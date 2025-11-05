@@ -1,0 +1,81 @@
+.page-head,
+.lecture-form-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.form,
+.lecture-form {
+  display: block;
+}
+
+.form__grid,
+.lecture-form__layout {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 1000px) {
+  .form__grid,
+  .lecture-form__layout {
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
+.card,
+.lecture-form__card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.field,
+.lecture-form__field {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.choice-row,
+.lecture-form__choice-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.upload input[type='file'],
+.lecture-form__upload input[type='file'] {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.preview,
+.lecture-form__preview {
+  margin-top: 8px;
+  aspect-ratio: 16/9;
+  background: #f3f4f6;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}
+
+.auth {
+  max-width: 520px;
+  margin-inline: auto;
+  display: grid;
+  gap: 12px;
+}
+
+.auth__actions {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
