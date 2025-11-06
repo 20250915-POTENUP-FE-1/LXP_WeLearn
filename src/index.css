@@ -23,3 +23,7 @@ html,
 button {
   cursor: pointer;
 }
+
+body {
+  font-family: 'SUITE Variable', sans-serif;
+}
