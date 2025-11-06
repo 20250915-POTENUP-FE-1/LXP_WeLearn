@@ -1,50 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const LectureDetail = () => {
+  // const [lectureItem, setLectureItem] = useState({});
+
   return (
     <main className="main pb-12">
-      {/* <!-- ============================================ --> */}
-      {/* <!-- Lecture Hero Section --> */}
-      {/* <!-- Description: 강의 기본 정보 및 큰 썸네일 이미지 --> */}
-      {/* <!-- ============================================ --> */}
       <section className="lecture-hero border-b border-gray-200 bg-white py-8">
         <div className="lecture-hero__container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-5">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
             {/* <!-- Left: Lecture Info (3/5 width) --> */}
-            <div className="lecture-info lg:col-span-3">
-              {/* <!-- Breadcrumb --> */}
-              <nav
-                className="mb-4 flex items-center space-x-2 text-sm text-gray-500"
-                aria-label="breadcrumb"
-              >
-                <a href="/lectures" className="hover:text-gray-900">
-                  강의
-                </a>
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-                <a href="/lectures?category=development" className="hover:text-gray-900">
-                  개발
-                </a>
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-                <span className="text-gray-900">강의 상세</span>
-              </nav>
-
+            <div className="lecture-info lg:col-span-2">
               {/* <!-- Category Badge --> */}
               <span className="mb-4 inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-900">
-                개발
+                프론트엔드
               </span>
 
               {/* <!-- Title --> */}
@@ -113,15 +81,15 @@ const LectureDetail = () => {
 
               {/* <!-- CTA Button (Left aligned) --> */}
               <div>
-                <button className="rounded-lg bg-gray-900 px-8 py-3 text-base font-medium text-white transition-colors hover:bg-gray-800 focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 focus:outline-none">
+                <button className="w-full rounded-lg bg-gray-900 px-8 py-3 text-base font-medium text-white transition-colors hover:bg-gray-800 focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 focus:outline-none">
                   수강신청
                 </button>
               </div>
             </div>
 
             {/* <!-- Right: Large Thumbnail (2/5 width) --> */}
-            <div className="lecture-thumbnail lg:col-span-2">
-              <div className="sticky top-24">
+            <div className="lecture-thumbnail lg:col-span-3">
+              <div className="top-24">
                 <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-200 shadow-lg">
                   <img
                     src="https://via.placeholder.com/800x450"
@@ -129,38 +97,14 @@ const LectureDetail = () => {
                     className="absolute inset-0 h-full w-full object-cover"
                   />
                 </div>
-
-                {/* <!-- Additional Info Card --> */}
-                <div className="mt-4 rounded-lg bg-gray-50 p-4">
-                  <ul className="space-y-2 text-sm text-gray-600">
-                    <li className="flex items-center justify-between">
-                      <span>난이도</span>
-                      <span className="font-medium text-gray-900">초급 ~ 중급</span>
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <span>수강 기한</span>
-                      <span className="font-medium text-gray-900">무제한</span>
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <span>자막</span>
-                      <span className="font-medium text-gray-900">한국어</span>
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <span>수료증</span>
-                      <span className="font-medium text-gray-900">제공</span>
-                    </li>
-                  </ul>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* <!-- ============================================ --> */}
-      {/* <!-- Lecture Details Section --> */}
       {/* <!-- Description: 강의 상세 정보 탭 --> */}
-      {/* <!-- ============================================ --> */}
+
       <section className="lecture-details bg-white">
         <div className="lecture-details__container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* <!-- Tab Navigation --> */}
