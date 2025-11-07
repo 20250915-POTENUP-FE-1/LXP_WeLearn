@@ -5,7 +5,7 @@ import Signup from '../pages/signup/Signup.jsx';
 import MainLayout from '../components/layout/MainLayout.jsx';
 import LectureList from '../pages/lectures/list/LectureList.jsx';
 import LectureDetail from '../pages/lectures/detail/LectureDetail.jsx';
-import { RequireAuth, RequireRole } from '../auth/guards.jsx';
+import { RequireAuth, RequireRole, RequireUnAuth } from '../auth/guards.jsx';
 import MyLectures from '../pages/mypage/(user)/my-lectures/MyLectures.jsx';
 import CreateLecture from '../pages/mypage/(instructor)/create-lecture/CreateLecture.jsx';
 import InstructorLectures from '../pages/mypage/(instructor)/instructor-lectures/InstructorLectures.jsx';
@@ -15,8 +15,12 @@ import ErrorPage from '../pages/Error/ErrorPage.jsx';
 export const router = createBrowserRouter([
   // 인증(비보호) 라우트
   {
-    path: '/auth',
-    element: <AuthLayout />,
+    path: '/',
+    element: (
+      <RequireUnAuth>
+        <AuthLayout />
+      </RequireUnAuth>
+    ),
     children: [
       { path: 'login', element: <Login /> },
       { path: 'signup', element: <Signup /> },
@@ -28,12 +32,12 @@ export const router = createBrowserRouter([
     path: '/',
     element: <MainLayout />,
     children: [
-      { index: true, element: <Navigate to="/lectures/list" replace /> },
+      { index: true, element: <Navigate to="/lectures" replace /> },
       // 강의 목록/상세는 공개
       {
         path: 'lectures',
         children: [
-          { path: 'list', element: <LectureList /> },
+          { index: true, element: <LectureList /> },
           { path: 'detail/:id', element: <LectureDetail /> },
         ],
       },
@@ -56,7 +60,7 @@ export const router = createBrowserRouter([
       {
         path: 'instructor-lectures',
         element: (
-          <RequireRole allow={['instructor']}>
+          <RequireRole allow={['INSTRUCTOR']}>
             <InstructorLectures />
           </RequireRole>
         ),
@@ -64,7 +68,7 @@ export const router = createBrowserRouter([
       {
         path: 'create-lecture',
         element: (
-          <RequireRole allow={['instructor']}>
+          <RequireRole allow={['INSTRUCTOR']}>
             <CreateLecture />
           </RequireRole>
         ),
@@ -73,7 +77,7 @@ export const router = createBrowserRouter([
       {
         path: 'edit-lecture/:id?',
         element: (
-          <RequireRole allow={['instructor']}>
+          <RequireRole allow={['INSTRUCTOR']}>
             <EditLecture />
           </RequireRole>
         ),

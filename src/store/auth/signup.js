@@ -29,11 +29,15 @@ export const signup = createAsyncThunk('auth/signup', async (payload, { rejectWi
     // - 사용자 프로필 조회 요청 (성공시 사용자 프로필 객체 반환)
     const userProfile = await getUserProfile(user.uid);
 
-    // - LocalStorage: 캐싱
-    localStorage.setItem('user:profile', JSON.stringify(userProfile));
-
     // - userProfile 객체를 상태로 저장시키기 위해 반환 (fulfilled 상태일때 사용될 데이터)
-    return { userProfile };
+    return {
+      user: {
+        uid: user.uid,
+        email: user.email,
+        role: userProfile.role,
+        name: userProfile.name ?? '',
+      },
+    };
   } catch (error) {
     let errorMessage = '회원가입 중 오류가 발생했습니다.';
     switch (error.code) {

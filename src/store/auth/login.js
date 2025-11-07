@@ -8,10 +8,19 @@ export const login = createAsyncThunk('auth/login', async (payload, { rejectWith
     // - 이메일, 비밀번호로 로그인 요청 (성공시 인증된 사용자 객체 반환)
     const userCredential = await signInWithEmailAndPassword(auth, payload.email, payload.password);
     const user = userCredential.user;
+
     // - 사용자 프로필 조회 요청 (성공시 사용자 프로필 객체 반환)
     const userProfile = await getUserProfile(user.uid);
+
     // - userProfile 객체를 상태로 저장시키기 위해 반환 (fulfilled 상태일때 사용될 데이터)
-    return { userProfile };
+    return {
+      user: {
+        uid: user.uid,
+        email: user.email,
+        role: userProfile.role,
+        name: userProfile.name ?? '',
+      },
+    };
   } catch (error) {
     let errorMessage = '로그인 중 오류가 발생했습니다.';
     switch (error.code) {

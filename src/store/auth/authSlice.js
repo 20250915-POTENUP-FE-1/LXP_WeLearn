@@ -2,22 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import { signup } from './signup.js';
 import { logout } from './logout.js';
 import { login } from './login.js';
-import { USERS_COLLECTION_NAME } from '../../lib/firebase/table/ddl.js';
-
-const saved = (() => {
-  try {
-    return JSON.parse(localStorage.getItem(USERS_COLLECTION_NAME));
-  } catch {
-    return null;
-  }
-})();
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: saved, // { id, name, role: 'instructor' | 'user' } | null
+    user: null,
     loading: false,
     error: '',
+    initializing: true,
   },
   reducers: {
     // 에러 메시지 초기화 액션 : 인증 상태 변경 중 발생한 에러 메시지를 초기화 시키기 위한 액션
@@ -26,7 +18,20 @@ const authSlice = createSlice({
     },
     // 인증 상태 감지하여 사용자 프로필 초기상태로 설정하는 액션
     setUserProfile: (state, action) => {
-      state.user = action.payload;
+      const p = action.payload;
+      if (!p) {
+        state.user = null;
+        return;
+      }
+      state.user = {
+        uid: p.uid ?? p.id ?? null, // 프로필이 id로 올 수도 있으니 대비
+        email: p.email ?? null,
+        role: p.role ?? null,
+        name: p.name ?? '',
+      };
+    },
+    setInitializing: (state, action) => {
+      state.initializing = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -39,6 +44,7 @@ const authSlice = createSlice({
       //   - 로그인 요청 성공 (fulfilled 상태) : action.payload에는 createAsyncThunk() 함수에서 반환된 데이터가 담겨있음
       .addCase(login?.fulfilled, (state, action) => {
         state.loading = false;
+        console.log(action.payload.user);
         state.user = action.payload.user;
       })
       //   - 로그인 요청 실패 (rejected 상태) : action.payload에는 rejectWithValue() 함수로 전달된 메세지가 담겨있음
@@ -75,8 +81,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { clearError, setUserProfile } = authSlice.actions;
+export const { clearError, setUserProfile, setInitializing } = authSlice.actions;
 export default authSlice.reducer;
-
-export const selectIsAuthed = (state) => !!state.auth.user;
-export const selectRole = (state) => state.auth.user?.role ?? null;
