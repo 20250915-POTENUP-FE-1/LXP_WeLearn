@@ -5,7 +5,7 @@ export const lecture_list = [
     description: '모두를 위한, 빠른 웹사이트 만들기',
     content:
       '웹 접근성 표준을 준수하고 성능을 극대화하는 프론트엔드 개발 기법을 배웁니다. WCAG 가이드라인 이해, 시맨틱 HTML 작성, ARIA 속성 활용, 키보드 네비게이션 구현을 실습합니다. Lighthouse 점수 개선, Core Web Vitals 최적화, 이미지 lazy loading, 코드 스플리팅 전략을 배우며, 번들 사이즈 분석과 트리 쉐이킹, 캐싱 전략을 통해 로딩 속도를 향상시킵니다.',
-    thumbnailUrl: '/thumbnails/accessibility.jpg',
+    thumbnailUrl: '/src/assets/images/lxp-image-01.png',
     userId: 'user001',
     userName: '윤강사',
     category: 2,
@@ -51,7 +51,7 @@ export const lecture_list = [
     description: 'useState부터 useReducer까지, 실무에서 바로 쓰는 훅 가이드',
     content:
       'React의 핵심 훅들을 실제 예제와 함께 학습합니다. 상태 관리, 렌더링 최적화, 커스텀 훅 제작 방법을 배우며, 컴포넌트 구조 설계와 리팩토링 실습을 통해 실무 감각을 익힙니다.',
-    thumbnailUrl: '/thumbnails/react-hooks.jpg',
+    thumbnailUrl: '/src/assets/images/lxp-image-06.png',
     userId: 'user002',
     userName: '이강사',
     category: 1,
@@ -92,7 +92,7 @@ export const lecture_list = [
     description: 'Express로 REST API 만들기부터 배포까지',
     content:
       'Node.js 환경 구성, Express 라우팅, 미들웨어, 에러 핸들링, MongoDB 연결 등 백엔드 기초를 실습합니다. Postman으로 API 테스트를 수행하고, 배포 자동화 파이프라인까지 경험합니다.',
-    thumbnailUrl: '/thumbnails/nodejs.jpg',
+    thumbnailUrl: '/src/assets/images/lxp-image-05.png',
     userId: 'user003',
     userName: '박강사',
     category: 3,
@@ -138,7 +138,7 @@ export const lecture_list = [
     description: '디자이너 없이도 세련된 UI 만들기',
     content:
       'Tailwind CSS의 유틸리티 퍼스트 철학을 이해하고, 반응형 그리드와 컴포넌트 아키텍처를 구성합니다. 디자인 토큰과 커스텀 테마를 설정하며, LXP 프로젝트를 위한 UI 시스템을 완성합니다.',
-    thumbnailUrl: '/thumbnails/tailwind.jpg',
+    thumbnailUrl: '/src/assets/images/lxp-image-04.png',
     userId: 'user004',
     userName: '장강사',
     category: 4,
