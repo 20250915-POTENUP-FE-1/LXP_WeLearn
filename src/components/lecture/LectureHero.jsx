@@ -1,4 +1,5 @@
 import { getCategoryName, getTotalLectureCount } from '../../utils/lectureUtils.js';
+import EnrollButton from './EnrollButton.jsx';
 
 /**
  *   getCategoryName(categoryValue)
@@ -12,6 +13,7 @@ function LectureHero({ lectureItem = {} }) {
 
   const {
     category,
+    lectureId = '',
     title = '',
     description = '',
     userName = '',
@@ -117,15 +119,7 @@ function LectureHero({ lectureItem = {} }) {
             </div>
 
             {/* CTA Button */}
-            <div>
-              <button
-                type="button"
-                className="w-full rounded-lg bg-gray-900 px-8 py-3 text-base font-medium text-white transition-colors hover:bg-gray-800 focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 focus:outline-none"
-                aria-label="수강 신청"
-              >
-                수강신청
-              </button>
-            </div>
+            <EnrollButton lectureId={lectureId} />
           </div>
 
           {/* Right: Thumbnail (3/5) */}

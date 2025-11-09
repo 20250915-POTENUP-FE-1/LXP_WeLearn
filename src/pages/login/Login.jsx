@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import FormTitleSection from '../../components/common/form/FormTitleSection.jsx';
 import LoginForm from '../../components/auth/LoginForm.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuthSelector } from '../../hooks/guard/useAuthSelector.js';
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user, initializing } = useAuthSelector();
+  const from = location.state?.from || '/';
+
+  // 로그인 상태이거나 로그인 직후 전역 User가 세팅되면 원래 페이지로 복귀
+  useEffect(() => {
+    if (initializing) return;
+    if (user) navigate(from, { replace: true });
+  }, [user, initializing, from, navigate]);
 
   return (
     <div className="flex min-w-md flex-col items-center justify-center px-4 py-12 sm:py-16">
