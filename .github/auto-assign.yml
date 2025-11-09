@@ -1,0 +1,9 @@
+addReviewers: true
+addAssignees: false
+
+reviewers:
+  - beedgreen
+  - Chang-KY
+  - Decseung
+
+numberOfReviewers: 2
