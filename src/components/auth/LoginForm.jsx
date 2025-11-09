@@ -32,13 +32,9 @@ const LoginForm = () => {
     const result = await dispatch(login(formData));
 
     if (result.meta.requestStatus === 'fulfilled') {
-      console.log('로그인 성공했음');
-
       //location.state?.from이 있는지 확인하고 보내기, 없으면 '/' 로 보내기
       const redirectTo = location.state?.from || '/';
-      console.log('리다이렉트 경로 어디임:', redirectTo);
       navigate(redirectTo, { replace: true });
-
       //  navigate('/');
     }
   };
