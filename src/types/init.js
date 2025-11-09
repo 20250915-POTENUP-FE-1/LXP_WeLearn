@@ -1,4 +1,4 @@
-import { collection, addDoc, getFirestore } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, getFirestore } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { lecture_list } from './dummyData.js';
 

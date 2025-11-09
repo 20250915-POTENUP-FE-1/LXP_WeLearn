@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
         path: 'lectures',
         children: [
           { index: true, element: <LectureList /> },
-          { path: 'detail/:id', element: <LectureDetail /> },
+          { path: 'detail/:lectureId', element: <LectureDetail /> },
         ],
       },
     ],
