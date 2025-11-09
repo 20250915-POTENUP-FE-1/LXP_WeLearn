@@ -113,6 +113,7 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId }) {
         studentCount: increment(1),
       });
       console.log('수강 인원 추가 완료');
+      setIsEnrolled(true);
       alert('수강 신청이 완료되었습니다.');
     } catch (error) {
       console.log('수강 신청 중 오류:', error);
