@@ -4,9 +4,9 @@ import Header from './Header';
 import Footer from './Footer';
 const AuthLayout = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="flex min-h-screen w-full flex-col items-center justify-between bg-gray-50">
       <Header />
-      <main className="item-center bg- flex h-[calc(100%-3.5rem)] justify-center">
+      <main className="item-center flex justify-center">
         <Outlet />
       </main>
       <Footer />

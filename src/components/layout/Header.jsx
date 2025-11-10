@@ -1,26 +1,31 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/auth/logout.js';
 import SkeletonButton from '../ui/SkeletonButton.jsx';
+import { toast } from 'react-toastify';
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { initializing, user } = useSelector((s) => s.auth);
+  const { pathname } = useLocation();
 
   const handleNavi = (location) => {
     navigate(location);
   };
+
   const handleLogout = async () => {
-    const ok = window.confirm('정말 로그아웃할까요?');
-    if (!ok) return; // 취소
     await dispatch(logout());
-    handleNavi('/'); // 로그아웃 후 홈 등으로
+
+    if (pathname.startsWith('/mypage')) {
+      handleNavi('/'); // 로그아웃 후 홈 등으로
+    }
+    toast.info('로그아웃 되었습니다.');
   };
 
   return (
-    <header className="header sticky top-0 z-50 bg-white shadow-md">
+    <header className="header sticky top-0 z-50 w-full bg-white shadow-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
           {/* <!-- Logo Section --> */}

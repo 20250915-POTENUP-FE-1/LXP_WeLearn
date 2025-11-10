@@ -17,11 +17,12 @@
     "@uidotdev/usehooks": "^2.4.1",
     "classnames": "^2.5.1",
     "firebase": "^12.5.0",
-    "lucide": "^0.552.0",
+    "lucide-react": "^0.553.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.5",
+    "react-toastify": "^11.0.5",
     "tailwindcss": "^4.1.16"
   },
   "devDependencies": {

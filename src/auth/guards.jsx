@@ -38,5 +38,20 @@ export function RequireRole({ children, allow = [], adminIsSuper = true }) {
   if (!user) return <Navigate to="/login" replace state={{ from: loc }} />;
 
   const isAllowed = (adminIsSuper && role === 'ADMIN') || allowSet.has(role);
-  return isAllowed ? children : <Navigate to="/error" replace />;
+  if (!isAllowed) {
+    return (
+      <Navigate
+        to="/403"
+        replace
+        state={{
+          from: loc, // 어디서 막혔는지
+          required: [...allow], // 필요한 권한 정보
+          have: role, // 현재 유저 권한
+        }}
+      />
+    );
+  }
+
+  // 3) 통과
+  return children;
 }

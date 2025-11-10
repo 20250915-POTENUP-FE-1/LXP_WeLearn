@@ -10,7 +10,8 @@ import MyLectures from '../pages/mypage/(user)/my-lectures/MyLectures.jsx';
 import CreateLecture from '../pages/mypage/(instructor)/create-lecture/CreateLecture.jsx';
 import InstructorLectures from '../pages/mypage/(instructor)/instructor-lectures/InstructorLectures.jsx';
 import EditLecture from '../pages/mypage/(instructor)/edit-lecture/EditLecture.jsx';
-import ErrorPage from '../pages/Error/ErrorPage.jsx';
+import Error404 from '../pages/Error/404/Error404.jsx';
+import Error403 from '../pages/Error/403/Error403.jsx';
 
 export const router = createBrowserRouter([
   // 인증(비보호) 라우트
@@ -86,6 +87,6 @@ export const router = createBrowserRouter([
   },
 
   // 에러/기타
-  { path: '*', element: <ErrorPage /> },
-  // { path: '*', element: <Navigate to="/" replace /> },
+  { path: '*', element: <Error404 /> },
+  { path: '/403', element: <Error403 /> },
 ]);

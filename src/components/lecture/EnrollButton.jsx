@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthSelector } from '../../hooks/guard/useAuthSelector';
 import { db } from '../../lib/firebase/config.js';
+import ENROLLMENTS_COLLECTION_NAME from '../../lib/firebase/table/ddl.js';
 import {
   collection,
   query,
@@ -84,7 +85,7 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
       // console.log('수강 신청 시작:', { userId: user.uid, lectureId, firestoreDocId });
 
       // 2-1) 중복 신청 확인하기
-      const enrollmentsRef = collection(db, 'enrollments');
+      const enrollmentsRef = collection(db, ENROLLMENTS_COLLECTION_NAME);
       const q = query(
         enrollmentsRef,
         where('userId', '==', user.uid),
