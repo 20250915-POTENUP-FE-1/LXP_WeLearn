@@ -10,11 +10,12 @@ import GlobalLoading from '../../../../components/loading/GlobalLoading.jsx';
 import NothingMyLectures from '../../../../components/mypage/my-lectures/NothingMyLectures.jsx';
 import { useInfiniteLectures } from '../../../../hooks/lectures/useInfiniteLectures.js';
 import CreateBtnLectureCard from '../../../../components/mypage/instructor-lectures/CreateBtnLectureCard.jsx';
+import { useGuardedDeleteLecture } from '../../../../hooks/guard/useGuardedDeleteLecture.js';
 
 const InstructorLectures = () => {
-  const { user } = useSelector((state) => state.auth); // 강사 uid 가져오기
+  const { user } = useSelector((state) => state.auth); // 강사 id 가져오기
 
-  const { items, isLoading, error, hasMore, sentinelRef, total } = useInfiniteLectures({
+  const { items, isLoading, error, hasMore, sentinelRef, total, refresh } = useInfiniteLectures({
     category: 'all',
     sort: 'latest',
     pageSize: 8,
@@ -23,6 +24,11 @@ const InstructorLectures = () => {
 
   // 강사 본인 강의만 필터링
   const myLectures = items.filter((item) => item.userId === user?.uid);
+
+  // 삭제 hook : success > list
+  const { handleDelete, removingId } = useGuardedDeleteLecture({
+    refresh,
+  });
 
   return (
     <main className="main py-8">
@@ -54,7 +60,8 @@ const InstructorLectures = () => {
                   myLectures.map((lec) => (
                     <InstructorLectureCard
                       key={lec.lectureId}
-                      id={lec.lectureId}
+                      id={lec.lectureId} // 문서 ID
+                      lectureId={lec.lectureId} // 필드 강의 ID
                       thumbnailUrl={lec.thumbnailUrl}
                       title={lec.title}
                       userName={lec.userName}
@@ -62,6 +69,8 @@ const InstructorLectures = () => {
                       rating={lec.rating}
                       reviewCount={lec.reviewCount}
                       categoryName={lec.categoryName}
+                      onDelete={handleDelete} // 삭제 핸들러
+                      disabled={removingId === lec.id} // 삭제 중 비활성
                     />
                   ))
                 ) : !isLoading && !error ? (

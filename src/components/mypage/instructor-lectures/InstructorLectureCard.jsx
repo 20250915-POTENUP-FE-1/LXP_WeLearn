@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default function InstructorLectureCard({
-  id,
+  id, // Firestore 문서 id
+  lectureId,
   thumbnailUrl,
   title,
   userName,
@@ -10,6 +11,7 @@ export default function InstructorLectureCard({
   rating = 0,
   reviewCount = 0,
   categoryName,
+  onDelete,
 }) {
   return (
     <article className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-lg">
@@ -62,7 +64,10 @@ export default function InstructorLectureCard({
             >
               수정
             </Link>
-            <button className="rounded-lg bg-red-50 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-100">
+            <button
+              onClick={() => onDelete?.({ id, lectureId })}
+              className="rounded-lg bg-red-50 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-100"
+            >
               삭제
             </button>
           </div>
