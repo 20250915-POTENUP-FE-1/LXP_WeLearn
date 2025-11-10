@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { getLectures } from '../../../services/lecture/getLecturesService';
 import CATEGORIES from '../../../constants/categories';
 
-const ITEMS_PER_PAGE = 8; // 페이지당 강의 수
+const itemsPerPage = 8; // 페이지당 강의 수
 
 const LectureList = () => {
   const [lectureDatas, setLectureDatas] = useState([]);
@@ -31,7 +31,7 @@ const LectureList = () => {
     const { lectures, total, lastDoc } = await getLectures({
       category,
       sort,
-      limitCount: ITEMS_PER_PAGE,
+      limitCount: itemsPerPage,
       startAfterDoc: pageInfo[pageNum - 1] || null,
     });
 
@@ -59,7 +59,7 @@ const LectureList = () => {
     fetchLecturePage(currentPage);
   }, [currentPage]);
 
-  const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(totalCount / itemsPerPage);
 
   return (
     <>
