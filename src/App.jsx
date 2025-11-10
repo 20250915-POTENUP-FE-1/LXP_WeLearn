@@ -7,7 +7,7 @@ function App() {
   useGuard();
   return (
     <>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
       <ToastProvider />
     </>
   );

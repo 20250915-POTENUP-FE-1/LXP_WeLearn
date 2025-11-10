@@ -10,7 +10,7 @@ function LectureTabs() {
   };
 
   return (
-    <section className="lecture-details bg-white">
+    <section className="lecture-details">
       <div className="lecture-details__container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* 탭 메뉴 */}
         <div className="tab-navigation border-b border-gray-200 pt-3">

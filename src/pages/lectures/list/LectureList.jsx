@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { getLectures } from '../../../services/lecture/getLecturesService';
 import CATEGORIES from '../../../constants/categories';
 import { ITEMS_PER_PAGE } from '../../../constants/paginationConstants';
+import GlobalLoading from '../../../components/loading/GlobalLoading';
 
 const LectureList = () => {
   const [lectureDatas, setLectureDatas] = useState([]);
@@ -62,7 +63,7 @@ const LectureList = () => {
 
   return (
     <>
-      <section className="page-title border-b border-gray-200 bg-white py-8">
+      <section className="page-title min-w-7xl py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="mb-2 text-3xl font-bold text-gray-900">{currentCategory}</h1>
           <p className="text-base text-gray-600">원하는 강의를 찾아보세요</p>
@@ -85,11 +86,13 @@ const LectureList = () => {
           </div>
 
           {/* 목록 */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div
+            className={`grid grid-cols-1 gap-6 ${lectureDatas.length !== 0 ? 'sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : 'gird-cols-1 h-[400px]'} items-center`}
+          >
             {isLoading ? (
-              <div>로딩중 ...</div>
+              <GlobalLoading />
             ) : lectureDatas.length === 0 ? (
-              <div>강의가 없습니다.</div>
+              <div className="text-center">강의가 없습니다.</div>
             ) : (
               lectureDatas.map((lecture) => (
                 <LectureCard key={lecture.lectureId} lecture={lecture} />

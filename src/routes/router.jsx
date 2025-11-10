@@ -1,5 +1,4 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import AuthLayout from '../components/layout/AuthLayout.jsx';
 import Login from '../pages/login/Login.jsx';
 import Signup from '../pages/signup/Signup.jsx';
 import MainLayout from '../components/layout/MainLayout.jsx';
@@ -19,7 +18,7 @@ export const router = createBrowserRouter([
     path: '/',
     element: (
       <RequireUnAuth>
-        <AuthLayout />
+        <MainLayout />
       </RequireUnAuth>
     ),
     children: [

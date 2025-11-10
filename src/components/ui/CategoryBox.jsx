@@ -11,7 +11,7 @@ function CategoryBox({ sortOptions, setSortOption }) {
     <>
       <div className="filter-buttons flex flex-wrap items-center gap-2">
         <button
-          className={`rounded-lg px-4 py-2 text-sm font-medium ${sortOptions.category === 'all' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'} `}
+          className={`rounded-full px-4 py-2 text-sm font-medium ${sortOptions.category === 'all' ? 'bg-gray-900 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'} `}
           value="all"
           onClick={handleCategoryClick}
         >
@@ -21,7 +21,7 @@ function CategoryBox({ sortOptions, setSortOption }) {
         {CATEGORIES.map((category) => {
           return (
             <button
-              className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${sortOptions.category === category.key ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${sortOptions.category === category.key ? 'bg-gray-900 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
               key={category.name}
               onClick={handleCategoryClick}
               value={category.key}
