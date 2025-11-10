@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { getLectures } from '../../../services/lecture/getLecturesService';
 import CATEGORIES from '../../../constants/categories';
 import { ITEMS_PER_PAGE } from '../../../constants/paginationConstants';
+import GlobalLoading from '../../../components/loading/GlobalLoading';
 
 const LectureList = () => {
   const [lectureDatas, setLectureDatas] = useState([]);
@@ -85,11 +86,13 @@ const LectureList = () => {
           </div>
 
           {/* 목록 */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div
+            className={`grid grid-cols-1 gap-6 ${lectureDatas.length !== 0 ? 'sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : 'gird-cols-1 h-[400px]'} items-center`}
+          >
             {isLoading ? (
-              <div>로딩중 ...</div>
+              <GlobalLoading />
             ) : lectureDatas.length === 0 ? (
-              <div>강의가 없습니다.</div>
+              <div className="text-center">강의가 없습니다.</div>
             ) : (
               lectureDatas.map((lecture) => (
                 <LectureCard key={lecture.lectureId} lecture={lecture} />
