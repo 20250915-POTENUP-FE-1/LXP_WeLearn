@@ -63,7 +63,7 @@ const LectureList = () => {
 
   return (
     <>
-      <section className="page-title border-b border-gray-200 bg-white py-8">
+      <section className="page-title min-w-7xl py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="mb-2 text-3xl font-bold text-gray-900">{currentCategory}</h1>
           <p className="text-base text-gray-600">원하는 강의를 찾아보세요</p>

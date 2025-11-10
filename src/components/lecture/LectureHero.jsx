@@ -47,7 +47,7 @@ function LectureHero({ lectureItem = {} }) {
     thumbnailUrl || 'https://dr.savee-cdn.com/things/6/6/0d3d5da690b611c98f76a2.webp';
 
   return (
-    <section className="lecture-hero border-b border-gray-200 bg-white py-8">
+    <section className="lecture-hero bg-trasparent border-gray-200 py-8">
       <div className="lecture-hero__container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
           {/* Left: Lecture Info (2/5) */}
