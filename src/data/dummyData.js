@@ -4,11 +4,11 @@ export const lecture_list = [
     title: '웹 접근성과 성능 최적화',
     description: '모두를 위한, 빠른 웹사이트 만들기',
     content:
-      '웹 접근성 표준을 준수하고 성능을 극대화하는 프론트엔드 개발 기법을 배웁니다. WCAG 가이드라인 이해, 시맨틱 HTML 작성, ARIA 속성 활용, 키보드 네비게이션 구현을 실습합니다. Lighthouse 점수 개선, Core Web Vitals 최적화, 이미지 lazy loading, 코드 스플리팅 전략을 배우며, 번들 사이즈 분석과 트리 쉐이킹, 캐싱 전략을 통해 로딩 속도를 향상시킵니다. 실무에서 바로 적용할 수 있는 최적화 기법들을 단계별로 학습하고, 실제 프로젝트에 적용하는 방법을 익힙니다.',
+      '웹 접근성 표준을 준수하고 성능을 극대화하는 프론트엔드 개발 기법을 배웁니다. WCAG 가이드라인 이해, 시맨틱 HTML 작성, ARIA 속성 활용, 키보드 네비게이션 구현을 실습합니다. Lighthouse 점수 개선, Core Web Vitals 최적화, 이미지 lazy loading, 코드 스플리팅 전략을 배우며, 번들 사이즈 분석과 트리 쉐이킹, 캐싱 전략을 통해 로딩 속도를 향상시킵니다. 실무 프로젝트에 바로 적용 가능한 최적화 패턴을 제공합니다.',
     thumbnailUrl: '/src/assets/images/lxp-image-01.png',
     userId: 'user1',
-    userName: '김민준',
-    category: 2,
+    userName: '김민수',
+    category: 1,
     level: '초급',
     studentCount: 10,
     lectureCreatedAt: '2025-11-10T00:10:00Z',
@@ -48,12 +48,12 @@ export const lecture_list = [
   {
     lectureId: 'lec2',
     title: 'React 훅 완전 정복',
-    description: 'useState부터 useReducer까지, 실무에서 바로 쓰는 훅',
+    description: 'useState부터 useReducer까지, 실무에서 바로 쓰는 훅 가이드',
     content:
-      'React의 핵심 훅들을 실제 예제와 함께 학습합니다. useState로 상태 관리의 기초를 다지고, useEffect로 사이드 이펙트를 처리하는 방법을 배웁니다. useContext를 활용한 전역 상태 관리, useMemo와 useCallback을 통한 성능 최적화, useRef로 DOM 요소 직접 접근하기 등 실무 필수 훅들을 마스터합니다. 또한 커스텀 훅을 만들어 로직을 재사용하는 방법과 복잡한 상태를 useReducer로 관리하는 패턴을 학습합니다. 실제 프로젝트 예제를 통해 훅의 활용법을 체득합니다.',
+      'React의 핵심 훅들을 실제 예제와 함께 학습합니다. useState로 상태 관리하기, useEffect로 사이드 이펙트 다루기, useContext로 전역 상태 관리, useReducer로 복잡한 로직 처리, useMemo와 useCallback으로 성능 최적화하는 방법을 배웁니다. 커스텀 훅을 만들어 로직을 재사용하고, 실무에서 자주 마주치는 문제들을 해결하는 패턴을 익힙니다. 프로젝트 구조 설계와 리팩토링 실습을 통해 실무 감각을 향상시킵니다.',
     thumbnailUrl: '/src/assets/images/lxp-image-06.png',
     userId: 'user2',
-    userName: '이서연',
+    userName: '박정복',
     category: 1,
     level: '중급',
     studentCount: 25,
@@ -88,30 +88,30 @@ export const lecture_list = [
   },
   {
     lectureId: 'lec3',
-    title: 'TypeScript 실전 가이드',
-    description: '타입 안정성으로 버그 없는 코드 작성하기',
+    title: 'Node.js와 Express 백엔드 개발',
+    description: 'REST API 설계부터 배포까지',
     content:
-      'TypeScript의 기본 타입부터 고급 타입까지 단계별로 학습합니다. 인터페이스와 타입 별칭의 차이점, 제네릭을 활용한 재사용 가능한 컴포넌트 작성, 유틸리티 타입으로 코드 간결화하기를 배웁니다. React와 TypeScript를 함께 사용할 때의 베스트 프랙티스, Props 타입 정의, 이벤트 핸들러 타입 지정 방법을 익힙니다. 실무에서 자주 마주치는 타입 에러를 해결하는 방법과 tsconfig 설정 최적화를 통해 개발 생산성을 높이는 전략을 학습합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-03.png',
+      'Node.js 환경에서 Express 프레임워크를 활용한 백엔드 개발을 처음부터 배웁니다. RESTful API 설계 원칙, 라우팅과 미들웨어 구조, MongoDB와 MySQL 데이터베이스 연동, JWT 기반 인증 시스템 구현을 학습합니다. 에러 핸들링, 로깅, 환경 변수 관리, API 문서화 방법을 익히고, Docker를 활용한 컨테이너화와 AWS EC2 배포까지 실습합니다. 실무에서 바로 적용 가능한 백엔드 아키텍처를 구축합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-02.png',
     userId: 'user3',
-    userName: '박지훈',
-    category: 1,
-    level: '중급',
+    userName: '이서연',
+    category: 2,
+    level: '초급',
     studentCount: 18,
-    lectureCreatedAt: '2025-10-15T14:30:00Z',
+    lectureCreatedAt: '2025-11-05T14:30:00Z',
     curriculum: [
       {
-        chapterTitle: 'TypeScript 기초',
+        chapterTitle: 'Express 기본',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: '기본 타입과 인터페이스',
-            lessonMediaUrl: '/media/ts1.mp4',
+            lessonTitle: 'Node.js와 Express 시작하기',
+            lessonMediaUrl: '/media/backend1.mp4',
           },
           {
             lessonId: 'less1-2',
-            lessonTitle: '제네릭 이해하기',
-            lessonMediaUrl: '/media/ts2.mp4',
+            lessonTitle: '라우팅과 미들웨어',
+            lessonMediaUrl: '/media/backend2.mp4',
           },
         ],
       },
@@ -119,50 +119,24 @@ export const lecture_list = [
   },
   {
     lectureId: 'lec4',
-    title: 'Node.js와 Express 백엔드',
-    description: 'RESTful API 설계부터 배포까지',
+    title: 'Flutter로 크로스플랫폼 앱 만들기',
+    description: 'iOS와 Android를 한 번에',
     content:
-      'Node.js 런타임 환경의 특징과 비동기 프로그래밍 패턴을 이해합니다. Express 프레임워크로 서버를 구축하고, 라우팅, 미들웨어, 에러 핸들링을 구현합니다. MongoDB를 연동하여 CRUD 작업을 처리하고, JWT를 활용한 인증 시스템을 구축합니다. Passport.js로 소셜 로그인을 구현하고, 파일 업로드, 이메일 발송 등 실무 기능을 추가합니다. API 문서화, 테스트 코드 작성, PM2를 이용한 프로세스 관리, Nginx 리버스 프록시 설정까지 배포 전 과정을 다룹니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-05.png',
+      'Flutter를 사용하여 하나의 코드로 iOS와 Android 앱을 동시에 개발하는 방법을 배웁니다. Dart 언어 기초, Widget 구조와 상태 관리, Provider와 Riverpod 패턴, HTTP 통신과 JSON 파싱, 로컬 데이터 저장을 학습합니다. Material Design과 Cupertino 디자인 가이드를 따르며, 애니메이션과 제스처 처리, 네이티브 기능 연동, Firebase 통합, 앱 스토어 배포 과정까지 실습합니다. 실제 출시 가능한 수준의 앱을 만듭니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-03.png',
     userId: 'user4',
-    userName: '최유진',
-    category: 2,
+    userName: '최지훈',
+    category: 3,
     level: '중급',
     studentCount: 32,
-    lectureCreatedAt: '2025-10-05T11:20:00Z',
+    lectureCreatedAt: '2025-10-15T11:20:00Z',
     curriculum: [
       {
-        chapterTitle: 'Express 시작하기',
+        chapterTitle: 'Flutter 시작하기',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: '서버 기초와 라우팅',
-            lessonMediaUrl: '/media/node1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec5',
-    title: 'Flutter 모바일 앱 개발',
-    description: '하나의 코드로 iOS와 Android 앱 만들기',
-    content:
-      'Flutter 프레임워크의 기본 개념과 위젯 시스템을 학습합니다. StatefulWidget과 StatelessWidget의 차이를 이해하고, 레이아웃을 구성하는 방법을 배웁니다. Provider 패턴으로 상태 관리를 구현하고, HTTP 통신으로 REST API와 연동합니다. Firebase를 활용한 푸시 알림, 로컬 데이터베이스 SQLite 연동, 카메라와 갤러리 접근, 지도 API 사용 등 네이티브 기능을 다룹니다. 앱 스토어와 플레이 스토어 배포 준비, 앱 서명, 릴리즈 빌드 생성까지 전 과정을 실습합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-02.png',
-    userId: 'user5',
-    userName: '정민수',
-    category: 3,
-    level: '초급',
-    studentCount: 22,
-    lectureCreatedAt: '2025-09-28T08:45:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'Flutter 기초',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: '위젯과 레이아웃',
+            lessonTitle: 'Dart 언어 기초',
             lessonMediaUrl: '/media/flutter1.mp4',
           },
         ],
@@ -170,25 +144,25 @@ export const lecture_list = [
     ],
   },
   {
-    lectureId: 'lec6',
-    title: 'ChatGPT API 활용법',
-    description: 'AI 챗봇 서비스 구축 완벽 가이드',
+    lectureId: 'lec5',
+    title: 'ChatGPT API 활용 실전 프로젝트',
+    description: 'AI 챗봇부터 자동화 도구까지',
     content:
-      'OpenAI API를 활용하여 실용적인 AI 애플리케이션을 개발합니다. API 키 발급부터 요청 형식, 응답 처리까지 기본기를 다지고, 프롬프트 엔지니어링 기법으로 원하는 답변을 유도합니다. 스트리밍 응답 처리, 토큰 관리로 비용 최적화, Function Calling으로 외부 도구 연동하는 방법을 배웁니다. 채팅 히스토리 관리, 컨텍스트 윈도우 최적화, RAG 패턴 구현으로 전문 지식을 활용하는 챗봇을 만듭니다. 실시간 채팅 UI 구현과 배포까지 완성합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-07.png',
-    userId: 'user6',
-    userName: '강다은',
+      'OpenAI의 ChatGPT API를 활용하여 다양한 AI 애플리케이션을 개발합니다. API 키 발급과 요금 체계 이해, 프롬프트 엔지니어링 기법, 컨텍스트 관리와 대화 히스토리 처리, 스트리밍 응답 구현을 배웁니다. 고객 지원 챗봇, 문서 요약 도구, 콘텐츠 생성 자동화, 코드 리뷰 어시스턴트를 만들어보며, RAG 패턴으로 외부 지식 베이스를 연동하고, 함수 호출 기능으로 확장성을 높입니다. 실무 적용 사례를 중심으로 학습합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-04.png',
+    userId: 'user5',
+    userName: '정은지',
     category: 4,
-    level: '중급',
+    level: '초급',
     studentCount: 45,
-    lectureCreatedAt: '2025-09-20T16:00:00Z',
+    lectureCreatedAt: '2025-11-08T16:00:00Z',
     curriculum: [
       {
-        chapterTitle: 'OpenAI API 시작',
+        chapterTitle: 'ChatGPT API 기본',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: 'API 기본 사용법',
+            lessonTitle: 'API 키 발급과 첫 호출',
             lessonMediaUrl: '/media/gpt1.mp4',
           },
         ],
@@ -196,207 +170,25 @@ export const lecture_list = [
     ],
   },
   {
-    lectureId: 'lec7',
-    title: 'Docker 컨테이너 기초',
-    description: '개발 환경을 코드로 관리하는 방법',
-    content:
-      'Docker의 개념과 컨테이너 기술의 장점을 이해합니다. 이미지와 컨테이너의 차이점, Dockerfile 작성법, 레이어 캐싱 최적화를 학습합니다. Docker Compose로 멀티 컨테이너 애플리케이션을 구성하고, 볼륨 마운트로 데이터를 영속화합니다. 네트워크 설정으로 컨테이너 간 통신을 구현하고, 환경 변수 관리, 헬스 체크 설정을 배웁니다. Docker Hub에 이미지를 푸시하고, CI/CD 파이프라인에 통합하는 방법까지 다룹니다. 실무에서 바로 쓸 수 있는 베스트 프랙티스를 학습합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-04.png',
-    userId: 'user7',
-    userName: '한승우',
-    category: 5,
-    level: '초급',
-    studentCount: 28,
-    lectureCreatedAt: '2025-09-12T10:15:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'Docker 시작하기',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: '컨테이너 기본 개념',
-            lessonMediaUrl: '/media/docker1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec8',
-    title: 'Python 데이터 분석',
-    description: 'Pandas와 Matplotlib으로 데이터 시각화하기',
-    content:
-      'Python을 활용한 데이터 분석의 전 과정을 학습합니다. Pandas로 CSV, Excel 파일을 읽고 데이터프레임을 조작하는 방법을 배웁니다. 결측치 처리, 중복 제거, 데이터 타입 변환 등 데이터 전처리 기법을 익힙니다. groupby로 집계 분석을 수행하고, merge와 join으로 데이터를 결합합니다. Matplotlib과 Seaborn으로 다양한 차트를 그려 인사이트를 도출합니다. 탐색적 데이터 분석 과정을 실습하고, Jupyter Notebook으로 분석 결과를 문서화하는 방법을 배웁니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-08.png',
-    userId: 'user8',
-    userName: '송지아',
-    category: 6,
-    level: '초급',
-    studentCount: 35,
-    lectureCreatedAt: '2025-09-01T13:30:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'Pandas 기초',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: '데이터프레임 다루기',
-            lessonMediaUrl: '/media/pandas1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec9',
-    title: '머신러닝 입문',
-    description: 'scikit-learn으로 시작하는 ML',
-    content:
-      '머신러닝의 기본 개념과 주요 알고리즘을 학습합니다. 지도학습과 비지도학습의 차이를 이해하고, 선형 회귀, 로지스틱 회귀, 의사결정나무 등 대표 알고리즘을 구현합니다. 훈련 데이터와 테스트 데이터 분리, 교차 검증으로 모델 성능 평가, 하이퍼파라미터 튜닝으로 모델을 최적화합니다. 과적합 방지를 위한 정규화 기법, 특성 엔지니어링으로 모델 성능 향상시키기를 배웁니다. 실제 데이터셋으로 분류와 회귀 문제를 풀어보며 실전 감각을 익힙니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-01.png',
-    userId: 'user9',
-    userName: '김태현',
-    category: 7,
-    level: '중급',
-    studentCount: 40,
-    lectureCreatedAt: '2025-08-25T09:45:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'ML 기초 이론',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: '머신러닝 개념 정리',
-            lessonMediaUrl: '/media/ml1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec10',
-    title: 'Vue 3 Composition API',
-    description: '최신 Vue로 반응형 애플리케이션 만들기',
-    content:
-      'Vue 3의 Composition API를 활용한 컴포넌트 개발을 학습합니다. setup 함수의 동작 원리, ref와 reactive로 반응형 데이터 생성하기, computed와 watch로 데이터 변화 감지하는 방법을 배웁니다. Composable 함수로 로직을 재사용하고, Provide/Inject로 컴포넌트 간 데이터를 공유합니다. Vue Router로 SPA 라우팅을 구현하고, Pinia로 전역 상태를 관리합니다. Vite 빌드 도구로 개발 환경을 구성하고, 컴포넌트 테스트 작성까지 다룹니다. 실무 프로젝트 구조 설계 방법을 익힙니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-06.png',
-    userId: 'user10',
-    userName: '오하늘',
-    category: 1,
-    level: '중급',
-    studentCount: 19,
-    lectureCreatedAt: '2025-08-18T15:20:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'Composition API 시작',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: 'setup 함수 이해하기',
-            lessonMediaUrl: '/media/vue1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec11',
-    title: 'Spring Boot REST API',
-    description: 'Java 백엔드 개발의 정석',
-    content:
-      'Spring Boot로 엔터프라이즈급 백엔드 애플리케이션을 개발합니다. Spring MVC 패턴, 의존성 주입, AOP 개념을 이해하고 실습합니다. JPA와 Hibernate로 데이터베이스를 다루고, QueryDSL로 복잡한 쿼리를 작성합니다. Spring Security로 인증과 인가를 구현하고, JWT 토큰 기반 인증 시스템을 구축합니다. 예외 처리 전략, 로깅 설정, 트랜잭션 관리를 배웁니다. Swagger로 API 문서를 자동화하고, JUnit으로 단위 테스트를 작성합니다. 실전 프로젝트로 게시판 API를 완성합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-03.png',
-    userId: 'user11',
-    userName: '신채원',
-    category: 2,
-    level: '고급',
-    studentCount: 27,
-    lectureCreatedAt: '2025-08-10T11:00:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'Spring Boot 기초',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: 'MVC 패턴과 의존성 주입',
-            lessonMediaUrl: '/media/spring1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec12',
-    title: 'React Native 앱 개발',
-    description: 'React로 네이티브 앱 만들기',
-    content:
-      'React 지식을 활용하여 모바일 앱을 개발합니다. React Native의 컴포넌트와 API를 학습하고, StyleSheet로 스타일링하는 방법을 배웁니다. Navigation 라이브러리로 화면 전환을 구현하고, AsyncStorage로 로컬 데이터를 저장합니다. 카메라, 위치 정보, 푸시 알림 등 네이티브 기능을 사용합니다. Redux로 상태 관리를 구현하고, API 통신으로 서버와 데이터를 주고받습니다. Expo를 활용한 빠른 개발 환경 구축, 실제 디바이스에서 테스트하기, 앱 스토어 배포 준비 과정을 실습합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-05.png',
-    userId: 'user12',
-    userName: '임준서',
-    category: 3,
-    level: '중급',
-    studentCount: 31,
-    lectureCreatedAt: '2025-08-02T14:45:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'RN 시작하기',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: 'React Native 기본',
-            lessonMediaUrl: '/media/rn1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec13',
-    title: 'Stable Diffusion 이미지 생성',
-    description: 'AI로 원하는 이미지 만들기',
-    content:
-      'Stable Diffusion을 활용한 AI 이미지 생성 기술을 학습합니다. 모델 설치와 설정, 프롬프트 작성 기법, 네거티브 프롬프트 활용법을 배웁니다. Sampling 방법과 CFG Scale 조정으로 이미지 품질을 제어하고, LoRA 모델을 추가하여 특정 스타일을 구현합니다. ControlNet으로 이미지 구도를 정밀하게 제어하고, Inpainting과 Outpainting으로 이미지를 편집합니다. 배치 생성으로 여러 이미지를 효율적으로 만들고, 고해상도 업스케일링 기법을 적용합니다. 실용적인 프롬프트 예시를 학습합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-02.png',
-    userId: 'user13',
-    userName: '배수민',
-    category: 4,
-    level: '초급',
-    studentCount: 52,
-    lectureCreatedAt: '2025-07-28T10:30:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'SD 기초',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: '모델 설치와 프롬프트',
-            lessonMediaUrl: '/media/sd1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec14',
-    title: 'Kubernetes 실전 운영',
+    lectureId: 'lec6',
+    title: 'Kubernetes 실전 운영 가이드',
     description: '컨테이너 오케스트레이션 마스터하기',
     content:
-      'Kubernetes로 컨테이너화된 애플리케이션을 배포하고 관리합니다. Pod, Service, Deployment 등 핵심 오브젝트를 이해하고, YAML 매니페스트 파일을 작성합니다. ConfigMap과 Secret으로 설정을 관리하고, PersistentVolume으로 데이터를 영속화합니다. Ingress로 외부 트래픽을 라우팅하고, HPA로 자동 스케일링을 구현합니다. 헬스 체크 설정, 롤링 업데이트 전략, 모니터링 구축을 배웁니다. Helm 차트로 패키지 관리를 간소화하고, kubectl 명령어로 클러스터를 관리하는 실무 기술을 익힙니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-07.png',
-    userId: 'user14',
-    userName: '남궁민',
+      'Kubernetes를 활용한 컨테이너 오케스트레이션과 배포 자동화를 배웁니다. Pod, Service, Deployment 개념 이해, ConfigMap과 Secret으로 설정 관리, Ingress로 트래픽 라우팅, Persistent Volume으로 데이터 영속성 보장하는 방법을 학습합니다. Helm 차트로 패키지 관리, Prometheus와 Grafana로 모니터링 구축, 로그 수집과 분석, HPA를 통한 자동 스케일링, 롤링 업데이트와 롤백 전략을 실습하며 안정적인 운영 환경을 구축합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-05.png',
+    userId: 'user6',
+    userName: '강민호',
     category: 5,
     level: '고급',
-    studentCount: 23,
-    lectureCreatedAt: '2025-07-20T16:15:00Z',
+    studentCount: 15,
+    lectureCreatedAt: '2025-10-28T10:15:00Z',
     curriculum: [
       {
-        chapterTitle: 'K8s 기본 개념',
+        chapterTitle: 'Kubernetes 기초',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: 'Pod와 Service',
+            lessonTitle: 'Pod와 Service 이해하기',
             lessonMediaUrl: '/media/k8s1.mp4',
           },
         ],
@@ -404,51 +196,51 @@ export const lecture_list = [
     ],
   },
   {
-    lectureId: 'lec15',
-    title: 'SQL 쿼리 최적화',
-    description: '느린 쿼리를 빠르게 만드는 기술',
+    lectureId: 'lec7',
+    title: 'Python 데이터 분석 입문',
+    description: 'Pandas와 Matplotlib로 데이터 다루기',
     content:
-      '데이터베이스 성능을 개선하는 SQL 최적화 기법을 학습합니다. 실행 계획 분석으로 쿼리 병목 지점을 찾고, 인덱스 설계 전략으로 조회 속도를 향상시킵니다. Join 최적화, 서브쿼리 제거, 윈도우 함수 활용으로 복잡한 쿼리를 효율적으로 작성합니다. 파티셔닝으로 대용량 테이블을 관리하고, 통계 정보 갱신으로 옵티마이저 성능을 개선합니다. N+1 문제 해결, 커넥션 풀 설정, 트랜잭션 격리 수준 이해를 통해 실무에서 발생하는 성능 이슈를 해결하는 방법을 배웁니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-04.png',
-    userId: 'user15',
-    userName: '유서진',
+      'Python을 활용한 데이터 분석의 기초를 탄탄하게 다집니다. NumPy로 배열 연산, Pandas로 데이터 프레임 조작, 데이터 정제와 전처리 기법, 결측치와 이상치 처리, 그룹화와 피벗 테이블 활용을 배웁니다. Matplotlib과 Seaborn으로 시각화 차트 그리기, 통계 분석 기초, CSV와 Excel 파일 읽고 쓰기, 웹 스크래핑으로 데이터 수집까지 실습합니다. 실제 데이터셋을 활용한 프로젝트로 분석 역량을 키웁니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-07.png',
+    userId: 'user7',
+    userName: '윤서아',
     category: 6,
-    level: '중급',
-    studentCount: 29,
-    lectureCreatedAt: '2025-07-12T12:00:00Z',
+    level: '초급',
+    studentCount: 38,
+    lectureCreatedAt: '2025-11-02T13:45:00Z',
     curriculum: [
       {
-        chapterTitle: '쿼리 성능 분석',
+        chapterTitle: 'Pandas 시작하기',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: '실행 계획 읽기',
-            lessonMediaUrl: '/media/sql1.mp4',
+            lessonTitle: '데이터프레임 기초',
+            lessonMediaUrl: '/media/pandas1.mp4',
           },
         ],
       },
     ],
   },
   {
-    lectureId: 'lec16',
-    title: '딥러닝 기초',
-    description: 'TensorFlow로 신경망 구현하기',
+    lectureId: 'lec8',
+    title: '딥러닝으로 이미지 분류하기',
+    description: 'TensorFlow와 Keras 실습',
     content:
-      '딥러닝의 기본 원리와 신경망 구조를 이해합니다. Perceptron부터 시작하여 다층 신경망, 역전파 알고리즘을 학습합니다. TensorFlow와 Keras로 모델을 구축하고, Dense, Conv2D, LSTM 등 다양한 레이어를 활용합니다. 손실 함수와 옵티마이저 선택, 배치 정규화와 드롭아웃으로 모델 성능을 개선합니다. 이미지 분류, 객체 탐지, 자연어 처리 등 실제 문제를 해결하는 모델을 구현합니다. GPU 활용, 모델 저장과 로딩, 전이 학습 기법으로 효율적으로 학습하는 방법을 익힙니다.',
+      '딥러닝 기초 개념부터 CNN을 활용한 이미지 분류까지 단계별로 학습합니다. 신경망의 작동 원리, 활성화 함수와 손실 함수, 역전파와 경사 하강법을 이해하고, TensorFlow와 Keras로 모델을 구축합니다. 합성곱 신경망 구조, 데이터 증강 기법, 전이 학습으로 성능 향상, 모델 평가와 튜닝 방법을 배우며, MNIST와 CIFAR-10 데이터셋으로 실습합니다. 실전 프로젝트로 고양이와 개를 분류하는 모델을 만들어봅니다.',
     thumbnailUrl: '/src/assets/images/lxp-image-08.png',
-    userId: 'user16',
-    userName: '홍지우',
+    userId: 'user8',
+    userName: '임동현',
     category: 7,
     level: '중급',
-    studentCount: 38,
-    lectureCreatedAt: '2025-07-05T09:20:00Z',
+    studentCount: 27,
+    lectureCreatedAt: '2025-10-25T15:30:00Z',
     curriculum: [
       {
-        chapterTitle: '신경망 기초',
+        chapterTitle: '딥러닝 기초',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: 'Perceptron 이해하기',
+            lessonTitle: '신경망의 이해',
             lessonMediaUrl: '/media/dl1.mp4',
           },
         ],
@@ -456,26 +248,234 @@ export const lecture_list = [
     ],
   },
   {
-    lectureId: 'lec17',
-    title: 'Next.js 풀스택 개발',
-    description: 'SSR과 SSG로 완성하는 웹 애플리케이션',
+    lectureId: 'lec9',
+    title: 'TypeScript로 안전한 코드 작성하기',
+    description: '타입 시스템으로 버그 줄이기',
     content:
-      'Next.js로 서버 사이드 렌더링과 정적 사이트 생성을 활용한 프로젝트를 개발합니다. App Router와 Pages Router의 차이를 이해하고, getServerSideProps와 getStaticProps로 데이터를 불러옵니다. Server Components와 Client Components를 구분하여 최적의 렌더링 전략을 선택합니다. API Routes로 백엔드 기능을 구현하고, Middleware로 요청을 가로채 처리합니다. 이미지 최적화, 폰트 최적화, 메타데이터 관리로 SEO를 개선합니다. Vercel에 배포하고 환경 변수를 관리하는 실무 과정을 학습합니다.',
+      'TypeScript의 타입 시스템을 활용하여 안정적인 JavaScript 코드를 작성합니다. 기본 타입과 인터페이스, 제네릭과 유틸리티 타입, 타입 가드와 타입 단언, 클래스와 데코레이터를 학습합니다. tsconfig 설정 최적화, 외부 라이브러리 타입 정의, React와 TypeScript 통합, 에러 처리 패턴, 점진적 마이그레이션 전략을 배우며, 실무 프로젝트에서 TypeScript를 효과적으로 도입하는 방법을 익힙니다. 타입 안정성으로 개발 생산성을 높입니다.',
     thumbnailUrl: '/src/assets/images/lxp-image-01.png',
-    userId: 'user17',
-    userName: '문재윤',
+    userId: 'user9',
+    userName: '한지원',
     category: 1,
-    level: '고급',
-    studentCount: 34,
-    lectureCreatedAt: '2025-06-28T14:10:00Z',
+    level: '중급',
+    studentCount: 41,
+    lectureCreatedAt: '2025-11-01T09:20:00Z',
     curriculum: [
       {
-        chapterTitle: 'Next.js 기본',
+        chapterTitle: 'TypeScript 기본',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: 'SSR과 SSG 이해하기',
-            lessonMediaUrl: '/media/next1.mp4',
+            lessonTitle: '타입 시스템 이해하기',
+            lessonMediaUrl: '/media/ts1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec10',
+    title: 'Spring Boot REST API 개발',
+    description: '자바 백엔드 완벽 가이드',
+    content:
+      'Spring Boot로 엔터프라이즈급 REST API를 개발합니다. 스프링 부트 프로젝트 구조, 의존성 주입과 IoC 컨테이너, JPA와 Hibernate ORM 매핑, RESTful 엔드포인트 설계, Spring Security로 인증과 인가 구현을 배웁니다. 트랜잭션 관리, 예외 처리 전략, Swagger로 API 문서화, 테스트 코드 작성, 로깅과 모니터링 설정을 익히고, Docker와 Jenkins로 CI/CD 파이프라인을 구축합니다. 실무에 바로 적용 가능한 아키텍처를 설계합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-02.png',
+    userId: 'user10',
+    userName: '송민재',
+    category: 2,
+    level: '중급',
+    studentCount: 29,
+    lectureCreatedAt: '2025-10-30T11:00:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'Spring Boot 시작',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: 'Spring Boot 프로젝트 생성',
+            lessonMediaUrl: '/media/spring1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec11',
+    title: 'SwiftUI로 iOS 앱 개발 시작하기',
+    description: '선언형 UI로 빠르게 만드는 네이티브 앱',
+    content:
+      'SwiftUI를 사용하여 현대적인 iOS 앱을 개발합니다. Swift 언어 기초와 옵셔널 처리, View와 Modifier 활용, 상태 관리와 데이터 바인딩, List와 Navigation 구현을 배웁니다. MVVM 아키텍처 패턴, Combine 프레임워크로 반응형 프로그래밍, URLSession으로 네트워크 통신, Core Data로 로컬 저장소 관리, 애니메이션과 제스처 추가 방법을 학습합니다. 실제 앱 스토어에 출시 가능한 퀄리티의 앱을 만들어보며 iOS 개발 역량을 키웁니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-03.png',
+    userId: 'user11',
+    userName: '배수진',
+    category: 3,
+    level: '초급',
+    studentCount: 22,
+    lectureCreatedAt: '2025-11-06T14:10:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'SwiftUI 기초',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: 'View와 Modifier',
+            lessonMediaUrl: '/media/swiftui1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec12',
+    title: 'Stable Diffusion 이미지 생성 마스터',
+    description: 'AI 아트로 창작의 새로운 지평을',
+    content:
+      'Stable Diffusion을 활용한 AI 이미지 생성 기술을 마스터합니다. 모델 설치와 환경 설정, 프롬프트 작성 기법과 네거티브 프롬프트 활용, Sampling 메서드와 CFG Scale 조정, LoRA와 ControlNet 활용법을 배웁니다. Img2Img로 이미지 변환, Inpainting으로 부분 수정, Upscaling으로 해상도 향상, 커스텀 모델 파인튜닝 방법을 익히며, 일러스트, 사진, 디자인 등 다양한 스타일의 이미지를 생성합니다. 창작 워크플로우를 최적화합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-04.png',
+    userId: 'user12',
+    userName: '오성훈',
+    category: 4,
+    level: '중급',
+    studentCount: 52,
+    lectureCreatedAt: '2025-10-18T16:40:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'Stable Diffusion 시작',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: '설치와 기본 설정',
+            lessonMediaUrl: '/media/sd1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec13',
+    title: 'Terraform으로 인프라 자동화하기',
+    description: 'IaC로 클라우드 리소스 관리',
+    content:
+      'Terraform을 활용한 Infrastructure as Code를 배우고 클라우드 인프라를 자동화합니다. HCL 문법과 리소스 정의, Provider 설정과 State 관리, Module로 재사용 가능한 구성, Variable과 Output 활용을 학습합니다. AWS, Azure, GCP 리소스 프로비저닝, 워크스페이스로 환경 분리, Remote Backend 구성, 보안 그룹과 네트워크 설정, 테라폼 best practices를 실습합니다. Git과 연동한 GitOps 워크플로우로 협업 효율을 높이고 안정적인 배포를 구현합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-05.png',
+    userId: 'user13',
+    userName: '신예린',
+    category: 5,
+    level: '중급',
+    studentCount: 19,
+    lectureCreatedAt: '2025-10-22T10:30:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'Terraform 기초',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: 'HCL 문법 배우기',
+            lessonMediaUrl: '/media/terraform1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec14',
+    title: 'SQL과 데이터베이스 설계 기초',
+    description: '관계형 DB 완벽 이해하기',
+    content:
+      '관계형 데이터베이스의 기초부터 고급 쿼리까지 체계적으로 학습합니다. 테이블 설계와 정규화, 기본 CRUD 쿼리 작성, JOIN으로 테이블 결합, 서브쿼리와 집계 함수, 인덱스 최적화 전략을 배웁니다. 트랜잭션과 ACID 속성, 뷰와 프로시저 활용, 권한 관리와 보안, 백업과 복구 전략, 쿼리 성능 튜닝 방법을 익히며, MySQL과 PostgreSQL 실습으로 실무 감각을 키웁니다. ERD 작성부터 실제 운영까지 데이터베이스 전반을 다룹니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-06.png',
+    userId: 'user14',
+    userName: '류태양',
+    category: 6,
+    level: '초급',
+    studentCount: 46,
+    lectureCreatedAt: '2025-11-03T12:15:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'SQL 기본',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: 'SELECT와 WHERE 절',
+            lessonMediaUrl: '/media/sql1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec15',
+    title: 'PyTorch로 시작하는 자연어 처리',
+    description: 'BERT부터 GPT까지, NLP 딥러닝',
+    content:
+      'PyTorch를 활용한 자연어 처리 모델을 구축합니다. 텍스트 전처리와 토큰화, Word Embedding과 Word2Vec, RNN과 LSTM 구조 이해, Attention 메커니즘, Transformer 아키텍처를 배웁니다. BERT로 감성 분석, GPT로 텍스트 생성, 기계 번역 모델 구현, Named Entity Recognition, 텍스트 분류와 요약 작업을 실습합니다. Hugging Face Transformers 라이브러리 활용, 사전 학습 모델 파인튜닝, 실전 프로젝트로 챗봇을 만들어봅니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-07.png',
+    userId: 'user15',
+    userName: '홍다은',
+    category: 7,
+    level: '고급',
+    studentCount: 23,
+    lectureCreatedAt: '2025-10-27T15:50:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'NLP 기초',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: '텍스트 전처리',
+            lessonMediaUrl: '/media/nlp1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec16',
+    title: 'Vue.js 3 Composition API 완벽 가이드',
+    description: '반응형 프론트엔드 개발의 정석',
+    content:
+      'Vue.js 3의 Composition API로 현대적인 프론트엔드 애플리케이션을 개발합니다. setup 함수와 ref, reactive 사용법, computed와 watch 활용, lifecycle hooks 이해, 컴포넌트 간 통신 패턴을 배웁니다. Vue Router로 라우팅 구현, Pinia로 상태 관리, Vite 빌드 도구 설정, TypeScript 통합, 재사용 가능한 composables 작성 방법을 익힙니다. 실전 프로젝트로 Todo 앱과 대시보드를 만들며, Options API에서 마이그레이션하는 전략도 학습합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-08.png',
+    userId: 'user16',
+    userName: '조현우',
+    category: 1,
+    level: '중급',
+    studentCount: 34,
+    lectureCreatedAt: '2025-11-04T13:25:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'Composition API 시작',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: 'setup과 ref 이해하기',
+            lessonMediaUrl: '/media/vue1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec17',
+    title: 'Django REST Framework 마스터',
+    description: 'Python 백엔드 API 개발 완성',
+    content:
+      'Django REST Framework로 강력한 RESTful API를 구축합니다. Serializer로 데이터 직렬화, ViewSet과 Router로 엔드포인트 관리, 인증과 권한 시스템 구현, 필터링과 페이지네이션, Throttling으로 rate limit 설정을 배웁니다. JWT 토큰 인증, CORS 설정, 파일 업로드 처리, 테스트 코드 작성, API 문서 자동 생성, Celery로 비동기 작업 처리 방법을 익힙니다. PostgreSQL 연동과 쿼리 최적화, Docker 배포까지 실습하며 프로덕션 레벨의 API를 개발합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-01.png',
+    userId: 'user17',
+    userName: '서지민',
+    category: 2,
+    level: '중급',
+    studentCount: 28,
+    lectureCreatedAt: '2025-10-19T09:45:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'DRF 기초',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: 'Serializer 이해하기',
+            lessonMediaUrl: '/media/drf1.mp4',
           },
         ],
       },
@@ -483,25 +483,25 @@ export const lecture_list = [
   },
   {
     lectureId: 'lec18',
-    title: 'GraphQL API 설계',
-    description: 'REST를 넘어 효율적인 데이터 통신',
+    title: 'React Native로 앱 개발 입문',
+    description: '크로스플랫폼 모바일 앱 만들기',
     content:
-      'GraphQL의 개념과 REST API와의 차이점을 이해합니다. 스키마 정의 언어로 타입을 선언하고, Query와 Mutation으로 데이터를 조회하고 변경합니다. Resolver 함수를 작성하여 실제 데이터 소스와 연결하고, DataLoader로 N+1 문제를 해결합니다. Apollo Server로 GraphQL 서버를 구축하고, Apollo Client로 프론트엔드에서 데이터를 패치합니다. Subscription으로 실시간 데이터 업데이트를 구현하고, 인증과 인가를 추가합니다. 에러 핸들링, 캐싱 전략, 성능 최적화를 통해 프로덕션 레벨의 API를 완성합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-06.png',
+      'React Native로 iOS와 Android 앱을 동시에 개발하는 방법을 배웁니다. React와의 차이점, 네이티브 컴포넌트 활용, StyleSheet로 스타일링, Navigation 구현, AsyncStorage로 데이터 저장을 학습합니다. REST API 통신, 이미지 처리와 카메라 연동, 푸시 알림 설정, 네이티브 모듈 사용, 앱 빌드와 배포 과정을 실습합니다. Expo CLI와 React Native CLI 비교, 성능 최적화 팁, 디버깅 도구 활용법을 익히며 실제 출시 가능한 앱을 만들어봅니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-02.png',
     userId: 'user18',
-    userName: '양시우',
-    category: 2,
-    level: '중급',
-    studentCount: 26,
-    lectureCreatedAt: '2025-06-20T11:35:00Z',
+    userName: '권민서',
+    category: 3,
+    level: '초급',
+    studentCount: 37,
+    lectureCreatedAt: '2025-11-07T14:55:00Z',
     curriculum: [
       {
-        chapterTitle: 'GraphQL 기초',
+        chapterTitle: 'React Native 시작',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: '스키마와 리졸버',
-            lessonMediaUrl: '/media/gql1.mp4',
+            lessonTitle: '개발 환경 설정',
+            lessonMediaUrl: '/media/rn1.mp4',
           },
         ],
       },
@@ -509,25 +509,25 @@ export const lecture_list = [
   },
   {
     lectureId: 'lec19',
-    title: 'Swift로 iOS 앱 만들기',
-    description: '애플 생태계 네이티브 개발',
+    title: 'LangChain으로 AI 에이전트 만들기',
+    description: 'LLM 애플리케이션 개발의 모든 것',
     content:
-      'Swift 언어의 기본 문법과 iOS 앱 개발 프로세스를 학습합니다. UIKit으로 인터페이스를 구성하고, Auto Layout으로 반응형 레이아웃을 만듭니다. SwiftUI로 선언적 UI를 구현하고, Combine으로 반응형 프로그래밍을 적용합니다. Core Data로 로컬 데이터를 저장하고, URLSession으로 네트워크 통신을 처리합니다. 푸시 알림, 위치 서비스, 카메라 접근 등 iOS 고유 기능을 활용합니다. TestFlight로 베타 테스트를 진행하고, App Store에 앱을 제출하는 전체 과정을 실습합니다.',
+      'LangChain을 활용하여 LLM 기반 애플리케이션을 개발합니다. Chain과 Agent 구조 이해, 프롬프트 템플릿 설계, Memory로 대화 컨텍스트 관리, Tool과 Function Calling 구현을 배웁니다. Vector Store로 문서 검색, RAG 파이프라인 구축, 다중 에이전트 협업 시스템, 스트리밍 응답 처리, 에러 핸들링과 재시도 로직을 학습합니다. OpenAI, Anthropic, Hugging Face 모델 통합, 실전 프로젝트로 Q&A 챗봇과 문서 분석 도구를 만들어봅니다.',
     thumbnailUrl: '/src/assets/images/lxp-image-03.png',
     userId: 'user19',
-    userName: '서민재',
-    category: 3,
-    level: '초급',
-    studentCount: 21,
-    lectureCreatedAt: '2025-06-12T15:50:00Z',
+    userName: '장서윤',
+    category: 4,
+    level: '중급',
+    studentCount: 49,
+    lectureCreatedAt: '2025-10-21T11:30:00Z',
     curriculum: [
       {
-        chapterTitle: 'Swift 기초',
+        chapterTitle: 'LangChain 기초',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: 'Swift 문법 정리',
-            lessonMediaUrl: '/media/swift1.mp4',
+            lessonTitle: 'Chain과 Agent 이해',
+            lessonMediaUrl: '/media/langchain1.mp4',
           },
         ],
       },
@@ -535,50 +535,24 @@ export const lecture_list = [
   },
   {
     lectureId: 'lec20',
-    title: 'LangChain으로 AI 앱 개발',
-    description: 'LLM 기반 애플리케이션 구축하기',
+    title: 'GitHub Actions로 CI/CD 구축하기',
+    description: '자동화된 배포 파이프라인 만들기',
     content:
-      'LangChain 프레임워크로 LLM 기반 애플리케이션을 개발합니다. 프롬프트 템플릿으로 재사용 가능한 프롬프트를 작성하고, Chain으로 여러 단계를 연결합니다. Vector Store에 문서를 저장하고, Retrieval을 통해 관련 정보를 검색하는 RAG 시스템을 구축합니다. Agent를 활용하여 도구를 선택하고 실행하는 자율적인 시스템을 만듭니다. Memory로 대화 기록을 관리하고, Callback으로 중간 과정을 모니터링합니다. Streamlit으로 간단한 UI를 만들어 실제 서비스 형태로 배포하는 방법을 학습합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-05.png',
+      'GitHub Actions로 지속적 통합과 배포를 자동화합니다. Workflow 파일 작성법, Job과 Step 구성, 트리거 이벤트 설정, Secret 관리 방법을 배웁니다. 테스트 자동화, 코드 린팅, 빌드 프로세스, Docker 이미지 생성과 푸시, AWS/Azure/GCP 배포를 실습합니다. Matrix 전략으로 다중 환경 테스트, Caching으로 빌드 속도 향상, 조건부 실행과 재사용 가능한 워크플로우 작성, 배포 승인 프로세스 구축 방법을 익힙니다. DevOps 베스트 프랙티스를 실전에 적용합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-04.png',
     userId: 'user20',
-    userName: '권예린',
-    category: 4,
-    level: '고급',
-    studentCount: 42,
-    lectureCreatedAt: '2025-06-05T10:25:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'LangChain 시작',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: 'Chain과 Agent',
-            lessonMediaUrl: '/media/lc1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec21',
-    title: 'GitHub Actions CI/CD',
-    description: '코드 푸시부터 배포까지 자동화하기',
-    content:
-      'GitHub Actions로 지속적 통합과 배포 파이프라인을 구축합니다. Workflow 파일 작성법, Job과 Step 구성, 트리거 설정을 배웁니다. 코드 린팅, 테스트 실행, 빌드 자동화를 구현하고, Artifact로 빌드 결과물을 관리합니다. Docker 이미지를 빌드하고 레지스트리에 푸시하는 과정을 자동화합니다. AWS, Azure, GCP 등 클라우드 플랫폼에 자동 배포하는 워크플로우를 만듭니다. 시크릿 관리, 환경별 배포 전략, 승인 프로세스 추가로 안전한 배포 환경을 구성합니다. 실무에서 바로 쓸 수 있는 템플릿을 제공합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-02.png',
-    userId: 'user21',
-    userName: '조현우',
+    userName: '정해인',
     category: 5,
-    level: '중급',
-    studentCount: 30,
-    lectureCreatedAt: '2025-05-28T13:40:00Z',
+    level: '초급',
+    studentCount: 31,
+    lectureCreatedAt: '2025-11-09T10:20:00Z',
     curriculum: [
       {
-        chapterTitle: 'Actions 기초',
+        chapterTitle: 'GitHub Actions 시작',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: 'Workflow 작성하기',
+            lessonTitle: 'Workflow 파일 작성',
             lessonMediaUrl: '/media/actions1.mp4',
           },
         ],
@@ -586,200 +560,18 @@ export const lecture_list = [
     ],
   },
   {
-    lectureId: 'lec22',
-    title: 'ElasticSearch 검색 엔진',
-    description: '빠르고 정확한 전문 검색 구현하기',
+    lectureId: 'lec21',
+    title: 'Apache Spark로 빅데이터 처리하기',
+    description: '대규모 데이터 분석 플랫폼 마스터',
     content:
-      'ElasticSearch로 강력한 검색 기능을 구현합니다. 역인덱스 구조와 분산 시스템 아키텍처를 이해하고, Index와 Document 개념을 학습합니다. Mapping으로 데이터 타입을 정의하고, Analyzer로 텍스트를 분석합니다. Query DSL로 다양한 검색 쿼리를 작성하고, Aggregation으로 데이터를 집계합니다. 자동완성, 오타 허용 검색, 동의어 처리 등 실용적인 기능을 구현합니다. Logstash로 데이터를 수집하고, Kibana로 시각화합니다. 성능 튜닝과 클러스터 관리 방법을 익혀 프로덕션 환경을 운영합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-07.png',
-    userId: 'user22',
-    userName: '윤도현',
-    category: 6,
-    level: '고급',
-    studentCount: 24,
-    lectureCreatedAt: '2025-05-20T09:15:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'ES 기본 개념',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: '인덱스와 매핑',
-            lessonMediaUrl: '/media/es1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec23',
-    title: 'PyTorch 실전 가이드',
-    description: '텐서 연산부터 모델 배포까지',
-    content:
-      'PyTorch로 딥러닝 모델을 개발하고 배포합니다. Tensor 연산과 Autograd로 자동 미분을 이해하고, nn.Module로 커스텀 모델을 정의합니다. DataLoader로 데이터를 효율적으로 로딩하고, Transform으로 데이터를 전처리합니다. CNN으로 이미지 분류, RNN으로 시계열 예측, Transformer로 자연어 처리 모델을 구현합니다. 학습 루프를 작성하고, TensorBoard로 학습 과정을 모니터링합니다. 모델 저장과 로딩, ONNX로 변환, TorchScript로 최적화하여 실전 배포하는 방법을 학습합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-04.png',
-    userId: 'user23',
-    userName: '장수아',
-    category: 7,
-    level: '고급',
-    studentCount: 36,
-    lectureCreatedAt: '2025-05-12T14:55:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'PyTorch 기초',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: 'Tensor와 Autograd',
-            lessonMediaUrl: '/media/pt1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec24',
-    title: 'Svelte 프론트엔드 개발',
-    description: '컴파일러 기반의 혁신적인 프레임워크',
-    content:
-      'Svelte의 독특한 컴파일 방식과 반응형 시스템을 학습합니다. 컴포넌트 작성법, 반응형 선언, 스토어를 활용한 상태 관리를 배웁니다. 조건부 렌더링, 반복문, 이벤트 핸들링으로 동적 UI를 구현합니다. 컴포넌트 간 데이터 전달, 슬롯으로 재사용 가능한 컴포넌트를 만듭니다. SvelteKit으로 라우팅과 SSR을 구현하고, 폼 처리와 API 엔드포인트를 추가합니다. 애니메이션과 트랜지션으로 사용자 경험을 향상시킵니다. Vercel이나 Netlify에 배포하고, 성능 최적화를 통해 완성도를 높입니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-08.png',
-    userId: 'user24',
-    userName: '임지훈',
-    category: 1,
-    level: '중급',
-    studentCount: 17,
-    lectureCreatedAt: '2025-05-05T11:30:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'Svelte 시작',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: '반응형 시스템',
-            lessonMediaUrl: '/media/svelte1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec25',
-    title: 'MongoDB 데이터베이스',
-    description: 'NoSQL로 유연한 데이터 관리하기',
-    content:
-      'MongoDB의 문서 지향 데이터베이스 개념을 이해합니다. Collection과 Document 구조, BSON 데이터 타입을 학습하고, CRUD 연산을 실습합니다. 쿼리 연산자로 복잡한 조건을 표현하고, Aggregation Pipeline으로 데이터를 집계합니다. 인덱스 설계로 조회 성능을 최적화하고, Replica Set으로 고가용성을 확보합니다. Mongoose로 Node.js와 연동하여 스키마를 정의하고 검증합니다. 트랜잭션 처리, 샤딩으로 수평 확장, 백업과 복구 전략을 배웁니다. Atlas 클라우드 서비스 활용법도 다룹니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-01.png',
-    userId: 'user25',
-    userName: '한유나',
-    category: 2,
-    level: '초급',
-    studentCount: 33,
-    lectureCreatedAt: '2025-04-28T16:20:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'MongoDB 기본',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: 'Document와 Collection',
-            lessonMediaUrl: '/media/mongo1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec26',
-    title: 'Kotlin Android 개발',
-    description: '현대적인 언어로 안드로이드 앱 만들기',
-    content:
-      'Kotlin 언어의 강력한 기능을 활용하여 안드로이드 앱을 개발합니다. Null Safety, 데이터 클래스, 확장 함수 등 Kotlin 문법을 학습합니다. Jetpack Compose로 선언적 UI를 구성하고, ViewModel로 비즈니스 로직을 분리합니다. Room으로 로컬 데이터베이스를 관리하고, Retrofit으로 REST API와 통신합니다. Coroutine으로 비동기 작업을 처리하고, Flow로 반응형 데이터 스트림을 다룹니다. Navigation Component로 화면 전환을 구현하고, Hilt로 의존성 주입을 적용합니다. 구글 플레이 스토어 배포 과정을 학습합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-06.png',
-    userId: 'user26',
-    userName: '백성민',
-    category: 3,
-    level: '중급',
-    studentCount: 28,
-    lectureCreatedAt: '2025-04-20T12:45:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'Kotlin 기초',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: 'Kotlin 문법 정리',
-            lessonMediaUrl: '/media/kotlin1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec27',
-    title: '프롬프트 엔지니어링 실전',
-    description: 'AI에게 정확히 원하는 답변 받기',
-    content:
-      '효과적인 프롬프트 작성 기법을 체계적으로 학습합니다. Few-shot Learning으로 예시를 제공하고, Chain-of-Thought로 단계별 사고를 유도합니다. Role Prompting으로 특정 역할을 부여하고, System Message로 행동 지침을 설정합니다. Temperature와 Top-P 조정으로 출력 결과를 제어하고, 토큰 제한 내에서 최대 효율을 내는 방법을 배웁니다. 다양한 작업별 프롬프트 템플릿을 제공하며, 실제 사례로 번역, 요약, 코드 생성, 창작 글쓰기 등을 실습합니다. 프롬프트 최적화와 평가 방법론을 익힙니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-03.png',
-    userId: 'user27',
-    userName: '남궁하은',
-    category: 4,
-    level: '초급',
-    studentCount: 48,
-    lectureCreatedAt: '2025-04-12T09:00:00Z',
-    curriculum: [
-      {
-        chapterTitle: '프롬프트 기초',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: '효과적인 프롬프트 구조',
-            lessonMediaUrl: '/media/prompt1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec28',
-    title: 'Terraform 인프라 관리',
-    description: 'Infrastructure as Code로 인프라 자동화',
-    content:
-      'Terraform으로 클라우드 인프라를 코드로 관리합니다. HCL 문법을 익히고, Provider 설정으로 AWS, Azure, GCP와 연결합니다. Resource와 Data Source를 정의하고, Variable과 Output으로 재사용 가능한 모듈을 만듭니다. State 파일 관리, 원격 백엔드 설정, State Lock으로 협업 환경을 구축합니다. Workspace로 환경을 분리하고, Module로 인프라 컴포넌트를 추상화합니다. Plan과 Apply 명령으로 변경 사항을 안전하게 적용하고, Import로 기존 리소스를 관리합니다. 실전 예제로 VPC, EC2, RDS 등을 프로비저닝합니다.',
+      'Apache Spark를 활용한 대규모 데이터 처리와 분석을 배웁니다. RDD와 DataFrame API, 데이터 변환과 액션 연산, Spark SQL로 쿼리 작성, 파티셔닝과 캐싱 전략을 학습합니다. PySpark로 데이터 ETL 파이프라인 구축, Streaming 데이터 처리, MLlib로 머신러닝 모델 학습, 클러스터 모드 배포, 성능 튜닝과 최적화 기법을 실습합니다. HDFS와 S3 데이터 소스 연동, Parquet 파일 포맷 활용, 실전 프로젝트로 로그 분석과 추천 시스템을 구축합니다.',
     thumbnailUrl: '/src/assets/images/lxp-image-05.png',
-    userId: 'user28',
-    userName: '독고준혁',
-    category: 5,
-    level: '고급',
-    studentCount: 20,
-    lectureCreatedAt: '2025-04-05T15:10:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'Terraform 기초',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: 'HCL 문법과 리소스',
-            lessonMediaUrl: '/media/tf1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec29',
-    title: 'Apache Spark 빅데이터',
-    description: '대용량 데이터 분산 처리 마스터',
-    content:
-      'Apache Spark로 대규모 데이터를 효율적으로 처리합니다. RDD, DataFrame, Dataset API를 이해하고 데이터를 변환합니다. Transformation과 Action의 차이를 배우고, Lazy Evaluation으로 성능을 최적화합니다. Spark SQL로 구조화된 데이터를 쿼리하고, DataFrame 연산으로 집계와 조인을 수행합니다. PySpark로 Python 환경에서 작업하고, 파티셔닝과 캐싱으로 성능을 튜닝합니다. Streaming으로 실시간 데이터를 처리하고, MLlib으로 머신러닝 파이프라인을 구축합니다. 클러스터 설정과 작업 제출 방법을 실습합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-02.png',
-    userId: 'user29',
-    userName: '선우지안',
+    userId: 'user21',
+    userName: '안유진',
     category: 6,
     level: '고급',
-    studentCount: 26,
-    lectureCreatedAt: '2025-03-28T10:35:00Z',
+    studentCount: 17,
+    lectureCreatedAt: '2025-10-24T16:10:00Z',
     curriculum: [
       {
         chapterTitle: 'Spark 기초',
@@ -794,26 +586,234 @@ export const lecture_list = [
     ],
   },
   {
-    lectureId: 'lec30',
-    title: 'Computer Vision 입문',
-    description: '이미지 처리와 객체 인식 기술',
+    lectureId: 'lec22',
+    title: '강화학습 기초부터 DQN까지',
+    description: 'OpenAI Gym으로 배우는 RL',
     content:
-      'Computer Vision의 핵심 개념과 기술을 학습합니다. OpenCV로 이미지를 읽고 처리하며, 필터링, 에지 검출, 모폴로지 연산을 적용합니다. 색 공간 변환, 히스토그램 분석, 이미지 세그멘테이션을 실습합니다. CNN 기반 이미지 분류 모델을 구현하고, 전이 학습으로 빠르게 학습시킵니다. YOLO와 SSD로 객체 탐지를 수행하고, OpenPose로 포즈 추정을 해봅니다. 얼굴 인식, OCR, 이미지 캡셔닝 등 실용적인 애플리케이션을 만듭니다. 실시간 비디오 처리와 웹캠 연동 방법을 배웁니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-07.png',
-    userId: 'user30',
-    userName: '황보서율',
+      '강화학습의 기초 개념부터 Deep Q-Network까지 단계별로 학습합니다. MDP와 Bellman 방정식, Q-Learning과 SARSA 알고리즘, Policy Gradient 방법, Actor-Critic 구조를 이해합니다. OpenAI Gym 환경 설정, Cartpole과 Atari 게임 에이전트 학습, Experience Replay와 Target Network, DQN 구현과 학습 안정화 기법을 실습합니다. PyTorch로 신경망 구축, 하이퍼파라미터 튜닝, 성능 시각화와 분석 방법을 배우며, 실전 프로젝트로 게임 AI를 만들어봅니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-06.png',
+    userId: 'user22',
+    userName: '김도윤',
     category: 7,
-    level: '중급',
-    studentCount: 31,
-    lectureCreatedAt: '2025-03-20T13:50:00Z',
+    level: '고급',
+    studentCount: 20,
+    lectureCreatedAt: '2025-10-26T12:40:00Z',
     curriculum: [
       {
-        chapterTitle: 'CV 기초',
+        chapterTitle: '강화학습 개념',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: 'OpenCV 시작하기',
-            lessonMediaUrl: '/media/cv1.mp4',
+            lessonTitle: 'MDP와 Q-Learning',
+            lessonMediaUrl: '/media/rl1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec23',
+    title: 'Next.js 14 App Router 완벽 가이드',
+    description: 'Server Components와 SSR 마스터하기',
+    content:
+      'Next.js 14의 App Router로 현대적인 풀스택 웹 애플리케이션을 개발합니다. 파일 기반 라우팅, Server Component와 Client Component 구분, Streaming과 Suspense, Server Actions로 폼 처리를 배웁니다. 이미지 최적화, 메타데이터 관리, 동적 라우트와 Catch-all 세그먼트, Parallel Routes와 Intercepting Routes, 미들웨어 활용을 학습합니다. API Routes 작성, ISR과 On-demand Revalidation, Vercel 배포와 성능 최적화, 실전 프로젝트로 블로그와 이커머스 사이트를 만들어봅니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-07.png',
+    userId: 'user23',
+    userName: '이채원',
+    category: 1,
+    level: '중급',
+    studentCount: 44,
+    lectureCreatedAt: '2025-11-01T15:35:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'App Router 시작',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: 'Server Components 이해',
+            lessonMediaUrl: '/media/nextjs1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec24',
+    title: 'GraphQL API 설계와 구현',
+    description: 'Apollo Server로 효율적인 API 만들기',
+    content:
+      'GraphQL을 활용한 효율적인 API 개발을 배웁니다. Schema 정의와 타입 시스템, Query와 Mutation 작성, Resolver 함수 구현, DataLoader로 N+1 문제 해결을 학습합니다. Apollo Server 설정, Subscriptions로 실시간 데이터, 인증과 권한 처리, 에러 핸들링, GraphQL Playground 사용법을 익힙니다. 프론트엔드에서 Apollo Client 통합, 캐싱 전략, Optimistic UI 구현, 실전 프로젝트로 소셜 미디어 API를 구축하며 REST와의 차이점을 비교합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-08.png',
+    userId: 'user24',
+    userName: '박시우',
+    category: 2,
+    level: '중급',
+    studentCount: 26,
+    lectureCreatedAt: '2025-10-29T13:50:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'GraphQL 기초',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: 'Schema와 Resolver',
+            lessonMediaUrl: '/media/graphql1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec25',
+    title: 'Kotlin으로 Android 앱 개발하기',
+    description: 'Jetpack Compose로 모던 UI 구축',
+    content:
+      'Kotlin과 Jetpack Compose로 현대적인 Android 앱을 개발합니다. Kotlin 언어 기초와 코루틴, Composable 함수 작성, 상태 관리와 Recomposition, Material Design 3 적용을 배웁니다. Navigation Component로 화면 전환, ViewModel과 LiveData로 MVVM 패턴, Room 데이터베이스 연동, Retrofit으로 네트워크 통신, Coil로 이미지 로딩을 학습합니다. Hilt로 의존성 주입, 테스트 코드 작성, 앱 최적화와 난독화, Play Store 배포까지 실습하며 프로덕션 앱을 완성합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-01.png',
+    userId: 'user25',
+    userName: '최서연',
+    category: 3,
+    level: '중급',
+    studentCount: 39,
+    lectureCreatedAt: '2025-11-05T09:25:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'Kotlin 시작하기',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: 'Kotlin 기본 문법',
+            lessonMediaUrl: '/media/kotlin1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec26',
+    title: 'Midjourney 프롬프트 엔지니어링',
+    description: 'AI 이미지 생성의 예술',
+    content:
+      'Midjourney로 전문가 수준의 AI 이미지를 생성하는 기법을 마스터합니다. Discord 봇 사용법, 기본 프롬프트 작성과 파라미터 조정, 스타일 키워드와 아티스트 레퍼런스, 종횡비와 품질 설정을 배웁니다. 이미지 프롬프트 활용, Blend 명령어, Remix 모드, Vary와 Upscale 옵션, Niji 모드로 애니메이션 스타일 생성을 학습합니다. 조명과 구도 제어, 색상 팔레트 지정, 실사와 일러스트 스타일 전환, 상업적 활용 사례와 저작권 이슈를 다루며 창작 워크플로우를 구축합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-02.png',
+    userId: 'user26',
+    userName: '강민재',
+    category: 4,
+    level: '초급',
+    studentCount: 58,
+    lectureCreatedAt: '2025-10-23T14:15:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'Midjourney 시작',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: 'Discord 설정과 첫 생성',
+            lessonMediaUrl: '/media/mj1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec27',
+    title: 'Ansible로 서버 자동화 구축하기',
+    description: 'Configuration Management 마스터',
+    content:
+      'Ansible을 활용한 서버 설정 자동화와 배포를 배웁니다. Inventory 파일 작성, Playbook과 Task 구조, Module 활용법, Variable과 Facts 관리를 학습합니다. Role로 재사용 가능한 구성, Template으로 동적 파일 생성, Handler로 서비스 관리, Vault로 민감 정보 암호화를 실습합니다. 멀티 환경 관리, 조건문과 반복문, 에러 처리와 롤백, Ansible Tower 소개, 실전 프로젝트로 웹 서버와 데이터베이스 클러스터를 자동 구축하며 운영 효율을 높입니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-03.png',
+    userId: 'user27',
+    userName: '윤지호',
+    category: 5,
+    level: '중급',
+    studentCount: 21,
+    lectureCreatedAt: '2025-11-08T11:05:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'Ansible 기초',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: 'Inventory와 Playbook',
+            lessonMediaUrl: '/media/ansible1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec28',
+    title: 'Tableau로 데이터 시각화 마스터',
+    description: '인사이트를 전달하는 대시보드 만들기',
+    content:
+      'Tableau를 활용한 효과적인 데이터 시각화를 배웁니다. 데이터 연결과 준비, 차트 타입 선택 기준, 계산 필드와 LOD 표현식, 필터와 파라미터 활용을 학습합니다. 대시보드 레이아웃 설계, 액션과 인터랙션 추가, 스토리텔링 기법, 색상과 서식 최적화, Tableau Server/Cloud 배포를 실습합니다. 지도 시각화, 통계 차트, 예측 분석, 실전 프로젝트로 판매 대시보드와 마케팅 리포트를 만들며, 데이터 기반 의사결정을 지원하는 시각화 역량을 키웁니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-04.png',
+    userId: 'user28',
+    userName: '임수빈',
+    category: 6,
+    level: '초급',
+    studentCount: 43,
+    lectureCreatedAt: '2025-10-31T15:40:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'Tableau 시작',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: '데이터 연결과 기본 차트',
+            lessonMediaUrl: '/media/tableau1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec29',
+    title: 'YOLO로 객체 탐지 시스템 구축하기',
+    description: '실시간 이미지 인식 마스터',
+    content:
+      'YOLO 알고리즘을 활용한 실시간 객체 탐지 시스템을 개발합니다. CNN 기초와 객체 탐지 원리, YOLOv8 아키텍처 이해, 커스텀 데이터셋 준비와 라벨링, 모델 학습과 파인튜닝을 배웩니다. Anchor Box와 NMS 개념, mAP 평가 지표, 하이퍼파라미터 최적화, TensorRT로 추론 속도 향상, ONNX 변환과 배포를 학습합니다. 실전 프로젝트로 차량 번호판 인식, 사람 카운팅, 제품 불량 검출 시스템을 구축하며 컴퓨터 비전 실무 역량을 키웁니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-05.png',
+    userId: 'user29',
+    userName: '한다인',
+    category: 7,
+    level: '중급',
+    studentCount: 30,
+    lectureCreatedAt: '2025-11-02T10:55:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'YOLO 기초',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: '객체 탐지 개념',
+            lessonMediaUrl: '/media/yolo1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec30',
+    title: 'Svelte로 가볍고 빠른 웹 앱 만들기',
+    description: '컴파일러 기반 프레임워크의 매력',
+    content:
+      'Svelte를 활용한 고성능 웹 애플리케이션 개발을 배웁니다. 반응형 변수와 $: 구문, 컴포넌트 props와 이벤트, 조건문과 반복문, Transition과 Animation 효과를 학습합니다. Svelte Store로 상태 관리, SvelteKit으로 풀스택 앱 개발, 파일 기반 라우팅, 서버 사이드 렌더링, API 엔드포인트 작성을 실습합니다. 번들 사이즈 최적화, SEO 설정, Adapter로 다양한 플랫폼 배포, 실전 프로젝트로 포트폴리오 사이트와 실시간 채팅 앱을 만들어봅니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-06.png',
+    userId: 'user30',
+    userName: '서준호',
+    category: 1,
+    level: '초급',
+    studentCount: 24,
+    lectureCreatedAt: '2025-11-06T16:20:00Z',
+    curriculum: [
+      {
+        chapterTitle: 'Svelte 기초',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: '반응형 변수와 컴포넌트',
+            lessonMediaUrl: '/media/svelte1.mp4',
           },
         ],
       },
@@ -821,25 +821,25 @@ export const lecture_list = [
   },
   {
     lectureId: 'lec31',
-    title: 'Angular 프레임워크',
-    description: '엔터프라이즈급 SPA 개발',
+    title: 'Go 언어로 마이크로서비스 개발하기',
+    description: '동시성 프로그래밍과 gRPC 마스터',
     content:
-      'Angular로 대규모 애플리케이션을 체계적으로 개발합니다. TypeScript 기반의 컴포넌트 구조, 양방향 데이터 바인딩, 의존성 주입을 이해합니다. 서비스로 비즈니스 로직을 분리하고, RxJS로 반응형 프로그래밍을 적용합니다. Routing으로 SPA를 구성하고, Lazy Loading으로 초기 로딩 속도를 개선합니다. Reactive Forms로 복잡한 폼을 다루고, Validators로 유효성 검사를 구현합니다. HttpClient로 API 통신, Interceptor로 요청을 가로채 처리합니다. NgRx로 상태 관리를 체계화하고, 테스트 코드를 작성하여 안정성을 확보합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-04.png',
+      'Go 언어로 확장 가능한 마이크로서비스를 개발합니다. Go 기본 문법과 패키지 관리, Goroutine과 Channel로 동시성 처리, Context로 요청 관리, Error 처리 패턴을 배웁니다. HTTP 서버 구축, gRPC로 서비스 간 통신, Protocol Buffers 정의, 서비스 디스커버리와 로드 밸런싱을 학습합니다. 미들웨어 체인, 로깅과 모니터링, 테스트 작성, Docker와 Kubernetes 배포, 실전 프로젝트로 쇼핑몰 백엔드 시스템을 구축하며 Go의 강점을 활용합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-07.png',
     userId: 'user31',
-    userName: '제갈민서',
-    category: 1,
-    level: '고급',
+    userName: '김하늘',
+    category: 2,
+    level: '중급',
     studentCount: 19,
-    lectureCreatedAt: '2025-03-12T16:25:00Z',
+    lectureCreatedAt: '2025-10-17T12:30:00Z',
     curriculum: [
       {
-        chapterTitle: 'Angular 기초',
+        chapterTitle: 'Go 언어 기초',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: '컴포넌트와 서비스',
-            lessonMediaUrl: '/media/angular1.mp4',
+            lessonTitle: 'Goroutine과 Channel',
+            lessonMediaUrl: '/media/go1.mp4',
           },
         ],
       },
@@ -847,50 +847,24 @@ export const lecture_list = [
   },
   {
     lectureId: 'lec32',
-    title: 'Django 웹 프레임워크',
-    description: 'Python으로 빠르게 웹 서비스 구축',
+    title: 'Jetpack Compose 심화 과정',
+    description: 'Android UI 개발 완벽 마스터',
     content:
-      'Django의 MTV 패턴과 강력한 ORM을 활용하여 웹 애플리케이션을 개발합니다. Model로 데이터베이스 스키마를 정의하고, Migration으로 변경사항을 관리합니다. View와 Template으로 화면을 구성하고, URLconf로 라우팅을 설정합니다. Django Admin으로 관리자 페이지를 자동 생성하고, 커스터마이징합니다. Form과 ModelForm으로 데이터 입력을 처리하고, Class-Based View로 코드를 재사용합니다. Django REST Framework로 API를 만들고, JWT 인증을 구현합니다. Static 파일 관리, 미디어 파일 업로드, 배포 준비 과정을 학습합니다.',
+      'Jetpack Compose의 고급 기능과 최적화 기법을 배웁니다. Custom Layout 구현, Canvas로 커스텀 드로잉, Modifier 체인 활용, 제스처 감지와 처리, Animation API 마스터를 학습합니다. CompositionLocal로 의존성 전달, Side Effect 이해와 활용, Recomposition 최적화, LazyColumn 성능 튜닝, 테스트 가능한 UI 작성을 실습합니다. Material 3 테마 커스터마이징, 다크 모드 지원, 접근성 개선, 실전 프로젝트로 복잡한 대시보드와 애니메이션 UI를 만들어봅니다.',
     thumbnailUrl: '/src/assets/images/lxp-image-08.png',
     userId: 'user32',
-    userName: '사공지원',
-    category: 2,
-    level: '중급',
-    studentCount: 37,
-    lectureCreatedAt: '2025-03-05T11:40:00Z',
-    curriculum: [
-      {
-        chapterTitle: 'Django 기초',
-        lessons: [
-          {
-            lessonId: 'less1-1',
-            lessonTitle: 'MTV 패턴 이해하기',
-            lessonMediaUrl: '/media/django1.mp4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    lectureId: 'lec33',
-    title: 'Jetpack Compose UI',
-    description: '선언적 방식의 안드로이드 UI 개발',
-    content:
-      'Jetpack Compose로 현대적인 안드로이드 UI를 구축합니다. Composable 함수로 UI를 선언하고, Modifier로 스타일을 적용합니다. State와 Recomposition을 이해하여 반응형 UI를 만들고, remember와 rememberSaveable로 상태를 관리합니다. LazyColumn과 LazyRow로 효율적인 리스트를 구현하고, Animation으로 부드러운 전환 효과를 추가합니다. Navigation Compose로 화면 전환을 처리하고, ViewModel과 통합합니다. Material Design 3 컴포넌트를 활용하여 일관된 디자인을 적용하고, 테마와 다크모드를 구현합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-01.png',
-    userId: 'user33',
-    userName: '남궁진우',
+    userName: '조민지',
     category: 3,
-    level: '중급',
-    studentCount: 25,
-    lectureCreatedAt: '2025-02-26T14:15:00Z',
+    level: '고급',
+    studentCount: 16,
+    lectureCreatedAt: '2025-11-04T14:45:00Z',
     curriculum: [
       {
-        chapterTitle: 'Compose 기초',
+        chapterTitle: 'Advanced Compose',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: 'Composable 함수',
+            lessonTitle: 'Custom Layout 만들기',
             lessonMediaUrl: '/media/compose1.mp4',
           },
         ],
@@ -898,26 +872,52 @@ export const lecture_list = [
     ],
   },
   {
-    lectureId: 'lec34',
-    title: 'RAG 시스템 구축하기',
-    description: '검색 증강 생성으로 정확한 AI 답변 만들기',
+    lectureId: 'lec33',
+    title: 'Claude API로 챗봇 서비스 만들기',
+    description: 'Anthropic AI 활용 완벽 가이드',
     content:
-      'Retrieval-Augmented Generation 시스템을 구축합니다. 문서를 청크로 분할하고, Embedding 모델로 벡터화하여 Vector DB에 저장합니다. 유사도 검색으로 관련 문서를 찾고, LLM에 컨텍스트로 제공하여 답변을 생성합니다. LangChain으로 RAG 파이프라인을 구성하고, Prompt 최적화로 답변 품질을 개선합니다. Pinecone, ChromaDB, FAISS 등 다양한 벡터 DB를 비교하고, 하이브리드 검색을 구현합니다. 멀티턴 대화 지원, 소스 인용, 스트리밍 응답 등 실용적인 기능을 추가합니다. 평가 메트릭으로 시스템 성능을 측정합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-06.png',
-    userId: 'user34',
-    userName: '독고준영',
+      'Claude API를 활용하여 지능형 챗봇 서비스를 개발합니다. API 키 발급과 인증, Message API 사용법, System Prompt 설계, Multi-turn 대화 관리를 배웁니다. Streaming 응답 처리, Token 사용량 최적화, Safety 필터링, 함수 호출 패턴, 컨텍스트 윈도우 관리를 학습합니다. RAG 시스템 구축, Vector DB 연동, 대화 히스토리 저장, 에러 핸들링과 재시도 로직, 실전 프로젝트로 고객 상담 봇과 문서 Q&A 서비스를 만들며 프로덕션 레벨의 AI 애플리케이션을 완성합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-01.png',
+    userId: 'user33',
+    userName: '이태현',
     category: 4,
-    level: '고급',
-    studentCount: 41,
-    lectureCreatedAt: '2025-02-18T09:50:00Z',
+    level: '중급',
+    studentCount: 36,
+    lectureCreatedAt: '2025-10-20T09:35:00Z',
     curriculum: [
       {
-        chapterTitle: 'RAG 기초',
+        chapterTitle: 'Claude API 시작',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: 'Vector DB와 Embedding',
-            lessonMediaUrl: '/media/rag1.mp4',
+            lessonTitle: 'Message API 기본',
+            lessonMediaUrl: '/media/claude1.mp4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    lectureId: 'lec34',
+    title: 'Prometheus와 Grafana 모니터링',
+    description: '시스템 메트릭 수집과 시각화',
+    content:
+      'Prometheus와 Grafana로 시스템 모니터링 환경을 구축합니다. Prometheus 설치와 설정, PromQL 쿼리 작성, Exporter로 메트릭 수집, Alert Manager로 알림 설정을 배웁니다. Grafana 대시보드 디자인, Panel 타입 선택, Variable과 Template 활용, Alert Rule 구성을 학습합니다. 컨테이너 모니터링, 애플리케이션 메트릭 추가, 로그 수집과 Loki 통합, 성능 병목 지점 발견, 실전 프로젝트로 Kubernetes 클러스터 모니터링 시스템을 구축하며 운영 안정성을 높입니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-02.png',
+    userId: 'user34',
+    userName: '박지수',
+    category: 5,
+    level: '중급',
+    studentCount: 22,
+    lectureCreatedAt: '2025-11-07T13:10:00Z',
+    curriculum: [
+      {
+        chapterTitle: '모니터링 기초',
+        lessons: [
+          {
+            lessonId: 'less1-1',
+            lessonTitle: 'Prometheus 설치',
+            lessonMediaUrl: '/media/prom1.mp4',
           },
         ],
       },
@@ -925,25 +925,25 @@ export const lecture_list = [
   },
   {
     lectureId: 'lec35',
-    title: 'AWS 클라우드 실전',
-    description: 'EC2부터 Lambda까지 AWS 서비스 마스터',
+    title: 'Elasticsearch와 Kibana 활용법',
+    description: '대규모 로그 분석 시스템 구축',
     content:
-      'AWS의 핵심 서비스를 활용하여 클라우드 인프라를 구축합니다. EC2로 가상 서버를 생성하고, Auto Scaling으로 트래픽에 대응합니다. S3로 정적 파일을 저장하고, CloudFront로 CDN을 구성합니다. RDS로 관계형 데이터베이스를 운영하고, Lambda로 서버리스 함수를 실행합니다. API Gateway로 REST API를 배포하고, IAM으로 권한을 관리합니다. VPC로 네트워크를 설계하고, Route 53으로 도메인을 연결합니다. CloudWatch로 모니터링하고, CloudFormation으로 인프라를 자동화합니다. 비용 최적화 전략도 학습합니다.',
+      'Elasticsearch로 대규모 로그 데이터를 저장하고 분석합니다. Index와 Document 개념, Mapping 설정, Query DSL과 Aggregation, Full-text Search 최적화를 배웁니다. Logstash로 데이터 파이프라인 구축, Beats로 로그 수집, Kibana로 시각화 대시보드 생성, Discover와 Canvas 활용을 학습합니다. Ingest Pipeline으로 데이터 변환, ILM으로 인덱스 생애주기 관리, 클러스터 튜닝과 스케일링, 실전 프로젝트로 웹 서버 로그 분석과 보안 이벤트 모니터링 시스템을 구축합니다.',
     thumbnailUrl: '/src/assets/images/lxp-image-03.png',
     userId: 'user35',
-    userName: '선우혁준',
-    category: 5,
+    userName: '최유진',
+    category: 6,
     level: '중급',
-    studentCount: 44,
-    lectureCreatedAt: '2025-02-10T15:05:00Z',
+    studentCount: 25,
+    lectureCreatedAt: '2025-10-19T11:50:00Z',
     curriculum: [
       {
-        chapterTitle: 'AWS 기초',
+        chapterTitle: 'Elasticsearch 기초',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: 'EC2와 S3',
-            lessonMediaUrl: '/media/aws1.mp4',
+            lessonTitle: 'Index와 Query DSL',
+            lessonMediaUrl: '/media/elastic1.mp4',
           },
         ],
       },
@@ -951,25 +951,25 @@ export const lecture_list = [
   },
   {
     lectureId: 'lec36',
-    title: 'Kafka 스트리밍 처리',
-    description: '실시간 데이터 파이프라인 구축',
+    title: 'GANs로 이미지 생성 모델 만들기',
+    description: 'Generative Adversarial Networks 마스터',
     content:
-      'Apache Kafka로 대용량 실시간 데이터를 처리합니다. Topic과 Partition 개념을 이해하고, Producer로 메시지를 발행합니다. Consumer Group으로 병렬 처리를 구현하고, Offset 관리로 메시지 전달을 보장합니다. Kafka Connect로 외부 시스템과 통합하고, Kafka Streams로 스트림 처리 애플리케이션을 개발합니다. Schema Registry로 데이터 형식을 관리하고, KSQL로 SQL 쿼리를 작성합니다. 클러스터 구성, 복제 설정, 성능 튜닝을 배우며, 실시간 로그 수집, 이벤트 기반 아키텍처 구현 등 실전 사례를 다룹니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-05.png',
+      'GAN 아키텍처로 창의적인 이미지 생성 모델을 개발합니다. Generator와 Discriminator 구조, Adversarial Loss 이해, Mode Collapse 문제와 해결책, Training Stability 향상 기법을 배웁니다. DCGAN 구현과 학습, StyleGAN 아키텍처 이해, Conditional GAN으로 제어 가능한 생성, Pix2Pix로 이미지 변환, CycleGAN으로 도메인 전환을 학습합니다. Latent Space 탐색, FID 평가 지표, 실전 프로젝트로 얼굴 생성과 스타일 전환 모델을 만들며 생성 모델의 핵심을 익힙니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-04.png',
     userId: 'user36',
-    userName: '황보민준',
-    category: 6,
+    userName: '강시온',
+    category: 7,
     level: '고급',
-    studentCount: 22,
-    lectureCreatedAt: '2025-02-02T12:30:00Z',
+    studentCount: 14,
+    lectureCreatedAt: '2025-11-09T15:15:00Z',
     curriculum: [
       {
-        chapterTitle: 'Kafka 기초',
+        chapterTitle: 'GAN 기초',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: 'Topic과 Partition',
-            lessonMediaUrl: '/media/kafka1.mp4',
+            lessonTitle: 'GAN 아키텍처 이해',
+            lessonMediaUrl: '/media/gan1.mp4',
           },
         ],
       },
@@ -977,25 +977,25 @@ export const lecture_list = [
   },
   {
     lectureId: 'lec37',
-    title: 'NLP 자연어 처리',
-    description: 'Transformer로 텍스트 이해하기',
+    title: 'Astro로 정적 사이트 생성하기',
+    description: '초고속 웹사이트 빌드 프레임워크',
     content:
-      '자연어 처리의 기본 개념과 최신 기술을 학습합니다. 토큰화, 형태소 분석, 불용어 제거 등 전처리 기법을 익힙니다. Word2Vec과 GloVe로 단어 임베딩을 생성하고, TF-IDF로 문서를 벡터화합니다. RNN과 LSTM으로 시퀀스 모델을 구현하고, Attention 메커니즘을 이해합니다. Transformer 아키텍처를 분석하고, BERT로 문장 분류를 수행합니다. Hugging Face Transformers로 사전 학습 모델을 파인튜닝하고, 감성 분석, 개체명 인식, 질의응답 시스템을 구축합니다. GPT 모델로 텍스트 생성도 실습합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-02.png',
+      'Astro를 활용한 최적화된 정적 사이트 생성을 배웁니다. Islands 아키텍처 이해, 컴포넌트 Hydration 전략, 다중 프레임워크 통합, Content Collections 활용을 학습합니다. Markdown과 MDX로 콘텐츠 작성, 동적 라우팅, Image 최적화, View Transitions API, RSS 피드 생성을 실습합니다. Tailwind CSS 통합, SEO 최적화, Cloudflare Pages 배포, 실전 프로젝트로 기술 블로그와 문서 사이트를 만들며 최고 성능의 웹사이트를 구축하는 방법을 익힙니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-05.png',
     userId: 'user37',
-    userName: '제갈민준',
-    category: 7,
-    level: '고급',
-    studentCount: 39,
-    lectureCreatedAt: '2025-01-25T10:45:00Z',
+    userName: '정민서',
+    category: 1,
+    level: '초급',
+    studentCount: 27,
+    lectureCreatedAt: '2025-11-03T10:40:00Z',
     curriculum: [
       {
-        chapterTitle: 'NLP 기초',
+        chapterTitle: 'Astro 시작하기',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: '토큰화와 임베딩',
-            lessonMediaUrl: '/media/nlp1.mp4',
+            lessonTitle: 'Islands 아키텍처',
+            lessonMediaUrl: '/media/astro1.mp4',
           },
         ],
       },
@@ -1003,25 +1003,25 @@ export const lecture_list = [
   },
   {
     lectureId: 'lec38',
-    title: 'Tailwind CSS 실전',
-    description: '유틸리티 클래스로 빠른 스타일링',
+    title: 'Rust로 시스템 프로그래밍 입문',
+    description: '메모리 안전성과 고성능 개발',
     content:
-      'Tailwind CSS의 유틸리티 퍼스트 접근 방식을 마스터합니다. 레이아웃, 타이포그래피, 색상, 간격 등 핵심 유틸리티를 학습합니다. Flexbox와 Grid 클래스로 반응형 레이아웃을 구성하고, 미디어 쿼리 없이 반응형 디자인을 구현합니다. 커스텀 설정으로 디자인 시스템을 만들고, @apply로 컴포넌트 클래스를 추출합니다. Dark Mode를 쉽게 적용하고, 플러그인으로 기능을 확장합니다. 프로덕션 빌드 최적화로 파일 크기를 줄이고, JIT 모드로 개발 속도를 높입니다. 실제 프로젝트에 적용하는 베스트 프랙티스를 배웁니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-07.png',
+      'Rust 언어로 안전하고 빠른 시스템 프로그램을 개발합니다. Ownership과 Borrowing 개념, Lifetime 이해, Pattern Matching과 Enum, Trait과 Generic, Error Handling을 배웁니다. 동시성 프로그래밍과 Thread Safety, Async/Await 패턴, Cargo 패키지 관리, Unsafe Rust 활용, FFI로 C 라이브러리 연동을 학습합니다. 파일 시스템 조작, 네트워크 프로그래밍, CLI 도구 제작, 실전 프로젝트로 HTTP 서버와 명령줄 유틸리티를 만들며 Rust의 강력함을 체험합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-06.png',
     userId: 'user38',
-    userName: '사공윤아',
-    category: 1,
-    level: '초급',
-    studentCount: 46,
-    lectureCreatedAt: '2025-01-18T16:00:00Z',
+    userName: '윤재혁',
+    category: 2,
+    level: '중급',
+    studentCount: 18,
+    lectureCreatedAt: '2025-10-16T14:20:00Z',
     curriculum: [
       {
-        chapterTitle: 'Tailwind 기초',
+        chapterTitle: 'Rust 기초',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: '유틸리티 클래스 익히기',
-            lessonMediaUrl: '/media/tailwind1.mp4',
+            lessonTitle: 'Ownership 이해하기',
+            lessonMediaUrl: '/media/rust1.mp4',
           },
         ],
       },
@@ -1029,25 +1029,25 @@ export const lecture_list = [
   },
   {
     lectureId: 'lec39',
-    title: 'FastAPI 고성능 백엔드',
-    description: 'Python으로 빠른 API 서버 만들기',
+    title: 'Unity로 3D 게임 개발 시작하기',
+    description: 'C#과 Unity Engine 완벽 가이드',
     content:
-      'FastAPI로 현대적이고 빠른 API를 개발합니다. Type Hints로 자동 문서화와 검증을 활용하고, Pydantic 모델로 데이터를 정의합니다. Path Parameter와 Query Parameter로 유연한 엔드포인트를 만들고, Request Body로 복잡한 데이터를 받습니다. Dependency Injection으로 코드를 재사용하고, 미들웨어로 요청을 처리합니다. SQLAlchemy로 데이터베이스를 연동하고, Alembic으로 마이그레이션을 관리합니다. JWT 인증을 구현하고, OAuth2 플로우를 적용합니다. 비동기 처리로 성능을 극대화하고, Uvicorn으로 배포합니다.',
-    thumbnailUrl: '/src/assets/images/lxp-image-04.png',
+      'Unity 엔진으로 3D 게임을 제작합니다. Unity 인터페이스와 씬 구성, GameObject와 Component 시스템, C# 스크립팅 기초, Rigidbody 물리 엔진을 배웁니다. 캐릭터 이동과 카메라 제어, 충돌 감지와 트리거, UI 시스템과 Canvas, 애니메이션 컨트롤러, 파티클 효과 추가를 학습합니다. 라이팅과 포스트 프로세싱, 사운드 디자인, 빌드와 최적화, 실전 프로젝트로 3인칭 액션 게임을 만들며 게임 개발 전반의 워크플로우를 익히고 플랫폼별 배포까지 경험합니다.',
+    thumbnailUrl: '/src/assets/images/lxp-image-07.png',
     userId: 'user39',
-    userName: '남궁서준',
-    category: 2,
-    level: '중급',
-    studentCount: 34,
-    lectureCreatedAt: '2025-01-10T13:20:00Z',
+    userName: '한서윤',
+    category: 3,
+    level: '초급',
+    studentCount: 48,
+    lectureCreatedAt: '2025-11-01T16:55:00Z',
     curriculum: [
       {
-        chapterTitle: 'FastAPI 기초',
+        chapterTitle: 'Unity 기초',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: 'Type Hints와 Pydantic',
-            lessonMediaUrl: '/media/fastapi1.mp4',
+            lessonTitle: 'GameObject와 Component',
+            lessonMediaUrl: '/media/unity1.mp4',
           },
         ],
       },
@@ -1055,25 +1055,25 @@ export const lecture_list = [
   },
   {
     lectureId: 'lec40',
-    title: 'SwiftUI 인터페이스 디자인',
-    description: '선언적 방식으로 iOS UI 만들기',
+    title: 'Hugging Face Transformers 활용법',
+    description: '사전 학습 모델로 NLP 프로젝트 만들기',
     content:
-      'SwiftUI로 아름다운 iOS 인터페이스를 구축합니다. View 프로토콜과 Body 프로퍼티를 이해하고, Stack으로 레이아웃을 조합합니다. State와 Binding으로 데이터를 관리하고, ObservableObject로 복잡한 상태를 다룹니다. List와 ForEach로 동적 컨텐츠를 표시하고, Navigation으로 화면을 전환합니다. Modifier로 뷰를 커스터마이징하고, Animation으로 부드러운 전환을 만듭니다. Combine으로 반응형 프로그래밍을 적용하고, Async/Await로 비동기 작업을 처리합니다. SF Symbols와 커스텀 Shape으로 디자인을 완성합니다.',
+      'Hugging Face Transformers 라이브러리로 최신 NLP 모델을 활용합니다. Pre-trained 모델 로드와 사용법, Tokenizer 이해, Pipeline API로 간편한 추론, Fine-tuning 기법을 배웁니다. BERT로 텍스트 분류, GPT로 텍스트 생성, T5로 요약과 번역, 감성 분석과 Named Entity Recognition 구현을 학습합니다. 커스텀 데이터셋 준비, Trainer API로 학습 자동화, 모델 평가와 배포, 실전 프로젝트로 리뷰 분석기와 챗봇을 만들며 NLP 실무 역량을 완성합니다.',
     thumbnailUrl: '/src/assets/images/lxp-image-08.png',
     userId: 'user40',
-    userName: '독고영서',
-    category: 3,
+    userName: '김도현',
+    category: 4,
     level: '중급',
-    studentCount: 27,
-    lectureCreatedAt: '2025-01-02T09:55:00Z',
+    studentCount: 33,
+    lectureCreatedAt: '2025-10-25T12:05:00Z',
     curriculum: [
       {
-        chapterTitle: 'SwiftUI 기초',
+        chapterTitle: 'Transformers 시작',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: 'View와 State',
-            lessonMediaUrl: '/media/swiftui1.mp4',
+            lessonTitle: 'Pipeline API 활용',
+            lessonMediaUrl: '/media/hf1.mp4',
           },
         ],
       },
@@ -1081,25 +1081,25 @@ export const lecture_list = [
   },
   {
     lectureId: 'lec41',
-    title: 'Fine-tuning LLM 모델',
-    description: '나만의 AI 모델 커스터마이징하기',
+    title: 'AWS 클라우드 아키텍처 설계',
+    description: 'EC2부터 Lambda까지 완벽 가이드',
     content:
-      '대규모 언어 모델을 특정 도메인에 맞게 파인튜닝합니다. LoRA와 QLoRA로 효율적인 파라미터 업데이트를 수행하고, PEFT 기법으로 메모리 사용을 최적화합니다. 학습 데이터 준비와 전처리, 프롬프트 형식 설계를 학습합니다. Hugging Face Transformers와 Trainer API로 학습 파이프라인을 구축하고, WandB로 학습 과정을 모니터링합니다. Gradient Accumulation과 Mixed Precision으로 대규모 모델을 효율적으로 학습시킵니다. 모델 평가, 배포 최적화, 추론 가속화 기법을 다루며, 실전 사례로 고객 지원 챗봇을 만듭니다.',
+      'AWS 클라우드 서비스로 확장 가능한 아키텍처를 설계합니다. EC2 인스턴스 관리, VPC와 서브넷 구성, Security Group 설정, S3로 스토리지 관리를 배웁니다. RDS 데이터베이스 구축, ELB로 로드 밸런싱, Auto Scaling 그룹 설정, CloudFront CDN 활용, Lambda로 서버리스 함수를 학습합니다. IAM 권한 관리, CloudWatch 모니터링, Cost Optimization 전략, 실전 프로젝트로 3-tier 웹 애플리케이션을 배포하며 프로덕션 환경의 인프라를 구축하는 실무 역량을 키웁니다.',
     thumbnailUrl: '/src/assets/images/lxp-image-01.png',
     userId: 'user41',
-    userName: '선우정호',
-    category: 4,
-    level: '고급',
+    userName: '이서영',
+    category: 5,
+    level: '중급',
     studentCount: 35,
-    lectureCreatedAt: '2024-12-25T14:30:00Z',
+    lectureCreatedAt: '2025-10-21T09:15:00Z',
     curriculum: [
       {
-        chapterTitle: 'Fine-tuning 기초',
+        chapterTitle: 'AWS 기초',
         lessons: [
           {
             lessonId: 'less1-1',
-            lessonTitle: 'LoRA와 PEFT',
-            lessonMediaUrl: '/media/finetune1.mp4',
+            lessonTitle: 'EC2와 VPC 이해',
+            lessonMediaUrl: '/media/aws1.mp4',
           },
         ],
       },
