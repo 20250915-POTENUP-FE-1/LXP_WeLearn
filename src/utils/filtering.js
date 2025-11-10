@@ -1,12 +1,13 @@
 import { query, where, orderBy, limit, startAfter } from 'firebase/firestore';
 import CATEGORIES from '../constants/categories';
+import { ITEMS_PER_PAGE } from '../constants/paginationConstants';
 
 export const buildLectureQuery = (
   baseRef,
   category = 'all',
   sort = 'latest',
   startAfterDoc = null,
-  limitCount = 8,
+  limitCount = ITEMS_PER_PAGE,
   isCountQuery = false,
 ) => {
   let categoryNum = null;
