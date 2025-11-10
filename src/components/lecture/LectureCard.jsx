@@ -1,11 +1,20 @@
 import React from 'react';
 import CATEGORIES from '../../constants/categories';
+import { useNavigate } from 'react-router-dom';
 
 function LectureCard({ lecture }) {
   const category = CATEGORIES.find((e) => e.id === lecture.category);
+  const navigate = useNavigate();
+
+  const handleMoveToDetail = () => {
+    navigate(`/lectures/detail/${lecture.lectureId}`);
+  };
 
   return (
-    <div className="cursor-pointer overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-xl">
+    <div
+      className="cursor-pointer overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-xl"
+      onClick={handleMoveToDetail}
+    >
       <div className="relative aspect-video bg-gray-200">
         <img
           src={lecture.thumbnailUrl}

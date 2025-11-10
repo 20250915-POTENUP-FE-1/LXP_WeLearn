@@ -1,93 +1,107 @@
 import React, { useEffect, useState } from 'react';
 import LectureCard from '../../../components/lecture/LectureCard';
-import { getLectures } from '../../../services/lecture/getLecturesService';
 import Categories from '../../../components/categories/categories';
+import Pagination from '../../../components/ui/Pagination';
 import { useSearchParams } from 'react-router-dom';
+import { getLectures } from '../../../services/lecture/getLecturesService';
+import CATEGORIES from '../../../constants/categories';
+import { ITEMS_PER_PAGE } from '../../../constants/paginationConstants';
 
 const LectureList = () => {
   const [lectureDatas, setLectureDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [pageInfo, setPageInfo] = useState({}); // 페이지별 커서 저장
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0); // 전체 강의 개수
+
   const [searchParams] = useSearchParams();
   const category = searchParams.get('category') || 'all';
   const sort = searchParams.get('sort') || 'latest';
 
+  const currentCategory =
+    category === 'all'
+      ? '전체 강의'
+      : CATEGORIES.find((c) => c.key === category)?.name || '전체 강의';
+
+  // 페이지별 강의 로드
+  const fetchLecturePage = async (pageNum = 1) => {
+    setIsLoading(true);
+
+    const { lectures, total, lastDoc } = await getLectures({
+      category,
+      sort,
+      limitCount: ITEMS_PER_PAGE,
+      startAfterDoc: pageInfo[pageNum - 1] || null,
+    });
+
+    setLectureDatas(lectures);
+    setTotalCount(total);
+
+    // 다음 페이지 커서 저장
+    if (lastDoc) {
+      setPageInfo((prev) => ({ ...prev, [pageNum]: lastDoc }));
+    }
+
+    setIsLoading(false);
+  };
+
+  // 카테고리/정렬 변경 시 1페이지부터 다시 조회
   useEffect(() => {
-    // 불러올 경우 로딩 상태 관리
-    const fetchLecture = async () => {
-      setIsLoading(true);
-      const lectureData = await getLectures({ category, sort });
-      setLectureDatas(lectureData);
-      setIsLoading(false);
-    };
-    fetchLecture();
+    setLectureDatas([]);
+    setPageInfo({});
+    setCurrentPage(1);
+    fetchLecturePage(1);
   }, [category, sort]);
 
+  // 페이지 변경 시 데이터 불러오기
+  useEffect(() => {
+    fetchLecturePage(currentPage);
+  }, [currentPage]);
+
+  const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
+
   return (
-    <main className="main">
+    <>
       <section className="page-title border-b border-gray-200 bg-white py-8">
-        <div className="page-title__container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h1 className="mb-2 text-3xl font-bold text-gray-900">모든 강의</h1>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h1 className="mb-2 text-3xl font-bold text-gray-900">{currentCategory}</h1>
           <p className="text-base text-gray-600">원하는 강의를 찾아보세요</p>
         </div>
       </section>
 
-      {/* 카테고리 및 sort 영역 */}
       <Categories />
 
-      <section className="lecture-grid py-12">
-        <div className="lecture-grid__container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* 총 갯수 영역*/}
+      <section className="lecture-grid min-h-[calc(100vh-423px)] pt-12 pb-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* 총 갯수 */}
           <div className="mb-6">
             <p className="text-sm text-gray-600">
-              총 <span className="font-medium text-gray-900">{lectureDatas.length}</span>개의 강의
+              <span className="mr-1">총</span>
+              <span className="font-medium text-gray-900">
+                {category === 'all' ? totalCount : lectureDatas.length}
+              </span>
+              개의 강의
             </p>
           </div>
-          {/* 목록 리스트 */}
-          {/* 불러오고있을 경우 로딩 처리, 강의 없을 경우 강의 없습니다 처리 */}
+
+          {/* 목록 */}
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {isLoading ? (
               <div>로딩중 ...</div>
             ) : lectureDatas.length === 0 ? (
               <div>강의가 없습니다.</div>
             ) : (
-              lectureDatas.map((lecture) => {
-                return <LectureCard key={lecture.lectureId} lecture={lecture} />;
-              })
+              lectureDatas.map((lecture) => (
+                <LectureCard key={lecture.lectureId} lecture={lecture} />
+              ))
             )}
-          </div>
-
-          {/* 페이지네이션 */}
-          <div className="pagination mt-12 flex items-center justify-center space-x-2">
-            <button
-              className="cursor-not-allowed rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-400"
-              disabled
-            >
-              이전
-            </button>
-
-            <button className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white">
-              1
-            </button>
-            <button className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
-              2
-            </button>
-            <button className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
-              3
-            </button>
-            <button className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
-              4
-            </button>
-            <button className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
-              5
-            </button>
-
-            <button className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
-              다음
-            </button>
           </div>
         </div>
       </section>
-    </main>
+
+      {/* 페이지네이션 */}
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+    </>
   );
 };
 
