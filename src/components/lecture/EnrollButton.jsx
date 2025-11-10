@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthSelector } from '../../hooks/guard/useAuthSelector';
 import { db } from '../../lib/firebase/config.js';
-import ENROLLMENTS_COLLECTION_NAME from '../../lib/firebase/table/ddl.js';
+import { ENROLLMENTS_COLLECTION_NAME } from '../../lib/firebase/table/ddl.js';
 import {
   collection,
   query,

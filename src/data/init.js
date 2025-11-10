@@ -9,8 +9,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const initLectureData = async () => {
-  enrollments.forEach((lecture) => {
-    addDoc(collection(db, ENROLLMENTS_COLLECTION_NAME), lecture);
+  lecture_list.forEach((lecture) => {
+    addDoc(collection(db, 'lecture-list'), lecture);
   });
 };
 
