@@ -13,6 +13,7 @@ import {
   updateDoc,
   increment,
 } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 /**
  * 수강 신청 버튼 컴포넌트
@@ -24,7 +25,6 @@ import {
  * @param {Function} props.onEnrollSuccess - 수강 신청 성공 시 호출 함수
  *
  */
-
 function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEnrollSuccess }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,7 +43,7 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
         return;
       }
       try {
-        const enrollmentsRef = collection(db, 'enrollments');
+        const enrollmentsRef = collection(db, ENROLLMENTS_COLLECTION_NAME);
         const q = query(
           enrollmentsRef,
           where('userId', '==', user.uid),
@@ -52,8 +52,6 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
         const querySnapshot = await getDocs(q);
 
         setIsEnrolled(!querySnapshot.empty);
-      } catch (error) {
-        console.log('수강 신청 확인 중 오류:', error);
       } finally {
         setCheckEnrollment(false);
       }
@@ -66,7 +64,7 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
     // 중복 동작 방지
     if (initializing) return;
 
-    // 1) 비로그인 사용자가 클릭했을 때 -> 로그인 페이지로 이동 -  로그인 후 리다이렉트할 경로 전달
+    // 1) 비로그인 사용자가 클릭했을 때 -> 로그인 페이지로 이동
     if (!user) {
       navigate('/login', {
         state: { from: location.pathname },
@@ -75,15 +73,19 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
       return;
     }
 
+    // 추가: lectureId 또는 firestoreDocId가 없는 경우 처리
+    if (!lectureId || !firestoreDocId) {
+      // console.error('강의 정보가 없습니다:', { lectureId, firestoreDocId });
+      toast.error('강의 정보를 불러올 수 없습니다. 다시 시도해주세요.', { toastId: 'error' });
+      return;
+    }
+
     if (isEnrolled) {
-      alert('이미 신청한 강의 입니다. 마이페이지에서 확인해보세요.');
       return;
     }
 
     // 2) 로그인 상태일 때 -> 중복 신청 확인, 수강인원 수 업데이트
     try {
-      // console.log('수강 신청 시작:', { userId: user.uid, lectureId, firestoreDocId });
-
       // 2-1) 중복 신청 확인하기
       const enrollmentsRef = collection(db, ENROLLMENTS_COLLECTION_NAME);
       const q = query(
@@ -95,19 +97,17 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
 
       // 이미 신청한 강의인 경우
       if (!querySnapshot.empty) {
-        alert('이미 신청한 강의입니다. 마이페이지에서 확인해보세요.');
+        toast.info('이미 신청한 강의입니다. 마이페이지에서 확인해보세요.');
         setIsEnrolled(true);
         return;
       }
 
       // 2-2) 처음 신청한 강의 => 수강 신청 처리
-      // Firestore에 데이터 기록
       await addDoc(enrollmentsRef, {
         userId: user.uid,
         lectureId: lectureId,
         enrolledAt: new Date(),
         status: 'active',
-        //  수강 상태 표시 'active', 'completed', 'cancelled'
       });
 
       // 3) 수강 신청 완료 안내 + 해당 강의 수강 인원 수 증가
@@ -115,17 +115,15 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
       await updateDoc(lectureDocRef, {
         studentCount: increment(1),
       });
-      console.log('수강 인원 추가 완료');
+      // console.log('수강 인원 추가 완료');
 
       // 수강 신청 성공 시 상태 업데이트
       setIsEnrolled(true);
       if (onEnrollSuccess) {
-        onEnrollSuccess(); // 부모 컴포넌트에 알려주기
+        onEnrollSuccess();
       }
-      // alert('수강 신청이 완료되었습니다.');
     } catch (error) {
-      console.log('수강 신청 중 오류:', error);
-      alert('수강 신청에 실패했습니다. 다시 시도해주세요.');
+      toast.error('수강 신청에 실패했습니다. 다시 시도해주세요.', { toastId: error });
     }
   };
 
@@ -144,7 +142,9 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
           className={[
             'w-full rounded-lg bg-blue-600 px-8 py-3 text-base font-medium text-white transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:outline-none',
             className,
-          ].join(' ')}
+          ]
+            .filter(Boolean)
+            .join(' ')}
           aria-label="강의 수정하기"
         >
           수정하기
@@ -169,7 +169,7 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
     );
   }
 
-  //  일반 사용자 또는 비로그인 사용자 수강 신청 버튼
+  // 일반 사용자 또는 비로그인 사용자 수강 신청 버튼
   return (
     <div>
       <button
@@ -179,7 +179,9 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
         className={[
           'w-full rounded-lg bg-gray-900 px-8 py-3 text-base font-medium text-white transition-colors hover:bg-gray-800 focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 focus:outline-none',
           className,
-        ].join('')}
+        ]
+          .filter(Boolean)
+          .join(' ')}
         aria-label="수강 신청"
       >
         {checkEnrollment ? '확인 중' : '수강 신청'}
