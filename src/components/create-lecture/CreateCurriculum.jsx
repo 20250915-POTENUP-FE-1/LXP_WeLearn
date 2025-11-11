@@ -5,7 +5,7 @@ import { X } from 'lucide-react';
 function CreateCurriculum({ curriculums, setFormData }) {
   // 빈 lesson 템플릿
   const EMPTY_LESSON = {
-    lessonId: crypto.randomUUID(),
+    lessonId: '',
     lessonMediaUrl: '',
     lessonTitle: '',
     runingTime: '',
