@@ -1,6 +1,6 @@
 import { db } from '../../lib/firebase/config';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { LECTURELIST_COLLECTION_NAME } from '../../lib/firebase/table/ddl';
+import { LECTURES_COLLECTION_NAME } from '../../lib/firebase/table/ddl';
 
 /**
  * Firestore의 lectureId 필드로 문서를 조회하기
@@ -10,7 +10,7 @@ import { LECTURELIST_COLLECTION_NAME } from '../../lib/firebase/table/ddl';
 
 export const getLectureItemService = async (lectureId) => {
   try {
-    const baseRef = collection(db, LECTURELIST_COLLECTION_NAME);
+    const baseRef = collection(db, LECTURES_COLLECTION_NAME);
     const q = query(baseRef, where('lectureId', '==', lectureId));
 
     const querySnapshot = await getDocs(q);

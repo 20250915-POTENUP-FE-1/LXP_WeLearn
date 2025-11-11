@@ -44,7 +44,7 @@ const MyLectureCard = (props) => {
           <div className="mb-3 flex items-start justify-between">
             <div className="flex-1">
               <span className="mb-2 inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-900">
-                {cat.name}
+                {/*{cat.name}*/}
               </span>
 
               <h3 className="mb-2 text-lg font-bold text-gray-900">{title}</h3>
