@@ -3,6 +3,22 @@ import Input from '../common/form/Input';
 import { X } from 'lucide-react';
 
 function CreateCurriculum({ curriculums, setFormData }) {
+  // 빈 lesson 템플릿
+  const EMPTY_LESSON = {
+    lessonId: crypto.randomUUID(),
+    lessonMediaUrl: '',
+    lessonTitle: '',
+    runingTime: '',
+  };
+
+  function appendEmptyLessonToChapter(curriculums, chapterIndex, template = EMPTY_LESSON) {
+    return curriculums.map((chapter, idx) =>
+      idx === chapterIndex
+        ? { ...chapter, lessons: [...(chapter.lessons ?? []), { ...template }] }
+        : chapter,
+    );
+  }
+
   const handleChapterTitle = (index, value) => {
     setFormData((prev) => {
       const updated = prev.curriculums;
@@ -29,20 +45,10 @@ function CreateCurriculum({ curriculums, setFormData }) {
 
   // ✅ 레슨 추가
   const addLesson = (chapterIndex) => {
-    setFormData((prev) => {
-      const updated = prev.curriculums.map((chapter, index) =>
-        index === chapterIndex
-          ? {
-              ...chapter,
-              lessons: [
-                ...chapter.lessons,
-                { lessonId: '', lessonMediaUrl: '', lessonTitle: '', runingTime: '' },
-              ],
-            }
-          : chapter,
-      );
-      return { ...prev, curriculums: updated };
-    });
+    setFormData((prev) => ({
+      ...prev,
+      curriculums: appendEmptyLessonToChapter(prev.curriculums, chapterIndex),
+    }));
   };
 
   return (
@@ -97,7 +103,7 @@ function CreateCurriculum({ curriculums, setFormData }) {
                             required
                             placeholder="예: 코딩이란?"
                             type="text"
-                            additionalProperties="col-span-17"
+                            outerClassName="col-span-17"
                             value={lesson.lessonTitle}
                             onChange={(e) => {
                               handleLessonChange(chapterIndex, lessonIndex, e.target.value);
@@ -112,7 +118,7 @@ function CreateCurriculum({ curriculums, setFormData }) {
                             required
                             aria-required="true"
                             label="영상 시간"
-                            additionalProperties="col-span-2"
+                            outerClassName="col-span-2"
                             value={lesson.runingTime}
                             onChange={(e) => {
                               handleRuningTimeChange(chapterIndex, lessonIndex, e.target.value);

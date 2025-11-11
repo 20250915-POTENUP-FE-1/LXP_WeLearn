@@ -1,5 +1,6 @@
 import React from 'react';
 import Required from '../../ui/Required.jsx';
+import classNames from 'classnames/bind';
 
 /**
  * @typedef {Object} InputProps
@@ -22,12 +23,12 @@ export default function Input({
   placeholder = '홍길동',
   className = '',
   type = 'text',
-  additionalProperties = null,
+  outerClassName = '',
 }) {
   const inputId = id || name;
 
   return (
-    <div className={`relative w-full ${additionalProperties !== null ? additionalProperties : ''}`}>
+    <div className={classNames('relative w-full', outerClassName)}>
       <label htmlFor={inputId} className="mb-2 block text-sm font-medium text-gray-700">
         {label} <Required />
       </label>

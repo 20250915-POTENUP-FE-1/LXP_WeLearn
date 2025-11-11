@@ -69,8 +69,9 @@ const LectureList = () => {
           <p className="text-base text-gray-600">원하는 강의를 찾아보세요</p>
         </div>
       </section>
-
-      <Categories />
+      <div className="px-4 sm:px-6 lg:px-8">
+        <Categories />
+      </div>
 
       <section className="lecture-grid min-h-[calc(100vh-423px)] pt-12 pb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
