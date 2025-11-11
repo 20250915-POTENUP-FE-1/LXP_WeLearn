@@ -6,14 +6,14 @@ import MyPageAsideProfileBar from '../../../../components/mypage/MyPageAsideProf
 import MyLectureCard from '../../../../components/mypage/my-lectures/MyLectureCard.jsx';
 import GlobalLoading from '../../../../components/loading/GlobalLoading.jsx';
 import NothingMyLectures from '../../../../components/mypage/my-lectures/NothingMyLectures.jsx';
-import Categories from '../../../../components/categories/Categories.jsx';
+import ColumnCategories from '../../../../components/categories/ColumnCategories.jsx';
 
 const MyLectures = () => {
   const [searchParams] = useSearchParams();
   const category = searchParams.get('category') || 'all';
   const sort = searchParams.get('sort') || 'latest';
 
-  const { items, isLoading, error, hasMore, total, sentinelRef, retry } = useInfiniteLectures({
+  const { items, isLoading, error, hasMore, total, sentinelRef } = useInfiniteLectures({
     category,
     sort,
     pageSize: 10,
@@ -27,25 +27,27 @@ const MyLectures = () => {
       <section className="size-full max-w-7xl grow px-4 sm:px-6 lg:px-8">
         <div className="grid h-full grid-cols-1 gap-8 lg:grid-cols-4">
           <MyPageAsideProfileBar>
-            <Categories direction="column" />
+            <nav className="mt-5 rounded-lg bg-white p-6 shadow-md">
+              <ColumnCategories />
+            </nav>
           </MyPageAsideProfileBar>
 
           <div className="content-area lg:col-span-3">
             <section className="in-progress-lectures">
               <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-gray-900">수강 중인 강의</h2>
-                <div>총 {total}개의 강의</div>
+                <p>총 {total}개의 강의</p>
               </div>
 
               {/* <!-- Lecture List --> */}
-              <section className="space-y-4">
+              <div className="space-y-4">
                 {items.length !== 0 ? (
                   items.map((item) => <MyLectureCard key={item.lectureId} {...item} />)
                 ) : (
                   <NothingMyLectures />
                 )}
                 {error && <p>데이터 불러오는데 에러 발생</p>}
-              </section>
+              </div>
             </section>
           </div>
         </div>

@@ -18,10 +18,7 @@ const MyPageAsideProfileBar = ({ children }) => {
         </div>
 
         {/* <!-- Menu --> */}
-        <nav
-          className="sidebar-menu space-y-1 border-b border-gray-200"
-          aria-label="마이페이지 메뉴"
-        >
+        <nav className="sidebar-menu space-y-1" aria-label="마이페이지 메뉴">
           <button
             href="/mypage"
             className="block w-full rounded-lg bg-gray-900 px-4 py-3 text-left text-sm font-medium text-white"
@@ -43,8 +40,9 @@ const MyPageAsideProfileBar = ({ children }) => {
             즐겨찾기
           </button>
         </nav>
-        {children}
       </div>
+
+      {children}
     </aside>
   );
 };
