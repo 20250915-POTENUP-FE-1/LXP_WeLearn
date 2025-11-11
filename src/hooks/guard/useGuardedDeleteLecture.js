@@ -23,12 +23,12 @@ export function useGuardedDeleteLecture(opt = {}) {
   const [removingId, setRemovingId] = useState(null);
 
   const handleDelete = useCallback(
-    async ({ id, lectureId }) => {
+    async ({ lectureId }) => {
       const ok = confirmFn('이 강의를 삭제할까요? 삭제 후 복구할 수 없습니다.');
       if (!ok) return;
 
       try {
-        setRemovingId(id);
+        setRemovingId(lectureId);
 
         // 1) 수강생 수 조회
         const count = await getEnrollmentCountByLecture(lectureId);
@@ -36,14 +36,14 @@ export function useGuardedDeleteLecture(opt = {}) {
         // 2) 조건
         if (count >= 1) {
           toast.info('수강 중인 학생이 있어 삭제할 수 없습니다.');
-          onBlocked?.({ id, lectureId, count });
+          onBlocked?.({ lectureId, count });
           return;
         }
 
         // 3) 삭제 실행
-        await deleteLectureService(id);
+        await deleteLectureService(lectureId);
         toast.success('강의가 삭제되었습니다.');
-        onSuccess?.({ id, lectureId });
+        onSuccess?.({ lectureId });
       } catch (error) {
         toast.error('삭제 처리 중 문제가 발생했습니다.');
         onError?.(error);

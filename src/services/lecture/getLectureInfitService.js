@@ -24,7 +24,6 @@ export async function getLectureInfitService({
         lectureId: doc.id,
       };
     });
-    console.log(lectures);
 
     // 다음 커서(없으면 null)
     const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] ?? null;

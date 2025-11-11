@@ -1,6 +1,6 @@
 // src/pages/mypage/(instructor)/instructor-lectures/InstructorLectures.jsx
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import PageSectionHeader from '../../../../components/common/PageSectionHeader.jsx';
 import MyPageAsideProfileBar from '../../../../components/mypage/MyPageAsideProfileBar.jsx';
@@ -14,9 +14,9 @@ import { useGuardedDeleteLecture } from '../../../../hooks/guard/useGuardedDelet
 
 const InstructorLectures = () => {
   const { user } = useSelector((state) => state.auth); // 강사 id 가져오기
-
+  useState;
   // 무한스크롤 훅 사용
-  const { items, isLoading, error, hasMore, sentinelRef, total } = useInfiniteLectures({
+  const { items, isLoading, error, hasMore, sentinelRef, setItems } = useInfiniteLectures({
     category: 'all',
     sort: 'latest',
     pageSize: 8,
@@ -24,55 +24,48 @@ const InstructorLectures = () => {
   });
 
   // 강사 본인 강의만 필터링
-  const filterMyLectures = useMemo(
-    () => items.filter((item) => item.userId === user?.uid),
-    [items, user?.uid],
-  );
-
-  // 강의 목록 상태, 초기값 빈배열
-  const [myLectures, setMyLectures] = useState([]);
-
-  // items 변화 시
-  useEffect(() => {
-    setMyLectures(filterMyLectures);
-  }, [filterMyLectures]);
+  const filterMyLectures = items.filter((item) => item.userId === user?.uid);
 
   // 삭제 hook : success > lecture list
-  const { handleDelete, removingId } = useGuardedDeleteLecture({
+  const { handleDelete } = useGuardedDeleteLecture({
     // 삭제가 성공하면 강의 제거
-    onSuccess: ({ id }) => {
-      setMyLectures((prev) => prev.filter((item) => item.lectureId !== id));
+    onSuccess: ({ lectureId }) => {
+      const updateMyLectures = filterMyLectures.filter((prev) => {
+        return prev.lectureId !== lectureId;
+      });
+      setItems(updateMyLectures);
     },
   });
 
   return (
-    <main className="main py-8">
-      <div className="main__container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* 헤더 */}
-        <PageSectionHeader title="마이페이지" subTitle="내 강의를 관리하고 학생들과 소통하세요" />
+    <div className="flex size-full shrink grow flex-col items-center justify-center">
+      {/* 헤더 */}
 
-        <section className="grid grid-cols-1 gap-8 lg:grid-cols-4">
+      <PageSectionHeader title="마이페이지" subTitle="내 강의를 관리하고 학생들과 소통하세요" />
+
+      <section className="size-full max-w-7xl grow px-4 sm:px-6 lg:px-8">
+        <div className="grid h-full grid-cols-1 gap-8 lg:grid-cols-4">
           {/* 사이드바 */}
           <MyPageAsideProfileBar>
             <Categories direction="column" />
           </MyPageAsideProfileBar>
 
           {/* 메인 콘텐츠 */}
-          <div className="lg:col-span-3">
+          <div className="content-area lg:col-span-3">
             {/* Quick Actions */}
             <CreateBtnLectureCard />
 
             {/* 내 강의 목록 */}
-            <section>
+            <section className="in-progress-lectures">
               <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-gray-900">내가 등록한 강의</h2>
-                <span className="text-sm text-gray-600">총 {myLectures.length || 0}개</span>
+                <span className="text-sm text-gray-600">총 {filterMyLectures.length || 0}개</span>
               </div>
 
               <div className="space-y-4">
                 {/* 데이터 표시 */}
-                {myLectures.length > 0 ? (
-                  myLectures.map((lec) => {
+                {filterMyLectures.length > 0 ? (
+                  filterMyLectures.map((lec) => {
                     return (
                       <InstructorLectureCard
                         key={lec.lectureId}
@@ -84,7 +77,6 @@ const InstructorLectures = () => {
                         studentCount={lec.studentCount}
                         categoryName={lec.categoryName}
                         onDelete={handleDelete} // 삭제 핸들러
-                        disabled={removingId === lec.id} // 삭제 중에는 비활성
                       />
                     );
                   })
@@ -104,16 +96,17 @@ const InstructorLectures = () => {
               {hasMore && <div ref={sentinelRef} className="h-10" />}
 
               {/* 끝 표시 */}
-              {!hasMore && myLectures.length > 0 && (
+              {!hasMore && filterMyLectures.length > 0 && (
                 <div className="py-10 text-center text-gray-600">- 끝 -</div>
               )}
               {/* 로딩 표시 */}
               {isLoading && <GlobalLoading mention="데이터 불러오는 중..." />}
             </section>
           </div>
-        </section>
-      </div>
-    </main>
+        </div>
+      </section>
+      {/* </div> */}
+    </div>
   );
 };
 

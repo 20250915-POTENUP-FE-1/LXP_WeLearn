@@ -101,5 +101,5 @@ export function useInfiniteLectures({
     }
   }, [isLoading, loadMore]);
 
-  return { items, isLoading, error, hasMore, loadMore, retry, total, sentinelRef };
+  return { items, isLoading, error, hasMore, setItems, loadMore, retry, total, sentinelRef };
 }

@@ -9,6 +9,6 @@ import { db } from '../../lib/firebase/config.js';
 export async function getEnrollmentCountByLecture(lectureId) {
   const q = query(collection(db, 'enrollments'), where('lectureId', '==', lectureId));
   const agg = await getCountFromServer(q);
-  // console.log(agg.data().count);
+
   return agg.data().count || 0;
 }
