@@ -46,7 +46,7 @@ function Categories({ direction = 'auto' }) {
   return (
     <section className="filter-section py-4">
       <div className="filter-section__container mx-auto max-w-7xl">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center sm:justify-between">
           <CategoryBox sortOptions={sortOptions} setSortOption={setSortOption} />
           <SortOption sortOptions={sortOptions} setSortOption={setSortOption} />
         </div>
