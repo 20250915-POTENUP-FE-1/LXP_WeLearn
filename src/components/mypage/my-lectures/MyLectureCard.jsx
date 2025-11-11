@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import CATEGORIES from '../../../constants/categories.js';
 
 const MyLectureCard = (props) => {
   const {
@@ -15,6 +16,7 @@ const MyLectureCard = (props) => {
     userId,
     userName,
   } = props;
+  const cat = CATEGORIES.find((e) => e.id === category);
   const navigate = useNavigate();
 
   const handleMoveToDetail = () => {
@@ -42,7 +44,7 @@ const MyLectureCard = (props) => {
           <div className="mb-3 flex items-start justify-between">
             <div className="flex-1">
               <span className="mb-2 inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-900">
-                {typeof category === 'string' ? category : `카테고리 ${category}`}
+                {cat.name}
               </span>
 
               <h3 className="mb-2 text-lg font-bold text-gray-900">{title}</h3>
