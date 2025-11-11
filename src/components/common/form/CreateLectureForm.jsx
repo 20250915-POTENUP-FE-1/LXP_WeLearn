@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import CreateLectureTitle from '../../create-lecture/CreateLectureTitle';
 import Input from './Input';
 import Textarea from './Textarea';

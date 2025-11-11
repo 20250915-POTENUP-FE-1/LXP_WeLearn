@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import Input from '../common/form/Input';
 import { X } from 'lucide-react';
 
@@ -10,6 +10,9 @@ function CreateCurriculum({ curriculums, setFormData }) {
     lessonTitle: '',
     runingTime: '',
   };
+
+  const disabled = 'cursor-not-allowed text-gray-400';
+  const abled = 'text-[#1a1a1a] hover:text-gray-700 active:scale-95';
 
   function appendEmptyLessonToChapter(curriculums, chapterIndex, template = EMPTY_LESSON) {
     return curriculums.map((chapter, idx) =>
@@ -51,6 +54,35 @@ function CreateCurriculum({ curriculums, setFormData }) {
     }));
   };
 
+  const deleteChapter = (chapterIndex) => {
+    setFormData((prev) => {
+      const updated = prev.curriculums.filter((_, index) => index !== chapterIndex);
+      return { ...prev, curriculums: updated };
+    });
+    return;
+  };
+
+  function removeLessonFromChapter(curriculums, chapterIndex, lessonIndex) {
+    return curriculums.map((chapter, index) =>
+      index === chapterIndex
+        ? {
+            ...chapter,
+            lessons: chapter.lessons.filter((_, secondIndex) => secondIndex !== lessonIndex),
+          }
+        : chapter,
+    );
+  }
+
+  const deleteLesson = (chapterIndex, lessonIndex) => {
+    if (curriculums[chapterIndex].lessons.length > 1) {
+      setFormData((prev) => ({
+        ...prev,
+        curriculums: removeLessonFromChapter(prev.curriculums, chapterIndex, lessonIndex),
+      }));
+    }
+    return;
+  };
+
   return (
     <>
       {curriculums.map((chapter, chapterIndex) => {
@@ -84,10 +116,14 @@ function CreateCurriculum({ curriculums, setFormData }) {
                   />
                   <button
                     type="button"
-                    className="w-13 px-3 py-1 pt-6 text-sm font-medium text-red-600 hover:text-red-700"
-                    aria-label="섹션 삭제"
+                    aria-label="챕터 삭제"
+                    disabled={curriculums.length <= 1}
+                    onClick={() => deleteChapter(chapterIndex)}
+                    className={`flex items-center justify-center rounded-md px-3 py-1 pt-6 text-sm font-medium transition-all duration-200 ${
+                      curriculums.length <= 1 ? disabled : abled
+                    }`}
                   >
-                    <X size={24} color="#1a1a1a" />
+                    <X size={24} color={curriculums.length <= 1 ? '#9ca3af' : '#1a1a1a'} />
                   </button>
                 </div>
                 <div className="space-y-3 p-4">
@@ -126,10 +162,22 @@ function CreateCurriculum({ curriculums, setFormData }) {
                           />
                           <button
                             type="button"
-                            className="px-3 py-1 pt-6 text-sm font-medium text-red-600 hover:text-red-700"
+                            className={`flex items-center justify-center rounded-md px-3 py-1 pt-6 text-sm font-medium transition-all duration-200 ${
+                              curriculums.length <= 1 ? disabled : abled
+                            }`}
                             aria-label="레슨 삭제"
+                            onClick={() => {
+                              deleteLesson(chapterIndex, lessonIndex);
+                            }}
                           >
-                            <X size={24} color="#1a1a1a" />
+                            <X
+                              size={24}
+                              color={
+                                curriculums[chapterIndex].lessons.length <= 1
+                                  ? '#9ca3af'
+                                  : '#1a1a1a'
+                              }
+                            />
                           </button>
                         </li>
                       );
@@ -137,6 +185,7 @@ function CreateCurriculum({ curriculums, setFormData }) {
                   </ol>
                   <button
                     type="button"
+                    disabled={curriculums[chapterIndex].lessons.length > 1}
                     onClick={() => addLesson(chapterIndex)}
                     className="add-lesson rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
                   >

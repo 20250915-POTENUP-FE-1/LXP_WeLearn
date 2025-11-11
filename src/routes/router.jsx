@@ -48,9 +48,9 @@ export const router = createBrowserRouter([
   {
     path: '/mypage',
     element: (
-      <RequireAuth>
-        <MainLayout />
-      </RequireAuth>
+      // <RequireAuth>
+      <MainLayout />
+      // </RequireAuth>
     ),
     children: [
       { index: true, element: <Navigate to="my-lectures" replace /> },
@@ -68,9 +68,9 @@ export const router = createBrowserRouter([
       {
         path: 'create-lecture',
         element: (
-          <RequireRole allow={['INSTRUCTOR']}>
-            <CreateLecture />
-          </RequireRole>
+          // <RequireRole allow={['INSTRUCTOR']}>
+          <CreateLecture />
+          // </RequireRole>
         ),
       },
       {
