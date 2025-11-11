@@ -7,6 +7,7 @@ import { getLectures } from '../../../services/lecture/getLecturesService';
 import CATEGORIES from '../../../constants/categories';
 import { ITEMS_PER_PAGE } from '../../../constants/paginationConstants';
 import GlobalLoading from '../../../components/loading/GlobalLoading';
+import PageSectionHeader from '../../../components/common/PageSectionHeader.jsx';
 
 const LectureList = () => {
   const [lectureDatas, setLectureDatas] = useState([]);
@@ -63,15 +64,9 @@ const LectureList = () => {
 
   return (
     <>
-      <section className="page-title mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 md:px-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h1 className="mb-2 text-3xl font-bold text-gray-900">{currentCategory}</h1>
-          <p className="text-base text-gray-600">원하는 강의를 찾아보세요</p>
-        </div>
-      </section>
-      <div className="px-4 sm:px-6 lg:px-8">
-        <Categories />
-      </div>
+      <PageSectionHeader title={currentCategory} subTitle="원하는 강의를 찾아보세요" />
+
+      <Categories />
 
       <section className="lecture-grid min-h-[calc(100vh-423px)] pt-12 pb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -4,7 +4,7 @@ import LectureHero from '../../../components/lecture/LectureHero.jsx';
 import LectureTabs from '../../../components/lecture/LectureTabs.jsx';
 import LectureContent from '../../../components/lecture/LectureContent.jsx';
 import LectureCurriculum from '../../../components/lecture/LectureCurriculum.jsx';
-import { getLectureItem } from '../../../services/lectureService.js';
+import { getLectureItemService } from '../../../services/lecture/getLectureItemService.js';
 
 const LectureDetail = () => {
   const { lectureId } = useParams();
@@ -19,7 +19,7 @@ const LectureDetail = () => {
       setLoading(true);
       try {
         // lectureId 기준으로 조회
-        const item = await getLectureItem(lectureId);
+        const item = await getLectureItemService(lectureId);
         if (isMounted) {
           setLectureItem(item ?? null);
         }
