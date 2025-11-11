@@ -1,6 +1,5 @@
 import React from 'react';
 import Required from '../../ui/Required.jsx';
-import classNames from 'classnames/bind';
 
 /**
  * @typedef {Object} InputProps
@@ -13,7 +12,7 @@ import classNames from 'classnames/bind';
  * @property {string} [placeholder='홍길동'] - 플레이스홀더
  * @property {string} [className='']     - 추가 클래스
  */
-export default function Input({
+export default function Textarea({
   name,
   id,
   label = '이름',
@@ -23,17 +22,16 @@ export default function Input({
   placeholder = '홍길동',
   className = '',
   type = 'text',
-  outerClassName = '',
 }) {
   const inputId = id || name;
 
   return (
-    <div className={classNames('relative w-full', outerClassName)}>
+    <div className="relative">
       <label htmlFor={inputId} className="mb-2 block text-sm font-medium text-gray-700">
         {label} <Required />
       </label>
 
-      <input
+      <textarea
         type={type}
         id={inputId}
         name={name}
@@ -43,12 +41,12 @@ export default function Input({
         onChange={onChange}
         className={[
           'w-full rounded-lg border border-gray-300 px-4 py-3 text-base transition-colors',
-          'placeholder:text-gray-400 focus:border-transparent focus:ring-2 focus:ring-gray-900 focus:outline-none',
+          'h-50 resize-none placeholder:text-gray-400 focus:border-transparent focus:ring-2 focus:ring-gray-900 focus:outline-none',
           className,
           type === 'password' ? 'pr-10' : '',
         ].join(' ')}
         placeholder={placeholder}
-      />
+      ></textarea>
     </div>
   );
 }
