@@ -7,7 +7,7 @@ const MainLayout = () => {
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-between bg-gray-100/70">
       <Header />
-      <main className="flex flex-col justify-center">
+      <main className="flex size-full shrink grow flex-col items-center justify-center">
         <Outlet />
       </main>
       <Footer />
