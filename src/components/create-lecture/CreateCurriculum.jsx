@@ -44,7 +44,7 @@ function CreateCurriculum({ curriculums, setFormData }) {
       return { ...prev, curriculums: updated };
     });
   };
-  console.log(curriculums);
+
   return (
     <>
       {curriculums.map((chapter, chapterIndex) => {
