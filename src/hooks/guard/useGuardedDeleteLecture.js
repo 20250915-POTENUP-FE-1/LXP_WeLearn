@@ -13,7 +13,6 @@ import { deleteLectureService } from '../../services/lecture/deleteLectureServic
  */
 export function useGuardedDeleteLecture(opt = {}) {
   const {
-    refresh, // 삭제 성공 후
     onSuccess,
     onBlocked,
     onError,
@@ -45,11 +44,6 @@ export function useGuardedDeleteLecture(opt = {}) {
         await deleteLectureService(id);
         toast.success('강의가 삭제되었습니다.');
         onSuccess?.({ id, lectureId });
-
-        // 삭제 성공 시 refresh 호출
-        if (typeof refresh === 'function') {
-          await Promise.resolve(refresh());
-        }
       } catch (error) {
         toast.error('삭제 처리 중 문제가 발생했습니다.');
         onError?.(error);
@@ -58,7 +52,7 @@ export function useGuardedDeleteLecture(opt = {}) {
         setRemovingId(null);
       }
     },
-    [confirmFn, onBlocked, onSuccess, onError, toast, refresh],
+    [confirmFn, onBlocked, onSuccess, onError, toast],
   );
 
   return { handleDelete, removingId };

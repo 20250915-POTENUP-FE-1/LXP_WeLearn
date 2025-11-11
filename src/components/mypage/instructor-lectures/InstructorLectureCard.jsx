@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Users } from 'lucide-react';
 
 export default function InstructorLectureCard({
   id, // Firestore 문서 id
@@ -8,8 +9,6 @@ export default function InstructorLectureCard({
   title,
   userName,
   studentCount = 0,
-  rating = 0,
-  reviewCount = 0,
   categoryName,
   onDelete,
 }) {
@@ -37,30 +36,15 @@ export default function InstructorLectureCard({
 
           <div className="mb-4 flex items-center gap-4 border-b border-gray-200 pb-4 text-sm text-gray-600">
             <div className="flex items-center gap-1">
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                />
-              </svg>
+              <Users size={16} />
               <span>{studentCount}명 수강</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <svg className="h-4 w-4" viewBox="0 0 20 20">
-                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-              </svg>
-              <span>
-                {rating} ({reviewCount})
-              </span>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <Link
               to={`/mypage/edit-lecture/${id}`}
-              className="flex-1 rounded-lg bg-gray-900 px-4 py-2 text-center text-sm font-medium text-white hover:bg-gray-800"
+              className="flex-1 rounded-lg bg-zinc-900 px-4 py-2 text-center text-sm font-medium text-white hover:bg-zinc-800"
             >
               수정
             </Link>

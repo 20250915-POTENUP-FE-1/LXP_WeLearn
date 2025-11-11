@@ -1,6 +1,6 @@
 // src/pages/mypage/(instructor)/instructor-lectures/InstructorLectures.jsx
 
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PageSectionHeader from '../../../../components/common/PageSectionHeader.jsx';
 import MyPageAsideProfileBar from '../../../../components/mypage/MyPageAsideProfileBar.jsx';
@@ -15,7 +15,8 @@ import { useGuardedDeleteLecture } from '../../../../hooks/guard/useGuardedDelet
 const InstructorLectures = () => {
   const { user } = useSelector((state) => state.auth); // 강사 id 가져오기
 
-  const { items, isLoading, error, hasMore, sentinelRef, total, refresh } = useInfiniteLectures({
+  // 무한스크롤 훅 사용
+  const { items, isLoading, error, hasMore, sentinelRef, total } = useInfiniteLectures({
     category: 'all',
     sort: 'latest',
     pageSize: 8,
@@ -23,11 +24,25 @@ const InstructorLectures = () => {
   });
 
   // 강사 본인 강의만 필터링
-  const myLectures = items.filter((item) => item.userId === user?.uid);
+  const filterMyLectures = useMemo(
+    () => items.filter((item) => item.userId === user?.uid),
+    [items, user?.uid],
+  );
 
-  // 삭제 hook : success > list
+  // 강의 목록 상태, 초기값 빈배열
+  const [myLectures, setMyLectures] = useState([]);
+
+  // items 변화 시
+  useEffect(() => {
+    setMyLectures(filterMyLectures);
+  }, [filterMyLectures]);
+
+  // 삭제 hook : success > lecture list
   const { handleDelete, removingId } = useGuardedDeleteLecture({
-    refresh,
+    // 삭제가 성공하면 강의 제거
+    onSuccess: ({ id }) => {
+      setMyLectures((prev) => prev.filter((item) => item.lectureId !== id));
+    },
   });
 
   return (
@@ -57,22 +72,22 @@ const InstructorLectures = () => {
               <div className="space-y-4">
                 {/* 데이터 표시 */}
                 {myLectures.length > 0 ? (
-                  myLectures.map((lec) => (
-                    <InstructorLectureCard
-                      key={lec.lectureId}
-                      id={lec.lectureId} // 문서 ID
-                      lectureId={lec.lectureId} // 필드 강의 ID
-                      thumbnailUrl={lec.thumbnailUrl}
-                      title={lec.title}
-                      userName={lec.userName}
-                      studentCount={lec.studentCount}
-                      rating={lec.rating}
-                      reviewCount={lec.reviewCount}
-                      categoryName={lec.categoryName}
-                      onDelete={handleDelete} // 삭제 핸들러
-                      disabled={removingId === lec.id} // 삭제 중 비활성
-                    />
-                  ))
+                  myLectures.map((lec) => {
+                    return (
+                      <InstructorLectureCard
+                        key={lec.lectureId}
+                        id={lec.lectureId} // 문서 ID
+                        lectureId={lec.lectureId} // 필드 강의 ID
+                        thumbnailUrl={lec.thumbnailUrl}
+                        title={lec.title}
+                        userName={lec.userName}
+                        studentCount={lec.studentCount}
+                        categoryName={lec.categoryName}
+                        onDelete={handleDelete} // 삭제 핸들러
+                        disabled={removingId === lec.id} // 삭제 중에는 비활성
+                      />
+                    );
+                  })
                 ) : !isLoading && !error ? (
                   <NothingMyLectures />
                 ) : null}
@@ -88,13 +103,12 @@ const InstructorLectures = () => {
               {/* 무한 스크롤 센티넬 */}
               {hasMore && <div ref={sentinelRef} className="h-10" />}
 
-              {/* 로딩 표시 */}
-              {isLoading && <GlobalLoading mention="데이터 불러오는 중..." />}
-
               {/* 끝 표시 */}
               {!hasMore && myLectures.length > 0 && (
                 <div className="py-10 text-center text-gray-600">- 끝 -</div>
               )}
+              {/* 로딩 표시 */}
+              {isLoading && <GlobalLoading mention="데이터 불러오는 중..." />}
             </section>
           </div>
         </section>
