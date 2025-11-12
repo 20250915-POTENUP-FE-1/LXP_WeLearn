@@ -68,7 +68,7 @@ const LectureList = () => {
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 md:px-8">
         <RowCategories />
       </div>
-      <section className="lecture-grid min-h-[calc(100vh-423px)] w-full pt-12 pb-8">
+      <section className="lecture-grid min-h-[808px] w-full pt-12 pb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* 총 갯수 */}
           <div className="mb-6">

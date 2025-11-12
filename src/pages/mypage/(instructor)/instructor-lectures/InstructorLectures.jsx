@@ -8,6 +8,7 @@ import NothingMyLectures from '../../../../components/mypage/my-lectures/Nothing
 import { useInfiniteLectures } from '../../../../hooks/lectures/useInfiniteLectures.js';
 import CreateBtnLectureCard from '../../../../components/mypage/instructor-lectures/CreateBtnLectureCard.jsx';
 import { useGuardedDeleteLecture } from '../../../../hooks/guard/useGuardedDeleteLecture.js';
+import ColumnCategories from '../../../../components/categories/ColumnCategories.jsx';
 
 const InstructorLectures = () => {
   const { user } = useSelector((state) => state.auth); // 강사 id 가져오기
@@ -43,7 +44,7 @@ const InstructorLectures = () => {
         <div className="grid h-full grid-cols-1 gap-8 lg:grid-cols-4">
           {/* 사이드바 */}
           <MyPageAsideProfileBar>
-            <Categories direction="column" />
+            <ColumnCategories direction="column" />
           </MyPageAsideProfileBar>
 
           {/* 메인 콘텐츠 */}
