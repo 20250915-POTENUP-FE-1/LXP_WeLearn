@@ -2,9 +2,11 @@ import React from 'react';
 import { User } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const MyPageAsideProfileBar = ({ children }) => {
   const { user } = useSelector((s) => s.auth);
+  const navigate = useNavigate();
 
   return (
     <aside className="lg:col-span-1">
@@ -23,14 +25,14 @@ const MyPageAsideProfileBar = ({ children }) => {
         {/* <!-- Menu --> */}
         <nav className="sidebar-menu space-y-1" aria-label="마이페이지 메뉴">
           <button
-            href="/mypage"
+            onClick={() => navigate('/mypage')}
             className="block w-full rounded-lg bg-gray-900 px-4 py-3 text-left text-sm font-medium text-white"
           >
             수강 중인 강의
           </button>
           {(user.role.toUpperCase() === 'ADMIN' || user.role.toUpperCase() === 'INSTRUCTOR') && (
             <button
-              href="/mypage/registered"
+              onClick={() => navigate('/mypage/instructor-lectures')}
               className="block w-full rounded-lg px-4 py-3 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
             >
               내가 등록한 강의

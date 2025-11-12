@@ -13,78 +13,80 @@ export function EnrolledCard({ status, enrolledAt, reviews, lecture }) {
   const teacher = lecture?.userName;
   const category = CATEGORIES.find((e) => e.id === lecture.category);
 
-  const subDesc = useMemo(() => {
-    const d = lecture?.description || '';
-    return d.length > 80 ? d.slice(0, 80) + '…' : d;
-  }, [lecture?.description]);
-
   return (
     <article
-      className="group relative flex overflow-hidden rounded-2xl border border-gray-200 bg-white text-black transition-colors hover:border-gray-300"
+      className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-lg"
       role="button"
       tabIndex={0}
     >
-      {/* 썸네일 */}
-      <div className="aspect-video h-48 w-48 flex-shrink-0 bg-gray-200 sm:aspect-auto">
-        <img
-          src={thumb}
-          alt=""
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-          loading="lazy"
-        />
-      </div>
-
-      {/* 본문 */}
-      <div className="flex min-h-full w-full flex-col justify-between p-4">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="line-clamp-2 text-base leading-snug font-semibold">{title}</h3>
-          <Heart />
+      <div className="flex flex-col sm:flex-row">
+        {/* 썸네일 */}
+        <div className="relative aspect-video shrink-0 bg-gray-100 sm:aspect-auto sm:w-48">
+          <img
+            src={thumb || 'https://dr.savee-cdn.com/things/6/6/0d3d5da690b611c98f76a2.webp'}
+            alt={title}
+            className="h-full w-full object-cover"
+            loading="lazy"
+          />
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 text-xs">
-          <LevelTag level={level} />
-          {typeof category !== 'undefined' && (
-            <span className="rounded-md px-2 py-0.5 ring-1 ring-gray-700">{category.name}</span>
-          )}
-          <span className="inline-flex items-center gap-1">
-            <User size={14} />
-            {teacher || '익명 강사'}
-          </span>
-        </div>
+        {/* 본문 */}
+        <div className="flex-1 p-6">
+          <div className="mb-3">
+            {/* 카테고리/레벨 배지 */}
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              {category?.name && (
+                <span className="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-900">
+                  {category.name}
+                </span>
+              )}
+              {level && (
+                <span className="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-900">
+                  {level}
+                </span>
+              )}
+            </div>
 
-        {subDesc && <p className="line-clamp-2 text-sm text-gray-900">{subDesc}</p>}
-
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-sm text-gray-300">
-            <RatingStars rating={reviews?.rating ?? 0} />
-            <span className="text-xs">{(reviews?.rating ?? 0).toFixed(1)}</span>
+            {/* 제목/강사 */}
+            <h3 className="mb-2 line-clamp-1 text-lg font-bold text-gray-900">{title}</h3>
+            <p className="text-sm text-gray-600">{teacher || '익명 강사'}</p>
           </div>
 
-          <div className="flex items-center gap-3 text-xs">
-            <span className="inline-flex items-center gap-1">
-              <BookOpen size={14} /> 수강등록 {fmtDate(enrolledAt)}
-            </span>
+          {/* 정보 바 */}
+          <div className="mb-4 flex items-center justify-between border-b border-gray-200 pb-4 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <BookOpen size={16} />
+              <span>수강 신청일 {fmtDate(enrolledAt)}</span>
+            </div>
+
             {status === 'completed' ? (
-              <span className="inline-flex items-center gap-1 text-indigo-300">
-                <CheckCircle size={14} /> 수료
+              <span className="rounded-md bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700">
+                수료
               </span>
             ) : status === 'active' ? (
-              <span className="inline-flex items-center gap-1 text-emerald-300">
-                <Play size={14} /> 수강 중
+              <span className="rounded-md bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-700">
+                수강 중
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1">
-                <Clock size={14} /> {status}
-              </span>
+              status && (
+                <span className="rounded-md bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700">
+                  {status}
+                </span>
+              )
             )}
           </div>
-        </div>
 
-        {/* 액션 */}
-        <div className="flex items-center justify-end gap-1 pt-1">
-          <Button rightIcon={<ChevronRight size={16} />} type="button" onClick={() => {}}>
-            {status === 'completed' ? '리뷰 보기' : '이어보기'}
-          </Button>
+          {/* 액션 */}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className="flex-1 rounded-lg bg-zinc-900 px-4 py-2 text-center text-sm font-medium text-white hover:bg-zinc-800"
+            >
+              <span className="inline-flex items-center gap-1">
+                학습하기 <ChevronRight size={16} />
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </article>
