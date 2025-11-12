@@ -55,7 +55,7 @@ const LectureDetail = () => {
 
   // 정상 렌더링
   return (
-    <main className="main pb-12">
+    <div className="size-full pb-12">
       {/* 상단 히어로 섹션 */}
       <LectureHero lectureItem={lectureItem} />
 
@@ -67,7 +67,7 @@ const LectureDetail = () => {
 
       {/* 커리큘럼 소개 */}
       <LectureCurriculum curriculum={lectureItem.curriculum} />
-    </main>
+    </div>
   );
 };
 

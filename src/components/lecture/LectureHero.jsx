@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getCategoryName, getTotalLectureCount } from '../../utils/lectureUtils.js';
 import EnrollButton from './EnrollButton.jsx';
+import { Users, Star, Film } from 'lucide-react';
 
 /**
  *   getCategoryName(categoryValue)
@@ -51,68 +52,38 @@ function LectureHero({ lectureItem = {} }) {
       <div className="lecture-hero__container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
           {/* Left: Lecture Info (2/5) */}
-          <div className="lecture-info lg:col-span-2">
+          <div className="lecture-info order-2 lg:order-1 lg:col-span-2">
             {/* Category Badge */}
-            <span className="mb-4 inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-900">
+            <span className="mb-4 inline-block rounded-full bg-gray-900 px-3 py-1 text-xs font-medium text-white">
               {getCategoryName(category)}
             </span>
 
             {/* Title */}
-            <h1 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">{title}</h1>
+            <h1 className="mb-4 pb-3 text-3xl leading-12 font-bold text-gray-900 sm:text-4xl">
+              {title}
+            </h1>
 
             {/* Description */}
-            <p className="mb-6 text-lg text-gray-600">{description}</p>
+            <p className="text-md mb-6 leading-7 text-gray-600">{description}</p>
 
             {/* Meta Info */}
             <div className="mb-6 flex flex-wrap items-center gap-4 border-b border-gray-200 pb-6 text-sm text-gray-600">
               {/* Rating */}
               <div className="flex items-center space-x-1">
-                <svg
-                  className="h-5 w-5 fill-current text-yellow-400"
-                  viewBox="0 0 20 20"
-                  aria-hidden="true"
-                >
-                  <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                </svg>
+                <Star size={16} />
                 <span className="font-medium text-gray-900">{Number(rating) || 0}</span>
                 <span>({Number(reviewCount) || 0})</span>
               </div>
 
               {/* Student Count */}
               <div className="flex items-center space-x-1">
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                  />
-                </svg>
+                <Users size={16} />
                 <span>{safeStudentCount}명 수강</span>
               </div>
 
               {/* Total lectures */}
               <div className="flex items-center space-x-1">
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"
-                  />
-                </svg>
+                <Film size={16} />
                 <span>{getTotalLectureCount(curriculum)} 개 강의</span>
               </div>
             </div>
@@ -133,7 +104,7 @@ function LectureHero({ lectureItem = {} }) {
           </div>
 
           {/* Right: Thumbnail (3/5) */}
-          <div className="lecture-thumbnail lg:col-span-3">
+          <div className="lecture-thumbnail order-1 lg:order-2 lg:col-span-3">
             <div className="top-24">
               <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-200 shadow-lg">
                 <img
