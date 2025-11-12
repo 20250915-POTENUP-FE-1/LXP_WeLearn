@@ -1,6 +1,6 @@
 import { db } from '../../lib/firebase/config';
 import { collection, getCountFromServer, getDocs } from 'firebase/firestore';
-import { LECTURELIST_COLLECTION_NAME } from '../../lib/firebase/table/ddl';
+import { LECTURES_COLLECTION_NAME } from '../../lib/firebase/table/ddl';
 import { buildLectureQuery } from '../../utils/filtering';
 import { ITEMS_PER_PAGE } from '../../constants/paginationConstants';
 
@@ -11,7 +11,7 @@ export const getLectures = async ({
   startAfterDoc = null,
 }) => {
   try {
-    const baseRef = collection(db, LECTURELIST_COLLECTION_NAME);
+    const baseRef = collection(db, LECTURES_COLLECTION_NAME);
 
     // 실제 데이터 쿼리
     const dataQuery = buildLectureQuery(baseRef, category, sort, startAfterDoc, limitCount);

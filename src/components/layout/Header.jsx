@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/auth/logout.js';
 import SkeletonButton from '../ui/SkeletonButton.jsx';
 import { toast } from 'react-toastify';
+import logo from '/logo/logo_welearn.svg';
 
 function Header() {
   const navigate = useNavigate();
@@ -35,10 +36,13 @@ function Header() {
               className="flex items-center space-x-2"
               aria-label="홈으로 이동"
             >
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-900">
+              {/* <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-900">
                 <span className="text-lg font-bold text-white">L</span>
+              </div> */}
+              {/* <span className="hidden text-xl font-bold text-gray-900 sm:block">LXP</span> */}
+              <div className="w-36">
+                <img src={logo} alt="welearn" />
               </div>
-              <span className="hidden text-xl font-bold text-gray-900 sm:block">LXP</span>
             </button>
           </div>
 
