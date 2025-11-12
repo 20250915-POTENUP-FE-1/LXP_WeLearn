@@ -12,12 +12,16 @@ function LectureCard({ lecture }) {
 
   return (
     <div
-      className="cursor-pointer overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-xl"
+      className="min-h-[330px] cursor-pointer overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-xl"
       onClick={handleMoveToDetail}
     >
       <div className="relative aspect-video bg-gray-200">
         <img
-          src={lecture.thumbnailUrl}
+          src={
+            lecture.thumbnailUrl
+              ? lecture.thumbnailUrl
+              : 'https://dr.savee-cdn.com/things/6/6/0d3d5da690b611c98f76a2.webp'
+          }
           alt="React 완전 정복"
           className="absolute inset-0 h-full w-full object-cover"
         />
@@ -26,7 +30,7 @@ function LectureCard({ lecture }) {
         </span>
       </div>
 
-      <div className="space-y-3 p-4">
+      <div className="flex h-full min-h-[170px] flex-col justify-between space-y-3 p-4">
         <h3 className="line-clamp-2 max-h-16 min-h-16 text-lg font-bold text-gray-900">
           {lecture.title}
         </h3>
@@ -42,7 +46,9 @@ function LectureCard({ lecture }) {
             <span className="text-sm text-gray-500">(120)</span>
           </div>
 
-          <span className="text-sm text-gray-500">{`(${lecture.studentCount})명`}</span>
+          <span className="text-sm text-gray-500">
+            {lecture.studentCount ? `(${lecture.studentCount}) 명` : ''}
+          </span>
         </div>
       </div>
     </div>

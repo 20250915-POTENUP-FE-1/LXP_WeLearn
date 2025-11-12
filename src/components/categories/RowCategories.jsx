@@ -11,7 +11,7 @@ function RowCategories() {
 
   return (
     <section className="filter-section py-4">
-      <div className="filter-section__container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="filter-section__container mx-auto max-w-7xl">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <CategoryBox sortOptions={filters} setSortOption={setSortOption} />
           <SortOption sortOptions={filters} setSortOption={setSortOption} />

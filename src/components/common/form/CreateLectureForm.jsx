@@ -22,7 +22,7 @@ function CreateLectureForm() {
     description: '',
     level: '',
     category: '',
-    thumbnailUrl: '',
+    thumbnailUrl: null,
     content: '',
     curriculums: [
       {
@@ -136,7 +136,11 @@ function CreateLectureForm() {
           </section>
 
           {/* <!-- 우측: 썸네일 --> */}
-          <CreateThumNail />
+          <CreateThumNail
+            setFormData={setFormData}
+            formData={formData}
+            thumbnailUrl={formData.thumbnailUrl}
+          />
         </div>
 
         {/* <!-- 커리큘럼: 섹션(아코디언) + 하위 레슨 --> */}
