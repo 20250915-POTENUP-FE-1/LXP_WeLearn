@@ -40,7 +40,7 @@ export async function getMyEnrolledLecturesService({
   // 필요한 필터/정렬 구성 (예: 상태 필터, 최근 신청 순)
   const parts = [where('userId', '==', userId)];
   if (status) parts.push(where('status', '==', status));
-  parts.push(orderBy('enrolledAt', 'desc'), limit(limitCount + 1)); // +1은 hasMore 판단용
+  parts.push(limit(limitCount + 1)); // +1은 hasMore 판단용
   if (startAfterDoc) parts.push(startAfter(startAfterDoc));
 
   const dataQuery = query(baseRef, ...parts);

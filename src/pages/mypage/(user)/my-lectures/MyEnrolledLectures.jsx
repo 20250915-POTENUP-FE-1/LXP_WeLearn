@@ -35,6 +35,7 @@ const MyEnrolledLectures = () => {
     fetcher: fetchLectures,
     enabled: !!user?.uid,
   });
+  console.log(error);
 
   return (
     <>
