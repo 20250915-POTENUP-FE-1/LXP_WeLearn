@@ -5,6 +5,8 @@ import { randomNumber } from '../utils/randomNumber.js';
 import { title } from './lecture-title-content-desc/title.js';
 import { description } from './lecture-title-content-desc/description.js';
 import { content } from './lecture-title-content-desc/content.js';
+import { chapterTitles } from './lesson-chapter/chapterTitle.js';
+import { lessonTitles } from './lesson-chapter/lessonTitle.js';
 
 function randomText(len) {
   const chars = '가나다라마바사아자차카타파하ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -22,10 +24,10 @@ function randomLevel() {
 export function createRandomLecture(userId, userName) {
   const numChapters = Math.floor(Math.random() * 3) + 1; // 1~3개 챕터
   const curriculum = Array.from({ length: numChapters }, (_, ci) => ({
-    chapterTitle: `챕터 ${ci + 1} - ${randomText(3)}`,
+    chapterTitle: `챕터 ${ci + 1} - ${chapterTitles[randomNumber(0, chapterTitles.length - 1)]}`,
     lessons: Array.from({ length: Math.floor(Math.random() * 3) + 1 }, (_, li) => ({
       lessonId: `lesson-${ci + 1}-${li + 1}`,
-      lessonTitle: `레슨 ${li + 1} - ${randomText(4)}`,
+      lessonTitle: `레슨 ${li + 1} - ${lessonTitles[randomNumber(0, lessonTitles.length - 1)]}`,
       lessonMediaUrl: `/media/${randomText(5)}.mp4`,
     })),
   }));
@@ -36,7 +38,7 @@ export function createRandomLecture(userId, userName) {
     title: title[randomNumber(0, title.length - 1)],
     description: description[randomNumber(0, description.length - 1)],
     content: content[randomNumber(0, content.length - 1)],
-    thumbnailUrl: `/src/assets/images/lxp-image-0${randomNumber(0, 9)}.png`,
+    thumbnailUrl: `/src/assets/images/lxp-image-${found2(randomNumber(0, 20))}.png`,
     userId,
     userName,
     category: Math.floor(Math.random() * 7) + 1,
@@ -45,3 +47,14 @@ export function createRandomLecture(userId, userName) {
     curriculum,
   };
 }
+
+function found2(num) {
+  if (String(num).length == 1) {
+    return `0${num}`;
+  }
+  return num;
+}
+
+const df = createRandomLecture('sdf', 'sdfsdf');
+
+console.log(df);

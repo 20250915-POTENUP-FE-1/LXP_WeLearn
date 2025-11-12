@@ -22,7 +22,7 @@ export function useGuard() {
             uid: fbUser.uid,
             email: fbUser.email,
             role: profile.role,
-            name: profile.name ?? '',
+            userName: profile.userName ?? '',
           }),
         );
       } finally {

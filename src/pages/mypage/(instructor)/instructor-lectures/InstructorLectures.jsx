@@ -5,7 +5,7 @@ import MyPageAsideProfileBar from '../../../../components/mypage/MyPageAsideProf
 import InstructorLectureCard from '../../../../components/mypage/instructor-lectures/InstructorLectureCard.jsx';
 import GlobalLoading from '../../../../components/loading/GlobalLoading.jsx';
 import NothingMyLectures from '../../../../components/mypage/my-lectures/NothingMyLectures.jsx';
-import { useInfiniteLectures } from '../../../../hooks/lectures/useInfiniteLectures.js';
+import { useInfiniteLecture } from '../../../../hooks/lectures/useInfiniteLecture.js';
 import CreateBtnLectureCard from '../../../../components/mypage/instructor-lectures/CreateBtnLectureCard.jsx';
 import { useGuardedDeleteLecture } from '../../../../hooks/guard/useGuardedDeleteLecture.js';
 import ColumnCategories from '../../../../components/categories/ColumnCategories.jsx';
@@ -13,7 +13,7 @@ import ColumnCategories from '../../../../components/categories/ColumnCategories
 const InstructorLectures = () => {
   const { user } = useSelector((state) => state.auth); // 강사 id 가져오기
   // 무한스크롤 훅 사용
-  const { items, isLoading, error, hasMore, sentinelRef, setItems } = useInfiniteLectures({
+  const { items, isLoading, error, hasMore, sentinelRef, setItems } = useInfiniteLecture({
     category: 'all',
     sort: 'latest',
     pageSize: 8,

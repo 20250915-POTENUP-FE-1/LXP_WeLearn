@@ -27,7 +27,7 @@ const authSlice = createSlice({
         uid: p.uid ?? p.id ?? null, // 프로필이 id로 올 수도 있으니 대비
         email: p.email ?? null,
         role: p.role ?? null,
-        name: p.name ?? '',
+        userName: p.userName ?? '',
       };
     },
     setInitializing: (state, action) => {

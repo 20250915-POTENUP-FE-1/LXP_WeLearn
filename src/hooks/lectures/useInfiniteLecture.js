@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getLectureInfitService } from '../../services/lecture/getLectureInfitService.js';
 
-export function useInfiniteLectures({
+export function useInfiniteLecture({
   category,
   sort,
   pageSize = 20,
