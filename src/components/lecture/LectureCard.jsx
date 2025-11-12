@@ -46,7 +46,9 @@ function LectureCard({ lecture }) {
             <span className="text-sm text-gray-500">(120)</span>
           </div>
 
-          <span className="text-sm text-gray-500">{`(${lecture.studentCount ? lecture.studentCount : ''})명`}</span>
+          <span className="text-sm text-gray-500">
+            {lecture.studentCount ? `(${lecture.studentCount}) 명` : ''}
+          </span>
         </div>
       </div>
     </div>
