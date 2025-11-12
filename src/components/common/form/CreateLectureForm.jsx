@@ -10,13 +10,14 @@ import CreateThumNail from '../../create-lecture/CreateThumNail';
 import { registLectureService } from '../../../services/lecture/registLectureService';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import useLectureForm from '../../../hooks/lectures/useLectureForm';
 
 function CreateLectureForm() {
   const { user } = useSelector((s) => s.auth);
   const userId = user?.uid || null;
   const userName = user?.name || null;
 
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     title: '',
     description: '',
     level: '',
@@ -29,14 +30,18 @@ function CreateLectureForm() {
         lessons: [{ lessonMediaUrl: '', lessonTitle: '' }],
       },
     ],
-  });
+  };
+
+  const { formData, setFormData, addChapter, deleteChapter, deleteLesson, addLesson } =
+    useLectureForm(initialFormData);
+
   const navigate = useNavigate();
 
   const level = [
-    { key: '입문', value: 'begginer', name: '입문' },
-    { key: '초급', value: 'low', name: '초급' },
-    { key: '중급', value: 'middle', name: '중급' },
-    { key: '고급', value: 'high', name: '고급' },
+    { key: 'begginer', value: '입문', name: '입문' },
+    { key: 'low', value: '초급', name: '초급' },
+    { key: 'middle', value: '중급', name: '중급' },
+    { key: 'high', value: '고급', name: '고급' },
   ];
 
   const handleLectureData = (e) => {
@@ -44,17 +49,6 @@ function CreateLectureForm() {
     setFormData((prev) => ({
       ...prev,
       [id]: id === 'category' ? Number(value) : value,
-    }));
-  };
-
-  // ✅ 챕터 추가
-  const addChapter = () => {
-    setFormData((prev) => ({
-      ...prev,
-      curriculums: [
-        ...prev.curriculums,
-        { chapterTitle: '', lessons: [{ lessonId: '', lessonMediaUrl: '', lessonTitle: '' }] },
-      ],
     }));
   };
 
@@ -150,12 +144,20 @@ function CreateLectureForm() {
           <h2 id="curi-title" className="mb-4 text-xl font-semibold text-gray-900">
             커리큘럼 구성
           </h2>
-          <CreateCurriculum curriculums={formData.curriculums} setFormData={setFormData} />
+          <CreateCurriculum
+            curriculums={formData.curriculums}
+            setFormData={setFormData}
+            addLesson={addLesson}
+            deleteLesson={deleteLesson}
+            deleteChapter={deleteChapter}
+          />
           <div className="mt-4 flex justify-end">
             <button
               type="button"
               id="addSectionBtn"
-              onClick={addChapter}
+              onClick={() => {
+                addChapter(setFormData);
+              }}
               className="rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
             >
               + 챕터 추가

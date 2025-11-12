@@ -2,24 +2,9 @@ import React, { Fragment } from 'react';
 import Input from '../common/form/Input';
 import { X, Minus } from 'lucide-react';
 
-function CreateCurriculum({ curriculums, setFormData }) {
-  // 빈 lesson 템플릿
-  const EMPTY_LESSON = {
-    lessonId: '',
-    lessonMediaUrl: '',
-    lessonTitle: '',
-  };
-
+function CreateCurriculum({ curriculums, setFormData, addLesson, deleteChapter, deleteLesson }) {
   const disabled = 'cursor-not-allowed text-gray-400';
   const abled = 'text-[#1a1a1a] hover:text-gray-700 active:scale-95';
-
-  function appendEmptyLessonToChapter(curriculums, chapterIndex, template = EMPTY_LESSON) {
-    return curriculums.map((chapter, idx) =>
-      idx === chapterIndex
-        ? { ...chapter, lessons: [...(chapter.lessons ?? []), { ...template }] }
-        : chapter,
-    );
-  }
 
   const handleChapterTitle = (index, value) => {
     setFormData((prev) => {
@@ -28,58 +13,13 @@ function CreateCurriculum({ curriculums, setFormData }) {
       return { ...prev, curriculums: updated };
     });
   };
-  // ✅ 레슨 제목 변경
+  // 레슨 제목 변경
   const handleLessonChange = (chapterIndex, lessonIndex, value) => {
     setFormData((prev) => {
       const updated = prev.curriculums;
       updated[chapterIndex].lessons[lessonIndex].lessonTitle = value;
       return { ...prev, curriculums: updated };
     });
-  };
-
-  const handleRuningTimeChange = (chapterIndex, lessonIndex, value) => {
-    setFormData((prev) => {
-      const updated = prev.curriculums;
-      updated[chapterIndex].lessons[lessonIndex].runingTime = value;
-      return { ...prev, curriculums: updated };
-    });
-  };
-
-  // ✅ 레슨 추가
-  const addLesson = (chapterIndex) => {
-    setFormData((prev) => ({
-      ...prev,
-      curriculums: appendEmptyLessonToChapter(prev.curriculums, chapterIndex),
-    }));
-  };
-
-  const deleteChapter = (chapterIndex) => {
-    setFormData((prev) => {
-      const updated = prev.curriculums.filter((_, index) => index !== chapterIndex);
-      return { ...prev, curriculums: updated };
-    });
-    return;
-  };
-
-  function removeLessonFromChapter(curriculums, chapterIndex, lessonIndex) {
-    return curriculums.map((chapter, index) =>
-      index === chapterIndex
-        ? {
-            ...chapter,
-            lessons: chapter.lessons.filter((_, secondIndex) => secondIndex !== lessonIndex),
-          }
-        : chapter,
-    );
-  }
-
-  const deleteLesson = (chapterIndex, lessonIndex) => {
-    if (curriculums[chapterIndex].lessons.length > 1) {
-      setFormData((prev) => ({
-        ...prev,
-        curriculums: removeLessonFromChapter(prev.curriculums, chapterIndex, lessonIndex),
-      }));
-    }
-    return;
   };
 
   return (
@@ -148,19 +88,7 @@ function CreateCurriculum({ curriculums, setFormData }) {
                               handleLessonChange(chapterIndex, lessonIndex, e.target.value);
                             }}
                           />
-                          {/* <Input
-                            name="mediaRuningTime"
-                            id="mediaRuningTime"
-                            lable="시간"
-                            type="text"
-                            placeholder="00:00"
-                            label="영상 시간"
-                            outerClassName="col-span-2"
-                            value={lesson.runingTime}
-                            onChange={(e) => {
-                              handleRuningTimeChange(chapterIndex, lessonIndex, e.target.value);
-                            }}
-                          /> */}
+
                           <button
                             type="button"
                             className={`flex items-center justify-center rounded-md px-3 py-1 pt-8 text-sm font-medium transition-all duration-200 ${
@@ -175,7 +103,7 @@ function CreateCurriculum({ curriculums, setFormData }) {
                             <Minus
                               size={24}
                               color={
-                                curriculums[chapterIndex].lessons.length < 1 ? '#9ca3af' : '#1a1a1a'
+                                curriculums[chapterIndex].lessons.length < 1 ? '#1a1a1a' : '#9ca3af'
                               }
                             />
                           </button>
