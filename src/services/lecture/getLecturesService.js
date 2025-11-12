@@ -13,23 +13,29 @@ export const getLectures = async ({
   try {
     const baseRef = collection(db, LECTURES_COLLECTION_NAME);
 
-    // 실제 데이터 쿼리
-    const dataQuery = buildLectureQuery(baseRef, category, sort, startAfterDoc, limitCount);
+    // limitCount가 null일 경우 전체 데이터 불러오기
+    const dataQuery = buildLectureQuery(
+      baseRef,
+      category,
+      sort,
+      startAfterDoc,
+      limitCount || undefined,
+    );
+
     const querySnapshot = await getDocs(dataQuery);
     const lectures = querySnapshot.docs.map((doc) => ({
       lectureId: doc.id,
       ...doc.data(),
     }));
 
-    // 조건에 맞는 전체 개수 쿼리 (
-    const countQuery = buildLectureQuery(baseRef, category, sort, null, null, true); // count용 모드
+    const countQuery = buildLectureQuery(baseRef, category, sort, null, null, true);
     const snapshotCount = await getCountFromServer(countQuery);
 
     const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
 
     return {
       lectures,
-      total: snapshotCount.data().count, // 필터 조건 반영된 총 개수
+      total: snapshotCount.data().count,
       lastDoc,
     };
   } catch (error) {

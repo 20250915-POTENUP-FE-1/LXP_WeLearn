@@ -57,7 +57,6 @@ function CreateCurriculum({ curriculums, setFormData, addLesson, deleteChapter, 
                   <button
                     type="button"
                     aria-label="챕터 삭제"
-                    disabled={curriculums.length <= 1}
                     onClick={() => {
                       if (curriculums.length <= 1) {
                         toast.error('최소 1개의 챕터는 필요합니다.');

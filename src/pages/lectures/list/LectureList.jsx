@@ -12,9 +12,9 @@ import PageSectionHeader from '../../../components/common/PageSectionHeader.jsx'
 const LectureList = () => {
   const [lectureDatas, setLectureDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [pageInfo, setPageInfo] = useState({}); // 페이지별 커서 저장
+  const [pageInfo, setPageInfo] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalCount, setTotalCount] = useState(0); // 전체 강의 개수
+  const [totalCount, setTotalCount] = useState(0);
 
   const [searchParams] = useSearchParams();
   const category = searchParams.get('category') || 'all';
@@ -25,15 +25,38 @@ const LectureList = () => {
       ? '전체 강의'
       : CATEGORIES.find((c) => c.key === category)?.name || '전체 강의';
 
-  // 페이지별 강의 로드
+  // 누락된 커서들을 순차적으로 생성
+  const prepareCursorsIfNeeded = async (pageNum) => {
+    if (pageNum <= 1) return;
+    const tempPageInfo = { ...pageInfo };
+
+    for (let i = 1; i < pageNum; i++) {
+      if (!tempPageInfo[i]) {
+        const { lastDoc } = await getLectures({
+          category,
+          sort,
+          limitCount: ITEMS_PER_PAGE,
+          startAfterDoc: tempPageInfo[i - 1] || null,
+        });
+        if (lastDoc) tempPageInfo[i] = lastDoc;
+      }
+    }
+
+    setPageInfo(tempPageInfo);
+    return tempPageInfo;
+  };
+
   const fetchLecturePage = async (pageNum = 1) => {
     setIsLoading(true);
+
+    const updatedPageInfo = await prepareCursorsIfNeeded(pageNum);
 
     const { lectures, total, lastDoc } = await getLectures({
       category,
       sort,
       limitCount: ITEMS_PER_PAGE,
-      startAfterDoc: pageInfo[pageNum - 1] || null,
+      startAfterDoc:
+        (updatedPageInfo && updatedPageInfo[pageNum - 1]) || pageInfo[pageNum - 1] || null,
     });
 
     setLectureDatas(lectures);
@@ -47,7 +70,7 @@ const LectureList = () => {
     setIsLoading(false);
   };
 
-  // 카테고리/정렬 변경 시 1페이지부터 다시 조회
+  // 카테고리 / 정렬 변경 시 초기화
   useEffect(() => {
     setLectureDatas([]);
     setPageInfo({});
@@ -55,7 +78,7 @@ const LectureList = () => {
     fetchLecturePage(1);
   }, [category, sort]);
 
-  // 페이지 변경 시 데이터 불러오기
+  // 페이지 변경 시 데이터 로드
   useEffect(() => {
     fetchLecturePage(currentPage);
   }, [currentPage]);
@@ -68,22 +91,23 @@ const LectureList = () => {
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 md:px-8">
         <RowCategories />
       </div>
+
       <section className="lecture-grid min-h-[808px] w-full pt-12 pb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* 총 갯수 */}
           <div className="mb-6">
             <p className="text-sm text-gray-600">
               <span className="mr-1">총</span>
-              <span className="font-medium text-gray-900">
-                {category === 'all' ? totalCount : lectureDatas.length}
-              </span>
+              <span className="font-medium text-gray-900">{totalCount}</span>
               개의 강의
             </p>
           </div>
 
-          {/* 목록 */}
           <div
-            className={`grid grid-cols-1 gap-6 ${lectureDatas.length !== 0 ? 'sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : 'gird-cols-1 h-[400px]'} items-center`}
+            className={`grid grid-cols-1 gap-6 ${
+              lectureDatas.length !== 0
+                ? 'sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+                : 'gird-cols-1 h-[400px]'
+            } items-center`}
           >
             {isLoading ? (
               <GlobalLoading />
@@ -98,7 +122,6 @@ const LectureList = () => {
         </div>
       </section>
 
-      {/* 페이지네이션 */}
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
     </>
   );
