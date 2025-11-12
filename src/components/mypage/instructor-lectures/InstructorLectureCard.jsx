@@ -1,17 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Users } from 'lucide-react';
+import { Users, Star } from 'lucide-react';
+import { getLectureStatsByLecture } from '../../../services/lecture/getLectureStatsByLecture.js';
 
-export default function InstructorLectureCard({
-  id, // Firestore 문서 id
+function InstructorLectureCard({
   lectureId,
   thumbnailUrl,
   title,
   userName,
-  studentCount = 0,
   categoryName,
   onDelete,
 }) {
+  // 상태 관리
+  const [stats, setStats] = useState({
+    enrollmentCount: 0,
+    reviewCount: 0,
+    avgRating: 0,
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      if (!lectureId) return;
+
+      try {
+        const data = await getLectureStatsByLecture(lectureId);
+        setStats(data);
+      } catch (error) {
+        console.log('강의 데이터 불러오기 실패:', error);
+      }
+    };
+    fetchStats();
+  }, [lectureId]);
+
   return (
     <article className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-lg">
       <div className="flex flex-col sm:flex-row">
@@ -35,15 +55,29 @@ export default function InstructorLectureCard({
           </div>
 
           <div className="mb-4 flex items-center gap-4 border-b border-gray-200 pb-4 text-sm text-gray-600">
+            {/* 별점 */}
+            <div className="flex items-center gap-1">
+              <Star size={16} className="fill-yellow-400 text-yellow-400" />
+              <span className="font-medium text-gray-900">{stats.avgRating.toFixed(1)}</span>
+            </div>
+
+            {/* 리뷰 개수 */}
+            <div className="flex items-center gap-1">
+              <MessageSquare size={16} />
+              <span>({stats.reviewCount})</span>
+            </div>
+
+            {/* 수강 인원 */}
+
             <div className="flex items-center gap-1">
               <Users size={16} />
-              <span>{studentCount}명 수강</span>
+              <span>{stats.enrollmentCount}명 수강</span>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <Link
-              to={`/mypage/edit-lecture/${id}`}
+              to={`/mypage/edit-lecture/${lectureId}`}
               className="flex-1 rounded-lg bg-zinc-900 px-4 py-2 text-center text-sm font-medium text-white hover:bg-zinc-800"
             >
               수정
@@ -60,3 +94,5 @@ export default function InstructorLectureCard({
     </article>
   );
 }
+
+export default InstructorLectureCard;

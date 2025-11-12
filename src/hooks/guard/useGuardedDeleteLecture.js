@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { toast as defaultToast } from 'react-toastify';
-import { getEnrollmentCountByLecture } from '../../services/lecture/getEnrollmentCountByLecture.js';
 import { deleteLectureService } from '../../services/lecture/deleteLectureService.js';
+import { getLectureStatsByLecture } from '../../services/lecture/getLectureStatsByLecture.js';
 /**
  * 강의 삭제 훅: 수강생 ≥ 1이면 차단, 0이면 삭제
  * @param {Object} opt
@@ -31,7 +31,7 @@ export function useGuardedDeleteLecture(opt = {}) {
         setRemovingId(lectureId);
 
         // 1) 수강생 수 조회
-        const count = await getEnrollmentCountByLecture(lectureId);
+        const count = await getLectureStatsByLecture(lectureId);
 
         // 2) 조건
         if (count >= 1) {
