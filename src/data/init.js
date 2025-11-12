@@ -127,12 +127,16 @@ async function init(count = 50) {
 
     for (let i = 0; i < lecturesInfo.length; i++) {
       const lectureId = lecturesInfo[i].lectureId;
-      const randomCount = randomNumber(0, 12);
-      // 유저는 중복이 되면 안됌
-      const selectedUsers = shuffle(lecturesInfo).slice(0, randomCount);
+      const instructorId = lecturesInfo[i].userId;
+      const pick = Math.min(randomNumber(0, 20), usersInfo.length);
 
-      for (let k = 0; k < selectedUsers.length; k++) {
-        const userId = selectedUsers[k].userId;
+      // ① 수강 후보: 전체 유저에서 '해당 강의의 강사' 제외
+      const candidates = shuffle(usersInfo)
+        .filter((u) => u.userId !== instructorId)
+        .slice(0, pick);
+
+      for (let k = 0; k < candidates.length; k++) {
+        const userId = candidates[k].userId;
         const enrollment = createRandomEnrollment();
         const docRef = doc(enrollmentColRef); // 여기서 Firestore가 랜덤 문서 ID 생성 (userId 대용)
         const enrollmentId = docRef.id;
@@ -142,7 +146,7 @@ async function init(count = 50) {
         enrollmentsInfo.push(payload);
 
         console.log(
-          `[${chalk.bold.cyan(selectedUsers[k].userName)}]님이 ${lecturesInfo[i].title} 수강 신청`,
+          `[${chalk.bold.cyan(candidates[k].userName)}]님이 ${lecturesInfo[i].title} 수강 신청`,
         );
 
         batch.set(docRef, payload);

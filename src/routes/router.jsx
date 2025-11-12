@@ -5,7 +5,7 @@ import MainLayout from '../components/layout/MainLayout.jsx';
 import LectureList from '../pages/lectures/list/LectureList.jsx';
 import LectureDetail from '../pages/lectures/detail/LectureDetail.jsx';
 import { RequireAuth, RequireRole, RequireUnAuth } from '../auth/guards.jsx';
-import MyLectures from '../pages/mypage/(user)/my-lectures/MyLectures.jsx';
+import MyEnrolledLectures from '../pages/mypage/(user)/my-lectures/MyEnrolledLectures.jsx';
 import CreateLecture from '../pages/mypage/(instructor)/create-lecture/CreateLecture.jsx';
 import InstructorLectures from '../pages/mypage/(instructor)/instructor-lectures/InstructorLectures.jsx';
 import EditLecture from '../pages/mypage/(instructor)/edit-lecture/EditLecture.jsx';
@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <Navigate to="my-lectures" replace /> },
-      { path: 'my-lectures', element: <MyLectures /> },
+      { path: 'my-lectures', element: <MyEnrolledLectures /> },
 
       // 강사용(권한 제한)
       {

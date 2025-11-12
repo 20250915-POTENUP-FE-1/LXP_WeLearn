@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 
 const MyPageAsideProfileBar = ({ children }) => {
   const { user } = useSelector((s) => s.auth);
-  console.log(user);
 
   return (
     <aside className="lg:col-span-1">
