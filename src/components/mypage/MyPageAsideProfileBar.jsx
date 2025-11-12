@@ -41,7 +41,7 @@ const MyPageAsideProfileBar = ({ children }) => {
           <button
             className="block w-full rounded-lg px-4 py-3 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
             onClick={() => {
-              toast.info('현재 개발 중 입니다.');
+              toast.info('현재 서비스 준비 중 입니다.', { toastId: 'mypage-prepare' });
             }}
           >
             즐겨찾기
