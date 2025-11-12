@@ -1,8 +1,12 @@
 import React from 'react';
 import { User } from 'lucide-react';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 const MyPageAsideProfileBar = ({ children }) => {
+  const { user } = useSelector((s) => s.auth);
+  console.log(user);
+
   return (
     <aside className="lg:col-span-1">
       <div className="rounded-lg bg-white p-6 shadow-md">
@@ -13,8 +17,8 @@ const MyPageAsideProfileBar = ({ children }) => {
               <User className="size-14" />
             </span>
           </div>
-          <h2 className="mb-1 text-lg font-bold text-gray-900">홍길동</h2>
-          <p className="text-sm text-gray-500">student@lxp.com</p>
+          <h2 className="mb-1 text-lg font-bold text-gray-900">{user.userName}</h2>
+          <p className="text-sm text-gray-500">{user.email}</p>
         </div>
 
         {/* <!-- Menu --> */}
@@ -25,12 +29,14 @@ const MyPageAsideProfileBar = ({ children }) => {
           >
             수강 중인 강의
           </button>
-          <button
-            href="/mypage/registered"
-            className="block w-full rounded-lg px-4 py-3 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
-          >
-            내가 등록한 강의
-          </button>
+          {(user.role.toUpperCase() === 'ADMIN' || user.role.toUpperCase() === 'INSTRUCTOR') && (
+            <button
+              href="/mypage/registered"
+              className="block w-full rounded-lg px-4 py-3 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+            >
+              내가 등록한 강의
+            </button>
+          )}
           <button
             className="block w-full rounded-lg px-4 py-3 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
             onClick={() => {

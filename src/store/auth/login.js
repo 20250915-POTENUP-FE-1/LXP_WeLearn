@@ -18,7 +18,7 @@ export const login = createAsyncThunk('auth/login', async (payload, { rejectWith
         uid: user.uid,
         email: user.email,
         role: userProfile.role,
-        name: userProfile.name ?? '',
+        userName: userProfile.userName ?? '',
       },
     };
   } catch (error) {
