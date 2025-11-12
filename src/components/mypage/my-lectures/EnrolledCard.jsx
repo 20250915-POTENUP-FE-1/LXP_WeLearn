@@ -1,10 +1,7 @@
-import React, { useMemo } from 'react';
-import { Heart, ChevronRight, Play, CheckCircle, Clock, BookOpen, User } from 'lucide-react';
-import LevelTag from './enrolled-card/LevelTag.jsx';
-import RatingStars from './enrolled-card/RatingStars.jsx';
+import React from 'react';
+import { ChevronRight, BookOpen } from 'lucide-react';
 import { fmtDate } from '../../../utils/fmtDate.js';
 import CATEGORIES from '../../../constants/categories.js';
-import Button from '../../ui/Button.jsx'; // 설치 안돼 있으면 폴백 사용됨
 
 export function EnrolledCard({ status, enrolledAt, reviews, lecture }) {
   const title = lecture?.title ?? '(삭제된 강의)';
