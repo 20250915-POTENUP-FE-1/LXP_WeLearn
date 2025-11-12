@@ -57,13 +57,13 @@ function Header() {
                 <>
                   <button
                     onClick={() => handleNavi('/mypage')}
-                    className="text-sm font-medium whitespace-nowrap text-gray-700 transition-colors hover:text-gray-900"
+                    className="rounded-lg bg-white px-4 py-2 text-sm font-medium whitespace-nowrap text-gray-900 transition-colors duration-150 hover:bg-gray-200"
                   >
                     마이페이지
                   </button>
                   <button
                     onClick={handleLogout}
-                    className="rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium whitespace-nowrap text-gray-900 transition-colors hover:bg-white"
+                    className="rounded-lg bg-white px-4 py-2 text-sm font-medium whitespace-nowrap text-gray-900 transition-colors duration-150 hover:bg-gray-200"
                   >
                     로그아웃
                   </button>
@@ -72,13 +72,13 @@ function Header() {
                 <>
                   <button
                     onClick={() => handleNavi(`/login`)}
-                    className="text-sm font-medium whitespace-nowrap text-gray-700 transition-colors hover:text-gray-900"
+                    className="rounded-lg bg-white px-4 py-2 text-sm font-medium whitespace-nowrap text-gray-900 transition-colors duration-150 hover:bg-gray-200"
                   >
                     로그인
                   </button>
                   <button
                     onClick={() => handleNavi(`/signup`)}
-                    className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium whitespace-nowrap text-white transition-colors hover:bg-gray-800"
+                    className="rounded-lg bg-white px-4 py-2 text-sm font-medium whitespace-nowrap text-gray-900 transition-colors duration-150 hover:bg-gray-200"
                   >
                     회원가입
                   </button>
