@@ -1,10 +1,7 @@
-// src/pages/mypage/(instructor)/instructor-lectures/InstructorLectures.jsx
-
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import PageSectionHeader from '../../../../components/common/PageSectionHeader.jsx';
 import MyPageAsideProfileBar from '../../../../components/mypage/MyPageAsideProfileBar.jsx';
-import Categories from '../../../../components/categories/Categories.jsx';
 import InstructorLectureCard from '../../../../components/mypage/instructor-lectures/InstructorLectureCard.jsx';
 import GlobalLoading from '../../../../components/loading/GlobalLoading.jsx';
 import NothingMyLectures from '../../../../components/mypage/my-lectures/NothingMyLectures.jsx';
@@ -14,7 +11,6 @@ import { useGuardedDeleteLecture } from '../../../../hooks/guard/useGuardedDelet
 
 const InstructorLectures = () => {
   const { user } = useSelector((state) => state.auth); // 강사 id 가져오기
-  useState;
   // 무한스크롤 훅 사용
   const { items, isLoading, error, hasMore, sentinelRef, setItems } = useInfiniteLectures({
     category: 'all',

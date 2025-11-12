@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/auth/logout.js';
 import SkeletonButton from '../ui/SkeletonButton.jsx';
 import { toast } from 'react-toastify';
-import logo from '/logo/logo_welearn.svg';
 
 function Header() {
   const navigate = useNavigate();
@@ -41,7 +40,7 @@ function Header() {
               </div> */}
               {/* <span className="hidden text-xl font-bold text-gray-900 sm:block">LXP</span> */}
               <div className="w-36">
-                <img src={logo} alt="welearn" />
+                <img src="/src/assets/logo/logo_welearn.svg" alt="welearn" />
               </div>
             </button>
           </div>
