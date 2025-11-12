@@ -11,7 +11,6 @@ function CreateThumNail() {
           type="file"
           accept=".jpg,.jpeg,.png,.webp"
           className="block w-full text-sm text-gray-500 file:mr-4 file:rounded-lg file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-blue-700 hover:file:bg-blue-100"
-          required
         />
         <p className="text-sm text-gray-500">권장 16:9, JPG/PNG/WEBP</p>
         <div

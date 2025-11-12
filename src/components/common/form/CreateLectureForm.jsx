@@ -1,52 +1,66 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import CreateLectureTitle from '../../create-lecture/CreateLectureTitle';
 import Input from './Input';
 import Textarea from './Textarea';
 import SelectOption from './SelectOption';
 import CATEGORIRES from '../../../constants/categories';
 import CreateCurriculum from '../../create-lecture/CreateCurriculum';
+import { useSelector } from 'react-redux';
 import CreateThumNail from '../../create-lecture/CreateThumNail';
+import { registLectureService } from '../../../services/lecture/registLectureService';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import useLectureForm from '../../../hooks/lectures/useLectureForm';
 
 function CreateLectureForm() {
-  const [formData, setFormData] = useState({
+  const { user } = useSelector((s) => s.auth);
+  const userId = user?.uid || null;
+  const userName = user?.name || null;
+
+  const initialFormData = {
     title: '',
     description: '',
     level: '',
     category: '',
     thumbnailUrl: '',
-    userName: '',
     content: '',
     curriculums: [
       {
         chapterTitle: '',
-        lessons: [{ lessonId: '', lessonMediaUrl: '', lessonTitle: '', runingTime: '' }],
+        lessons: [{ lessonMediaUrl: '', lessonTitle: '' }],
       },
     ],
-  });
+  };
+
+  const { formData, setFormData, addChapter, deleteChapter, deleteLesson, addLesson } =
+    useLectureForm(initialFormData);
+
+  const navigate = useNavigate();
 
   const level = [
-    { key: '입문', value: 'begginer', name: '입문' },
-    { key: '초급', value: 'low', name: '초급' },
-    { key: '중급', value: 'middle', name: '중급' },
-    { key: '고급', value: 'high', name: '고급' },
+    { key: 'begginer', value: '입문', name: '입문' },
+    { key: 'low', value: '초급', name: '초급' },
+    { key: 'middle', value: '중급', name: '중급' },
+    { key: 'high', value: '고급', name: '고급' },
   ];
 
   const handleLectureData = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
-  };
-
-  // ✅ 챕터 추가
-  const addChapter = () => {
+    const { id, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      curriculums: [
-        ...prev.curriculums,
-        { chapterTitle: '', lessons: [{ lessonId: '', lessonMediaUrl: '', lessonTitle: '' }] },
-      ],
+      [id]: id === 'category' ? Number(value) : value,
     }));
+  };
+
+  const handleRegist = async (e) => {
+    e.preventDefault();
+    try {
+      await registLectureService({ userId, userName, formData });
+      toast.success('강의 등록이 완료되었습니다.');
+      navigate('/mypage/instructor-lectures');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -101,7 +115,7 @@ function CreateLectureForm() {
               label="난이도"
               id="level"
               aria-required="true"
-              placeholder="옵션을 선택해주세요."
+              placeholder="난이도를 선택해주세요."
               options={level}
               value={formData.level}
               onChange={handleLectureData}
@@ -130,12 +144,20 @@ function CreateLectureForm() {
           <h2 id="curi-title" className="mb-4 text-xl font-semibold text-gray-900">
             커리큘럼 구성
           </h2>
-          <CreateCurriculum curriculums={formData.curriculums} setFormData={setFormData} />
+          <CreateCurriculum
+            curriculums={formData.curriculums}
+            setFormData={setFormData}
+            addLesson={addLesson}
+            deleteLesson={deleteLesson}
+            deleteChapter={deleteChapter}
+          />
           <div className="mt-4 flex justify-end">
             <button
               type="button"
               id="addSectionBtn"
-              onClick={addChapter}
+              onClick={() => {
+                addChapter(setFormData);
+              }}
               className="rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
             >
               + 챕터 추가
@@ -149,15 +171,18 @@ function CreateLectureForm() {
           role="group"
           aria-label="제출 동작"
         >
-          <a
+          <button
             className="rounded-lg border border-gray-300 bg-white px-6 py-3 font-medium text-gray-700 hover:bg-gray-50"
-            href="/instructor/my-lectures"
+            onClick={() => {
+              navigate('/mypage/instructor-lectures');
+            }}
           >
             취소
-          </a>
+          </button>
           <button
             type="submit"
             className="rounded-lg bg-black px-8 py-3 text-lg font-medium text-white hover:bg-gray-800"
+            onClick={handleRegist}
           >
             등록하기
           </button>

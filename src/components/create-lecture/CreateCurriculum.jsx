@@ -1,23 +1,10 @@
 import React, { Fragment } from 'react';
 import Input from '../common/form/Input';
-import { X } from 'lucide-react';
+import { X, Minus } from 'lucide-react';
 
-function CreateCurriculum({ curriculums, setFormData }) {
-  // 빈 lesson 템플릿
-  const EMPTY_LESSON = {
-    lessonId: '',
-    lessonMediaUrl: '',
-    lessonTitle: '',
-    runingTime: '',
-  };
-
-  function appendEmptyLessonToChapter(curriculums, chapterIndex, template = EMPTY_LESSON) {
-    return curriculums.map((chapter, idx) =>
-      idx === chapterIndex
-        ? { ...chapter, lessons: [...(chapter.lessons ?? []), { ...template }] }
-        : chapter,
-    );
-  }
+function CreateCurriculum({ curriculums, setFormData, addLesson, deleteChapter, deleteLesson }) {
+  const disabled = 'cursor-not-allowed text-gray-400';
+  const abled = 'text-[#1a1a1a] hover:text-gray-700 active:scale-95';
 
   const handleChapterTitle = (index, value) => {
     setFormData((prev) => {
@@ -26,29 +13,13 @@ function CreateCurriculum({ curriculums, setFormData }) {
       return { ...prev, curriculums: updated };
     });
   };
-  // ✅ 레슨 제목 변경
+  // 레슨 제목 변경
   const handleLessonChange = (chapterIndex, lessonIndex, value) => {
     setFormData((prev) => {
       const updated = prev.curriculums;
       updated[chapterIndex].lessons[lessonIndex].lessonTitle = value;
       return { ...prev, curriculums: updated };
     });
-  };
-
-  const handleRuningTimeChange = (chapterIndex, lessonIndex, value) => {
-    setFormData((prev) => {
-      const updated = prev.curriculums;
-      updated[chapterIndex].lessons[lessonIndex].runingTime = value;
-      return { ...prev, curriculums: updated };
-    });
-  };
-
-  // ✅ 레슨 추가
-  const addLesson = (chapterIndex) => {
-    setFormData((prev) => ({
-      ...prev,
-      curriculums: appendEmptyLessonToChapter(prev.curriculums, chapterIndex),
-    }));
   };
 
   return (
@@ -65,7 +36,7 @@ function CreateCurriculum({ curriculums, setFormData }) {
               {/* 챕터 */}
               <div className="rounded-lg border border-gray-200" open>
                 <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 hover:bg-gray-100">
-                  <span className="text-gray-70 min-w-4 items-center justify-center pt-6 font-semibold after:content-['.']">
+                  <span className="text-gray-70 min-w-4 items-center justify-center pt-8 font-semibold after:content-['.']">
                     {`${chapterIndex + 1}`}
                   </span>
 
@@ -84,18 +55,26 @@ function CreateCurriculum({ curriculums, setFormData }) {
                   />
                   <button
                     type="button"
-                    className="w-13 px-3 py-1 pt-6 text-sm font-medium text-red-600 hover:text-red-700"
-                    aria-label="섹션 삭제"
+                    aria-label="챕터 삭제"
+                    disabled={curriculums.length <= 1}
+                    onClick={() => deleteChapter(chapterIndex)}
+                    className={`flex items-center justify-center rounded-md px-3 py-1 pt-8 text-sm font-medium transition-all duration-200 ${
+                      curriculums.length <= 1 ? disabled : abled
+                    }`}
                   >
-                    <X size={24} color="#1a1a1a" />
+                    <X size={24} color={curriculums.length <= 1 ? '#9ca3af' : '#1a1a1a'} />
                   </button>
                 </div>
-                <div className="space-y-3 p-4">
-                  <ol className="space-y-2">
+
+                <div className="flex flex-col space-y-3 p-4">
+                  <ol className="flex flex-col justify-end gap-3 rounded-lg">
                     {chapter.lessons.map((lesson, lessonIndex) => {
                       return (
                         // 레슨
-                        <li className="grid grid-cols-20 items-center gap-2" key={lessonIndex}>
+                        <li className="flex items-center gap-2" key={lessonIndex + 1}>
+                          <span className="text-gray-70 pr min-w-4 items-center justify-center pt-8 font-semibold">
+                            {`${chapterIndex + 1}.${lessonIndex + 1}`}
+                          </span>
                           <Input
                             name="lessonTitle"
                             id="lessonTitle"
@@ -103,45 +82,44 @@ function CreateCurriculum({ curriculums, setFormData }) {
                             required
                             placeholder="예: 코딩이란?"
                             type="text"
-                            outerClassName="col-span-17"
+                            outerClassName="flex-1"
                             value={lesson.lessonTitle}
                             onChange={(e) => {
                               handleLessonChange(chapterIndex, lessonIndex, e.target.value);
                             }}
                           />
-                          <Input
-                            name="mediaRuningTime"
-                            id="mediaRuningTime"
-                            lable="시간"
-                            type="text"
-                            placeholder="00:00"
-                            required
-                            aria-required="true"
-                            label="영상 시간"
-                            outerClassName="col-span-2"
-                            value={lesson.runingTime}
-                            onChange={(e) => {
-                              handleRuningTimeChange(chapterIndex, lessonIndex, e.target.value);
-                            }}
-                          />
+
                           <button
                             type="button"
-                            className="px-3 py-1 pt-6 text-sm font-medium text-red-600 hover:text-red-700"
+                            className={`flex items-center justify-center rounded-md px-3 py-1 pt-8 text-sm font-medium transition-all duration-200 ${
+                              curriculums[chapterIndex].lessons.length < 1 ? disabled : abled
+                            }`}
+                            disabled={curriculums[chapterIndex].lessons.length < 1}
                             aria-label="레슨 삭제"
+                            onClick={() => {
+                              deleteLesson(chapterIndex, lessonIndex);
+                            }}
                           >
-                            <X size={24} color="#1a1a1a" />
+                            <Minus
+                              size={24}
+                              color={
+                                curriculums[chapterIndex].lessons.length < 1 ? '#1a1a1a' : '#9ca3af'
+                              }
+                            />
                           </button>
                         </li>
                       );
                     })}
                   </ol>
-                  <button
-                    type="button"
-                    onClick={() => addLesson(chapterIndex)}
-                    className="add-lesson rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
-                  >
-                    + 레슨 추가
-                  </button>
+                  <div className="px-6">
+                    <button
+                      type="button"
+                      onClick={() => addLesson(chapterIndex)}
+                      className="mt-4 w-26 rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
+                    >
+                      + 레슨 추가
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
