@@ -42,7 +42,8 @@ function CreateThumbnail({ formData, setFormData }) {
           e.preventDefault();
           setIsDragOver(true);
         }}
-        onDragLeave={() => setIsDragOver(false)}
+        // onDrag={() => {setIsDragOver(true)}}
+        DragLeave={() => setIsDragOver(false)}
         className={`group mt-4 flex aspect-video min-h-[200px] w-full cursor-pointer flex-col items-center justify-center rounded-lg text-gray-400 shadow-sm transition-all duration-200 ${isDragOver ? 'bg-gray-200 text-[#1a1a1a] shadow-md' : 'bg-gray-100 hover:text-[#1a1a1a] hover:shadow-md'} `}
       >
         {preview ? (
@@ -55,7 +56,7 @@ function CreateThumbnail({ formData, setFormData }) {
           <div className="flex flex-col items-center justify-center" aria-hidden="true">
             <CirclePlus size={48} strokeWidth={1} />
             <p className="text-sm text-gray-500 group-hover:text-[#1a1a1a]">JPG/JPEG/PNG/WEBP</p>
-            {isDragOver && <p className="mt-2 text-sm font-medium text-[#1a1a1a]">놓아서 업로드</p>}
+            {isDragOver && <p className="mt-2 text-sm font-medium text-[#1a1a1a]">Drag & Drop</p>}
           </div>
         )}
 
