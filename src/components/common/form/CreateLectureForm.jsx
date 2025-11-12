@@ -5,24 +5,32 @@ import Textarea from './Textarea';
 import SelectOption from './SelectOption';
 import CATEGORIRES from '../../../constants/categories';
 import CreateCurriculum from '../../create-lecture/CreateCurriculum';
+import { useSelector } from 'react-redux';
 import CreateThumNail from '../../create-lecture/CreateThumNail';
+import { registLectureService } from '../../../services/lecture/registLectureService';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function CreateLectureForm() {
+  const { user } = useSelector((s) => s.auth);
+  const userId = user?.uid || null;
+  const userName = user?.name || null;
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     level: '',
     category: '',
     thumbnailUrl: '',
-    userName: '',
     content: '',
     curriculums: [
       {
         chapterTitle: '',
-        lessons: [{ lessonId: '', lessonMediaUrl: '', lessonTitle: '', runingTime: '' }],
+        lessons: [{ lessonMediaUrl: '', lessonTitle: '' }],
       },
     ],
   });
+  const navigate = useNavigate();
 
   const level = [
     { key: '입문', value: 'begginer', name: '입문' },
@@ -47,6 +55,17 @@ function CreateLectureForm() {
         { chapterTitle: '', lessons: [{ lessonId: '', lessonMediaUrl: '', lessonTitle: '' }] },
       ],
     }));
+  };
+
+  const handleRegist = async (e) => {
+    e.preventDefault();
+    try {
+      await registLectureService({ userId, userName, formData });
+      toast.success('강의 등록이 완료되었습니다.');
+      navigate('/mypage/instructor-lectures');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -101,7 +120,7 @@ function CreateLectureForm() {
               label="난이도"
               id="level"
               aria-required="true"
-              placeholder="옵션을 선택해주세요."
+              placeholder="난이도를 선택해주세요."
               options={level}
               value={formData.level}
               onChange={handleLectureData}
@@ -149,15 +168,18 @@ function CreateLectureForm() {
           role="group"
           aria-label="제출 동작"
         >
-          <a
+          <button
             className="rounded-lg border border-gray-300 bg-white px-6 py-3 font-medium text-gray-700 hover:bg-gray-50"
-            href="/instructor/my-lectures"
+            onClick={() => {
+              navigate('/mypage/instructor-lectures');
+            }}
           >
             취소
-          </a>
+          </button>
           <button
             type="submit"
             className="rounded-lg bg-black px-8 py-3 text-lg font-medium text-white hover:bg-gray-800"
+            onClick={handleRegist}
           >
             등록하기
           </button>
