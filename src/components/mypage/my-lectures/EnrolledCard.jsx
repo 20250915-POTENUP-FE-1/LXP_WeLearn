@@ -2,12 +2,14 @@ import React from 'react';
 import { ChevronRight, BookOpen } from 'lucide-react';
 import { fmtDate } from '../../../utils/fmtDate.js';
 import CATEGORIES from '../../../constants/categories.js';
+import { useNavigate } from 'react-router-dom';
 
 export function EnrolledCard({ status, enrolledAt, reviews, lecture }) {
   const title = lecture?.title ?? '(삭제된 강의)';
   const thumb = lecture?.thumbnailUrl ?? '/placeholder.png';
   const level = lecture?.level;
   const teacher = lecture?.userName;
+  const navigate = useNavigate();
   const category = CATEGORIES.find((e) => e.id === lecture.category);
 
   return (
@@ -77,6 +79,7 @@ export function EnrolledCard({ status, enrolledAt, reviews, lecture }) {
           <div className="flex items-center gap-2">
             <button
               type="button"
+              onClick={() => navigate(`/lectures/detail/${lecture.lectureId}`)}
               className="flex-1 rounded-lg bg-zinc-900 px-4 py-2 text-center text-sm font-medium text-white hover:bg-zinc-800"
             >
               <span className="inline-flex items-center gap-1">
