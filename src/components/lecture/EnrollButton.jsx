@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthSelector } from '../../hooks/guard/useAuthSelector';
 import { db } from '../../lib/firebase/config.js';
-import { ENROLLMENTS_COLLECTION_NAME } from '../../lib/firebase/table/ddl.js';
+import {
+  ENROLLMENTS_COLLECTION_NAME,
+  LECTURES_COLLECTION_NAME,
+} from '../../lib/firebase/table/ddl.js';
 import {
   collection,
   query,
@@ -75,8 +78,9 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
 
     // 추가: lectureId 또는 firestoreDocId가 없는 경우 처리
     if (!lectureId || !firestoreDocId) {
-      // console.error('강의 정보가 없습니다:', { lectureId, firestoreDocId });
-      toast.error('강의 정보를 불러올 수 없습니다. 다시 시도해주세요.', { toastId: 'error' });
+      toast.error('강의 정보를 불러올 수 없습니다. 다시 시도해주세요.', {
+        toastId: 'enroll-error',
+      });
       return;
     }
 
@@ -111,7 +115,7 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
       });
 
       // 3) 수강 신청 완료 안내 + 해당 강의 수강 인원 수 증가
-      const lectureDocRef = doc(db, 'lecture-list', firestoreDocId);
+      const lectureDocRef = doc(db, LECTURES_COLLECTION_NAME, firestoreDocId);
       await updateDoc(lectureDocRef, {
         studentCount: increment(1),
       });
@@ -119,10 +123,14 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
 
       // 수강 신청 성공 시 상태 업데이트
       setIsEnrolled(true);
+      toast.success('수강 신청이 완료되었습니다!', {
+        toastId: 'enroll-success',
+      });
       if (onEnrollSuccess) {
         onEnrollSuccess();
       }
     } catch (error) {
+      // console.log('수강신청 오류 :', error);
       toast.error('수강 신청에 실패했습니다. 다시 시도해주세요.', { toastId: error });
     }
   };
