@@ -130,7 +130,6 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
         onEnrollSuccess();
       }
     } catch (error) {
-      // console.log('수강신청 오류 :', error);
       toast.error('수강 신청에 실패했습니다. 다시 시도해주세요.', { toastId: error });
     }
   };
