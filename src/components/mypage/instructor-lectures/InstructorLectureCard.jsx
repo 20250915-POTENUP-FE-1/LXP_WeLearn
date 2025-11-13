@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Star, MessageSquare } from 'lucide-react';
+import { Users, Star } from 'lucide-react';
 import { getLectureStatsByLecture } from '../../../services/lecture/getLectureStatsByLecture.js';
 
 function InstructorLectureCard({
@@ -58,34 +58,36 @@ function InstructorLectureCard({
           <div className="mb-4 flex items-center gap-4 border-b border-gray-200 pb-4 text-sm text-gray-600">
             {/* 별점 */}
             <div className="flex items-center gap-1">
-              <Star size={16} className="fill-yellow-400 text-yellow-400" />
+              <Star size={16} />
               <span className="font-medium text-gray-900">{stats.avgRating.toFixed(1)}</span>
-            </div>
-
-            {/* 리뷰 개수 */}
-            <div className="flex items-center gap-1">
-              <MessageSquare size={16} />
+              {/* 리뷰 개수 */}
               <span>({stats.reviewCount})</span>
             </div>
 
             {/* 수강 인원 */}
-
             <div className="flex items-center gap-1">
               <Users size={16} />
-              <span>{stats.enrollmentCount}명 수강</span>
+              <span>{stats.enrollmentCount}명 수강 중</span>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <Link
+              to={`/lectures/detail/${lectureId}`}
+              className="flex-1 rounded-lg bg-gray-100 px-4 py-2 text-center text-sm font-medium text-zinc-900 hover:bg-gray-200"
+            >
+              상세보기
+            </Link>
+            <Link
               to={`/mypage/edit-lecture/${lectureId}`}
-              className="flex-1 rounded-lg bg-zinc-900 px-4 py-2 text-center text-sm font-medium text-white hover:bg-zinc-800"
+              className="flex-1 rounded-lg bg-gray-100 px-4 py-2 text-center text-sm font-medium text-zinc-900 hover:bg-gray-200"
             >
               수정
             </Link>
+
             <button
               onClick={() => onDelete?.({ lectureId })}
-              className="rounded-lg bg-red-50 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-100"
+              className="rounded-lg bg-red-50 px-4 py-2 text-sm font-medium text-[#ea4848] hover:bg-[#ea4848]/20"
             >
               삭제
             </button>
