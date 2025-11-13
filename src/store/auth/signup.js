@@ -24,7 +24,7 @@ export const signup = createAsyncThunk('auth/signup', async (payload, { rejectWi
     // - 사용자 프로필 정보 저장 요청 (Firebase Firestore에 저장)
     await addUserProfile(user.uid, {
       email: payload.email,
-      name: payload.name || '',
+      userName: payload.userName || '',
     });
     // - 사용자 프로필 조회 요청 (성공시 사용자 프로필 객체 반환)
     const userProfile = await getUserProfile(user.uid);
@@ -35,7 +35,7 @@ export const signup = createAsyncThunk('auth/signup', async (payload, { rejectWi
         uid: user.uid,
         email: user.email,
         role: userProfile.role,
-        name: userProfile.name ?? '',
+        userName: userProfile.userName ?? '',
       },
     };
   } catch (error) {

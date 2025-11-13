@@ -57,7 +57,7 @@ const SignupForm = () => {
       signup({
         email: formData.email,
         password: formData.password,
-        name: formData.userName,
+        userName: formData.userName,
       }),
     );
 

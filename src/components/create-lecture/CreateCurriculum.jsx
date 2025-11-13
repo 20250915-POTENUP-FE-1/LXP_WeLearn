@@ -3,29 +3,29 @@ import Input from '../common/form/Input';
 import { X, Minus } from 'lucide-react';
 import { toast } from 'react-toastify';
 
-function CreateCurriculum({ curriculums, setFormData, addLesson, deleteChapter, deleteLesson }) {
+function CreateCurriculum({ curriculum, setFormData, addLesson, deleteChapter, deleteLesson }) {
   const disabled = 'cursor-not-allowed text-gray-400';
   const abled = 'text-[#1a1a1a] hover:text-gray-700 active:scale-95';
 
   const handleChapterTitle = (index, value) => {
     setFormData((prev) => {
-      const updated = prev.curriculums;
+      const updated = prev.curriculum;
       updated[index].chapterTitle = value;
-      return { ...prev, curriculums: updated };
+      return { ...prev, curriculum: updated };
     });
   };
   // 레슨 제목 변경
   const handleLessonChange = (chapterIndex, lessonIndex, value) => {
     setFormData((prev) => {
-      const updated = prev.curriculums;
+      const updated = prev.curriculum;
       updated[chapterIndex].lessons[lessonIndex].lessonTitle = value;
-      return { ...prev, curriculums: updated };
+      return { ...prev, curriculum: updated };
     });
   };
 
   return (
     <>
-      {curriculums.map((chapter, chapterIndex) => {
+      {curriculum.map((chapter, chapterIndex) => {
         return (
           <Fragment key={chapterIndex}>
             <div
@@ -58,17 +58,17 @@ function CreateCurriculum({ curriculums, setFormData, addLesson, deleteChapter, 
                     type="button"
                     aria-label="챕터 삭제"
                     onClick={() => {
-                      if (curriculums.length <= 1) {
+                      if (curriculum.length <= 1) {
                         toast.error('최소 1개의 챕터는 필요합니다.');
                         return;
                       }
                       deleteChapter(chapterIndex);
                     }}
                     className={`flex items-center justify-center rounded-md px-3 py-1 pt-8 text-sm font-medium transition-all duration-200 ${
-                      curriculums.length <= 1 ? disabled : abled
+                      curriculum.length <= 1 ? disabled : abled
                     }`}
                   >
-                    <X size={24} color={curriculums.length <= 1 ? '#9ca3af' : '#1a1a1a'} />
+                    <X size={24} color={curriculum.length <= 1 ? '#9ca3af' : '#1a1a1a'} />
                   </button>
                 </div>
 
@@ -98,11 +98,11 @@ function CreateCurriculum({ curriculums, setFormData, addLesson, deleteChapter, 
                           <button
                             type="button"
                             className={`flex items-center justify-center rounded-md px-3 py-1 pt-8 text-sm font-medium transition-all duration-200 ${
-                              curriculums[chapterIndex].lessons.length <= 1 ? disabled : abled
+                              curriculum[chapterIndex].lessons.length <= 1 ? disabled : abled
                             }`}
                             aria-label="레슨 삭제"
                             onClick={() => {
-                              if (curriculums[chapterIndex].lessons.length <= 1) {
+                              if (curriculum[chapterIndex].lessons.length <= 1) {
                                 toast.error('최소 1개의 레슨은 필요합니다.');
                                 return;
                               }
@@ -112,9 +112,7 @@ function CreateCurriculum({ curriculums, setFormData, addLesson, deleteChapter, 
                             <Minus
                               size={24}
                               color={
-                                curriculums[chapterIndex].lessons.length <= 1
-                                  ? '#9ca3af'
-                                  : '#1a1a1a'
+                                curriculum[chapterIndex].lessons.length <= 1 ? '#9ca3af' : '#1a1a1a'
                               }
                             />
                           </button>

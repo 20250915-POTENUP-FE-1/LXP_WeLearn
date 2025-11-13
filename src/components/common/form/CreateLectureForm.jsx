@@ -15,7 +15,7 @@ import useLectureForm from '../../../hooks/lectures/useLectureForm';
 function CreateLectureForm() {
   const { user } = useSelector((s) => s.auth);
   const userId = user?.uid || null;
-  const userName = user?.name || null;
+  const userName = user?.userName || null;
 
   const initialFormData = {
     title: '',
@@ -24,7 +24,7 @@ function CreateLectureForm() {
     category: '',
     thumbnailUrl: null,
     content: '',
-    curriculums: [
+    curriculum: [
       {
         chapterTitle: '',
         lessons: [{ lessonMediaUrl: '', lessonTitle: '' }],
@@ -149,7 +149,7 @@ function CreateLectureForm() {
             커리큘럼 구성
           </h2>
           <CreateCurriculum
-            curriculums={formData.curriculums}
+            curriculum={formData.curriculum}
             setFormData={setFormData}
             addLesson={addLesson}
             deleteLesson={deleteLesson}

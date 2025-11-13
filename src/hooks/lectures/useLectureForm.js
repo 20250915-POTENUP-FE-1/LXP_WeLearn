@@ -7,16 +7,16 @@ const EMPTY_LESSON = {
   lessonTitle: '',
 };
 
-function appendEmptyLessonToChapter(curriculums, chapterIndex, template = EMPTY_LESSON) {
-  return curriculums.map((chapter, idx) =>
+function appendEmptyLessonToChapter(curriculum, chapterIndex, template = EMPTY_LESSON) {
+  return curriculum.map((chapter, idx) =>
     idx === chapterIndex
       ? { ...chapter, lessons: [...(chapter.lessons ?? []), { ...template }] }
       : chapter,
   );
 }
 
-function removeLessonFromChapter(curriculums, chapterIndex, lessonIndex) {
-  return curriculums.map((chapter, index) =>
+function removeLessonFromChapter(curriculum, chapterIndex, lessonIndex) {
+  return curriculum.map((chapter, index) =>
     index === chapterIndex
       ? {
           ...chapter,
@@ -32,8 +32,8 @@ const useLectureForm = (initialFormData) => {
   const addChapter = (setFormData) =>
     setFormData((prev) => ({
       ...prev,
-      curriculums: [
-        ...prev.curriculums,
+      curriculum: [
+        ...prev.curriculum,
         { chapterTitle: '', lessons: [{ lessonId: '', lessonMediaUrl: '', lessonTitle: '' }] },
       ],
     }));
@@ -42,15 +42,15 @@ const useLectureForm = (initialFormData) => {
   const addLesson = (chapterIndex) => {
     setFormData((prev) => ({
       ...prev,
-      curriculums: appendEmptyLessonToChapter(prev.curriculums, chapterIndex),
+      curriculum: appendEmptyLessonToChapter(prev.curriculum, chapterIndex),
     }));
   };
 
   // 챕터 삭제
   const deleteChapter = (chapterIndex) => {
     setFormData((prev) => {
-      const updated = prev.curriculums.filter((_, index) => index !== chapterIndex);
-      return { ...prev, curriculums: updated };
+      const updated = prev.curriculum.filter((_, index) => index !== chapterIndex);
+      return { ...prev, curriculum: updated };
     });
     return;
   };
@@ -58,12 +58,12 @@ const useLectureForm = (initialFormData) => {
   // 레슨 삭제
   const deleteLesson = (chapterIndex, lessonIndex) => {
     setFormData((prev) => {
-      const currLessons = prev.curriculums[chapterIndex].lessons;
+      const currLessons = prev.curriculum[chapterIndex].lessons;
       if (currLessons.length <= 1) return prev; // 최소 1개 유지
 
       return {
         ...prev,
-        curriculums: removeLessonFromChapter(prev.curriculums, chapterIndex, lessonIndex),
+        curriculum: removeLessonFromChapter(prev.curriculum, chapterIndex, lessonIndex),
       };
     });
   };

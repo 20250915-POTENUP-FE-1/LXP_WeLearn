@@ -13,7 +13,7 @@ export const registLectureService = async ({ userId, userName, formData }) => {
     const lectureId = newDocRef.id; // ← 자동 생성된 문서 ID
 
     // ✅ 각 lesson에 UUID 부여
-    const curriculumsWithUUID = formData.curriculums.map((chapter) => ({
+    const curriculumsWithUUID = formData.curriculum.map((chapter) => ({
       ...chapter,
       lessons: chapter.lessons.map((lesson) => ({
         ...lesson,
@@ -27,7 +27,7 @@ export const registLectureService = async ({ userId, userName, formData }) => {
       userName,
       lectureId, // 문서 ID를 내부 데이터에도 명시적으로 포함
       ...formData,
-      curriculums: curriculumsWithUUID,
+      curriculum: curriculumsWithUUID,
       lectureCreatedAt: serverTimestamp(),
     });
 
