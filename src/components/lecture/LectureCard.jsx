@@ -1,10 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CATEGORIES from '../../constants/categories';
 import { useNavigate } from 'react-router-dom';
+import { getLectureStatsByLecture } from '../../services/lecture/getLectureStatsByLecture';
+import { Star, User } from 'lucide-react';
 
 function LectureCard({ lecture }) {
   const category = CATEGORIES.find((e) => e.id === lecture.category);
   const navigate = useNavigate();
+
+  const [stats, setStats] = useState({
+    enrollmentCount: 0,
+    reviewCount: 0,
+    avgRating: 0,
+  });
+
+  useEffect(() => {
+    const fetchLectureStats = async () => {
+      if (!lecture) {
+        return;
+      }
+      try {
+        // 단 한 번의 호출로 모든 메타데이터 가져오기
+        const data = await getLectureStatsByLecture(lecture.lectureId);
+        setStats(data);
+      } catch (error) {
+        console.error('강의 메타데이터 불러오기 실패:', error);
+      }
+    };
+
+    fetchLectureStats();
+  }, [lecture.lectureId]);
 
   const handleMoveToDetail = () => {
     navigate(`/lectures/detail/${lecture.lectureId}`);
@@ -39,15 +64,13 @@ function LectureCard({ lecture }) {
 
         <div className="flex items-center justify-between border-t border-gray-100 pt-2">
           <div className="flex items-center space-x-1">
-            <svg className="h-4 w-4 fill-current text-yellow-400" viewBox="0 0 20 20">
-              <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-            </svg>
-            <span className="text-sm font-medium text-gray-900">4.8</span>
-            <span className="text-sm text-gray-500">(120)</span>
+            <Star size={16} />
+            <span className="text-sm font-medium text-gray-900">{lecture && stats.avgRating}</span>
+            <span className="text-sm text-gray-500">{`(${lecture && stats.reviewCount})`}</span>
           </div>
 
           <span className="text-sm text-gray-500">
-            {lecture.studentCount ? `(${lecture.studentCount}) 명` : ''}
+            {stats.enrollmentCount ? `${stats.enrollmentCount} 명` : ''}
           </span>
         </div>
       </div>
