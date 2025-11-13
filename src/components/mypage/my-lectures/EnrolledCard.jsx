@@ -3,6 +3,7 @@ import { ChevronRight, BookOpen } from 'lucide-react';
 import { fmtDate } from '../../../utils/fmtDate.js';
 import CATEGORIES from '../../../constants/categories.js';
 import { useNavigate } from 'react-router-dom';
+import StatusTag from './enrolled-card/StatusTag.jsx';
 
 export function EnrolledCard({ status, enrolledAt, reviews, lecture }) {
   const title = lecture?.title ?? '(삭제된 강의)';
@@ -58,21 +59,7 @@ export function EnrolledCard({ status, enrolledAt, reviews, lecture }) {
               <span>수강 신청일 {fmtDate(enrolledAt)}</span>
             </div>
 
-            {status === 'completed' ? (
-              <span className="rounded-md bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700">
-                수료
-              </span>
-            ) : status === 'active' ? (
-              <span className="rounded-md bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-700">
-                수강 중
-              </span>
-            ) : (
-              status && (
-                <span className="rounded-md bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700">
-                  {status}
-                </span>
-              )
-            )}
+            <StatusTag status={status} />
           </div>
 
           {/* 액션 */}
