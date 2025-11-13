@@ -24,7 +24,7 @@ function InstructorLectureCard({
 
       try {
         const data = await getLectureStatsByLecture(lectureId);
-        console.log('강의 데이터:', data);
+
         setStats(data);
       } catch (error) {
         console.log('강의 데이터 불러오기 실패:', error);
