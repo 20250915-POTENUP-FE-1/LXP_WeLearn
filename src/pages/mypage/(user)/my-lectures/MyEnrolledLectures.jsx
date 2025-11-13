@@ -54,14 +54,14 @@ const MyEnrolledLectures = () => {
             {error && <p>데이터 불러오는데 에러 발생</p>}
           </div>
         </section>
-      </div>
 
-      {hasMore ? (
-        <div ref={sentinelRef} className="h-10" />
-      ) : (
-        items.length > 0 && <div className="py-10 text-center text-2xl text-gray-700">- 끝 -</div>
-      )}
-      {isLoading && <GlobalLoading mention="데이터 불러오는 중..." />}
+        {hasMore ? (
+          <div ref={sentinelRef} className="h-10" />
+        ) : (
+          items.length > 0 && <div className="py-10 text-center text-gray-600">- 끝 -</div>
+        )}
+        {isLoading && <GlobalLoading mention="데이터 불러오는 중..." />}
+      </div>
     </>
   );
 };

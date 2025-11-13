@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { getLectureInfitService } from '../../services/lecture/getLectureInfitService.js';
 
 export function useInfiniteList({
   category,

@@ -140,7 +140,7 @@ function EnrollButton({ className, lectureId, firestoreDocId, instructorId, onEn
           type="button"
           onClick={handleClickEdit}
           className={[
-            'w-full rounded-lg bg-blue-600 px-8 py-3 text-base font-medium text-white transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:outline-none',
+            'w-full rounded-lg bg-[#EA4848] px-8 py-3 text-base font-medium text-white transition-colors hover:bg-[#EA4848]/70 focus:ring-2 focus:ring-[#EA4848] focus:ring-offset-2 focus:outline-none',
             className,
           ]
             .filter(Boolean)
