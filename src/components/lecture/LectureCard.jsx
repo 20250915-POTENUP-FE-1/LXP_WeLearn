@@ -64,7 +64,7 @@ function LectureCard({ lecture }) {
 
         <div className="flex items-center justify-between border-t border-gray-100 pt-2">
           <div className="flex items-center space-x-1">
-            <Star size={16} />
+            <Star size={16} color="#FFD700" fill="#FFD700" />
             <span className="text-sm font-medium text-gray-900">{lecture && stats.avgRating}</span>
             <span className="text-sm text-gray-500">{`(${lecture && stats.reviewCount})`}</span>
           </div>
