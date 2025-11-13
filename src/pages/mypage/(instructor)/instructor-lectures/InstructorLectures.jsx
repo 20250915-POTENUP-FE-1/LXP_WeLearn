@@ -9,8 +9,43 @@ import CreateBtnLectureCard from '../../../../components/mypage/instructor-lectu
 import { useGuardedDeleteLecture } from '../../../../hooks/guard/useGuardedDeleteLecture.js';
 import ColumnCategories from '../../../../components/categories/ColumnCategories.jsx';
 
+import { useEffect, useState } from 'react';
+import { db } from '../../../../lib/firebase/config.js';
+import { collection, getDocs } from 'firebase/firestore';
+import { LECTURES_COLLECTION_NAME } from '../../../../lib/firebase/table/ddl.js';
+
 const InstructorLectures = () => {
   const { user } = useSelector((state) => state.auth); // 강사 id 가져오기
+  const [testItems, setTestItems] = useState([]);
+
+  // 🧪 직접 데이터 가져오기 테스트
+  useEffect(() => {
+    const fetchTestData = async () => {
+      try {
+        console.log('🧪 Firestore 직접 조회 시작...');
+        const snapshot = await getDocs(collection(db, LECTURES_COLLECTION_NAME));
+        const lectures = snapshot.docs.map((doc) => ({
+          lectureId: doc.id,
+          ...doc.data(),
+        }));
+        console.log('✅ 조회된 강의:', lectures);
+        console.log('📊 강의 개수:', lectures.length);
+
+        if (lectures.length > 0) {
+          console.log('📝 첫 번째 강의 샘플:', lectures[0]);
+        }
+
+        setTestItems(lectures);
+      } catch (error) {
+        console.error('❌ Firestore 조회 실패:', error);
+      }
+    };
+
+    if (user?.uid) {
+      fetchTestData();
+    }
+  }, [user?.uid]);
+
   // 무한스크롤 훅 사용
   const { items, isLoading, error, hasMore, sentinelRef, setItems } = useInfiniteLecture({
     category: 'all',
@@ -19,8 +54,17 @@ const InstructorLectures = () => {
     withCount: true,
   });
 
+  console.log('📊 Hook Items:', items);
+  console.log('🧪 Test Items:', testItems);
+
   // 강사 본인 강의만 필터링
-  const filterMyLectures = items.filter((item) => item.userId === user?.uid);
+  // const filterMyLectures = items.filter((item) => item.userId === user?.uid);
+
+  // 🧪 테스트 데이터 사용
+  const dataToUse = testItems.length > 0 ? testItems : items;
+  const filterMyLectures = dataToUse.filter((item) => item.userId === user?.uid);
+
+  console.log('✅ 내 강의:', filterMyLectures);
 
   // 삭제 hook : success > lecture list
   const { handleDelete } = useGuardedDeleteLecture({

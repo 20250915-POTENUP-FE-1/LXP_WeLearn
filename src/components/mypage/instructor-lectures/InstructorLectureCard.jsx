@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Star } from 'lucide-react';
+import { Users, Star, MessageSquare } from 'lucide-react';
 import { getLectureStatsByLecture } from '../../../services/lecture/getLectureStatsByLecture.js';
 
 function InstructorLectureCard({
@@ -24,6 +24,7 @@ function InstructorLectureCard({
 
       try {
         const data = await getLectureStatsByLecture(lectureId);
+        console.log('강의 데이터:', data);
         setStats(data);
       } catch (error) {
         console.log('강의 데이터 불러오기 실패:', error);

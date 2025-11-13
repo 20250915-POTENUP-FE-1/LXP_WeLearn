@@ -17,8 +17,9 @@ export function useInfiniteLecture({
   const [error, setError] = useState(null);
   const [total, setTotal] = useState(undefined);
   const sentinelRef = useRef(null);
-  const loadingRef = useRef(false); // 중복 로딩 방지
-  const paramsRef = useRef({ category, sort }); // 의도치 않은 race 방지용
+  const loadingRef = useRef(false);
+  const paramsRef = useRef({ category, sort });
+  const isFirstLoadRef = useRef(true); // 첫 로드 추적
 
   // 카테고리/정렬 바뀌면 리셋
   useEffect(() => {
@@ -28,10 +29,12 @@ export function useInfiniteLecture({
     setHasMore(true);
     setError(null);
     setTotal(undefined);
+    isFirstLoadRef.current = true; // 리셋 시 첫 로드 플래그도 초기화
   }, [category, sort]);
 
   const loadMore = useCallback(async () => {
     if (loadingRef.current || !hasMore) return;
+
     loadingRef.current = true;
     setIsLoading(true);
     setError(null);
@@ -42,17 +45,15 @@ export function useInfiniteLecture({
         sort: paramsRef.current.sort,
         limitCount: pageSize,
         startAfterDoc: lastDoc,
-        withCount: lastDoc ? false : withCount, // 첫 페이지에서만 카운트 (옵션)
+        withCount: lastDoc ? false : withCount,
       });
 
-      // race 방지: 응답 시점에 파라미터가 변했는지 체크(선택)
+      // race 방지
       if (paramsRef.current.category !== category || paramsRef.current.sort !== sort) {
-        // 바뀐 경우 이 응답은 무시
         return;
       }
 
       setItems((prev) => {
-        // Firestore는 중복 거의 없지만 안전하게 id로 dedupe
         const seen = new Set(prev.map((x) => x.lectureId));
         const next = res.lectures.filter((x) => !seen.has(x.lectureId));
         return prev.concat(next);
@@ -65,6 +66,7 @@ export function useInfiniteLecture({
       setLastDoc(res.lastDoc);
       setHasMore(res.hasMore);
     } catch (e) {
+      console.error('getLectureInfitService 에러:', e); //  에러 로깅 추가
       setError(e);
     } finally {
       setIsLoading(false);
@@ -72,19 +74,24 @@ export function useInfiniteLecture({
     }
   }, [category, sort, pageSize, lastDoc, hasMore, withCount, total]);
 
-  // 첫 로드 + 센티넬 관찰
+  // ✅ 첫 로드만 실행
   useEffect(() => {
-    // 첫 페이지 로드
-    loadMore();
-  }, [category, sort]);
+    if (isFirstLoadRef.current) {
+      isFirstLoadRef.current = false;
+      loadMore();
+    }
+  }, [category, sort]); //  loadMore 제거
 
+  //  IntersectionObserver - loadMore를 의존성에서 제거하고 ref 사용
   useEffect(() => {
     const el = sentinelRef.current;
     if (!el) return;
 
+    // ✅ loadMore를 직접 참조하지 않고 조건만 체크
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !isLoading && hasMore) {
+        if (entry.isIntersecting && !loadingRef.current && hasMore) {
+          // ✅ loadMore를 직접 호출
           loadMore();
         }
       },
@@ -93,13 +100,13 @@ export function useInfiniteLecture({
 
     io.observe(el);
     return () => io.disconnect();
-  }, [root, rootMargin, threshold, isLoading, hasMore, loadMore]);
+  }, [root, rootMargin, threshold, hasMore, loadMore]); // isLoading 대신 hasMore 사용
 
   const retry = useCallback(() => {
-    if (!isLoading) {
+    if (!loadingRef.current) {
       loadMore();
     }
-  }, [isLoading, loadMore]);
+  }, [loadMore]);
 
   return { items, isLoading, error, hasMore, setItems, loadMore, retry, total, sentinelRef };
 }
