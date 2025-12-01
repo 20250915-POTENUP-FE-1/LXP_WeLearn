@@ -3,7 +3,9 @@ type FetchOptions = {
   revalidate?: number // Next ISR (ex: 10 = 10초 후 자동 재검증)
 }
 
-export default function api(baseUrl: string) {
+const baseUrl = process.env.NEXT_PUBLIC_API_URL
+
+export default function api() {
   /** GET with cache + revalidate (둘 다 선택 가능) */
   const get = async (endpoint = '', options?: FetchOptions) => {
     const res = await fetch(`${baseUrl}${endpoint}`, {
