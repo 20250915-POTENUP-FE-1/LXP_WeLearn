@@ -17,14 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="">
-        <div className="flex min-h-screen w-full flex-col items-center justify-between bg-gray-100/70">
-          <Header />
-          <main className="flex size-full shrink grow flex-col items-center justify-center">
-            {children}
-          </main>
-          <Footer />
-        </div>
+      <body className="min-h-screen bg-white">
+        <Header />
+        <main className="mx-auto min-h-[calc(100vh-148px)] max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   )
