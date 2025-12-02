@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "server": "npx json-server ./public/db.json --watch --port 4000"
   },
   "dependencies": {
     "lucide-react": "^0.555.0",
