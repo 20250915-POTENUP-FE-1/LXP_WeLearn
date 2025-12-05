@@ -32,14 +32,8 @@ export const shortFormItems: ShortFormItem[] = [
     viewCount: '250k',
     duration: '1분',
   },
-  {
-    id: '5',
-    thumbnail: '',
-    title: '9:16 :: 킬니다·웅얄 앨처트 서굿앤 갈의',
-    viewCount: '250k',
-    duration: '1분',
-  },
 ]
+
 export const playlists: PlaylistItem[] = [
   { id: '1', thumbnail: '', title: '어자의 플레이리스트', videoCount: 5 },
   { id: '2', thumbnail: '', title: '개발 가발 플레이리스트', videoCount: 5 },

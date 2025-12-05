@@ -1,5 +1,6 @@
 type FetchOptions = {
-  cache?: RequestCache // 'force-cache' | 'no-store' ...
+  // "default" | "force-cache" | "no-cache" | "no-store" | "only-if-cached" | "reload";
+  cache?: RequestCache
   revalidate?: number // Next ISR (ex: 10 = 10초 후 자동 재검증)
 }
 
@@ -8,7 +9,7 @@ const baseUrl = process.env.NEXT_PUBLIC_API_URL
 export default function api() {
   /** GET with cache + revalidate (둘 다 선택 가능) */
   const get = async (endpoint = '', options?: FetchOptions) => {
-    const res = await fetch(`${baseUrl}${endpoint}`, {
+    const res = await fetch(`${baseUrl}/api/v1${endpoint}`, {
       cache: options?.cache, // 브라우저/서버 캐시
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
     })
@@ -17,8 +18,8 @@ export default function api() {
   }
 
   /** POST (데이터 생성 → 기본적으로 캐시 사용 X) */
-  const post = async (endpoint = '', data?: any, options?: FetchOptions) => {
-    const res = await fetch(`${baseUrl}${endpoint}`, {
+  const post = async (endpoint = '', data?: unknown, options?: FetchOptions) => {
+    const res = await fetch(`${baseUrl}/api/v1${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       cache: options?.cache ?? 'no-store',
@@ -30,8 +31,8 @@ export default function api() {
   }
 
   /** PATCH (부분 업데이트) */
-  const patch = async (endpoint = '', data?: any, options?: FetchOptions) => {
-    const res = await fetch(`${baseUrl}${endpoint}`, {
+  const patch = async (endpoint = '', data?: unknown, options?: FetchOptions) => {
+    const res = await fetch(`${baseUrl}/api/v1${endpoint}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       cache: options?.cache ?? 'no-store',
@@ -44,7 +45,7 @@ export default function api() {
 
   /** DELETE */
   const del = async (endpoint = '', options?: FetchOptions) => {
-    const res = await fetch(`${baseUrl}${endpoint}`, {
+    const res = await fetch(`${baseUrl}/api/v1${endpoint}`, {
       method: 'DELETE',
       cache: options?.cache ?? 'no-store',
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,

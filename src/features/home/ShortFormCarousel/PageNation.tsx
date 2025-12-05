@@ -26,7 +26,7 @@ export default function PageNation({
       <div className="relative">
         <button
           onClick={handlePrev}
-          className="absolute top-1/2 -left-4 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-gray-600 shadow-lg transition-colors hover:text-gray-900"
+          className="absolute top-1/2 -left-4 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-gray-600 shadow-lg transition-colors hover:bg-indigo-100 hover:text-gray-900"
           aria-label="이전"
         >
           <ChevronLeft />
@@ -35,25 +35,25 @@ export default function PageNation({
 
         <button
           onClick={handleNext}
-          className="absolute top-1/2 -right-4 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-gray-600 shadow-lg transition-colors hover:text-gray-900"
+          className="absolute top-1/2 -right-4 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-gray-600 shadow-lg transition-colors hover:bg-indigo-100 hover:text-gray-900"
           aria-label="다음"
         >
           <ChevronRight />
         </button>
       </div>
 
-      <div className="mt-6 flex justify-center gap-2">
-        {[0, 1, 2, 3, 4].map((idx) => (
-          <button
-            key={idx}
-            onClick={() => setCurrentIndex(idx)}
-            className={`h-2 w-2 rounded-full transition-colors ${
-              currentIndex === idx ? 'bg-gray-900' : 'bg-gray-300'
-            }`}
-            aria-label={`${idx + 1}번째 페이지`}
-          />
-        ))}
-      </div>
+      {/*<div className="mt-6 flex justify-center gap-2">*/}
+      {/*  {items.length / 4.map((idx) => (*/}
+      {/*    <button*/}
+      {/*      key={idx}*/}
+      {/*      onClick={() => setCurrentIndex(idx)}*/}
+      {/*      className={`h-2 w-2 rounded-full transition-colors ${*/}
+      {/*        currentIndex === idx ? 'bg-gray-900' : 'bg-gray-300'*/}
+      {/*      }`}*/}
+      {/*      aria-label={`${idx + 1}번째 페이지`}*/}
+      {/*    />*/}
+      {/*  ))}*/}
+      {/*</div>*/}
     </>
   )
 }
