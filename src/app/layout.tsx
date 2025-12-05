@@ -6,7 +6,7 @@ import Footer from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
 
 export const metadata: Metadata = {
-  title: 'III',
+  title: '35FUND',
   description: '',
 }
 
