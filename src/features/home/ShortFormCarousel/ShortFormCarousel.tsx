@@ -1,19 +1,20 @@
 import React from 'react'
 import { ShortFormItem } from '@/features/home/types/ShortFormItem'
 import PageNation from '@/features/home/ShortFormCarousel/PageNation'
+import { shortFormItems } from '@/dummy/data'
 
-export default function ShortFormCarousel({ items }: { items: ShortFormItem[] }) {
+export default function ShortFormCarousel() {
   return (
     <section className="mb-12">
       <h2 className="mb-6 flex items-center gap-2 text-2xl font-bold text-gray-900">
         인기 숏폼 <span className="text-2xl">🔥</span>
       </h2>
 
-      <PageNation items={items}>
-        <div className="flex gap-4 overflow-hidden">
-          {items.map((item) => (
-            <div key={item.id} className="group w-36 flex-shrink-0 cursor-pointer">
-              <div className="relative mb-3 aspect-[9/16] overflow-hidden rounded-2xl bg-gradient-to-br from-gray-300 to-gray-400 transition-all group-hover:ring-2 group-hover:ring-gray-900">
+      <PageNation items={shortFormItems}>
+        <div className="flex items-center justify-between gap-4 overflow-hidden">
+          {shortFormItems.map((item: ShortFormItem) => (
+            <div key={item.id} className="group w-72 flex-shrink-0 cursor-pointer">
+              <div className="relative mb-3 aspect-[9/16] overflow-hidden rounded-2xl bg-gradient-to-br from-gray-300 to-gray-400 transition-all group-hover:opacity-80">
                 {item.thumbnail ? (
                   <img
                     src={item.thumbnail}
