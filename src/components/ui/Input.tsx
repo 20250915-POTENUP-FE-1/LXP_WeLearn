@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { InputProps } from './types'
-import ShowHideButton from '@/features/auth/components/ShowHideButton'
+import ShowHideButton from './ShowHideButton'
 
 export const Input = ({
   label,

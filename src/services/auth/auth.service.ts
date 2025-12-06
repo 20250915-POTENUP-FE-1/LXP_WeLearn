@@ -1,5 +1,4 @@
 import api from '@/lib/utils/apiUtils'
-import { ResponseData } from '../types'
 
 interface SignupRequest {
   email: string
