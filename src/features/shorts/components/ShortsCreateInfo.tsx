@@ -1,18 +1,33 @@
 import { User } from 'lucide-react'
+import { ShortsUploader } from '../../../types/shortform'
 
-function ShortsCreateInfo() {
+interface ShortsCreateInfoProps {
+  uploader: ShortsUploader
+  title: string
+  description: string
+}
+
+function ShortsCreateInfo({ uploader, title, description }: ShortsCreateInfoProps) {
   return (
-    <div className="pointer-events-none absolute inset-x-4 bottom-0 rounded-lg px-4 pb-10 text-white backdrop-blur-sm">
+    <div className="pointer-events-none absolute bottom-0 w-full rounded-lg px-4 py-8 text-white backdrop-blur-sm">
       <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-300">
-          <User strokeWidth={1.5} color="#333" />
+        <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gray-300">
+          {uploader.profileUrl ? (
+            <img
+              src={uploader.profileUrl}
+              alt={`${uploader.nickname} 프로필`}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <User strokeWidth={1.5} color="#333" />
+          )}
         </div>
         <div>
-          <p className="font-medium">UserName</p>
-          <p className="text-sm opacity-90">lessonTitle</p>
+          <p className="font-medium"> {uploader.nickname} </p>
+          <p className="text-sm opacity-90"> {title} </p>
         </div>
       </div>
-      <p className="mt-3 text-sm leading-relaxed opacity-90">lessonDescription</p>
+      <p className="mt-3 text-sm leading-relaxed opacity-90"> {description} </p>
     </div>
   )
 }

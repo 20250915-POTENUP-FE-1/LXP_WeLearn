@@ -6,7 +6,7 @@ function ShortsActionBar() {
       {/* 좋아요 */}
       <button
         aria-label="좋아요"
-        className="flex flex-col items-center text-white hover:text-gray-300 focus:ring-1 focus:ring-gray-600 focus:outline-none"
+        className="flex cursor-pointer flex-col items-center text-white hover:text-gray-300 focus:ring-1 focus:ring-gray-600 focus:outline-none"
         type="button"
       >
         <Heart strokeWidth={1.5} />
@@ -16,7 +16,7 @@ function ShortsActionBar() {
       {/* 댓글 */}
       <button
         aria-label="댓글 보기"
-        className="flex flex-col items-center text-white hover:text-gray-300 focus:ring-1 focus:ring-gray-600 focus:outline-none"
+        className="flex cursor-pointer flex-col items-center text-white hover:text-gray-300 focus:ring-1 focus:ring-gray-600 focus:outline-none"
         type="button"
       >
         <MessageSquareText strokeWidth={1.5} />
@@ -26,7 +26,7 @@ function ShortsActionBar() {
       {/* 자막 */}
       <button
         aria-label="자막 보기"
-        className="flex flex-col items-center text-white hover:text-gray-300 focus:ring-1 focus:ring-gray-600 focus:outline-none"
+        className="flex cursor-pointer flex-col items-center text-white hover:text-gray-300 focus:ring-1 focus:ring-gray-600 focus:outline-none"
         type="button"
       >
         <ClosedCaption strokeWidth={1.5} />
@@ -36,7 +36,7 @@ function ShortsActionBar() {
       {/* 저장 */}
       <button
         aria-label="저장"
-        className="flex flex-col items-center text-white hover:text-gray-300 focus:ring-1 focus:ring-gray-600 focus:outline-none"
+        className="flex cursor-pointer flex-col items-center text-white hover:text-gray-300 focus:ring-1 focus:ring-gray-600 focus:outline-none"
         type="button"
       >
         <ListPlus strokeWidth={1.5} />
@@ -46,7 +46,7 @@ function ShortsActionBar() {
       {/* 공유 */}
       <button
         aria-label="공유"
-        className="flex flex-col items-center text-white hover:text-gray-300 focus:ring-1 focus:ring-gray-600 focus:outline-none"
+        className="flex cursor-pointer flex-col items-center text-white hover:text-gray-300 focus:ring-1 focus:ring-gray-600 focus:outline-none"
         type="button"
       >
         <Send strokeWidth={1.5} />
