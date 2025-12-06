@@ -3,7 +3,7 @@ import ShortsActionBar from '@/features/shorts/components/ShortsActionBar'
 import ShortsCreateInfo from '@/features/shorts/components/ShortsCreateInfo'
 import ShortsPlayer from '@/features/shorts/components/ShortsPlayer'
 
-const ShortformDetailPage: React.FC = () => {
+export default function ShortformDetailPage() {
   return (
     <div className="relative h-dvh w-full bg-black md:h-auto md:bg-transparent">
       <section aria-labelledby="shortform-content" className="flex h-full w-full justify-center">
@@ -21,5 +21,3 @@ const ShortformDetailPage: React.FC = () => {
     </div>
   )
 }
-
-export default ShortformDetailPage
