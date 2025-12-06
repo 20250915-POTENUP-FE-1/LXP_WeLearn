@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className="flex min-h-screen flex-col bg-white">
         <Header />
-        <main className="max-w-7xlitems-center flex flex-1 justify-center px-4 py-8 sm:px-6 lg:px-8">
+        <main className="mx-auto box-border flex max-w-7xl flex-1 items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
           {children}
         </main>
         <Footer />

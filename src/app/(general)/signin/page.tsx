@@ -1,4 +1,5 @@
 import SigninForm from '@/features/auth/components/SigninForm'
+import Link from 'next/link'
 
 // ============================================
 // Page: 로그인 페이지
@@ -16,23 +17,23 @@ import SigninForm from '@/features/auth/components/SigninForm'
 export default function SigninPage() {
   return (
     <>
-      <div className="flex flex-1 items-center justify-center px-4 py-12">
+      <div className="flex min-w-lg items-center justify-center px-4 py-8">
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <h1 className="mb-2 text-2xl font-bold text-gray-900">로그인</h1>
             <p className="text-sm text-gray-500">학습을 계속하려면 로그인하세요</p>
           </div>
 
-          <div className="rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
+          <div className="shadow-s rounded-xl border border-gray-200 bg-white p-8">
             <SigninForm />
           </div>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-500">
               계정이 없으신가요?{' '}
-              <a href="/signup" className="font-medium text-gray-900 hover:underline">
+              <Link href="/signup" className="font-medium text-gray-900 hover:underline">
                 회원가입
-              </a>
+              </Link>
             </p>
           </div>
         </div>

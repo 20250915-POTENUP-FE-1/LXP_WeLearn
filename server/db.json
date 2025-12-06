@@ -82,3 +82,24 @@
     }
   ]
 }
+{
+  "users": [
+    {
+      "id": 1764930604555,
+      "email": "test03@example.com",
+      "password": "sdfsdf",
+      "name": "asdfasdf",
+      "nickname": "asdfsdf",
+      "createdAt": "2025-12-05T10:30:04.555Z"
+    },
+    {
+      "id": 1764930979997,
+      "email": "test22@example.com",
+      "password": "sdfsd",
+      "name": "asdfsdf",
+      "nickname": "sdfd",
+      "createdAt": "2025-12-05T10:36:19.997Z"
+    }
+  ],
+  "posts": []
+}

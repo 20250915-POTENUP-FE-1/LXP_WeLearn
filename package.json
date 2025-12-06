@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "server": "npx json-server ./server/db.json --watch --port 4000"
+    "server": "npx json-server ./server/db.json --watch --port 4000",
+    "mock": "node server/mock-server.js"
   },
   "dependencies": {
     "lucide-react": "^0.555.0",

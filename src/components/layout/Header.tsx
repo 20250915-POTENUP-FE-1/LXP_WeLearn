@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export const Header: React.FC = () => {
   return (
     <header className="sticky top-0 z-50 border-b border-gray-100 bg-white">
@@ -40,18 +42,18 @@ export const Header: React.FC = () => {
 
           {/* Right Section */}
           <div className="flex items-center gap-3">
-            <a
-              href="/login"
+            <Link
+              href="/signin"
               className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
             >
               로그인
-            </a>
-            <a
+            </Link>
+            <Link
               href="/signup"
               className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800"
             >
               회원가입
-            </a>
+            </Link>
             {/* <button
               className="p-2 text-gray-600 transition-colors hover:text-gray-900"
               aria-label="장바구니"

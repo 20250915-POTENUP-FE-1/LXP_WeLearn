@@ -1,14 +1,56 @@
 type FetchOptions = {
-  cache?: RequestCache // 'force-cache' | 'no-store' ...
+  // "default" | "force-cache" | "no-cache" | "no-store" | "only-if-cached" | "reload";
+  cache?: RequestCache
   revalidate?: number // Next ISR (ex: 10 = 10초 후 자동 재검증)
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL
+const baseUrl = 'http://localhost:4000'
+
+async function fetchWithAuth(
+  url: string,
+  options: RequestInit & { revalidate?: number; retry?: boolean } = {},
+) {
+  const response = await fetch(url, {
+    ...options,
+    next: options.revalidate ? { revalidate: options.revalidate } : undefined,
+    credentials: 'include',
+  })
+
+  // 성공 or 401 외의 오류면 그대로 반환
+  if (response.status !== 401) return response
+
+  // 이미 retry했다면 무한루프 방지 → 강제 로그아웃 처리
+  if (options.retry) {
+    console.log('❌ Retry already attempted. Forcing logout.')
+    throw new Error('UNAUTHORIZED')
+  }
+
+  console.log('⚠️ Access Token expired. Trying refresh...')
+
+  // refresh 요청
+  const refreshRes = await fetch(`${baseUrl}/api/v1/auth/refresh`, {
+    method: 'POST',
+    credentials: 'include',
+  })
+
+  if (!refreshRes.ok) {
+    console.log('❌ Refresh failed. Redirecting to login...')
+    throw new Error('UNAUTHORIZED')
+  }
+
+  console.log('🔄 Refresh success. Retrying original request...')
+
+  // retry=true 추가하여 재요청 (1회만 허용)
+  return fetchWithAuth(url, {
+    ...options,
+    retry: true,
+  })
+}
 
 export default function api() {
   /** GET with cache + revalidate (둘 다 선택 가능) */
   const get = async (endpoint = '', options?: FetchOptions) => {
-    const res = await fetch(`${baseUrl}${endpoint}`, {
+    const res = await fetchWithAuth(`${baseUrl}${endpoint}`, {
       cache: options?.cache, // 브라우저/서버 캐시
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
     })
@@ -17,8 +59,8 @@ export default function api() {
   }
 
   /** POST (데이터 생성 → 기본적으로 캐시 사용 X) */
-  const post = async (endpoint = '', data?: any, options?: FetchOptions) => {
-    const res = await fetch(`${baseUrl}${endpoint}`, {
+  const post = async (endpoint = '', data?: unknown, options?: FetchOptions) => {
+    const res = await fetchWithAuth(`${baseUrl}${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       cache: options?.cache ?? 'no-store',
@@ -30,8 +72,8 @@ export default function api() {
   }
 
   /** PATCH (부분 업데이트) */
-  const patch = async (endpoint = '', data?: any, options?: FetchOptions) => {
-    const res = await fetch(`${baseUrl}${endpoint}`, {
+  const patch = async (endpoint = '', data?: unknown, options?: FetchOptions) => {
+    const res = await fetchWithAuth(`${baseUrl}${endpoint}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       cache: options?.cache ?? 'no-store',
@@ -44,7 +86,7 @@ export default function api() {
 
   /** DELETE */
   const del = async (endpoint = '', options?: FetchOptions) => {
-    const res = await fetch(`${baseUrl}${endpoint}`, {
+    const res = await fetchWithAuth(`${baseUrl}${endpoint}`, {
       method: 'DELETE',
       cache: options?.cache ?? 'no-store',
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
