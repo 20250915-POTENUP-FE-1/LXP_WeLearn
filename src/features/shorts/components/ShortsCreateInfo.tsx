@@ -1,5 +1,5 @@
 import { User } from 'lucide-react'
-import { ShortsUploader } from '../types'
+import { ShortsUploader } from '../../../types/shortform'
 
 interface ShortsCreateInfoProps {
   uploader: ShortsUploader

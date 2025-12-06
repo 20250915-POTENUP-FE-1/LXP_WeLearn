@@ -3,27 +3,10 @@ import { notFound } from 'next/navigation'
 import ShortsActionBar from '@/features/shorts/components/ShortsActionBar'
 import ShortsCreateInfo from '@/features/shorts/components/ShortsCreateInfo'
 import ShortsPlayer from '@/features/shorts/components/ShortsPlayer'
-import { ShortsDetail } from '@/features/shorts/types'
+import { getShortsDetail } from '@/services/getShortsDetailService'
 
 interface ShortDetailPageProps {
   params: Promise<{ id: string }>
-}
-
-async function getShortsDetail(id: string): Promise<ShortsDetail | null> {
-  try {
-    const response = await fetch(`http://localhost:4000/shorts/${id}`, {
-      cache: 'no-store',
-    })
-
-    if (!response.ok) {
-      return null
-    }
-
-    return response.json()
-  } catch (error) {
-    console.error('데이터 불러오기 실패:', error)
-    return null
-  }
 }
 
 const ShortformDetailPage: React.FC<ShortDetailPageProps> = async ({ params }) => {
