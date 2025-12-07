@@ -12,14 +12,8 @@ export interface ShortsListProps {
 
 /**
  * Shorts 목록을 가져오는 함수
- *
  * @param startId - 시작할 영상의 ID (URL에서 받아온 값)
  * @returns 영상 목록과 시작 인덱스, 실패 시 null
- *
- * 사용 예시:
- * const data = await getShortsList("5")
- * // data.shortsList = [영상3, 영상4, 영상5, ...]
- * // data.initialIndex = 2 (영상5가 배열에서 2번 인덱스)
  */
 export async function getShortsList(startId: string): Promise<ShortsListProps | null> {
   try {

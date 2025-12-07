@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { ArrowDown, ArrowUp } from 'lucide-react'
 
 interface ShortsNavigationButtonsProps {
   onPrev: () => void
@@ -23,7 +23,7 @@ function ShortsNavigationButtons({
         aria-label="이전 영상"
       >
         <span className="flex flex-col items-center text-xs text-gray-600">
-          <ChevronUp strokeWidth={1.5} />
+          <ArrowUp strokeWidth={1.5} />
         </span>
       </button>
 
@@ -35,7 +35,7 @@ function ShortsNavigationButtons({
         aria-label="다음 영상"
       >
         <span className="flex flex-col items-center text-xs text-gray-600">
-          <ChevronDown strokeWidth={1.5} />
+          <ArrowDown strokeWidth={1.5} />
         </span>
       </button>
     </div>

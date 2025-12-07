@@ -18,10 +18,3 @@ export interface ShortsDetail {
   uploader: ShortsUploader
   category: ShortsCategory
 }
-
-export interface ShortsNavigation {
-  prevId: number | null
-  nextId: number | null
-  sortBy?: 'latest' | 'popular' | 'category'
-  categoryId?: number | null
-}

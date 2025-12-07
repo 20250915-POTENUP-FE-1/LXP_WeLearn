@@ -27,7 +27,7 @@ function ShortsPlayer({ videoUrl, thumbnailUrl }: ShortsPlayerProps) {
       className="h-full w-full object-cover"
       controls
       autoPlay
-      /*muted*/
+      muted
       loop
       playsInline
       poster={thumbnailUrl}
