@@ -14,33 +14,29 @@ function ShortsNavigationButtons({
   hasNext,
 }: ShortsNavigationButtonsProps) {
   return (
-    <div className="absolute top-1/2 left-full z-10 ml-4 hidden -translate-y-1/2 flex-col gap-4 md:flex">
-      {/* 이전 영상 (위로) */}
+    <div className="hidden flex-col items-center justify-center gap-4 md:flex">
+      {/* 이전 영상 버튼 */}
       <button
-        type="button"
         onClick={onPrev}
         disabled={!hasPrev}
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 transition-colors hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-40"
         aria-label="이전 영상"
-        className="flex flex-col items-center gap-1 text-gray-600 transition-colors hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-40"
       >
-        <span className="text-sm">이전 영상</span>
-        <div className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300">
-          <ChevronUp size={20} />
-        </div>
+        <span className="flex flex-col items-center text-xs text-gray-600">
+          <ChevronUp strokeWidth={1.5} />
+        </span>
       </button>
 
-      {/* 다음 영상 (아래로) */}
+      {/* 다음 영상 버튼 */}
       <button
-        type="button"
         onClick={onNext}
         disabled={!hasNext}
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 transition-colors hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-40"
         aria-label="다음 영상"
-        className="flex flex-col items-center gap-1 text-gray-600 transition-colors hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-40"
       >
-        <div className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300">
-          <ChevronDown size={20} />
-        </div>
-        <span className="text-sm">다음 영상</span>
+        <span className="flex flex-col items-center text-xs text-gray-600">
+          <ChevronDown strokeWidth={1.5} />
+        </span>
       </button>
     </div>
   )

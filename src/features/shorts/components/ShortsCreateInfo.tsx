@@ -9,9 +9,9 @@ interface ShortsCreateInfoProps {
 
 function ShortsCreateInfo({ uploader, title, description }: ShortsCreateInfoProps) {
   return (
-    <div className="pointer-events-none absolute bottom-0 w-full rounded-lg px-4 py-8 text-white backdrop-blur-sm">
+    <div className="w-full from-black/80 to-transparent px-4 py-6 text-white backdrop-blur-sm">
       <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gray-300">
+        <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full">
           {uploader.profileUrl ? (
             <img
               src={uploader.profileUrl}
@@ -23,11 +23,11 @@ function ShortsCreateInfo({ uploader, title, description }: ShortsCreateInfoProp
           )}
         </div>
         <div>
-          <p className="font-medium"> {uploader.nickname} </p>
-          <p className="text-sm opacity-90"> {title} </p>
+          <p className="font-medium">{uploader.nickname}</p>
+          <p className="text-sm opacity-90">{title}</p>
         </div>
       </div>
-      <p className="mt-3 text-sm leading-relaxed opacity-90"> {description} </p>
+      <p className="mt-3 text-sm leading-relaxed opacity-90">{description}</p>
     </div>
   )
 }

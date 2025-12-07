@@ -10,7 +10,7 @@ export interface ShortsCategory {
 }
 
 export interface ShortsDetail {
-  shortsId: number
+  id: number
   title: string
   description: string
   videoUrl: string
@@ -19,14 +19,6 @@ export interface ShortsDetail {
   category: ShortsCategory
 }
 
-// 네비게이션 정보 포함된 응답 타입
-export interface ShortsDetailResponse {
-  shorts: ShortsDetail
-  prevId: number | null
-  nextId: number | null
-}
-
-// 향후 확장용 (정렬 컨텍스트 포함)
 export interface ShortsNavigation {
   prevId: number | null
   nextId: number | null

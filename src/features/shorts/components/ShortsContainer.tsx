@@ -1,107 +1,146 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence, PanInfo } from 'framer-motion'
-import { useState } from 'react'
-import { ShortsDetailResponse } from '@/types/shortform'
-import ShortsPlayer from './ShortsPlayer'
-import ShortsCreateInfo from './ShortsCreateInfo'
-import ShortsActionBar from './ShortsActionBar'
+import { ShortsDetail } from '@/types/shortform'
+import ShortsItem from './ShortsItem'
 import ShortsNavigationButtons from './ShortsNavigationButtons'
 
 interface ShortsContainerProps {
-  data: ShortsDetailResponse
+  shortsList: ShortsDetail[]
+  initialIndex: number
 }
 
 type SlideDirection = 'up' | 'down' | null
 
-function ShortsContainer({ data }: ShortsContainerProps) {
-  const router = useRouter()
-  const [isNavigating, setIsNavigating] = useState(false)
+function ShortsContainer({ shortsList, initialIndex }: ShortsContainerProps) {
+  const isEmpty = shortsList.length === 0
+
+  const safeInitialIndex = isEmpty
+    ? 0
+    : initialIndex < 0
+      ? 0
+      : initialIndex >= shortsList.length
+        ? shortsList.length - 1
+        : initialIndex
+
+  const [currentIndex, setCurrentIndex] = useState(safeInitialIndex)
   const [slideDirection, setSlideDirection] = useState<SlideDirection>(null)
+  const [isAnimating, setIsAnimating] = useState(false)
 
-  const { shorts, prevId, nextId } = data
+  const currentShorts = isEmpty ? null : shortsList[currentIndex]
+  const hasPrev = currentIndex > 0
+  const hasNext = currentIndex < shortsList.length - 1
 
-  const navigateTo = (id: number | null, direction: SlideDirection) => {
-    if (!id || isNavigating) return
+  useEffect(() => {
+    if (!currentShorts) return
+    const newUrl = `/shortform/${currentShorts.id}`
+    window.history.replaceState(null, '', newUrl)
+  }, [currentShorts?.id])
 
-    setIsNavigating(true)
-    setSlideDirection(direction)
+  const navigateTo = useCallback(
+    (direction: 'prev' | 'next') => {
+      if (isAnimating) return
 
-    // 애니메이션 후 페이지 이동
-    setTimeout(() => {
-      router.push(`/shortform/${id}`)
-    }, 200)
-  }
+      if (direction === 'prev' && hasPrev) {
+        setSlideDirection('down')
+        setIsAnimating(true)
+        // 즉시 인덱스 변경
+        setCurrentIndex((prev) => prev - 1)
+      } else if (direction === 'next' && hasNext) {
+        setSlideDirection('up')
+        setIsAnimating(true)
+        // 즉시 인덱스 변경
+        setCurrentIndex((prev) => prev + 1)
+      }
+    },
+    [isAnimating, hasPrev, hasNext],
+  )
 
-  const handleDragEnd = (_: any, info: PanInfo) => {
+  const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const threshold = 50
     const velocity = info.velocity.y
     const offset = info.offset.y
 
-    // 위로 스와이프 → 다음 영상
     if (offset < -threshold || velocity < -500) {
-      navigateTo(nextId, 'up')
-    }
-    // 아래로 스와이프 → 이전 영상
-    else if (offset > threshold || velocity > 500) {
-      navigateTo(prevId, 'down')
+      navigateTo('next')
+    } else if (offset > threshold || velocity > 500) {
+      navigateTo('prev')
     }
   }
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        navigateTo('prev')
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        navigateTo('next')
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [navigateTo])
+
+  if (isEmpty || !currentShorts) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <p>영상이 없습니다.</p>
+      </div>
+    )
+  }
+
   const slideVariants = {
-    initial: (direction: SlideDirection) => ({
-      y: direction === 'up' ? '100%' : direction === 'down' ? '-100%' : 0,
-      opacity: 0,
+    enter: (direction: SlideDirection) => ({
+      y: direction === 'up' ? '100%' : '-100%',
     }),
-    animate: {
+    center: {
       y: 0,
-      opacity: 1,
-      transition: { type: 'tween', duration: 0.3 },
     },
     exit: (direction: SlideDirection) => ({
-      y: direction === 'up' ? '-100%' : direction === 'down' ? '100%' : 0,
-      opacity: 0,
-      transition: { type: 'tween', duration: 0.2 },
+      y: direction === 'up' ? '-100%' : '100%',
     }),
   }
 
   return (
-    <div className="relative h-full w-full">
-      {/* PC 네비게이션 버튼 */}
-      <ShortsNavigationButtons
-        onPrev={() => navigateTo(prevId, 'up')}
-        onNext={() => navigateTo(nextId, 'down')}
-        hasPrev={!!prevId}
-        hasNext={!!nextId}
-      />
+    <div className="flex w-full items-center justify-center gap-4">
+      <div className="w-full md:w-[420px]">
+        <div className="`h-[100vh]` w-full overflow-hidden rounded-2xl md:h-[70vh]">
+          <AnimatePresence initial={false} custom={slideDirection} mode="wait">
+            <motion.div
+              key={currentShorts.id}
+              custom={slideDirection}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ type: 'tween', duration: 0.3, ease: 'easeInOut' }}
+              drag="y"
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={0.2}
+              onDragEnd={handleDragEnd}
+              onAnimationComplete={() => {
+                // 애니메이션 완료 후 플래그만 해제
+                setIsAnimating(false)
+              }}
+              className="h-full w-full cursor-grab active:cursor-grabbing"
+            >
+              <ShortsItem shorts={currentShorts} />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
 
-      {/* 메인 콘텐츠 */}
-      <AnimatePresence mode="wait" custom={slideDirection}>
-        <motion.div
-          key={shorts.shortsId}
-          custom={slideDirection}
-          variants={slideVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          drag="y"
-          dragConstraints={{ top: 0, bottom: 0 }}
-          dragElastic={0.2}
-          onDragEnd={handleDragEnd}
-          className="relative h-full w-full cursor-grab active:cursor-grabbing"
-        >
-          <ShortsPlayer videoUrl={shorts.videoUrl} thumbnailUrl={shorts.thumbnailUrl} />
-
-          <ShortsCreateInfo
-            uploader={shorts.uploader}
-            title={shorts.title}
-            description={shorts.description}
-          />
-
-          <ShortsActionBar />
-        </motion.div>
-      </AnimatePresence>
+      <div className="hidden md:block">
+        <ShortsNavigationButtons
+          onPrev={() => navigateTo('prev')}
+          onNext={() => navigateTo('next')}
+          hasPrev={hasPrev}
+          hasNext={hasNext}
+        />
+      </div>
     </div>
   )
 }

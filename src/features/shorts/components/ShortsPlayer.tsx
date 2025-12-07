@@ -11,10 +11,10 @@ function ShortsPlayer({ videoUrl, thumbnailUrl }: ShortsPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
-    // 자동 재생 시도
     if (videoRef.current) {
+      videoRef.current.load()
       videoRef.current.play().catch(() => {
-        // 자동재생 차단된 경우 무시 (사용자 인터랙션 필요)
+        // 자동재생 차단 시 무시
       })
     }
   }, [videoUrl])
@@ -22,11 +22,13 @@ function ShortsPlayer({ videoUrl, thumbnailUrl }: ShortsPlayerProps) {
   return (
     <video
       ref={videoRef}
+      key={videoUrl}
       aria-label="shorts video player"
       className="h-full w-full object-cover"
       controls
+      autoPlay
+      /*muted*/
       loop
-      muted
       playsInline
       poster={thumbnailUrl}
       src={videoUrl}
