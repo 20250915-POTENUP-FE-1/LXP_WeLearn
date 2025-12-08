@@ -10,7 +10,7 @@ export interface ShortsCategory {
 }
 
 export interface ShortsDetail {
-  shortsId: number
+  id: number
   title: string
   description: string
   videoUrl: string

@@ -11,6 +11,7 @@
     "mock": "node server/mock-server.js"
   },
   "dependencies": {
+    "framer-motion": "^12.23.25",
     "lucide-react": "^0.555.0",
     "next": "16.0.4",
     "react": "19.2.0",
