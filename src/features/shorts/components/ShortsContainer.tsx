@@ -5,6 +5,7 @@ import { motion, AnimatePresence, PanInfo } from 'framer-motion'
 import { ShortsDetail } from '@/types/shortform'
 import ShortsItem from './ShortsItem'
 import ShortsNavigationButtons from './ShortsNavigationButtons'
+import { useKeyboardNavigation } from '@/hook/useKeyboardNavigation'
 
 /**
  * ShortsContainer
@@ -89,23 +90,12 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
     }
   }
 
-  /**
-   * 키보드(↑, ↓)로도 이전/다음 이동 가능하도록 처리
-   */
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowUp') {
-        e.preventDefault()
-        navigateTo('prev')
-      } else if (e.key === 'ArrowDown') {
-        e.preventDefault()
-        navigateTo('next')
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [navigateTo])
+  // 키보드 방향키 네비게이션 훅 사용
+  useKeyboardNavigation({
+    onPrev: () => navigateTo('prev'),
+    onNext: () => navigateTo('next'),
+    enabled: !isEmpty, // 데이터가 있을 때만 키보드 네비게이션 활성화
+  })
 
   // 데이터가 없을 때 처리
   if (isEmpty || !currentShorts) {

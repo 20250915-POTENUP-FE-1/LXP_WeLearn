@@ -1,3 +1,4 @@
+import api from '@/lib/utils/apiUtils'
 import { ShortsDetail } from '@/types/shortform'
 
 /**
@@ -17,21 +18,21 @@ export interface ShortsListProps {
  */
 export async function getShortsList(startId: string): Promise<ShortsListProps | null> {
   try {
+    const apiClient = api()
+
     // 1: 전체 shorts 목록 가져오기
-    const response = await fetch(`http://localhost:4000/shorts`, {
+    const allShorts: ShortsDetail[] = await apiClient.get('/api/v1/shorts', {
       cache: 'no-store', // 항상 최신 데이터 요청 (캐시 사용 안 함)
     })
 
-    // 응답 실패 시 null 반환
-    if (!response.ok) {
+    // 데이터가 없는 경우
+    if (!allShorts || allShorts.length === 0) {
       return null
     }
 
-    // JSON으로 파싱
-    const allShorts: ShortsDetail[] = await response.json()
-
     // 2: ID 오름차순 정렬 (1, 2, 3, 4, 5...)
     // sort()는 원본을 변경하므로 스프레드 연산자로 복사 후 정렬
+    // 백엔드에서 정렬이 되어 올 수도 있지만, 프론트엔드에서 확실히 처리
     const sortedShorts = [...allShorts].sort((a, b) => a.id - b.id)
 
     // 3: 시작 영상의 인덱스 찾기
