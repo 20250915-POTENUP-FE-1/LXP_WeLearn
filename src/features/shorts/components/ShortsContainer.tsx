@@ -8,7 +8,7 @@ import ShortsNavigationButtons from './ShortsNavigationButtons'
 
 /**
  * ShortsContainer
- * - 숏폼 리스트 세로 슬라이드(스와이프)로 탐색하는 컨테이너 컴포넌트
+ * 숏폼 리스트 세로 슬라이드(스와이프)로 탐색하는 컨테이너 컴포넌트
  */
 interface ShortsContainerProps {
   shortsList: ShortsDetail[] // 전체 숏폼 리스트는 배열로
