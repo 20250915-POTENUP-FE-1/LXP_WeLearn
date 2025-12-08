@@ -1,12 +1,16 @@
-import React from 'react'
+interface ShortsPlayerProps {
+  videoUrl: string
+  thumbnailUrl?: string
+}
 
-function ShortsPlayer() {
+function ShortsPlayer({ videoUrl, thumbnailUrl }: ShortsPlayerProps) {
   return (
     <video
-      aria-label="숏폼 학습 영상"
+      aria-label="shorts video player"
       className="h-full w-full object-cover"
       controls
-      src="/videos/sample.mp4"
+      poster={thumbnailUrl}
+      src={videoUrl}
     />
   )
 }

@@ -1,4 +1,88 @@
 {
+  "shorts": [
+    {
+      "id": 1,
+      "title": "스프링 DI 요약",
+      "description": "핵심 개념을 1분 안에 정리해보는 숏폼 강의입니다.",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      "thumbnailUrl": "https://fastly.picsum.photos/id/933/200/300.jpg?hmac=8zdipGWKGkHz8wyA9J63P3fzghuUL9wqV5Y34b8mLTI",
+      "uploader": {
+        "userId": 3,
+        "nickname": "코딩맨",
+        "profileUrl": "https://fastly.picsum.photos/id/785/200/200.jpg?hmac=vvHnS4TgoGTRqwI2soaIhbOxE7Q-hhoZTTDe75h_fz4"
+      },
+      "category": {
+        "categoryId": 1,
+        "name": "프로그래밍"
+      }
+    },
+    {
+      "id": 2,
+      "title": "리액트 훅스 핵심정리",
+      "description": "useState와 useEffect를 가장 빠르게 이해하는 방법.",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+      "thumbnailUrl": "https://fastly.picsum.photos/id/661/200/300.jpg?hmac=j0ICelTq_T71g1Ejb1d0iy2byHhhIoB1J1pMAVRoBpk",
+      "uploader": {
+        "userId": 4,
+        "nickname": "프론트마스터",
+        "profileUrl": "https://fastly.picsum.photos/id/785/200/200.jpg?hmac=vvHnS4TgoGTRqwI2soaIhbOxE7Q-hhoZTTDe75h_fz4"
+      },
+      "category": {
+        "categoryId": 1,
+        "name": "프로그래밍"
+      }
+    },
+    {
+      "id": 3,
+      "title": "자료구조: 스택과 큐",
+      "description": "면접 단골 질문! 스택과 큐 개념을 시각적으로 정리.",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      "thumbnailUrl": "https://fastly.picsum.photos/id/494/200/300.jpg?hmac=YdLwRbrTAzFXaAJcsj854mgNuS5jqYM8bcjCzSrSDRM",
+      "uploader": {
+        "userId": 8,
+        "nickname": "개발도르",
+        "profileUrl": "https://fastly.picsum.photos/id/785/200/200.jpg?hmac=vvHnS4TgoGTRqwI2soaIhbOxE7Q-hhoZTTDe75h_fz4"
+      },
+      "category": {
+        "categoryId": 1,
+        "name": "프로그래밍"
+      }
+    },
+    {
+      "id": 4,
+      "title": "CSS Flexbox 30초 정리",
+      "description": "가장 많이 쓰는 flex 기본 축 개념을 쉽게 설명합니다.",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      "thumbnailUrl": "https://fastly.picsum.photos/id/802/200/300.jpg?hmac=q6ItUSh1lSpO66uCg28JvcSG6TC_XXIOgCwifpzTD9M",
+      "uploader": {
+        "userId": 5,
+        "nickname": "디자인코더",
+        "profileUrl": "https://fastly.picsum.photos/id/785/200/200.jpg?hmac=vvHnS4TgoGTRqwI2soaIhbOxE7Q-hhoZTTDe75h_fz4"
+      },
+      "category": {
+        "categoryId": 2,
+        "name": "UI/UX"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Node.js 이벤트 루프 이해하기",
+      "description": "자바스크립트 런타임의 동작 방식을 애니메이션으로 설명.",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+      "thumbnailUrl": "https://cdn.example.com/thumbnails/node_eventloop.png",
+      "uploader": {
+        "userId": 10,
+        "nickname": "백엔드왕",
+        "profileUrl": "https://cdn.example.com/profiles/user10.png"
+      },
+      "category": {
+        "categoryId": 1,
+        "name": "프로그래밍"
+      }
+    }
+  ]
+}
+{
   "users": [
     {
       "id": 1764930604555,
@@ -15,22 +99,6 @@
       "name": "asdfsdf",
       "nickname": "sdfd",
       "createdAt": "2025-12-05T10:36:19.997Z"
-    },
-    {
-      "id": 1765106246807,
-      "email": "text@example.com",
-      "password": "12341234",
-      "name": "홍길동",
-      "nickname": "홍길동",
-      "createdAt": "2025-12-07T11:17:26.807Z"
-    },
-    {
-      "id": 1765106313463,
-      "email": "test@test.com",
-      "password": "12341234",
-      "name": "홍길동",
-      "nickname": "홍길동",
-      "createdAt": "2025-12-07T11:18:33.463Z"
     }
   ],
   "posts": []
