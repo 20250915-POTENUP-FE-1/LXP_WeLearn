@@ -1,10 +1,16 @@
 'use client'
 import Link from 'next/link'
-import { ShoppingCart, User } from 'lucide-react'
+import { LogOut, ShoppingCart, User, UserIcon } from 'lucide-react'
 import { startTransition, useActionState, useEffect, useState } from 'react'
 import { UserInfo } from '@/types/auth'
 import { LogoutAction } from '@/features/auth/action'
 import { useRouter } from 'next/navigation'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 interface HeaderRightSectionProps {
   isLogined: boolean
@@ -57,32 +63,48 @@ export default function HeaderRightSection({ isLogined }: HeaderRightSectionProp
           >
             <ShoppingCart strokeWidth={2} />
           </button>
-          <button
-            className="p-2 text-gray-600 transition-colors hover:text-gray-900"
-            aria-label="프로필"
-          >
-            {/* 유저 프로필 영역 */}
-            {user?.profileUrl && (
-              <div
-                className="rounded-full border-gray-100 transition-colors hover:border-gray-600"
-                aria-label="프로필 이미지"
-              >
-                <img src={user?.profileUrl} />
-              </div>
-            )}
 
-            <User strokeWidth={2} />
-          </button>
-          <button
-            className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800"
-            onClick={() => {
-              startTransition(() => {
-                action()
-              })
-            }}
-          >
-            로그아웃
-          </button>
+          <DropdownMenu modal={false}>
+            <DropdownMenuTrigger asChild>
+              <div
+                className="cursor-pointer p-2 text-gray-600 transition-colors hover:text-gray-900"
+                aria-label="프로필"
+              >
+                {/* 유저 프로필 영역 */}
+                {user?.profileUrl && (
+                  <div
+                    className="cursor-pointer rounded-full border-gray-100 transition-colors hover:border-gray-600"
+                    aria-label="프로필 이미지"
+                  >
+                    <img src={user?.profileUrl} />
+                  </div>
+                )}
+
+                <User strokeWidth={2} />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-30 py-3 pl-2">
+              <DropdownMenuItem className="cursor-pointer">
+                <UserIcon />
+                <div className="p-1">
+                  <Link href="/mypage/profile">프로필</Link>
+                </div>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
+                <LogOut />
+                <button
+                  className="flex p-1"
+                  onClick={() => {
+                    startTransition(() => {
+                      action()
+                    })
+                  }}
+                >
+                  로그아웃
+                </button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </>
       )}
     </div>
