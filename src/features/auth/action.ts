@@ -34,7 +34,9 @@ export const SignupAction = async (
     }
   }
 
-  redirect('/signin')
+  return {
+    success: true,
+  }
 }
 
 export const SigninAction = async (
@@ -63,6 +65,14 @@ export const SigninAction = async (
     httpOnly: true,
     maxAge: 60 * 60,
     path: '/',
+  })
+
+  cookieStore.set('refreshToken', data.refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 60 * 60 * 24 * 30,
   })
 
   return {

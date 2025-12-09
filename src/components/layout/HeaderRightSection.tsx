@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { toast } from 'react-toastify'
 
 interface HeaderRightSectionProps {
   isLogined: boolean
@@ -87,7 +88,13 @@ export default function HeaderRightSection({ isLogined }: HeaderRightSectionProp
               <DropdownMenuItem className="cursor-pointer">
                 <UserIcon />
                 <div className="p-1">
-                  <Link href="/mypage/profile">프로필</Link>
+                  <button
+                    onClick={() => {
+                      toast.info('준비중인 서비스입니다.')
+                    }}
+                  >
+                    프로필
+                  </button>
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer">

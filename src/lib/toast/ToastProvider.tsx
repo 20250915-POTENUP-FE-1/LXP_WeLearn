@@ -14,7 +14,7 @@ export default function ToastProvider() {
       draggable
       theme="light"
       // 컨테이너 z-index/간격 (필요시)
-      className="z-[9999]"
+      className="z-9999"
       // 토스트 박스
       // toastClassName={(ctx) =>
       //   clsx(

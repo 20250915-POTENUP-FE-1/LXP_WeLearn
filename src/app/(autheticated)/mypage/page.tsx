@@ -189,7 +189,7 @@ const EnrolledLectureCard: React.FC<{
     <div className="flex flex-col gap-4 border-b border-gray-100 py-6 last:border-b-0 sm:flex-row">
       {/* Thumbnail */}
       {/* Tailwind: aspect-video로 비율 유지, rounded-lg로 모서리 둥글게 */}
-      <div className="aspect-video w-full flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:w-48">
+      <div className="aspect-video w-full shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:w-48">
         <img
           src={lecture.thumbnail}
           alt={`${lecture.title} 강의 썸네일`}
@@ -314,7 +314,7 @@ export default function MyLecturesPage() {
           {/* Description: 좌측 사이드바 (프로필 + 메뉴) */}
           {/* Tailwind: w-64로 고정 너비, border로 구분 */}
           {/* ============================================ */}
-          <aside className="w-full flex-shrink-0 lg:w-64">
+          <aside className="w-full shrink-0 lg:w-64">
             <div className="rounded-xl border border-gray-200 bg-white p-6">
               {/* User Profile */}
               <UserProfileCard user={sampleUser} />

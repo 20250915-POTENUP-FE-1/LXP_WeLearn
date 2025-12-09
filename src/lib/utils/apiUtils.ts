@@ -4,13 +4,12 @@ type FetchOptions = {
   revalidate?: number // Next ISR (ex: 10 = 10초 후 자동 재검증)
 }
 
-const baseUrl = 'http://localhost:4000/ // process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8080'
+const baseUrl = 'http://localhost:4000'
 
 async function fetchWithAuth(
   url: string,
   options: RequestInit & { revalidate?: number; retry?: boolean } = {},
 ) {
-  console.log('fetch URL:', url)
   const response = await fetch(url, {
     ...options,
     next: options.revalidate ? { revalidate: options.revalidate } : undefined,
@@ -55,11 +54,7 @@ export default function api() {
       cache: options?.cache, // 브라우저/서버 캐시
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
     })
-    if (!res.ok) {
-      const err = await res.json()
-      console.log(err)
-      throw new Error(err.message)
-    }
+    if (!res.ok) throw new Error(`GET failed: ${res.status}`)
     return res.json()
   }
 
@@ -72,11 +67,7 @@ export default function api() {
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
       body: JSON.stringify(data || {}),
     })
-    if (!res.ok) {
-      const err = await res.json()
-      console.log(err)
-      throw new Error(err.message)
-    }
+    if (!res.ok) throw new Error(`POST failed: ${res.status}`)
     return res.json()
   }
 
@@ -89,11 +80,7 @@ export default function api() {
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
       body: JSON.stringify(data || {}),
     })
-    if (!res.ok) {
-      const err = await res.json()
-      console.log(err)
-      throw new Error(err.message)
-    }
+    if (!res.ok) throw new Error(`PATCH failed: ${res.status}`)
     return res.json()
   }
 
@@ -104,11 +91,7 @@ export default function api() {
       cache: options?.cache ?? 'no-store',
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
     })
-    if (!res.ok) {
-      const err = await res.json()
-      console.log(err)
-      throw new Error(err.message)
-    }
+    if (!res.ok) throw new Error(`DELETE failed: ${res.status}`)
     return res.json()
   }
 

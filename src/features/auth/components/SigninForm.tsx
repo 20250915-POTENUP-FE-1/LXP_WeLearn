@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/Input'
 import { useActionState, useEffect } from 'react'
 import { SigninAction } from '../action'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 export default function SigninForm() {
   const router = useRouter()
@@ -15,8 +16,11 @@ export default function SigninForm() {
 
   useEffect(() => {
     if (state.success && state.user) {
+      toast.success('로그인에 성공하였습니다.')
       localStorage.setItem('user', JSON.stringify(state.user))
       router.push('/')
+    } else if (state.success === false && state.message) {
+      toast.error(state.message)
     }
   }, [state])
 
