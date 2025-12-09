@@ -1,8 +1,8 @@
 import { ClosedCaption, Heart, ListPlus, MessageSquareText, Send } from 'lucide-react'
 
-function ShortsActionBar() {
+export default function ShortsActionBar() {
   return (
-    <aside className="absolute right-5 bottom-18 flex flex-col items-center gap-6">
+    <aside className="absolute right-5 bottom-20 flex flex-col items-center gap-6">
       {/* 좋아요 */}
       <button
         aria-label="좋아요"
@@ -10,7 +10,7 @@ function ShortsActionBar() {
         type="button"
       >
         <Heart strokeWidth={1.5} />
-        <span className="mt-1 text-sm">892</span>
+        <span className="mt-1 text-xs">892</span>
       </button>
 
       {/* 댓글 */}
@@ -20,7 +20,7 @@ function ShortsActionBar() {
         type="button"
       >
         <MessageSquareText strokeWidth={1.5} />
-        <span className="mt-1 text-sm">57</span>
+        <span className="mt-1 text-xs">57</span>
       </button>
 
       {/* 자막 */}
@@ -30,7 +30,7 @@ function ShortsActionBar() {
         type="button"
       >
         <ClosedCaption strokeWidth={1.5} />
-        <span className="text-sm">자막</span>
+        <span className="text-xs">자막</span>
       </button>
 
       {/* 저장 */}
@@ -40,7 +40,7 @@ function ShortsActionBar() {
         type="button"
       >
         <ListPlus strokeWidth={1.5} />
-        <span className="mt-1 text-sm">저장</span>
+        <span className="mt-1 text-xs">저장</span>
       </button>
 
       {/* 공유 */}
@@ -50,10 +50,8 @@ function ShortsActionBar() {
         type="button"
       >
         <Send strokeWidth={1.5} />
-        <span className="mt-1 text-sm">공유</span>
+        <span className="mt-1 text-xs">공유</span>
       </button>
     </aside>
   )
 }
-
-export default ShortsActionBar
