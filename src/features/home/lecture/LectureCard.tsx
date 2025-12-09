@@ -8,10 +8,10 @@ export default function LectureCard({ lecture }: { lecture: Lecture }) {
         <img
           src={lecture.thumbnail}
           alt={`${lecture.title} 강의 썸네일`}
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="h-full w-full object-cover opacity-100 transition-transform duration-300 group-hover:opacity-80"
         />
         <span
-          className={`absolute top-3 left-3 px-2 py-1 text-xs font-medium text-white ${lecture.categoryColor} rounded`}
+          className={`absolute top-3 left-3 rounded bg-black px-2 py-1 text-xs font-medium text-white`}
         >
           {lecture.category}
         </span>

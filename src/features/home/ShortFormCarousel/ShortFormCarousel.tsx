@@ -12,7 +12,7 @@ export default function ShortFormCarousel() {
       </h2>
 
       <PageNation items={shortFormItems}>
-        <div className="flex items-center justify-between gap-4 overflow-hidden">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
           {shortFormItems.map((item: ShortFormItem) => (
             <Link key={item.id} href={`/shortform/${item.id}`}>
               <div className="group w-72 flex-shrink-0 cursor-pointer">

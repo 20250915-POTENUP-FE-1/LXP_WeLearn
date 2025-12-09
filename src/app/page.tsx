@@ -1,8 +1,8 @@
 import React from 'react'
 import ShortFormCarousel from '@/features/home/ShortFormCarousel/ShortFormCarousel'
-import PlaylistSection from '@/features/home/PlaylistSection'
 import CategoryLectureSection from '@/features/home/lecture/CategoryLectureSection'
 import { lectures, playlistGroup } from '@/dummy/data'
+import PlaylistSection from '@/features/home/play-list-section/PlaylistSection'
 
 const HomePage = () => {
   return (

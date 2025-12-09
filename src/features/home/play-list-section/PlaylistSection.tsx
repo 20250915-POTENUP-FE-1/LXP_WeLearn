@@ -1,14 +1,15 @@
 import React from 'react'
 import { PlaylistItem } from '@/features/home/types/PlayListItem'
+import PlaylistButton from '@/features/home/play-list-section/PlaylistButton'
 
 export default async function PlaylistSection({ items }: { items: PlaylistItem[] }) {
   return (
     <section className="mb-12">
       <h2 className="mb-6 text-2xl font-bold text-gray-900">숏폼 플레이리스트</h2>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {items.map((item) => (
-          <div key={item.id} className="group cursor-pointer">
-            <div className="relative mb-3 aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-gray-200 to-gray-300 transition-all group-hover:ring-2 group-hover:ring-gray-900">
+          <PlaylistButton key={item.id}>
+            <div className="relative mb-3 aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-gray-200 to-gray-300 opacity-100 transition duration-300 group-hover:opacity-80">
               {item.thumbnail ? (
                 <img src={item.thumbnail} alt={item.title} className="h-full w-full object-cover" />
               ) : (
@@ -22,7 +23,7 @@ export default async function PlaylistSection({ items }: { items: PlaylistItem[]
               </div>
             </div>
             <h3 className="text-sm font-medium text-gray-900">{item.title}</h3>
-          </div>
+          </PlaylistButton>
         ))}
       </div>
     </section>
