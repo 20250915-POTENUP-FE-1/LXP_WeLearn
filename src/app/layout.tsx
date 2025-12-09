@@ -19,11 +19,12 @@ export default function RootLayout({
   return (
     <html lang="ko" className={suit.className}>
       <body className="flex min-h-screen flex-col bg-white">
-        <Header />
+        {children}
+        {/* <Header />
         <main className="mx-auto box-border flex max-w-7xl flex-1 items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
           {children}
         </main>
-        <Footer />
+        <Footer /> */}
         <ToastProvider />
       </body>
     </html>

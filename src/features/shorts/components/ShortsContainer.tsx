@@ -101,7 +101,7 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
       {/* 메인 숏폼 영역 */}
       <div className="w-full md:w-[420px]">
         {/* 세로 슬라이드 영역 (모바일: 전체 높이, 데스크탑: 70vh) */}
-        <div className="w-full overflow-hidden rounded-2xl bg-black md:h-[70vh]">
+        <div className="h-[80vh] w-full overflow-hidden bg-black sm:h-full sm:rounded-2xl md:h-[70vh]">
           <AnimatePresence initial={false} custom={slideDirection} mode="wait">
             <motion.div
               key={currentShorts.id}

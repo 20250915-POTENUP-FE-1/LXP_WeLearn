@@ -4,12 +4,13 @@ type FetchOptions = {
   revalidate?: number // Next ISR (ex: 10 = 10초 후 자동 재검증)
 }
 
-const baseUrl = 'http://localhost:4000'
+const baseUrl = 'http://localhost:4000/ // process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8080'
 
 async function fetchWithAuth(
   url: string,
   options: RequestInit & { revalidate?: number; retry?: boolean } = {},
 ) {
+  console.log('fetch URL:', url)
   const response = await fetch(url, {
     ...options,
     next: options.revalidate ? { revalidate: options.revalidate } : undefined,
