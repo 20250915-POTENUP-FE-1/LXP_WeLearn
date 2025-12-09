@@ -11,7 +11,10 @@
         "nickname": "코드리치",
         "profileUrl": "https://fastly.picsum.photos/id/777/200/200.jpg?hmac=wqNcn1FLgH_VlRZFLMyEJDk_9vJna3GWYQJ-QH9uIUs"
       },
-      "category": { "categoryId": 1, "name": "프로그래밍" }
+      "category": {
+        "categoryId": 1,
+        "name": "프로그래밍"
+      }
     },
     {
       "id": 2,
@@ -24,7 +27,10 @@
         "nickname": "디자인펭귄",
         "profileUrl": "https://fastly.picsum.photos/id/538/200/200.jpg?hmac=fW2cZK9nco5CLnM5mA-q9LxBKkHvBoNhz0WIpEeKBYc"
       },
-      "category": { "categoryId": 2, "name": "UI/UX" }
+      "category": {
+        "categoryId": 2,
+        "name": "UI/UX"
+      }
     },
     {
       "id": 3,
@@ -37,7 +43,10 @@
         "nickname": "백엔드러버",
         "profileUrl": "https://fastly.picsum.photos/id/255/200/200.jpg?hmac=-1ufayN-J6lUr6TH2bgM22Hef_M4zizvENZxoWbP-CA"
       },
-      "category": { "categoryId": 1, "name": "프로그래밍" }
+      "category": {
+        "categoryId": 1,
+        "name": "프로그래밍"
+      }
     },
     {
       "id": 4,
@@ -50,7 +59,10 @@
         "nickname": "CSS요정",
         "profileUrl": "https://fastly.picsum.photos/id/830/200/200.jpg?hmac=AeTqoE0L9f6QZrxVtxdr8Kcvff8bXWm1lp7W8yUUHko"
       },
-      "category": { "categoryId": 2, "name": "UI/UX" }
+      "category": {
+        "categoryId": 2,
+        "name": "UI/UX"
+      }
     },
     {
       "id": 5,
@@ -63,7 +75,10 @@
         "nickname": "프론트선배",
         "profileUrl": "https://fastly.picsum.photos/id/988/200/200.jpg?hmac=9-i8lXE496qlMnORWMwlSPcuU0fgoLjLcz2tZ7wwlAs"
       },
-      "category": { "categoryId": 1, "name": "프로그래밍" }
+      "category": {
+        "categoryId": 1,
+        "name": "프로그래밍"
+      }
     },
     {
       "id": 6,
@@ -76,7 +91,10 @@
         "nickname": "프레임워크러버",
         "profileUrl": "https://fastly.picsum.photos/id/233/200/200.jpg?hmac=h1Q6fPlEvwo1lpiF4-1iYEPNelxfyORl8_AdcRU7lKQ"
       },
-      "category": { "categoryId": 1, "name": "프로그래밍" }
+      "category": {
+        "categoryId": 1,
+        "name": "프로그래밍"
+      }
     },
     {
       "id": 7,
@@ -89,7 +107,10 @@
         "nickname": "모션디자이너",
         "profileUrl": "https://fastly.picsum.photos/id/477/200/200.jpg?hmac=Wxwc_baL8a6oYN-X6JPFV0Z_WuUWuj8xXyAiRzq5cFI"
       },
-      "category": { "categoryId": 2, "name": "UI/UX" }
+      "category": {
+        "categoryId": 2,
+        "name": "UI/UX"
+      }
     },
     {
       "id": 8,
@@ -102,7 +123,10 @@
         "nickname": "API장인",
         "profileUrl": "https://fastly.picsum.photos/id/352/200/200.jpg?hmac=MnM5VSdovc1YpCgZomJa99Uvs3dXPuGsgXHO7pBaRfA"
       },
-      "category": { "categoryId": 1, "name": "프로그래밍" }
+      "category": {
+        "categoryId": 1,
+        "name": "프로그래밍"
+      }
     },
     {
       "id": 9,
@@ -115,7 +139,10 @@
         "nickname": "시스템디자이너",
         "profileUrl": "https://fastly.picsum.photos/id/412/200/200.jpg?hmac=It1S1IdSW99Zz9xXW9wp0Fw5uVRN3ha2Xbq9RM_J6s0"
       },
-      "category": { "categoryId": 2, "name": "UI/UX" }
+      "category": {
+        "categoryId": 2,
+        "name": "UI/UX"
+      }
     },
     {
       "id": 10,
@@ -128,7 +155,10 @@
         "nickname": "알고리즘달인",
         "profileUrl": "https://fastly.picsum.photos/id/302/200/200.jpg?hmac=olCwyPpDSFa4XH0dFJv2kQbH227hZmXYguW_umVAmMQ"
       },
-      "category": { "categoryId": 1, "name": "프로그래밍" }
+      "category": {
+        "categoryId": 1,
+        "name": "프로그래밍"
+      }
     }
   ],
   "users": [
@@ -147,7 +177,14 @@
       "name": "asdfsdf",
       "nickname": "sdfd",
       "createdAt": "2025-12-05T10:36:19.997Z"
+    },
+    {
+      "id": 1765244125162,
+      "email": "test@test11.com",
+      "password": "12341234",
+      "name": "승일",
+      "nickname": "말괄량이",
+      "createdAt": "2025-12-09T01:35:25.162Z"
     }
-  ],
-  "posts": []
+  ]
 }
