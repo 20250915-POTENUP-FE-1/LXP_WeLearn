@@ -185,6 +185,14 @@
       "name": "김말순",
       "nickname": "테스터",
       "createdAt": "2025-12-09T08:30:36.847Z"
+    },
+    {
+      "id": 1765272684213,
+      "email": "qweqwe@gmail.com",
+      "password": "zxcv1234",
+      "name": "정호준",
+      "nickname": "정몽실",
+      "createdAt": "2025-12-09T09:31:24.213Z"
     }
   ]
 }

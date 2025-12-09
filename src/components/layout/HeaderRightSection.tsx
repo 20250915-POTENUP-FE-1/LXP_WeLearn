@@ -58,13 +58,6 @@ export default function HeaderRightSection({ isLogined }: HeaderRightSectionProp
         </>
       ) : (
         <>
-          <button
-            className="p-2 text-gray-600 transition-colors hover:text-gray-900"
-            aria-label="장바구니"
-          >
-            <ShoppingCart strokeWidth={2} />
-          </button>
-
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
               <div
@@ -86,27 +79,26 @@ export default function HeaderRightSection({ isLogined }: HeaderRightSectionProp
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-30 py-3 pl-2">
               <DropdownMenuItem className="cursor-pointer">
-                <UserIcon />
-                <div className="p-1">
-                  <button
-                    onClick={() => {
-                      toast.info('준비중인 서비스입니다.')
-                    }}
-                  >
-                    프로필
-                  </button>
-                </div>
+                <button
+                  onClick={() => {
+                    toast.info('준비중인 서비스입니다.')
+                  }}
+                  className="flex gap-4 p-1"
+                >
+                  <UserIcon />
+                  프로필
+                </button>
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer">
-                <LogOut />
                 <button
-                  className="flex p-1"
                   onClick={() => {
                     startTransition(() => {
                       action()
                     })
                   }}
+                  className="flex gap-4 p-1"
                 >
+                  <LogOut />
                   로그아웃
                 </button>
               </DropdownMenuItem>
