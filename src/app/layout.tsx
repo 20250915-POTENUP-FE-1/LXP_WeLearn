@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import React from 'react'
 import Footer from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
+import { suit } from '@/app/font/suit/font'
 
 export const metadata: Metadata = {
   title: '35FUND',
@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" className={suit.className}>
       <body className="flex min-h-screen flex-col bg-white">
         <Header />
         <main className="mx-auto box-border flex max-w-7xl flex-1 items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
