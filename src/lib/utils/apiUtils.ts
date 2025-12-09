@@ -54,7 +54,11 @@ export default function api() {
       cache: options?.cache, // 브라우저/서버 캐시
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
     })
-    if (!res.ok) throw new Error(`GET failed: ${res.status}`)
+    if (!res.ok) {
+      const err = await res.json()
+      console.log(err)
+      throw new Error(err.message)
+    }
     return res.json()
   }
 
@@ -67,7 +71,11 @@ export default function api() {
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
       body: JSON.stringify(data || {}),
     })
-    if (!res.ok) throw new Error(`POST failed: ${res.status}`)
+    if (!res.ok) {
+      const err = await res.json()
+      console.log(err)
+      throw new Error(err.message)
+    }
     return res.json()
   }
 
@@ -80,7 +88,11 @@ export default function api() {
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
       body: JSON.stringify(data || {}),
     })
-    if (!res.ok) throw new Error(`PATCH failed: ${res.status}`)
+    if (!res.ok) {
+      const err = await res.json()
+      console.log(err)
+      throw new Error(err.message)
+    }
     return res.json()
   }
 
@@ -91,7 +103,11 @@ export default function api() {
       cache: options?.cache ?? 'no-store',
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
     })
-    if (!res.ok) throw new Error(`DELETE failed: ${res.status}`)
+    if (!res.ok) {
+      const err = await res.json()
+      console.log(err)
+      throw new Error(err.message)
+    }
     return res.json()
   }
 
