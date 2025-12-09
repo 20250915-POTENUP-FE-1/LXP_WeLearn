@@ -1,0 +1,90 @@
+'use client'
+import Link from 'next/link'
+import { ShoppingCart, User } from 'lucide-react'
+import { startTransition, useActionState, useEffect, useState } from 'react'
+import { UserInfo } from '@/types/auth'
+import { LogoutAction } from '@/features/auth/action'
+import { useRouter } from 'next/navigation'
+
+interface HeaderRightSectionProps {
+  isLogined: boolean
+}
+
+export default function HeaderRightSection({ isLogined }: HeaderRightSectionProps) {
+  const [user, setUser] = useState<UserInfo | null>(null)
+
+  const router = useRouter()
+
+  const [state, action, isPending] = useActionState(LogoutAction, {
+    success: false,
+    message: '',
+  })
+
+  useEffect(() => {
+    const user = (JSON.parse(localStorage.getItem('user') || 'null') as UserInfo) || null
+    if (user) setUser(user)
+  }, [])
+
+  useEffect(() => {
+    if (state.success) {
+      localStorage.removeItem('user')
+      router.push('/')
+    }
+  }, [state, router])
+
+  return (
+    <div className="flex items-center gap-3">
+      {!isLogined ? (
+        <>
+          <Link
+            href="/signin"
+            className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+          >
+            로그인
+          </Link>
+          <Link
+            href="/signup"
+            className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800"
+          >
+            회원가입
+          </Link>
+        </>
+      ) : (
+        <>
+          <button
+            className="p-2 text-gray-600 transition-colors hover:text-gray-900"
+            aria-label="장바구니"
+          >
+            <ShoppingCart strokeWidth={2} />
+          </button>
+          <button
+            className="p-2 text-gray-600 transition-colors hover:text-gray-900"
+            aria-label="프로필"
+          >
+            {/* 유저 프로필 영역 */}
+            {user?.profileUrl && (
+              <div
+                className="rounded-full border-gray-100 transition-colors hover:border-gray-600"
+                aria-label="프로필 이미지"
+              >
+                <img src={user?.profileUrl} />
+              </div>
+            )}
+
+            <User strokeWidth={2} />
+          </button>
+          <button
+            className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800"
+            onClick={() => {
+              startTransition(() => {
+                action()
+              })
+            }}
+          >
+            로그아웃
+          </button>
+        </>
+      )}
+    </div>
+  )
+}

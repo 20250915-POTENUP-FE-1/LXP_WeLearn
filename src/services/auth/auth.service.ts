@@ -24,4 +24,8 @@ export const authApi = {
   signin: (data: SigninRequest) => {
     return auth.post('/api/auth/login', data, { cache: 'no-store' })
   },
+
+  logout: () => {
+    return auth.post('/api/auth/logout')
+  },
 }

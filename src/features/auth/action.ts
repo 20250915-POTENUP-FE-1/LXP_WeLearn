@@ -1,12 +1,15 @@
 'use server'
 
 import { authApi } from '@/services/auth/auth.service'
+import { UserInfo } from '@/types/auth'
+import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 type ActionState = {
   success: boolean
   message?: string
   errors?: Record<string, string>
+  user?: UserInfo
 }
 
 export const SignupAction = async (
@@ -27,9 +30,59 @@ export const SignupAction = async (
   } catch (error) {
     return {
       success: false,
-      message: error instanceof Error ? error.message : 'Unknow error',
+      message: error instanceof Error ? error.message : '알수없는 오류 발생',
     }
   }
 
   redirect('/signin')
+}
+
+export const SigninAction = async (
+  prevState: ActionState,
+  formData: FormData,
+): Promise<ActionState> => {
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+
+  const payload = { email, password }
+
+  let data
+
+  try {
+    data = await authApi.signin(payload)
+  } catch (error) {
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : '알수없는 오류 발생',
+    }
+  }
+
+  const cookieStore = await cookies()
+
+  cookieStore.set('accessToken', data.accessToken, {
+    httpOnly: true,
+    maxAge: 60 * 60,
+    path: '/',
+  })
+
+  return {
+    success: true,
+    user: data.user,
+  }
+}
+
+export const LogoutAction = async (prevState: ActionState) => {
+  try {
+    await authApi.logout()
+  } catch (error) {
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : '알수없는 오류 발생',
+    }
+  }
+
+  const cookieStore = await cookies()
+  cookieStore.delete('accessToken')
+
+  return { success: true }
 }

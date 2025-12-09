@@ -9,3 +9,11 @@ export interface SignupFormData {
   password: string
   passwordConfirm: string
 }
+
+export interface UserInfo {
+  name: string
+  email: string
+  nickname: string
+  profileUrl?: string
+  createdAt?: string
+}

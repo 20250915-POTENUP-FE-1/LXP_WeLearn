@@ -35,7 +35,7 @@ server.post('/api/auth/login', (req, res) => {
 // ==========================================
 server.use((req, res, next) => {
   // 인증이 필요 없는 공개 경로들
-  const publicPaths = ['/api/auth/login', '/api/auth/register']
+  const publicPaths = ['/api/auth/login', '/api/auth/register', '/api/auth/logout']
 
   // GET 요청(조회)은 게시글 목록 같은 경우 공개일 수 있으므로 일단 통과
   // (단, /users/me 같은 개인정보는 아래에서 별도 처리)
@@ -161,6 +161,10 @@ server.post('/api/auth/register', (req, res) => {
   })
 })
 
+server.post('/api/auth/logout', (req, res) => {
+  return res.status(200).json({ message: '로그아웃 성공' })
+})
+
 // ==========================================
 // 6. 라우팅 설정 (Prefix: /api)
 // ==========================================
@@ -172,6 +176,7 @@ const PORT = 4000
 server.listen(PORT, () => {
   console.log(`JSON Server is running on http://localhost:${PORT}`)
   console.log(`- Login: POST /api/auth/login`)
+  console.log(`- Register: POST /api/auth/register`)
   console.log(`- Me:    GET /api/users/me`)
   console.log(`- Posts: GET /api/posts`)
 })
