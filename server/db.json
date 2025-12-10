@@ -169,30 +169,6 @@
       "name": "길동이",
       "nickname": "길동이",
       "createdAt": "2025-12-10T02:28:01.311Z"
-    },
-    {
-      "id": 1765336564544,
-      "email": "test03@test.com",
-      "password": "12341234",
-      "name": "승일",
-      "nickname": "승일",
-      "createdAt": "2025-12-10T03:16:04.544Z"
-    },
-    {
-      "id": 1765337132452,
-      "email": "test100@test.com",
-      "password": "12341234",
-      "name": "승일",
-      "nickname": "말괄량이",
-      "createdAt": "2025-12-10T03:25:32.452Z"
-    },
-    {
-      "id": 1765337594641,
-      "email": "test1004@test.com",
-      "password": "12341234",
-      "name": "승일",
-      "nickname": "승일",
-      "createdAt": "2025-12-10T03:33:14.641Z"
     }
   ]
 }
