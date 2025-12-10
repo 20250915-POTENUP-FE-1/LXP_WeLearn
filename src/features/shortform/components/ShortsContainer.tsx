@@ -26,10 +26,10 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
   const hasPrev = currentIndex > 0
   const hasNext = currentIndex < shortsList.length - 1
 
-  // 현재 숏폼이 바뀔 때 URL 동기화 (/shortform/:id)
+  // 현재 숏폼이 바뀔 때 URL 동기화 (/shorts/:id)
   useEffect(() => {
     if (!currentShorts) return
-    const newUrl = `/shortform/${currentShorts.id}`
+    const newUrl = `/shorts/${currentShorts.id}`
     window.history.replaceState(null, '', newUrl)
   }, [currentShorts?.id])
 
@@ -101,7 +101,7 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
       {/* 메인 숏폼 영역 */}
       <div className="w-full md:w-[420px]">
         {/* 세로 슬라이드 영역 (모바일: 전체 높이, 데스크탑: 70vh) */}
-        <div className="h-[80vh] w-full overflow-hidden bg-black sm:h-full sm:rounded-2xl md:h-[70vh]">
+        <div className="h-[84vh] w-full overflow-hidden bg-black sm:rounded-2xl md:h-[70vh]">
           <AnimatePresence initial={false} custom={slideDirection} mode="wait">
             <motion.div
               key={currentShorts.id}
