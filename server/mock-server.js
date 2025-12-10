@@ -27,7 +27,7 @@ server.post('/api/v1/auth/login', (req, res) => {
       message: '로그인 성공',
     })
   } else {
-    return res.status(400).json({ message: '이메일 또는 비밀번호가 일치하지 않습니다.' })
+    return res.status(401).json({ message: '이메일 또는 비밀번호가 일치하지 않습니다.' })
   }
 })
 

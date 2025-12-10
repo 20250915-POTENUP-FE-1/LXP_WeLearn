@@ -38,15 +38,6 @@ export default function SignupForm() {
       {/* 이름 입력 */}
       <Input label="이름" type="text" id="name" name="name" placeholder="홍길동" required />
 
-      {/* 이메일 입력 */}
-      <Input
-        label="email"
-        id="email"
-        name="email"
-        placeholder="example@lxp.com"
-        required
-        type="email"
-      />
       {/* 닉네임 입력 */}
       <Input
         label="닉네임"
@@ -55,6 +46,16 @@ export default function SignupForm() {
         id="nickname"
         placeholder="말괄량이"
         required
+      />
+
+      {/* 이메일 입력 */}
+      <Input
+        label="email"
+        id="email"
+        name="email"
+        placeholder="example@lxp.com"
+        required
+        type="email"
       />
 
       {/* 비밀번호 입력 */}

@@ -18,15 +18,17 @@ const auth = api()
 export const authApi = {
   // 회원가입
   signup: async (data: SignupRequest) => {
-    const df = await auth.post('/api/v1/auth/signup', data, { cache: 'no-store' })
-    return df
+    const response = await auth.post('/api/v1/auth/signup', data, { cache: 'no-store' })
+    return response
   },
 
-  signin: (data: SigninRequest) => {
-    return auth.post('/api/v1/auth/login', data, { cache: 'no-store' })
+  signin: async (data: SigninRequest) => {
+    const response = await auth.post('/api/v1/auth/login', data, { cache: 'no-store' })
+    return response
   },
 
-  logout: () => {
-    return auth.post('/api/v1/auth/logout')
+  logout: async () => {
+    const response = auth.post('/api/v1/auth/logout')
+    return response
   },
 }

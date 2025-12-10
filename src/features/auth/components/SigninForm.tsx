@@ -20,7 +20,7 @@ export default function SigninForm() {
       localStorage.setItem('user', JSON.stringify(state.user))
       router.push('/')
     } else if (state.success === false && state.message) {
-      toast.error(state.message)
+      toast.error(state?.message)
     }
   }, [state])
 

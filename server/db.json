@@ -161,38 +161,5 @@
       }
     }
   ],
-  "users": [
-    {
-      "id": 1765265087106,
-      "email": "test01@test.com",
-      "password": "12341234",
-      "name": "승일",
-      "nickname": "수니",
-      "createdAt": "2025-12-09T07:24:47.106Z"
-    },
-    {
-      "id": 1765268721446,
-      "email": "test10@test.com",
-      "password": "12341234",
-      "name": "승일",
-      "nickname": "12341234",
-      "createdAt": "2025-12-09T08:25:21.446Z"
-    },
-    {
-      "id": 1765269036847,
-      "email": "test20@test.com",
-      "password": "12341234",
-      "name": "김말순",
-      "nickname": "테스터",
-      "createdAt": "2025-12-09T08:30:36.847Z"
-    },
-    {
-      "id": 1765272684213,
-      "email": "qweqwe@gmail.com",
-      "password": "zxcv1234",
-      "name": "정호준",
-      "nickname": "정몽실",
-      "createdAt": "2025-12-09T09:31:24.213Z"
-    }
-  ]
+  "users": []
 }

@@ -35,9 +35,12 @@ export default function HeaderRightSection({ isLogined }: HeaderRightSectionProp
   useEffect(() => {
     if (state.success) {
       localStorage.removeItem('user')
+      toast.success('로그아웃 되셨습니다.')
       router.push('/')
+    } else if (state.success === false && state.message) {
+      toast.error(state.message)
     }
-  }, [state, router])
+  }, [state])
 
   return (
     <div className="flex items-center gap-3">
