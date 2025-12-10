@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getShortsList } from '@/services/getShortsListService'
-import ShortsContainer from '@/features/shorts/components/ShortsContainer'
+import ShortsContainer from '@/features/shortform/components/ShortsContainer'
 
 interface ShortDetailPageProps {
   params: Promise<{ id: string }>

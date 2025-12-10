@@ -58,6 +58,7 @@ export default function api() {
       const errorData = await res.json()
       throw new Error(errorData?.message || '알수없는 요류')
     }
+
     return res.json()
   }
 
@@ -74,6 +75,7 @@ export default function api() {
       const errorData = await res.json()
       throw new Error(errorData?.message || '알수없는 요류')
     }
+
     return res.json()
   }
 
@@ -90,6 +92,7 @@ export default function api() {
       const errorData = await res.json()
       throw new Error(errorData?.message || '알수없는 요류')
     }
+
     return res.json()
   }
 
@@ -104,6 +107,7 @@ export default function api() {
       const errorData = await res.json()
       throw new Error(errorData?.message || '알수없는 요류')
     }
+
     return res.json()
   }
 
