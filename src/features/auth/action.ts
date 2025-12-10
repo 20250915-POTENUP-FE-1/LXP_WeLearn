@@ -1,5 +1,6 @@
 'use server'
 
+import { handleUnauthorized } from '@/lib/utils/handleUnauthorized.ts'
 import { authApi } from '@/services/auth/auth.service'
 import { UserInfo } from '@/types/auth'
 import { cookies } from 'next/headers'
@@ -28,6 +29,9 @@ export const SignupAction = async (
   try {
     response = await authApi.signup(payload)
   } catch (error) {
+    if (error instanceof Error && error.message === 'UNAUTHORIZED') {
+      await handleUnauthorized()
+    }
     return {
       success: false,
       message: error instanceof Error ? error.message : '알수없는 오류 발생',
@@ -74,6 +78,9 @@ export const SigninAction = async (
       user: response.user,
     }
   } catch (error) {
+    if (error instanceof Error && error.message === 'UNAUTHORIZED') {
+      await handleUnauthorized()
+    }
     return {
       success: false,
       message: error instanceof Error ? error.message : '알수없는 오류 발생',
