@@ -6,11 +6,11 @@ import Link from 'next/link'
 export default function SignupPage() {
   return (
     <>
-      <div className="flex min-w-lg items-center justify-center">
+      <div className="flex min-w-sm items-center justify-center md:min-w-lg">
         <div className="w-full max-w-md">
           <div className="mb-8 flex w-full flex-col items-center justify-center">
             <h1 className="mb-2 text-2xl font-bold text-gray-900">회원가입</h1>
-            <p className="text-sm text-gray-500">Welearn과 함께 학습을 시작하세요.</p>
+            <p className="text-sm text-gray-500">Shortudy 함께 학습을 시작하세요.</p>
           </div>
 
           <div className="w-full rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
