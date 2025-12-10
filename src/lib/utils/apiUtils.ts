@@ -16,6 +16,10 @@ async function fetchWithAuth(
     credentials: 'include',
   })
 
+  if (response.status === 204) {
+    return undefined // 혹은 true / undefined 등
+  }
+
   // 성공 or 401 외의 오류면 그대로 반환
   if (response.status !== 401) return response
 
@@ -54,8 +58,8 @@ export default function api() {
       cache: options?.cache, // 브라우저/서버 캐시
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
     })
-    if (!res.ok) {
-      const errorData = await res.json()
+    if (!res?.ok) {
+      const errorData = await res?.json()
       throw new Error(errorData?.message || '알수없는 요류')
     }
 
@@ -71,8 +75,8 @@ export default function api() {
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
       body: JSON.stringify(data || {}),
     })
-    if (!res.ok) {
-      const errorData = await res.json()
+    if (!res?.ok) {
+      const errorData = await res?.json()
       throw new Error(errorData?.message || '알수없는 요류')
     }
 
@@ -88,8 +92,8 @@ export default function api() {
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
       body: JSON.stringify(data || {}),
     })
-    if (!res.ok) {
-      const errorData = await res.json()
+    if (!res?.ok) {
+      const errorData = await res?.json()
       throw new Error(errorData?.message || '알수없는 요류')
     }
 
@@ -103,8 +107,8 @@ export default function api() {
       cache: options?.cache ?? 'no-store',
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
     })
-    if (!res.ok) {
-      const errorData = await res.json()
+    if (!res?.ok) {
+      const errorData = await res?.json()
       throw new Error(errorData?.message || '알수없는 요류')
     }
 

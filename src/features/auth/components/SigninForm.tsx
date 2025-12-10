@@ -13,7 +13,6 @@ export default function SigninForm() {
     message: '',
     errors: {},
   })
-  console.log(state)
 
   useEffect(() => {
     if (state.success && state.user) {
@@ -45,16 +44,14 @@ export default function SigninForm() {
 
       {/* 비밀번호 입력 */}
       <div>
-        <div className="relative">
-          <Input
-            label="비밀번호"
-            type="password"
-            id="password"
-            name="password"
-            placeholder="비밀번호를 입력해주세요."
-            required
-          />
-        </div>
+        <Input
+          label="비밀번호"
+          type="password"
+          id="password"
+          name="password"
+          placeholder="비밀번호를 입력해주세요."
+          required
+        />
       </div>
 
       {/* 로그인 버튼 */}
