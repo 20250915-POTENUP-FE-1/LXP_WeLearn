@@ -2,15 +2,27 @@
 import { CircleUserRound } from 'lucide-react'
 import { Input } from '@/components/ui/Input'
 import { SignupAction } from '../action'
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 
 export default function SignupForm() {
+  const router = useRouter()
   const [state, formAction, isPending] = useActionState(SignupAction, {
     success: false,
     message: '',
     errors: {},
   })
-  console.log(state)
+
+  useEffect(() => {
+    if (state.success === true) {
+      toast.success('회원가입에 성공하였습니다.🚀')
+      router.push('/signin')
+    } else if (state.success === false && state.message) {
+      toast.error(state.message)
+    }
+  }, [state])
+
   return (
     <form className="flex flex-col space-y-5" action={formAction}>
       {/* 이름 입력 */}

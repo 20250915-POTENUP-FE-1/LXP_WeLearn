@@ -10,7 +10,7 @@ server.use(jsonServer.bodyParser)
 // ==========================================
 // 1. 로그인 (POST /api/auth/login)
 // ==========================================
-server.post('/api/auth/login', (req, res) => {
+server.post('/api/v1/auth/login', (req, res) => {
   const { email, password } = req.body
   const db = router.db // db.json 접근
 
@@ -24,9 +24,10 @@ server.post('/api/auth/login', (req, res) => {
     return res.status(200).json({
       accessToken: 'fake_access_token_' + Date.now(),
       user: userInfo,
+      message: '로그인 성공',
     })
   } else {
-    return res.status(401).json({ message: '이메일 또는 비밀번호가 일치하지 않습니다.' })
+    return res.status(400).json({ message: '이메일 또는 비밀번호가 일치하지 않습니다.' })
   }
 })
 
@@ -35,7 +36,7 @@ server.post('/api/auth/login', (req, res) => {
 // ==========================================
 server.use((req, res, next) => {
   // 인증이 필요 없는 공개 경로들
-  const publicPaths = ['/api/auth/login', '/api/auth/register', '/api/auth/logout']
+  const publicPaths = ['/api/v1/auth/login', '/api/v1/auth/signup', '/api/v1/auth/logout']
 
   // GET 요청(조회)은 게시글 목록 같은 경우 공개일 수 있으므로 일단 통과
   // (단, /users/me 같은 개인정보는 아래에서 별도 처리)
@@ -58,7 +59,7 @@ server.use((req, res, next) => {
 // ==========================================
 // 3. 내 정보 조회 (GET /api/users/me)
 // ==========================================
-server.get('/api/users/me', (req, res) => {
+server.get('/api/v1/users/me', (req, res) => {
   // 실제론 토큰을 해독해야 하지만, Mock이므로 무조건 1번 유저(홍길동)라고 가정
   const userId = 1
   const db = router.db
@@ -75,7 +76,7 @@ server.get('/api/users/me', (req, res) => {
 // ==========================================
 // 4. 게시글 작성 (POST /api/posts)
 // ==========================================
-server.post('/api/posts', (req, res, next) => {
+server.post('/api/v1/posts', (req, res, next) => {
   // 백엔드에서 해줘야 할 일 (클라이언트가 보내지 않는 데이터 주입)
   // 실제라면 토큰을 디코딩해서 userId를 뽑지만,
   // 여기선 테스트를 위해 무조건 id:1 (홍길동)이 쓴 것으로 간주합니다.
@@ -92,7 +93,7 @@ server.post('/api/posts', (req, res, next) => {
 // ==========================================
 // 5. 게시글 수정/삭제 권한 체크 (PUT/DELETE)
 // ==========================================
-server.use('/api/posts/:id', (req, res, next) => {
+server.use('/api/v1/posts/:id', (req, res, next) => {
   if (req.method === 'GET') return next()
 
   const postId = parseInt(req.params.id)
@@ -120,7 +121,7 @@ server.use('/api/posts/:id', (req, res, next) => {
 // ==========================================
 // 0. 회원가입 (POST /api/auth/register)
 // ==========================================
-server.post('/api/auth/register', (req, res) => {
+server.post('/api/v1/auth/signup', (req, res) => {
   const { email, password, name, nickname, profileUrl } = req.body
 
   if (!email || !password || !name || !nickname) {
@@ -136,6 +137,7 @@ server.post('/api/auth/register', (req, res) => {
 
   if (exists) {
     return res.status(409).json({
+      success: false,
       message: '이미 존재하는 이메일입니다.',
     })
   }
@@ -158,10 +160,11 @@ server.post('/api/auth/register', (req, res) => {
   return res.status(201).json({
     message: '회원가입 성공',
     user: userInfo,
+    success: true,
   })
 })
 
-server.post('/api/auth/logout', (req, res) => {
+server.post('/api/v1/auth/logout', (req, res) => {
   return res.status(200).json({ message: '로그아웃 성공' })
 })
 
@@ -175,8 +178,8 @@ server.use('/api', router)
 const PORT = 4000
 server.listen(PORT, () => {
   console.log(`JSON Server is running on http://localhost:${PORT}`)
-  console.log(`- Login: POST /api/auth/login`)
-  console.log(`- Register: POST /api/auth/register`)
-  console.log(`- Me:    GET /api/users/me`)
-  console.log(`- Posts: GET /api/posts`)
+  console.log(`- Login: POST /api/v1/auth/login`)
+  console.log(`- Register: POST /api/v1/auth/register`)
+  console.log(`- Me:    GET /api/v1/users/me`)
+  console.log(`- Posts: GET /api/v1/posts`)
 })
