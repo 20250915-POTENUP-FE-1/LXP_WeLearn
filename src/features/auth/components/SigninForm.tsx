@@ -13,6 +13,7 @@ export default function SigninForm() {
     message: '',
     errors: {},
   })
+  console.log(state)
 
   useEffect(() => {
     if (state.success && state.user) {

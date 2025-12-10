@@ -55,13 +55,13 @@ export const SigninAction = async (
 
     const cookieStore = await cookies()
 
-    cookieStore.set('accessToken', response.data?.accessToken, {
+    cookieStore.set('accessToken', response.accessToken, {
       httpOnly: true,
       maxAge: 60 * 60,
       path: '/',
     })
 
-    cookieStore.set('refreshToken', response.data?.refreshToken, {
+    cookieStore.set('refreshToken', response.refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'lax',
@@ -71,7 +71,7 @@ export const SigninAction = async (
 
     return {
       success: true,
-      user: response.data?.user,
+      user: response.user,
     }
   } catch (error) {
     return {
