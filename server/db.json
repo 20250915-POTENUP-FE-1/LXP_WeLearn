@@ -9,7 +9,7 @@
       "uploader": {
         "userId": 12,
         "nickname": "코드리치",
-        "profileUrl": "https://fastly.picsum.photos/id/777/200/200.jpg?hmac=wqNcn1FLgH_VlRZFLMyEJDk_9vJna3GWYQJ-QH9uIUs"
+        "profileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-19.webp"
       },
       "category": {
         "categoryId": 1,
@@ -25,7 +25,7 @@
       "uploader": {
         "userId": 6,
         "nickname": "디자인펭귄",
-        "profileUrl": "https://fastly.picsum.photos/id/538/200/200.jpg?hmac=fW2cZK9nco5CLnM5mA-q9LxBKkHvBoNhz0WIpEeKBYc"
+        "profileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecia-profilowe-26.webp"
       },
       "category": {
         "categoryId": 2,
@@ -41,7 +41,7 @@
       "uploader": {
         "userId": 16,
         "nickname": "백엔드러버",
-        "profileUrl": "https://fastly.picsum.photos/id/255/200/200.jpg?hmac=-1ufayN-J6lUr6TH2bgM22Hef_M4zizvENZxoWbP-CA"
+        "profileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecie-profilowe-9.webp"
       },
       "category": {
         "categoryId": 1,
@@ -57,7 +57,7 @@
       "uploader": {
         "userId": 11,
         "nickname": "CSS요정",
-        "profileUrl": "https://fastly.picsum.photos/id/830/200/200.jpg?hmac=AeTqoE0L9f6QZrxVtxdr8Kcvff8bXWm1lp7W8yUUHko"
+        "profileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecie-profilowe-14.webp"
       },
       "category": {
         "categoryId": 2,
@@ -73,7 +73,7 @@
       "uploader": {
         "userId": 9,
         "nickname": "프론트선배",
-        "profileUrl": "https://fastly.picsum.photos/id/988/200/200.jpg?hmac=9-i8lXE496qlMnORWMwlSPcuU0fgoLjLcz2tZ7wwlAs"
+        "profileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-13-1.webp"
       },
       "category": {
         "categoryId": 1,
@@ -89,7 +89,7 @@
       "uploader": {
         "userId": 21,
         "nickname": "프레임워크러버",
-        "profileUrl": "https://fastly.picsum.photos/id/233/200/200.jpg?hmac=h1Q6fPlEvwo1lpiF4-1iYEPNelxfyORl8_AdcRU7lKQ"
+        "profileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecia-profilowe-25.webp"
       },
       "category": {
         "categoryId": 1,
@@ -105,7 +105,7 @@
       "uploader": {
         "userId": 7,
         "nickname": "모션디자이너",
-        "profileUrl": "https://fastly.picsum.photos/id/477/200/200.jpg?hmac=Wxwc_baL8a6oYN-X6JPFV0Z_WuUWuj8xXyAiRzq5cFI"
+        "profileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-24.webp"
       },
       "category": {
         "categoryId": 2,
@@ -121,7 +121,7 @@
       "uploader": {
         "userId": 15,
         "nickname": "API장인",
-        "profileUrl": "https://fastly.picsum.photos/id/352/200/200.jpg?hmac=MnM5VSdovc1YpCgZomJa99Uvs3dXPuGsgXHO7pBaRfA"
+        "profileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-8.webp"
       },
       "category": {
         "categoryId": 1,
@@ -137,7 +137,7 @@
       "uploader": {
         "userId": 18,
         "nickname": "시스템디자이너",
-        "profileUrl": "https://fastly.picsum.photos/id/412/200/200.jpg?hmac=It1S1IdSW99Zz9xXW9wp0Fw5uVRN3ha2Xbq9RM_J6s0"
+        "profileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecia-profilowe-14.webp"
       },
       "category": {
         "categoryId": 2,
@@ -153,7 +153,7 @@
       "uploader": {
         "userId": 20,
         "nickname": "알고리즘달인",
-        "profileUrl": "https://fastly.picsum.photos/id/302/200/200.jpg?hmac=olCwyPpDSFa4XH0dFJv2kQbH227hZmXYguW_umVAmMQ"
+        "profileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-5.webp"
       },
       "category": {
         "categoryId": 1,
@@ -161,14 +161,5 @@
       }
     }
   ],
-  "users": [
-    {
-      "id": 1765333681311,
-      "email": "test10@test.com",
-      "password": "12341234",
-      "name": "길동이",
-      "nickname": "길동이",
-      "createdAt": "2025-12-10T02:28:01.311Z"
-    }
-  ]
+  "users": []
 }
