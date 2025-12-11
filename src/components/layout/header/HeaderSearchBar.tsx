@@ -4,9 +4,16 @@ import { Search, X } from 'lucide-react'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Input } from '@/components/ui/Input'
+import { toast } from 'react-toastify'
 
 export const HeaderSearchBar = () => {
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false)
+
+  const handleComingSoon = () => {
+    toast.info('검색 기능은 준비 중입니다.', {
+      toastId: 'header-search-toast',
+    })
+  }
 
   // PC 검색바의 오른쪽 버튼 (검색 아이콘)
   const searchButton = (
@@ -14,6 +21,7 @@ export const HeaderSearchBar = () => {
       type="button"
       className="flex text-gray-400 transition-colors hover:text-gray-600"
       aria-label="검색"
+      onClick={handleComingSoon}
     >
       <Search className="h-5 w-5" />
     </button>
