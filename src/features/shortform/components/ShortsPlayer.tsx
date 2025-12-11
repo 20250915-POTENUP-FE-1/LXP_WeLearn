@@ -25,8 +25,8 @@ export default function ShortsPlayer({ videoUrl, thumbnailUrl }: ShortsPlayerPro
       key={videoUrl}
       aria-label="shorts video player"
       className="h-full w-full object-cover"
-      controls
       autoPlay
+      controls
       muted
       loop
       playsInline
