@@ -53,22 +53,6 @@ export const SigninAction = async (
   try {
     response = await authApi.signin(payload)
 
-    const cookieStore = await cookies()
-
-    cookieStore.set('accessToken', response.accessToken, {
-      httpOnly: true,
-      maxAge: 60 * 60,
-      path: '/',
-    })
-
-    cookieStore.set('refreshToken', response.refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'strict',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 30,
-    })
-
     return {
       success: true,
       user: response.user,
@@ -90,10 +74,5 @@ export const LogoutAction = async (prevState: ActionState) => {
       message: error instanceof Error ? error.message : '알수없는 오류 발생',
     }
   }
-
-  const cookieStore = await cookies()
-  cookieStore.delete('accessToken')
-  cookieStore.delete('refreshToken')
-
   return { success: true }
 }
