@@ -104,7 +104,7 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
         <div className="h-[84vh] w-full overflow-hidden bg-black sm:rounded-2xl md:h-[84vh]">
           <AnimatePresence initial={false} custom={slideDirection} mode="wait">
             <motion.div
-              key={currentShorts.id}
+              key={currentShorts.shortsId}
               custom={slideDirection}
               variants={slideVariants}
               initial="enter"

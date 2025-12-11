@@ -1,3 +1,4 @@
+'use client'
 import { PanInfo } from 'framer-motion'
 import { useCallback } from 'react'
 

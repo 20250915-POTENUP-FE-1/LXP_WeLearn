@@ -15,7 +15,9 @@ export interface ShortsListProps {
 export async function getShortsDetailList(startId: string): Promise<ShortsListProps | null> {
   try {
     // 1: API 호출
-    const response = await shortsApi.shortsDetailList()
+    const response = await shortsApi.shortsDetailList({ page: 0, size: 20 })
+
+    // console.log('data:', response)
 
     // 2: 페이징 응답에서 실제 배열 추출
     let allShorts: ShortsDetail[]
@@ -52,7 +54,7 @@ export async function getShortsDetailList(startId: string): Promise<ShortsListPr
     }
 
     // 6: 시작 지점 기준으로 10개 추출
-    const beforeCount = Math.min(startIndex, 2)
+    const beforeCount = Math.min(startIndex, 0)
     const startSlice = startIndex - beforeCount
     const endSlice = Math.min(startSlice + 10, sortedShorts.length)
 

@@ -1,3 +1,4 @@
+'use client'
 import { ArrowDown, ArrowUp } from 'lucide-react'
 
 interface ShortsNavigationButtonsProps {
