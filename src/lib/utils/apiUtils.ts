@@ -1,10 +1,6 @@
-type FetchOptions = {
-  // "default" | "force-cache" | "no-cache" | "no-store" | "only-if-cached" | "reload";
-  cache?: RequestCache
-  revalidate?: number // Next ISR (ex: 10 = 10초 후 자동 재검증)
-}
+import { buildQueryString } from '@/utils/buildQueryString'
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL
+const baseUrl = process.env.NEXT_PUBLIC_API_URL!
 
 async function fetchWithAuth(
   url: string,
@@ -54,7 +50,8 @@ async function fetchWithAuth(
 export default function api() {
   /** GET with cache + revalidate (둘 다 선택 가능) */
   const get = async (endpoint = '', options?: FetchOptions) => {
-    const res = await fetchWithAuth(`${baseUrl}${endpoint}`, {
+    const queryString = buildQueryString(options?.params)
+    const res = await fetchWithAuth(`${baseUrl}${endpoint}${queryString}`, {
       cache: options?.cache, // 브라우저/서버 캐시
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
     })

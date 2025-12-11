@@ -3,11 +3,14 @@ import ShortFormCarousel from '@/features/home/ShortFormCarousel/ShortFormCarous
 import PlaylistSection from '@/features/home/play-list-section/PlaylistSection'
 import CategoryLectureSection from '@/features/home/lecture/CategoryLectureSection'
 import { lectures, playlistGroup } from '@/dummy/data'
+import { getShortPopular } from '@/services/getShortPopular'
 
-const HomePage = () => {
+export default async function Page() {
+  const popularShorts = await getShortPopular()
+  console.log(popularShorts)
   return (
     <div className="min-h-screen bg-white">
-      <ShortFormCarousel />
+      <ShortFormCarousel data={popularShorts?.data?.content} />
 
       <PlaylistSection items={playlistGroup} />
 
@@ -15,5 +18,3 @@ const HomePage = () => {
     </div>
   )
 }
-
-export default HomePage

@@ -32,6 +32,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.0.4",
     "json-server": "^0.17.4",
+    "openapi-typescript": "^7.10.1",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.7.1",
     "tailwindcss": "^4",

@@ -35,10 +35,34 @@ export const shortFormItems: ShortFormItem[] = [
 ]
 
 export const playlistGroup: PlaylistItem[] = [
-  { id: '1', thumbnail: '', title: '어자의 플레이리스트', videoCount: 5 },
-  { id: '2', thumbnail: '', title: '개발 가발 플레이리스트', videoCount: 5 },
-  { id: '3', thumbnail: '', title: '디자인 플레이리스트', videoCount: 5 },
-  { id: '4', thumbnail: '', title: '디자인 플레이리스트', videoCount: 5 },
+  {
+    id: '1',
+    thumbnail:
+      'https://images.pexels.com/photos/164745/pexels-photo-164745.jpeg?auto=compress&cs=tinysrgb&w=600',
+    title: '어자의 플레이리스트',
+    videoCount: 5,
+  },
+  {
+    id: '2',
+    thumbnail:
+      'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=600',
+    title: '개발 가발 플레이리스트',
+    videoCount: 5,
+  },
+  {
+    id: '3',
+    thumbnail:
+      'https://images.pexels.com/photos/4348403/pexels-photo-4348403.jpeg?auto=compress&cs=tinysrgb&w=600',
+    title: '디자인 플레이리스트',
+    videoCount: 5,
+  },
+  {
+    id: '4',
+    thumbnail:
+      'https://images.pexels.com/photos/2693205/pexels-photo-2693205.jpeg?auto=compress&cs=tinysrgb&w=600',
+    title: '디자인 플레이리스트',
+    videoCount: 5,
+  },
 ]
 
 export const categories: Category[] = ['전체', '개발', '디자인', '비즈니스']
