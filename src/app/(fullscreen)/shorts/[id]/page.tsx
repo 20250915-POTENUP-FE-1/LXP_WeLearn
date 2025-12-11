@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { getShortsList } from '@/services/getShortsListService'
+import { getShortsDetailList } from '@/services/shorts/getShortsDetailList'
 import ShortsContainer from '@/features/shortform/components/ShortsContainer'
 
 interface ShortDetailPageProps {
@@ -8,7 +8,7 @@ interface ShortDetailPageProps {
 
 export default async function ShortformDetailPage({ params }: ShortDetailPageProps) {
   const { id } = await params
-  const data = await getShortsList(id)
+  const data = await getShortsDetailList(id)
 
   if (!data) {
     notFound()

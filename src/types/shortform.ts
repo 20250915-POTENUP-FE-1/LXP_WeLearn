@@ -18,19 +18,3 @@ export interface ShortsDetail {
   uploader: ShortsUploader
   category: ShortsCategory
 }
-
-export interface ShortsApiResponse {
-  shortsId: number
-  uploaderId: number
-  uploaderNickname: string
-  categoryId: number
-  categoryName: string
-  title: string
-  description: string
-  videoUrl: string
-  thumbnailUrl: string
-  durationSec: number
-  status: string
-  createdAt: string
-  tagNames: string[]
-}
