@@ -26,12 +26,12 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
   const hasPrev = currentIndex > 0
   const hasNext = currentIndex < shortsList.length - 1
 
-  // 현재 숏폼이 바뀔 때 URL 동기화 (/shorts/:id)
+  // 현재 숏폼이 바뀔 때 URL 동기화 (/shorts/:shortsId)
   useEffect(() => {
     if (!currentShorts) return
-    const newUrl = `/shorts/${currentShorts.id}`
+    const newUrl = `/shorts/${currentShorts.shortsId}`
     window.history.replaceState(null, '', newUrl)
-  }, [currentShorts?.id])
+  }, [currentShorts?.shortsId])
 
   /**
    * 이전/다음 숏폼으로 이동
