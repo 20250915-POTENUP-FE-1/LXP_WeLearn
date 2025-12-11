@@ -18,18 +18,12 @@ export const SignupAction = async (
 ): Promise<ActionState> => {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
-  const confirmPassword = formData.get('confirmPassword')
   const name = formData.get('name') as string
   const nickname = formData.get('nickname') as string
   const profileUrl = formData.get('profileUrl') as string
 
   const payload = { email, password, name, nickname, profileUrl }
 
-  if (password !== confirmPassword) {
-    return {
-      success: false,
-    }
-  }
   let response
   try {
     response = await authApi.signup(payload)
