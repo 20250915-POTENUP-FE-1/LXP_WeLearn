@@ -16,7 +16,7 @@ export const Header = async () => {
         <div className="flex h-16 items-center gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2" aria-label="홈으로 이동">
-            <img src="/shortudy.svg" alt="Shortudy_Logo" className="h-12 w-auto" />
+            <img src="/shortudy.svg" alt="Shortudy_Logo" className="h-8 w-auto" />
           </Link>
 
           <div className="ml-auto md:mx-auto md:max-w-xl md:flex-1">
