@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { LogOut, ShoppingCart, User, UserIcon } from 'lucide-react'
+import { LogOut, User, UserIcon } from 'lucide-react'
 import { startTransition, useActionState, useEffect, useState } from 'react'
 import { UserInfo } from '@/types/auth'
 import { LogoutAction } from '@/features/auth/action'

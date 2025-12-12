@@ -7,6 +7,14 @@ const middlewares = jsonServer.defaults()
 server.use(middlewares)
 server.use(jsonServer.bodyParser)
 
+server.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000') // 프론트 주소
+  res.setHeader('Access-Control-Allow-Credentials', 'true')
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+  next()
+})
+
 // ==========================================
 // 1. 로그인 (POST /api/auth/login)
 // ==========================================
@@ -21,8 +29,21 @@ server.post('/api/v1/auth/login', (req, res) => {
     // 비밀번호는 보안상 응답에서 제외
     const { password, ...userInfo } = user
 
+    const accessToken = 'fake_access_token_' + Date.now()
+    const refreshToken = 'fake_refresh_token_' + Date.now()
+
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      sameSite: 'Strict',
+      path: '/',
+      maxAge: 86400 * 1000, // ms 단위
+    })
+
+    const cookieHeaderValue = res.get('Set-Cookie')
+    console.log('설정된 Set-Cookie 헤더 값:', cookieHeaderValue)
+
     return res.status(200).json({
-      accessToken: 'fake_access_token_' + Date.now(),
+      accessToken: accessToken,
       user: userInfo,
       message: '로그인 성공',
     })

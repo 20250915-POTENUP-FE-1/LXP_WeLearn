@@ -27,6 +27,8 @@ export const SignupAction = async (
   let response
   try {
     response = await authApi.signup(payload)
+    console.log('---------------action-------------')
+    console.log(response)
   } catch (error) {
     return {
       success: false,
@@ -52,10 +54,12 @@ export const SigninAction = async (
 
   try {
     response = await authApi.signin(payload)
+    console.log('---------------action-------------')
+    console.log(response)
 
     return {
       success: true,
-      user: response.user,
+      user: response.data.user,
     }
   } catch (error) {
     return {
@@ -68,6 +72,12 @@ export const SigninAction = async (
 export const LogoutAction = async (prevState: ActionState) => {
   try {
     await authApi.logout()
+    console.log('------------actions-----------')
+    // console.log(response)
+    const cookieStore = await cookies()
+
+    cookieStore.delete('refreshToken')
+    cookieStore.delete('accessToken')
   } catch (error) {
     return {
       success: false,

@@ -30,7 +30,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full">
         {label && (
-          <label htmlFor={inputId} className="mb-2 block text-sm font-medium text-gray-700">
+          <label htmlFor={inputId} className="mb-2 flex gap-1 text-sm font-medium text-gray-700">
             {label}
             {required && <span className="text-red-500">*</span>}
           </label>

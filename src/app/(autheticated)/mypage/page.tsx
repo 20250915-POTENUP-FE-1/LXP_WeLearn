@@ -295,74 +295,66 @@ export default function MyLecturesPage() {
       {/* Page Header */}
       {/* Description: 페이지 제목 영역 */}
       {/* ============================================ */}
-      <div className="border-b border-gray-100">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-2xl font-bold text-gray-900">마이페이지</h1>
-          <p className="mt-1 text-sm text-gray-500">내 학습 현황과 정보를 관리하세요</p>
-        </div>
-      </div>
 
       {/* ============================================ */}
       {/* Main Content with Sidebar */}
       {/* Description: 사이드바 + 메인 콘텐츠 레이아웃 */}
       {/* Tailwind: grid로 2컬럼 레이아웃 (사이드바 고정, 메인 유동) */}
       {/* ============================================ */}
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-8 lg:flex-row">
-          {/* ============================================ */}
-          {/* Sidebar */}
-          {/* Description: 좌측 사이드바 (프로필 + 메뉴) */}
-          {/* Tailwind: w-64로 고정 너비, border로 구분 */}
-          {/* ============================================ */}
-          <aside className="w-full shrink-0 lg:w-64">
-            <div className="rounded-xl border border-gray-200 bg-white p-6">
-              {/* User Profile */}
-              <UserProfileCard user={sampleUser} />
+      <div className="flex flex-col gap-8 lg:flex-row">
+        {/* ============================================ */}
+        {/* Sidebar */}
+        {/* Description: 좌측 사이드바 (프로필 + 메뉴) */}
+        {/* Tailwind: w-64로 고정 너비, border로 구분 */}
+        {/* ============================================ */}
+        <aside className="w-full shrink-0 lg:w-64">
+          <div className="rounded-xl border border-gray-200 bg-white p-6">
+            {/* User Profile */}
+            <UserProfileCard user={sampleUser} />
 
-              {/* Navigation Menu */}
-              <SidebarNavigation activeMenu={activeMenu} onMenuChange={setActiveMenu} />
-            </div>
-          </aside>
+            {/* Navigation Menu */}
+            <SidebarNavigation activeMenu={activeMenu} onMenuChange={setActiveMenu} />
+          </div>
+        </aside>
 
-          {/* ============================================ */}
-          {/* Main Content Area */}
-          {/* Description: 수강 중인 강의 목록 */}
-          {/* ============================================ */}
-          <div className="flex-1">
-            {/* Section Header */}
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-gray-900">수강 중인 강의</h2>
-              <span className="text-sm text-gray-500">전체보기</span>
-            </div>
+        {/* ============================================ */}
+        {/* Main Content Area */}
+        {/* Description: 수강 중인 강의 목록 */}
+        {/* ============================================ */}
+        <div className="flex-1">
+          {/* Section Header */}
+          <div className="mb-6 flex items-center justify-between">
+            <h2 className="text-xl font-bold text-gray-900">수강 중인 강의</h2>
+            <span className="text-sm text-gray-500">전체보기</span>
+          </div>
 
-            {/* Lecture List */}
-            {/* Tailwind: divide-y로 카드 구분선 */}
-            <div className="bg-white">
-              {lectures.length > 0 ? (
-                lectures.map((lecture) => (
-                  <EnrolledLectureCard
-                    key={lecture.id}
-                    lecture={lecture}
-                    onToggleFavorite={handleToggleFavorite}
-                  />
-                ))
-              ) : (
-                /* Empty State */
-                <div className="flex flex-col items-center justify-center py-16">
-                  <div className="mb-4 text-5xl">📚</div>
-                  <p className="mb-2 text-lg font-medium text-gray-900">
-                    아직 수강 중인 강의가 없습니다
-                  </p>
-                  <p className="mb-6 text-sm text-gray-500">관심 있는 강의를 찾아보세요</p>
-                  <a
-                    href="/lectures"
-                    className="rounded-lg bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-800"
-                  >
-                    강의 찾아보기
-                  </a>
-                </div>
-              )}
-            </div>
+          {/* Lecture List */}
+          {/* Tailwind: divide-y로 카드 구분선 */}
+          <div className="bg-white">
+            {lectures.length > 0 ? (
+              lectures.map((lecture) => (
+                <EnrolledLectureCard
+                  key={lecture.id}
+                  lecture={lecture}
+                  onToggleFavorite={handleToggleFavorite}
+                />
+              ))
+            ) : (
+              /* Empty State */
+              <div className="flex flex-col items-center justify-center py-16">
+                <div className="mb-4 text-5xl">📚</div>
+                <p className="mb-2 text-lg font-medium text-gray-900">
+                  아직 수강 중인 강의가 없습니다
+                </p>
+                <p className="mb-6 text-sm text-gray-500">관심 있는 강의를 찾아보세요</p>
+                <a
+                  href="/lectures"
+                  className="rounded-lg bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-800"
+                >
+                  강의 찾아보기
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>

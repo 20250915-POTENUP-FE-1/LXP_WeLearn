@@ -1,8 +1,8 @@
 'use client'
-import { CircleUserRound } from 'lucide-react'
+import { Check, CircleUserRound } from 'lucide-react'
 import { Input } from '@/components/ui/Input'
 import { SignupAction } from '../action'
-import { useActionState, useEffect } from 'react'
+import { useActionState, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 
@@ -13,6 +13,16 @@ export default function SignupForm() {
     message: '',
     errors: {},
   })
+
+  // const [userName, setUserName] = useState('')
+  // const [userEmail, setUserEmail] = useState('')
+  // const [userNickname, setUserNickname] = useState('')
+  // const [userPw, setUserPw] = useState('')
+  // const [userConfirmPw, setUserConfirmPw] = useState('')
+
+  // const [emailVerify, setEmailVerify] = useState(false)
+  // const [pwVerified, setPwVerified] = useState(false)
+  // const [confirmPwVerified, setConfirmPwVerified] = useState(false)
 
   useEffect(() => {
     if (state.success === true) {
@@ -25,18 +35,26 @@ export default function SignupForm() {
 
   return (
     <form className="flex flex-col space-y-5" action={formAction}>
+      <p className="text-sm font-medium text-gray-700">프로필</p>
       {/* 이름 입력 */}
-      <div>
-        <label
-          htmlFor="profile-image"
-          className="mb-2 box-border flex w-full justify-center overflow-hidden rounded-full"
-        >
-          <CircleUserRound size={120} strokeWidth={1} />
-        </label>
-        <input type="file" id="profile-image" name="profile-image" className="hidden" />
-      </div>
+      <label
+        htmlFor="profile-image"
+        className="mb-2 box-border flex w-full flex-col items-center justify-center overflow-hidden rounded-full"
+      >
+        <CircleUserRound size={120} strokeWidth={1} />
+      </label>
+      <input type="file" id="profile-image" name="profile-image" className="hidden" />
       {/* 이름 입력 */}
-      <Input label="이름" type="text" id="name" name="name" placeholder="홍길동" required />
+      <Input
+        label="이름"
+        type="text"
+        id="name"
+        name="name"
+        placeholder="김코드"
+        required
+        // value={userName}
+        // onChange={(e) => setUserName(e.target.value)}
+      />
 
       {/* 닉네임 입력 */}
       <Input
@@ -44,8 +62,10 @@ export default function SignupForm() {
         type="nickname"
         name="nickname"
         id="nickname"
-        placeholder="말괄량이"
+        placeholder="숏터"
         required
+        // value={userNickname}
+        // onChange={(e) => setUserNickname(e.target.value)}
       />
 
       {/* 이메일 입력 */}
@@ -56,7 +76,13 @@ export default function SignupForm() {
         placeholder="example@lxp.com"
         required
         type="email"
+        // value={userEmail}
+        // onChange={(e) => setUserEmail(e.target.value)}
       />
+      {/* <p className="flex items-center gap-2 text-sm leading-2 font-semibold text-gray-300">
+        <Check strokeWidth={1.5} size={16} />
+        올바른 이메일 형식이 아닙니다.
+      </p> */}
 
       {/* 비밀번호 입력 */}
       <Input
@@ -65,18 +91,31 @@ export default function SignupForm() {
         name="password"
         placeholder="비밀번호 8자 이상 입력하세요."
         type="password"
+        minLength={8}
         required
+        // value={userPw}
+        // onChange={(e) => setUserPw(e.target.value)}
       />
+      {/* <p className="flex items-center gap-2 text-sm leading-2 font-semibold text-gray-300">
+        <Check strokeWidth={1.5} size={16} />
+        비밀번호는 8자 이상이어야 합니다.
+      </p> */}
       {/* 비밀번호 확인 입력 */}
       <Input
         label="비밀번호 확인"
-        id="confirm-password"
-        name="confirm-password"
+        id="confirmPassword"
+        name="confirmPassword"
         placeholder="비밀번호를 다시 한번 입력해주세요."
         type="password"
+        minLength={8}
         required
+        // value={userConfirmPw}
+        // onChange={(e) => setUserConfirmPw(e.target.value)}
       />
-
+      {/* <p className="flex items-center gap-2 text-sm leading-2 font-semibold text-gray-300">
+        <Check strokeWidth={1.5} size={16} />
+        비밀번호가 서로 일치하지 않습니다.
+      </p> */}
       {/* 회원가입 버튼 */}
       <button
         type="submit"

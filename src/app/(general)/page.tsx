@@ -7,7 +7,6 @@ import { getShortPopular } from '@/services/getShortPopular'
 
 export default async function Page() {
   const popularShorts = await getShortPopular()
-  // console.log(popularShorts)
   return (
     <div className="min-h-screen bg-white">
       <ShortFormCarousel data={popularShorts?.data?.content} />
