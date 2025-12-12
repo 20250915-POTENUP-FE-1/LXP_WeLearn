@@ -21,7 +21,6 @@ export const HeaderSearchBar = () => {
       type="button"
       className="flex text-gray-400 transition-colors hover:text-gray-600"
       aria-label="검색"
-      onClick={handleComingSoon}
     >
       <Search className="h-5 w-5" />
     </button>
@@ -35,7 +34,7 @@ export const HeaderSearchBar = () => {
       className="flex text-gray-400 transition-colors hover:text-gray-600"
       aria-label="검색 닫기"
     >
-      <X className="h-5 w-5" />
+      <X className="h-4 w-4" />
     </button>
   )
 
@@ -50,13 +49,14 @@ export const HeaderSearchBar = () => {
           variant="search"
           rightButton={searchButton}
           aria-label="검색"
+          onClick={handleComingSoon}
         />
       </div>
 
       {/* 모바일 버전 - 아이콘만 표시 */}
       <button
         onClick={() => setIsMobileSearchOpen(true)}
-        className="p-2 text-left text-gray-600 hover:text-gray-900 md:hidden"
+        className="pt-1.5 text-left text-gray-600 hover:text-gray-900 md:hidden"
         aria-label="검색 열기"
       >
         <Search className="h-5 w-5" />

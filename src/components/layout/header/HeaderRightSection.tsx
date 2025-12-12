@@ -48,13 +48,13 @@ export default function HeaderRightSection({ isLogined }: HeaderRightSectionProp
         <>
           <Link
             href="/signin"
-            className="rounded-lg px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100"
+            className="rounded-lg p-0 text-sm font-medium text-gray-700 transition-colors hover:font-extrabold hover:text-gray-900 md:px-2 md:py-1"
           >
             로그인
           </Link>
           <Link
             href="/signup"
-            className="rounded-lg px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100"
+            className="rounded-lg p-0 text-sm font-medium text-gray-700 transition-colors hover:font-extrabold hover:text-gray-900 md:px-2 md:py-1"
           >
             회원가입
           </Link>
@@ -84,7 +84,7 @@ export default function HeaderRightSection({ isLogined }: HeaderRightSectionProp
               <DropdownMenuItem className="cursor-pointer">
                 <button
                   onClick={() => {
-                    toast.info('준비중인 서비스입니다.')
+                    toast.info('서비스 준비 중입니다.')
                   }}
                   className="flex gap-4 p-1"
                 >

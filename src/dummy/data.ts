@@ -39,29 +39,29 @@ export const playlistGroup: PlaylistItem[] = [
     id: '1',
     thumbnail:
       'https://images.pexels.com/photos/164745/pexels-photo-164745.jpeg?auto=compress&cs=tinysrgb&w=600',
-    title: '어자의 플레이리스트',
-    videoCount: 5,
+    title: '스택별로 정리한 실전 개발 로드맵',
+    videoCount: 10,
   },
   {
     id: '2',
     thumbnail:
       'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=600',
-    title: '개발 가발 플레이리스트',
-    videoCount: 5,
+    title: '숏츠로 완성하는 개발 학습 지도',
+    videoCount: 7,
   },
   {
     id: '3',
     thumbnail:
       'https://images.pexels.com/photos/4348403/pexels-photo-4348403.jpeg?auto=compress&cs=tinysrgb&w=600',
-    title: '디자인 플레이리스트',
+    title: '개념부터 실전까지, 개발 지식 모음',
     videoCount: 5,
   },
   {
     id: '4',
     thumbnail:
       'https://images.pexels.com/photos/2693205/pexels-photo-2693205.jpeg?auto=compress&cs=tinysrgb&w=600',
-    title: '디자인 플레이리스트',
-    videoCount: 5,
+    title: '한눈에 배우는 프로그래밍',
+    videoCount: 15,
   },
 ]
 

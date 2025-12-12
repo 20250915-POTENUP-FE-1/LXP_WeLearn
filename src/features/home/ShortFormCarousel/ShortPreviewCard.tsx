@@ -109,7 +109,7 @@ export default function ShortPreviewCard({ item }: { item: ShortsItem }) {
           )}
 
           {/* 상단 배지 */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex justify-between p-2">
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex justify-between p-4">
             {item.category?.name && (
               <span className="rounded-full bg-black/55 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur">
                 {item.category.name}
@@ -121,7 +121,7 @@ export default function ShortPreviewCard({ item }: { item: ShortsItem }) {
           </div>
 
           {/* 하단 그라데이션 + 텍스트 */}
-          <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/85 via-black/50 to-transparent p-3">
+          <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/85 via-black/50 to-transparent p-4">
             <p className="mb-1 line-clamp-2 text-xs font-semibold text-white">{item.title}</p>
             <p className="mb-2 line-clamp-2 text-[11px] text-gray-200">{item.description}</p>
             <div className="flex items-center justify-between text-[11px] text-gray-300">
