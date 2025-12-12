@@ -83,7 +83,7 @@ export default function ShortPreviewCard({ item }: { item: ShortsItem }) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <article className="flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white/90 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-lg">
+      <article className="flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white/90 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg">
         <div className="relative aspect-[9/16] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-gray-200 to-gray-300">
           {/* 비디오가 썸네일 + 프리뷰를 둘 다 담당 */}
           {item.videoUrl ? (

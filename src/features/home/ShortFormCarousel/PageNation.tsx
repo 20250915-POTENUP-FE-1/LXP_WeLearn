@@ -37,7 +37,7 @@ export default function PageNation({
         {currentPage > 0 && (
           <button
             onClick={handlePrev}
-            className="absolute top-1/2 -left-4 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-gray-600 shadow-lg transition-colors hover:bg-indigo-100 hover:text-gray-900"
+            className="absolute top-1/2 -left-4 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-transparent text-gray-600 shadow-lg transition-colors hover:bg-gray-100 hover:text-gray-900"
             aria-label="이전"
           >
             <ChevronLeft />
@@ -54,7 +54,7 @@ export default function PageNation({
         {currentPage < totalPages - 1 && (
           <button
             onClick={handleNext}
-            className="absolute top-1/2 -right-4 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-gray-600 shadow-lg transition-colors hover:bg-indigo-100 hover:text-gray-900"
+            className="absolute top-1/2 -right-4 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-transparent text-gray-600 shadow-lg transition-colors hover:bg-indigo-100 hover:text-gray-900"
             aria-label="다음"
           >
             <ChevronRight />

@@ -5,7 +5,7 @@ import PlaylistButton from '@/features/home/play-list-section/PlaylistButton'
 export default async function PlaylistSection({ items }: { items: PlaylistItem[] }) {
   return (
     <section className="mb-12">
-      <h2 className="mb-6 text-2xl font-bold text-gray-900">숏폼 플레이리스트</h2>
+      <h2 className="mb-6 text-2xl font-bold text-gray-900">Knowledge Blocks</h2>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {items.map((item) => (
           <PlaylistButton key={item.id}>
