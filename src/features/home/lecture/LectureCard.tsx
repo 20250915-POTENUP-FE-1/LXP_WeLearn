@@ -1,13 +1,14 @@
 import React from 'react'
 import { Lecture } from '@/features/home/types/Lecture'
+import { Heart } from 'lucide-react'
 
 export default function LectureCard({ lecture }: { lecture: Lecture }) {
   return (
-    <div className="lecture-card group cursor-pointer overflow-hidden rounded-lg bg-white">
-      <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-200">
+    <div className="lecture-card group mb-6 cursor-pointer rounded-lg">
+      <div className="relative aspect-video h-40 w-full overflow-hidden rounded-lg bg-gray-200 sm:h-52 lg:h-80">
         <img
           src={lecture.thumbnail}
-          alt={`${lecture.title} 강의 썸네일`}
+          alt={`${lecture.title} 썸네일`}
           className="h-full w-full object-cover opacity-100 transition-transform duration-300 group-hover:opacity-80"
         />
         <span
@@ -24,11 +25,9 @@ export default function LectureCard({ lecture }: { lecture: Lecture }) {
         <p className="mb-2 text-sm text-gray-500">{lecture.instructor}</p>
 
         <div className="flex items-center space-x-1">
-          <svg className="h-4 w-4 fill-current text-yellow-400" viewBox="0 0 20 20">
-            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-          </svg>
-          <span className="text-sm font-medium text-gray-900">{lecture.rating}</span>
-          <span className="text-sm text-gray-400">({lecture.reviewCount})</span>
+          <Heart className="h-4 w-4 text-gray-400" />
+          {/* <span className="text-sm font-medium text-gray-900">{lecture.rating}</span> */}
+          <span className="text-sm text-gray-400">{lecture.reviewCount}</span>
         </div>
       </div>
     </div>
