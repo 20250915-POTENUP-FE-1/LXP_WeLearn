@@ -64,9 +64,7 @@ export default function api() {
   }
 
   /** POST (데이터 생성 → 기본적으로 캐시 사용 X) */
-  const post = async (endpoint = '', data?: unknown, options?: FetchOptions) => {
-    console.log(`${baseUrl}${endpoint}`)
-
+  const post = async (endpoint = '', data?: unknown, options?: FetchOptions): Promise<Response> => {
     const res = await fetchWithAuth(`${baseUrl}${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -75,27 +73,19 @@ export default function api() {
       body: JSON.stringify(data || {}),
     })
 
-    console.log('---------------utils--------------')
-    console.log(res)
-
     const contentLength = res?.headers.get('content-length')
     const isEmpty = !contentLength || contentLength === '0'
 
     // 실패 처리
     if (!res?.ok) {
-      if (isEmpty) {
-        throw new Error('알수없는 오류')
+      if (!isEmpty) {
+        const errorData = await res?.json()
+        throw new Error(errorData?.message || '알수없는 오류')
       }
-      const errorData = await res?.json()
-      throw new Error(errorData?.message || '알수없는 오류')
+      throw new Error('알수없는 오류')
     }
 
-    // 성공 처리
-    if (isEmpty) {
-      return {} // or true
-    }
-
-    return await res?.json()
+    return res
   }
 
   /** PATCH (부분 업데이트) */
