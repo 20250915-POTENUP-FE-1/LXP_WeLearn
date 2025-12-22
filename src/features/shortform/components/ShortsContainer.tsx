@@ -8,6 +8,8 @@ import ShortsNavigationButtons from './ShortsNavigationButtons'
 import { useKeyboardNavigation } from '@/hook/useKeyboardNavigation'
 import { getSafeIndex } from '@/lib/utils/getSafeIndex'
 import { useDragNavigation } from '@/hook/useDragNavigation'
+import { useScrollNavigation } from '@/hook/useScrollNavigation'
+import { getShortsDetailList } from '@/services/shorts/getShortsDetailList'
 
 interface ShortsContainerProps {
   shortsList: ShortsDetail[]
@@ -21,6 +23,8 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
   const [currentIndex, setCurrentIndex] = useState(safeInitialIndex)
   const [slideDirection, setSlideDirection] = useState<SlideDirection>(null)
   const [isAnimating, setIsAnimating] = useState(false)
+  const [list, setList] = useState(shortsList)
+  const [isFetching, setIsFetching] = useState(false)
 
   const currentShorts = shortsList[currentIndex] ?? null
   const hasPrev = currentIndex > 0
@@ -32,6 +36,31 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
     const newUrl = `/shorts/${currentShorts.shortsId}`
     window.history.replaceState(null, '', newUrl)
   }, [currentShorts?.shortsId])
+
+  // // 무한 스크롤
+  // const fetchMore = useCallback(async () => {
+  //   if (isFetching) return
+
+  //   setIsFetching(true)
+
+  //   const lastId = list[list.length - 1]?.shortsId
+  //   const res = await getShortsDetailList(String(lastId))
+
+  //   if (res?.shortsList?.length) {
+  //     setList((prev) => [...prev, ...res.shortsList])
+  //   }
+
+  //   setIsFetching(false)
+  // }, [list, isFetching])
+
+  // // ⭐️ 핵심 로직
+  // useEffect(() => {
+  //   const remain = list.length - currentIndex - 1
+
+  //   if (remain <= 2) {
+  //     fetchMore()
+  //   }
+  // }, [currentIndex, list.length, fetchMore])
 
   /**
    * 이전/다음 숏폼으로 이동
@@ -69,6 +98,11 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
     enabled: !!currentShorts,
   })
 
+  const handleWheel = useScrollNavigation({
+    onPrev: () => navigateTo('prev'),
+    onNext: () => navigateTo('next'),
+  })
+
   // 데이터가 없을 때 처리
   if (!currentShorts) {
     return (
@@ -99,10 +133,15 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
   return (
     <div className="flex w-full items-center justify-center gap-4">
       {/* 메인 숏폼 영역 */}
-      <div className="w-full md:w-[460px]">
+      <div className="w-full overflow-hidden md:w-[460px]">
         {/* 세로 슬라이드 영역 (모바일: 전체 높이, 데스크탑: 70vh) */}
-        <div className="h-[84vh] w-full overflow-hidden bg-black sm:rounded-2xl md:h-[84vh]">
-          <AnimatePresence initial={false} custom={slideDirection} mode="wait">
+        <div
+          className="h-[84vh] w-full overflow-hidden sm:rounded-2xl md:h-[84vh]"
+          onWheel={(e) => {
+            handleWheel(e.nativeEvent)
+          }}
+        >
+          <AnimatePresence initial={false} custom={slideDirection} mode="popLayout">
             <motion.div
               key={currentShorts.shortsId}
               custom={slideDirection}
@@ -113,12 +152,12 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
               transition={{ type: 'tween', duration: 0.3, ease: 'easeInOut' }}
               drag="y"
               dragConstraints={{ top: 0, bottom: 0 }}
-              dragElastic={0.2}
+              dragElastic={0.5}
               onDragEnd={handleDragEnd}
               onAnimationComplete={() => {
                 setIsAnimating(false)
               }}
-              className="h-full w-full cursor-grab active:cursor-grabbing"
+              className="h-full w-full cursor-grab overflow-y-hidden active:cursor-grabbing"
             >
               <ShortsItem shorts={currentShorts} />
             </motion.div>

@@ -11,7 +11,7 @@ export default function ShortsItem({ shorts }: ShortsItemProps) {
   return (
     <div className="relative h-full w-full">
       {/* 영상 플레이어  */}
-      <div className="h-full w-full">
+      <div className="aspect-9/16 h-full w-full">
         <ShortsPlayer videoUrl={shorts.videoUrl} thumbnailUrl={shorts.thumbnailUrl} />
       </div>
 

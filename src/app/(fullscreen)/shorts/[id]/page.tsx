@@ -10,7 +10,7 @@ export default async function ShortformDetailPage({ params }: ShortDetailPagePro
   const { id } = await params
   const data = await getShortsDetailList(id)
   // console.log('데이터 불러오기:', data)
-
+  console.log(data)
   if (!data) {
     notFound()
   }
