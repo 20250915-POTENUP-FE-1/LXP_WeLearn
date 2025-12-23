@@ -53,14 +53,18 @@ export async function getShortsDetailList(startId: string): Promise<ShortsListPr
       return null
     }
 
+    const RANGE = 5
+
     // 6: 시작 지점 기준으로 10개 추출
-    const beforeCount = Math.min(startIndex, 0)
-    const startSlice = startIndex - beforeCount
-    const endSlice = Math.min(startSlice + 10, sortedShorts.length)
+    // slice 시작/끝 index 계산
+    const startSlice = Math.max(startIndex - RANGE, 0)
+    const endSlice = Math.min(startIndex + RANGE + 1, sortedShorts.length)
 
+    // 실제 데이터
     const shortsList = sortedShorts.slice(startSlice, endSlice)
-    const initialIndex = beforeCount
 
+    // slice된 배열 안에서 현재 영상 위치
+    const initialIndex = startIndex - startSlice
     return {
       shortsList,
       initialIndex,
