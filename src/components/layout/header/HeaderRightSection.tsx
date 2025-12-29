@@ -1,17 +1,8 @@
 'use client'
 import Link from 'next/link'
-import { LogOut, User, UserIcon } from 'lucide-react'
-import { startTransition, useActionState, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { UserInfo } from '@/types/auth'
-import { LogoutAction } from '@/features/auth/action'
-import { useRouter } from 'next/navigation'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { toast } from 'react-toastify'
+import HeaderDropdown from './HeaderDropdown'
 
 interface HeaderRightSectionProps {
   isLogined: boolean
@@ -20,27 +11,10 @@ interface HeaderRightSectionProps {
 export default function HeaderRightSection({ isLogined }: HeaderRightSectionProps) {
   const [user, setUser] = useState<UserInfo | null>(null)
 
-  const router = useRouter()
-
-  const [state, action, isPending] = useActionState(LogoutAction, {
-    success: false,
-    message: '',
-  })
-
   useEffect(() => {
     const user = (JSON.parse(localStorage.getItem('user') || 'null') as UserInfo) || null
     if (user) setUser(user)
   }, [])
-
-  useEffect(() => {
-    if (state.success) {
-      localStorage.removeItem('user')
-      toast.success('로그아웃 되셨습니다.')
-      router.push('/')
-    } else if (state.success === false && state.message) {
-      toast.error(state.message)
-    }
-  }, [state])
 
   return (
     <div className="flex items-center gap-3">
@@ -60,54 +34,7 @@ export default function HeaderRightSection({ isLogined }: HeaderRightSectionProp
           </Link>
         </>
       ) : (
-        <>
-          <DropdownMenu modal={false}>
-            <DropdownMenuTrigger asChild>
-              <div
-                className="cursor-pointer p-2 text-gray-600 transition-colors hover:text-gray-900"
-                aria-label="프로필"
-              >
-                {/* 유저 프로필 영역 */}
-                {user?.profileUrl && (
-                  <div
-                    className="cursor-pointer rounded-full border-gray-100 transition-colors hover:border-gray-600"
-                    aria-label="프로필 이미지"
-                  >
-                    <img src={user?.profileUrl} />
-                  </div>
-                )}
-
-                <User strokeWidth={2} />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-30 py-3 pl-2">
-              <DropdownMenuItem className="cursor-pointer">
-                <button
-                  onClick={() => {
-                    toast.info('서비스 준비 중입니다.')
-                  }}
-                  className="flex gap-4 p-1"
-                >
-                  <UserIcon />
-                  프로필
-                </button>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <button
-                  onClick={() => {
-                    startTransition(() => {
-                      action()
-                    })
-                  }}
-                  className="flex gap-4 p-1"
-                >
-                  <LogOut />
-                  로그아웃
-                </button>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </>
+        <HeaderDropdown user={user} />
       )}
     </div>
   )

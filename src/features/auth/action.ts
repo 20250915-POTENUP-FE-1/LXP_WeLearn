@@ -27,8 +27,6 @@ export const SignupAction = async (
   let response
   try {
     response = await authApi.signup(payload)
-    console.log('---------------action-------------')
-    console.log(response)
   } catch (error) {
     return {
       success: false,
