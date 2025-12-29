@@ -1,363 +1,543 @@
-'use client'
-
-// ============================================
-// Page: 학생 마이페이지 - 수강 중인 강의
-// Route: /mypage/my-lectures
-// Access: 로그인 필수 (학생)
-// Description: 수강 중인 강의 목록을 진행률과 함께 표시하는 페이지
-// Tailwind: grid로 사이드바/메인 레이아웃, flex로 카드 구성
-// ============================================
-
-import React, { useState } from 'react'
-
-// 사이드바 메뉴 타입 정의
-type SidebarMenu = '수강 중인 강의' | '내가 등록한 강의' | '찜목록'
-
-// 수강 중인 강의 타입 정의
-interface EnrolledLecture {
-  id: string
-  thumbnail: string
-  category: string
-  level: string
-  title: string
-  instructor: string
-  enrolledDate: string
-  progress: number
-  completedLessons: number
-  totalLessons: number
-  isFavorite: boolean
-}
-
-// 사용자 정보 타입 정의
-interface UserInfo {
-  name: string
-  email: string
-  profileImage?: string
-}
-
-// 샘플 사용자 데이터
-const sampleUser: UserInfo = {
-  name: '홍길동',
-  email: 'student@lxp.com',
-}
-
-// 샘플 수강 중인 강의 데이터
-const sampleEnrolledLectures: EnrolledLecture[] = [
-  {
-    id: '1',
-    thumbnail: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=300&h=200&fit=crop',
-    category: '개발',
-    level: '초급',
-    title: 'React와 TypeScript로 만드는 현대적인 웹 애플리케이션',
-    instructor: '윤강사',
-    enrolledDate: '2024.01.15',
-    progress: 35,
-    completedLessons: 8,
-    totalLessons: 24,
-    isFavorite: true,
-  },
-  {
-    id: '2',
-    thumbnail: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=300&h=200&fit=crop',
-    category: '디자인',
-    level: '중급',
-    title: 'UI/UX 디자인 기초부터 실전까지',
-    instructor: '김디자이너',
-    enrolledDate: '2024.02.20',
-    progress: 62,
-    completedLessons: 12,
-    totalLessons: 20,
-    isFavorite: true,
-  },
-  {
-    id: '3',
-    thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=200&fit=crop',
-    category: '개발',
-    level: '초급',
-    title: 'Python으로 시작하는 데이터 분석',
-    instructor: '박데이터',
-    enrolledDate: '2024.03.10',
-    progress: 15,
-    completedLessons: 3,
-    totalLessons: 18,
-    isFavorite: true,
-  },
-]
-
-// ============================================
-// UserProfileCard Component
-// Description: 사이드바 상단 사용자 프로필 카드
-// Tailwind: flex-col로 세로 배치, items-center로 중앙 정렬
-// ============================================
-const UserProfileCard: React.FC<{ user: UserInfo }> = ({ user }) => {
+export default function MyPageDashboard() {
   return (
-    <div className="mb-6 flex flex-col items-center text-center">
-      {/* Profile Image */}
-      <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
-        {user.profileImage ? (
-          <img
-            src={user.profileImage}
-            alt={`${user.name} 프로필 이미지`}
-            className="h-full w-full rounded-full object-cover"
-          />
-        ) : (
-          <svg
-            className="h-10 w-10 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-            />
-          </svg>
-        )}
-      </div>
-
-      {/* User Name */}
-      <h2 className="mb-1 text-base font-semibold text-gray-900">{user.name}</h2>
-
-      {/* User Email */}
-      <p className="text-sm text-gray-500">{user.email}</p>
-    </div>
-  )
-}
-
-// ============================================
-// SidebarNavigation Component
-// Description: 사이드바 네비게이션 메뉴
-// Tailwind: space-y-1로 메뉴 간격, rounded-lg로 활성 메뉴 스타일
-// ============================================
-const SidebarNavigation: React.FC<{
-  activeMenu: SidebarMenu
-  onMenuChange: (menu: SidebarMenu) => void
-}> = ({ activeMenu, onMenuChange }) => {
-  const menus: SidebarMenu[] = ['수강 중인 강의', '내가 등록한 강의', '찜목록']
-
-  return (
-    <nav className="space-y-1" aria-label="마이페이지 메뉴">
-      {menus.map((menu) => (
-        <button
-          key={menu}
-          onClick={() => onMenuChange(menu)}
-          className={`w-full rounded-lg px-4 py-3 text-left text-sm font-medium transition-colors ${
-            activeMenu === menu ? 'bg-gray-900 text-white' : 'text-gray-700 hover:bg-gray-100'
-          }`}
-          aria-current={activeMenu === menu ? 'page' : undefined}
-        >
-          {menu}
-        </button>
-      ))}
-    </nav>
-  )
-}
-
-// ============================================
-// ProgressBar Component
-// Description: 강의 진행률 표시 바
-// Tailwind: bg-gray-200으로 배경, bg-emerald-500으로 진행률 표시
-// ============================================
-const ProgressBar: React.FC<{ progress: number }> = ({ progress }) => {
-  return (
-    <div className="h-1.5 w-full rounded-full bg-gray-200">
-      <div
-        className="h-1.5 rounded-full bg-emerald-500 transition-all duration-300"
-        style={{ width: `${progress}%` }}
-        role="progressbar"
-        aria-valuenow={progress}
-        aria-valuemin={0}
-        aria-valuemax={100}
-      />
-    </div>
-  )
-}
-
-// ============================================
-// EnrolledLectureCard Component
-// Description: 수강 중인 강의 카드 컴포넌트
-// Tailwind: flex로 가로 배치, border로 카드 구분
-// Props: lecture (EnrolledLecture 타입)
-// ============================================
-const EnrolledLectureCard: React.FC<{
-  lecture: EnrolledLecture
-  onToggleFavorite: (id: string) => void
-}> = ({ lecture, onToggleFavorite }) => {
-  return (
-    <div className="flex flex-col gap-4 border-b border-gray-100 py-6 last:border-b-0 sm:flex-row">
-      {/* Thumbnail */}
-      {/* Tailwind: aspect-video로 비율 유지, rounded-lg로 모서리 둥글게 */}
-      <div className="aspect-video w-full shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:w-48">
-        <img
-          src={lecture.thumbnail}
-          alt={`${lecture.title} 강의 썸네일`}
-          className="h-full w-full object-cover"
-        />
-      </div>
-
-      {/* Content */}
-      <div className="flex flex-1 flex-col">
-        {/* Header Row - Category, Level, Favorite */}
-        <div className="mb-2 flex items-start justify-between">
+    <div className="min-h-screen bg-white">
+      {/* ==================== Header (기존 헤더 컴포넌트 사용) ==================== */}
+      <header className="sticky top-0 z-40 border-b border-gray-200 bg-white">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
           <div className="flex items-center gap-2">
-            {/* Category Badge */}
-            <span className="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
-              {lecture.category}
-            </span>
-            {/* Level Badge */}
-            <span className="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
-              {lecture.level}
-            </span>
+            <span className="text-sm text-gray-500">Mypage</span>
+            <span className="text-xl font-bold">shorTudy</span>
           </div>
-
-          {/* Favorite Button */}
-          <button
-            onClick={() => onToggleFavorite(lecture.id)}
-            className="rounded p-1 transition-colors hover:bg-gray-100"
-            aria-label={lecture.isFavorite ? '찜 해제' : '찜하기'}
-          >
+          <div className="mx-8 max-w-md flex-1">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="검색어를 입력하세요"
+                className="w-full rounded-full bg-gray-100 px-4 py-2 text-sm focus:ring-1 focus:ring-black focus:outline-none"
+              />
+              <button className="absolute top-1/2 right-3 -translate-y-1/2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-gray-400"
+                >
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <button className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-200">
             <svg
-              className={`h-5 w-5 ${
-                lecture.isFavorite ? 'fill-current text-gray-900' : 'text-gray-300'
-              }`}
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
+              fill="none"
               stroke="currentColor"
               strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-gray-500"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              />
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
             </svg>
           </button>
         </div>
+      </header>
 
-        {/* Title */}
-        <h3 className="mb-1 line-clamp-2 text-base font-semibold text-gray-900">{lecture.title}</h3>
+      {/* ==================== Main Content ==================== */}
+      <main className="mx-auto max-w-7xl px-4 py-8">
+        {/* ==================== User Profile Section ==================== */}
+        <section className="mb-10 flex items-center gap-4">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-gray-400"
+            >
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-gray-900">userName</h1>
+            <p className="text-sm text-gray-500">userEmail</p>
+          </div>
+        </section>
 
-        {/* Instructor */}
-        <p className="mb-3 text-sm text-gray-500">{lecture.instructor}</p>
-
-        {/* Progress Section */}
-        <div className="mt-auto">
-          {/* Progress Label */}
-          <div className="mb-2 flex items-center justify-between text-sm">
-            <span className="text-gray-500">진행률</span>
-            <span className="font-medium text-gray-900">{lecture.progress}%</span>
+        {/* ==================== Liked Shorts Section (좋아요한 숏츠) ==================== */}
+        <section className="mb-12">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-bold text-gray-900">shortsLikedList</h2>
+            <div className="flex items-center gap-2">
+              <button className="rounded-md border border-gray-300 px-3 py-1.5 text-sm transition-colors hover:bg-gray-50">
+                전체보기
+              </button>
+              {/* 좌우 슬라이드 버튼 */}
+              <button className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 transition-colors hover:bg-gray-50">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <button className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 transition-colors hover:bg-gray-50">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
           </div>
 
-          {/* Progress Bar */}
-          <ProgressBar progress={lecture.progress} />
+          {/* 좋아요 숏츠 가로 스크롤 리스트 */}
+          <div className="scrollbar-hide flex gap-4 overflow-x-auto pb-4">
+            {/* Liked Shorts Card 1 */}
+            <div className="w-44 flex-shrink-0">
+              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+                {/* 카테고리 뱃지 */}
+                <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
+                  개발
+                </span>
+                {/* 썸네일 */}
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
+                  thumbnailUrl
+                </div>
+                {/* 하단 프로그레스 바 */}
+                <div className="absolute right-0 bottom-0 left-0 h-1 bg-gray-300">
+                  <div className="h-full w-3/4 bg-red-500"></div>
+                </div>
+              </div>
+              <p className="truncate text-sm font-medium text-gray-900">shortsTitle</p>
+              <p className="truncate text-xs text-gray-500">채널명</p>
+            </div>
 
-          {/* Lesson Count & Button Row */}
-          <div className="mt-3 flex items-center justify-between">
-            <span className="text-xs text-gray-400">
-              {lecture.completedLessons} / {lecture.totalLessons} 강의 완료
-            </span>
+            {/* Liked Shorts Card 2 */}
+            <div className="w-44 flex-shrink-0">
+              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+                <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
+                  개발
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
+                  thumbnailUrl
+                </div>
+                <div className="absolute right-0 bottom-0 left-0 h-1 bg-gray-300">
+                  <div className="h-full w-1/2 bg-red-500"></div>
+                </div>
+              </div>
+              <p className="truncate text-sm font-medium text-gray-900">shortsTitle</p>
+              <p className="truncate text-xs text-gray-500">채널명</p>
+            </div>
 
-            {/* Continue Learning Button */}
-            <button
-              className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none"
-              aria-label={`${lecture.title} 이어서 학습하기`}
-            >
-              이어서 학습하기 &gt;
+            {/* Liked Shorts Card 3 */}
+            <div className="w-44 flex-shrink-0">
+              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+                <span className="absolute top-2 left-2 rounded bg-orange-500 px-2 py-0.5 text-xs text-white">
+                  비즈니스
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
+                  thumbnailUrl
+                </div>
+                <div className="absolute right-0 bottom-0 left-0 h-1 bg-gray-300">
+                  <div className="h-full w-full bg-red-500"></div>
+                </div>
+              </div>
+              <p className="truncate text-sm font-medium text-gray-900">shortsTitle</p>
+              <p className="truncate text-xs text-gray-500">채널명</p>
+            </div>
+
+            {/* Liked Shorts Card 4 */}
+            <div className="w-44 flex-shrink-0">
+              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+                <span className="absolute top-2 left-2 rounded bg-orange-500 px-2 py-0.5 text-xs text-white">
+                  비즈니스
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
+                  thumbnailUrl
+                </div>
+                <div className="absolute right-0 bottom-0 left-0 h-1 bg-gray-300">
+                  <div className="h-full w-1/4 bg-red-500"></div>
+                </div>
+              </div>
+              <p className="truncate text-sm font-medium text-gray-900">shortsTitle</p>
+              <p className="truncate text-xs text-gray-500">채널명</p>
+            </div>
+
+            {/* Liked Shorts Card 5 */}
+            <div className="w-44 flex-shrink-0">
+              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+                <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
+                  개발
+                </span>
+                {/* 최신순 뱃지 */}
+                <span className="absolute top-2 right-2 rounded bg-black px-2 py-0.5 text-xs text-white">
+                  최신순
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
+                  thumbnailUrl
+                </div>
+                <div className="absolute right-0 bottom-0 left-0 h-1 bg-gray-300">
+                  <div className="h-full w-0 bg-red-500"></div>
+                </div>
+              </div>
+              <p className="truncate text-sm font-medium text-gray-900">shortsTitle</p>
+              <p className="truncate text-xs text-gray-500">채널명</p>
+            </div>
+          </div>
+        </section>
+
+        {/* ==================== Saved Shorts Section (저장한 플레이리스트) ==================== */}
+        <section>
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-bold text-gray-900">shortsSavedList</h2>
+          </div>
+
+          {/* 플레이리스트 그리드 */}
+          <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+            {/* Playlist Card 1 */}
+            <div className="group cursor-pointer">
+              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+                {/* 공개/비공개 뱃지 */}
+                <span className="absolute top-2 left-2 rounded bg-gray-800 px-2 py-0.5 text-xs text-white">
+                  비공개
+                </span>
+                {/* 숏츠 갯수 */}
+                <span className="absolute top-2 right-2 flex items-center gap-1 rounded bg-black/60 px-2 py-0.5 text-xs text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  12
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
+                  thumbnailUrl
+                </div>
+                {/* 하단 프로그레스 바 */}
+                <div className="absolute right-0 bottom-0 left-0 h-1 bg-gray-300">
+                  <div className="h-full w-2/3 bg-green-500"></div>
+                </div>
+              </div>
+              <p className="truncate text-sm font-medium text-gray-900 group-hover:text-black">
+                savedListTitle
+              </p>
+              <p className="text-xs text-gray-500">개발 · 12개</p>
+            </div>
+
+            {/* Playlist Card 2 */}
+            <div className="group cursor-pointer">
+              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+                <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
+                  공개
+                </span>
+                <span className="absolute top-2 right-2 flex items-center gap-1 rounded bg-black/60 px-2 py-0.5 text-xs text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  8
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
+                  thumbnailUrl
+                </div>
+                <div className="absolute right-0 bottom-0 left-0 h-1 bg-gray-300">
+                  <div className="h-full w-1/2 bg-green-500"></div>
+                </div>
+              </div>
+              <p className="truncate text-sm font-medium text-gray-900 group-hover:text-black">
+                숏츠로 완성하는 개발 학습 지도
+              </p>
+              <p className="text-xs text-gray-500">개발 · 8개</p>
+            </div>
+
+            {/* Playlist Card 3 */}
+            <div className="group cursor-pointer">
+              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+                <span className="absolute top-2 left-2 rounded bg-orange-500 px-2 py-0.5 text-xs text-white">
+                  공개
+                </span>
+                <span className="absolute top-2 right-2 flex items-center gap-1 rounded bg-black/60 px-2 py-0.5 text-xs text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  5
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
+                  thumbnailUrl
+                </div>
+                <div className="absolute right-0 bottom-0 left-0 h-1 bg-gray-300">
+                  <div className="h-full w-full bg-green-500"></div>
+                </div>
+              </div>
+              <p className="truncate text-sm font-medium text-gray-900 group-hover:text-black">
+                개념부터 실전까지 파이썬 모음
+              </p>
+              <p className="text-xs text-gray-500">비즈니스 · 5개</p>
+            </div>
+
+            {/* Playlist Card 4 */}
+            <div className="group cursor-pointer">
+              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+                <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
+                  공개
+                </span>
+                <span className="absolute top-2 right-2 flex items-center gap-1 rounded bg-black/60 px-2 py-0.5 text-xs text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  15
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
+                  thumbnailUrl
+                </div>
+                <div className="absolute right-0 bottom-0 left-0 h-1 bg-gray-300">
+                  <div className="h-full w-1/4 bg-green-500"></div>
+                </div>
+              </div>
+              <p className="truncate text-sm font-medium text-gray-900 group-hover:text-black">
+                15일 완전 정복 기능별 html
+              </p>
+              <p className="text-xs text-gray-500">개발 · 15개</p>
+            </div>
+
+            {/* Playlist Card 5 */}
+            <div className="group cursor-pointer">
+              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+                <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
+                  공개
+                </span>
+                <span className="absolute top-2 right-2 flex items-center gap-1 rounded bg-black/60 px-2 py-0.5 text-xs text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  7
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
+                  thumbnailUrl
+                </div>
+                <div className="absolute right-0 bottom-0 left-0 h-1 bg-gray-300">
+                  <div className="h-full w-3/4 bg-green-500"></div>
+                </div>
+              </div>
+              <p className="truncate text-sm font-medium text-gray-900 group-hover:text-black">
+                Spring Boot 시작하기
+              </p>
+              <p className="text-xs text-gray-500">개발 · 7개</p>
+            </div>
+
+            {/* Playlist Card 6 */}
+            <div className="group cursor-pointer">
+              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+                <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
+                  공개
+                </span>
+                <span className="absolute top-2 right-2 flex items-center gap-1 rounded bg-black/60 px-2 py-0.5 text-xs text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  10
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
+                  thumbnailUrl
+                </div>
+                <div className="absolute right-0 bottom-0 left-0 h-1 bg-gray-300">
+                  <div className="h-full w-1/2 bg-green-500"></div>
+                </div>
+              </div>
+              <p className="truncate text-sm font-medium text-gray-900 group-hover:text-black">
+                숏츠로 완성하는 개발 직접 지도
+              </p>
+              <p className="text-xs text-gray-500">개발 · 10개</p>
+            </div>
+
+            {/* Playlist Card 7 */}
+            <div className="group cursor-pointer">
+              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+                <span className="absolute top-2 left-2 rounded bg-orange-500 px-2 py-0.5 text-xs text-white">
+                  공개
+                </span>
+                <span className="absolute top-2 right-2 flex items-center gap-1 rounded bg-black/60 px-2 py-0.5 text-xs text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  6
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
+                  thumbnailUrl
+                </div>
+                <div className="absolute right-0 bottom-0 left-0 h-1 bg-gray-300">
+                  <div className="h-full w-1/3 bg-green-500"></div>
+                </div>
+              </div>
+              <p className="truncate text-sm font-medium text-gray-900 group-hover:text-black">
+                개념부터 실전까지 파이썬 모음
+              </p>
+              <p className="text-xs text-gray-500">비즈니스 · 6개</p>
+            </div>
+
+            {/* Playlist Card 8 */}
+            <div className="group cursor-pointer">
+              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+                <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
+                  공개
+                </span>
+                <span className="absolute top-2 right-2 flex items-center gap-1 rounded bg-black/60 px-2 py-0.5 text-xs text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  9
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
+                  thumbnailUrl
+                </div>
+                <div className="absolute right-0 bottom-0 left-0 h-1 bg-gray-300">
+                  <div className="h-full w-2/3 bg-green-500"></div>
+                </div>
+              </div>
+              <p className="truncate text-sm font-medium text-gray-900 group-hover:text-black">
+                Spring Boot 시작하기
+              </p>
+              <p className="text-xs text-gray-500">개발 · 9개</p>
+            </div>
+          </div>
+
+          {/* ==================== Pagination ==================== */}
+          <div className="flex items-center justify-center gap-2">
+            <button className="flex h-8 w-8 items-center justify-center rounded bg-black text-sm text-white">
+              1
+            </button>
+            <button className="flex h-8 w-8 items-center justify-center rounded text-sm text-gray-600 hover:bg-gray-100">
+              2
+            </button>
+            <button className="flex h-8 w-8 items-center justify-center rounded text-sm text-gray-600 hover:bg-gray-100">
+              3
+            </button>
+            <button className="flex h-8 w-8 items-center justify-center rounded text-sm text-gray-600 hover:bg-gray-100">
+              4
+            </button>
+            <button className="flex h-8 w-8 items-center justify-center rounded text-sm text-gray-600 hover:bg-gray-100">
+              5
             </button>
           </div>
+        </section>
+      </main>
+
+      {/* ==================== Footer (기존 푸터 컴포넌트 사용) ==================== */}
+      <footer className="mt-16 border-t border-gray-200 bg-gray-100">
+        <div className="mx-auto max-w-7xl px-4 py-8">
+          <p className="text-center text-sm text-gray-500">Footer</p>
         </div>
-      </div>
+      </footer>
     </div>
-  )
-}
-
-// ============================================
-// MyLecturesPage Component
-// Description: 학생 마이페이지 메인 컴포넌트
-// ============================================
-export default function MyLecturesPage() {
-  const [activeMenu, setActiveMenu] = useState<SidebarMenu>('수강 중인 강의')
-  const [lectures, setLectures] = useState<EnrolledLecture[]>(sampleEnrolledLectures)
-
-  // 찜하기 토글 핸들러
-  const handleToggleFavorite = (lectureId: string) => {
-    setLectures((prev) =>
-      prev.map((lecture) =>
-        lecture.id === lectureId ? { ...lecture, isFavorite: !lecture.isFavorite } : lecture,
-      ),
-    )
-  }
-
-  return (
-    <>
-      {/* ============================================ */}
-      {/* Page Header */}
-      {/* Description: 페이지 제목 영역 */}
-      {/* ============================================ */}
-
-      {/* ============================================ */}
-      {/* Main Content with Sidebar */}
-      {/* Description: 사이드바 + 메인 콘텐츠 레이아웃 */}
-      {/* Tailwind: grid로 2컬럼 레이아웃 (사이드바 고정, 메인 유동) */}
-      {/* ============================================ */}
-      <div className="flex flex-col gap-8 lg:flex-row">
-        {/* ============================================ */}
-        {/* Sidebar */}
-        {/* Description: 좌측 사이드바 (프로필 + 메뉴) */}
-        {/* Tailwind: w-64로 고정 너비, border로 구분 */}
-        {/* ============================================ */}
-        <aside className="w-full shrink-0 lg:w-64">
-          <div className="rounded-xl border border-gray-200 bg-white p-6">
-            {/* User Profile */}
-            <UserProfileCard user={sampleUser} />
-
-            {/* Navigation Menu */}
-            <SidebarNavigation activeMenu={activeMenu} onMenuChange={setActiveMenu} />
-          </div>
-        </aside>
-
-        {/* ============================================ */}
-        {/* Main Content Area */}
-        {/* Description: 수강 중인 강의 목록 */}
-        {/* ============================================ */}
-        <div className="flex-1">
-          {/* Section Header */}
-          <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-xl font-bold text-gray-900">수강 중인 강의</h2>
-            <span className="text-sm text-gray-500">전체보기</span>
-          </div>
-
-          {/* Lecture List */}
-          {/* Tailwind: divide-y로 카드 구분선 */}
-          <div className="bg-white">
-            {lectures.length > 0 ? (
-              lectures.map((lecture) => (
-                <EnrolledLectureCard
-                  key={lecture.id}
-                  lecture={lecture}
-                  onToggleFavorite={handleToggleFavorite}
-                />
-              ))
-            ) : (
-              /* Empty State */
-              <div className="flex flex-col items-center justify-center py-16">
-                <div className="mb-4 text-5xl">📚</div>
-                <p className="mb-2 text-lg font-medium text-gray-900">
-                  아직 수강 중인 강의가 없습니다
-                </p>
-                <p className="mb-6 text-sm text-gray-500">관심 있는 강의를 찾아보세요</p>
-                <a
-                  href="/lectures"
-                  className="rounded-lg bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-800"
-                >
-                  강의 찾아보기
-                </a>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </>
   )
 }
