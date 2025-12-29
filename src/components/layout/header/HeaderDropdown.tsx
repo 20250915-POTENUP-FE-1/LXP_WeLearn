@@ -1,13 +1,4 @@
-import {
-  CirclePlay,
-  CircleUser,
-  Heart,
-  Layers,
-  LogOut,
-  Settings,
-  User,
-  UserIcon,
-} from 'lucide-react'
+import { CirclePlay, CircleUser, Heart, Layers, LogOut, Settings, User } from 'lucide-react'
 import { startTransition, useActionState, useEffect } from 'react'
 import { LogoutAction } from '@/features/auth/action'
 import { useRouter } from 'next/navigation'
@@ -41,6 +32,7 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
       toast.error(state.message)
     }
   }, [state])
+
   return (
     <>
       <DropdownMenu modal={false}>
@@ -50,16 +42,16 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
             aria-label="프로필"
           >
             {/* 유저 프로필 영역 */}
-            {user?.profileUrl && (
+            {user?.profileUrl ? (
               <div
                 className="cursor-pointer rounded-full border-gray-100 transition-colors hover:border-gray-600"
                 aria-label="프로필 이미지"
               >
-                <img src={user?.profileUrl} />
+                <img src={user?.profileUrl} alt="user-profile-image" />
               </div>
+            ) : (
+              <User strokeWidth={2} />
             )}
-
-            <User strokeWidth={2} />
           </div>
         </DropdownMenuTrigger>
 
@@ -69,14 +61,18 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
               className="cursor-pointer rounded-full border-gray-100 transition-colors hover:border-gray-600"
               aria-label="프로필 이미지"
             >
-              <img src={user?.profileUrl} />
+              <img src={user?.profileUrl} alt="user-profile-image" />
             </div>
           )}
           <div className="mb-3 flex items-center gap-4 p-1">
             <CircleUser strokeWidth={2} size={48} />
             <div className="flex flex-col justify-center">
-              <div>{user?.name}</div>
-              <div>{user?.email}</div>
+              {user && (
+                <>
+                  <div>{user.name}</div>
+                  <div>{user.email}</div>
+                </>
+              )}
             </div>
           </div>
           <hr />
@@ -125,7 +121,7 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
             </button>
           </DropdownMenuItem>
           <hr />
-          <DropdownMenuItem className="cursor-pointe mt-2">
+          <DropdownMenuItem className="mt-2 cursor-pointer">
             <button
               onClick={() => {
                 startTransition(() => {
