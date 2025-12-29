@@ -50,12 +50,14 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
                 <img src={user?.profileUrl} alt="user-profile-image" />
               </div>
             ) : (
-              <User strokeWidth={2} />
+              <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gray-200">
+                <User strokeWidth={1.5} size={24} />
+              </div>
             )}
           </div>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="end" className="flex flex-col gap-2 px-3 py-3">
+        <DropdownMenuContent align="end" className="pb- flex flex-col gap-2 px-6 pt-5 pb-3">
           {user?.profileUrl && (
             <div
               className="cursor-pointer rounded-full border-gray-100 transition-colors hover:border-gray-600"
@@ -65,12 +67,14 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
             </div>
           )}
           <div className="mb-3 flex items-center gap-4 p-1">
-            <CircleUser strokeWidth={2} size={48} />
+            <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gray-200">
+              <User strokeWidth={1.5} size={24} />
+            </div>
             <div className="flex flex-col justify-center">
               {user && (
                 <>
                   <div>{user.name}</div>
-                  <div>{user.email}</div>
+                  <div className="text-xs text-gray-600">{user.email}</div>
                 </>
               )}
             </div>
@@ -121,7 +125,7 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
             </button>
           </DropdownMenuItem>
           <hr />
-          <DropdownMenuItem className="mt-2 cursor-pointer">
+          <DropdownMenuItem className="cursor-pointer">
             <button
               onClick={() => {
                 startTransition(() => {

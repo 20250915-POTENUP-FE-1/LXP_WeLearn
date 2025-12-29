@@ -1,7 +1,7 @@
 export default function CommentModal() {
   return (
     /* ==================== Modal Overlay ==================== */
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div className="absolute top-50 right-[-550px] z-50 flex items-center justify-center">
       {/* ==================== Modal Container ==================== */}
       <div className="flex h-[80vh] max-h-[700px] w-full max-w-lg flex-col overflow-hidden rounded-xl bg-white shadow-2xl">
         {/* ==================== Modal Header ==================== */}
@@ -137,15 +137,22 @@ export default function CommentModal() {
             </div>
 
             {/* ==================== Reply Input Section (답글 입력 영역) - hidden 제거하여 표시 ==================== */}
-            {/* 
-            <div className="pl-12 py-3 bg-gray-50 rounded-lg mt-2">
+
+            <div className="mt-2 rounded-lg bg-gray-50 py-3 pl-12">
               <div className="flex gap-2">
-                <input type="text" placeholder="답글을 입력하세요..." className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black" />
-                <button className="px-3 py-2 text-sm text-gray-600 hover:bg-gray-200 rounded-md transition-colors">취소</button>
-                <button className="px-4 py-2 text-sm bg-black text-white rounded-md hover:bg-gray-800 transition-colors">등록</button>
+                <input
+                  type="text"
+                  placeholder="답글을 입력하세요..."
+                  className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
+                />
+                <button className="rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-200">
+                  취소
+                </button>
+                <button className="rounded-md bg-black px-4 py-2 text-sm text-white transition-colors hover:bg-gray-800">
+                  등록
+                </button>
               </div>
             </div>
-            */}
 
             {/* ==================== Reply Block List (답글 목록) ==================== */}
             <div className="mt-3">
