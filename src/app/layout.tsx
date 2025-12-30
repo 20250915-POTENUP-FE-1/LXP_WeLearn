@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={suit.className}>
-      <body className="flex min-h-screen flex-col px-4 sm:px-6">
+      <body className="flex min-h-screen flex-col">
         {children}
 
         <ToastProvider />
