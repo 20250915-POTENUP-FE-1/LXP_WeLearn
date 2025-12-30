@@ -22,7 +22,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       'w-full rounded-lg border border-gray-200 px-4 text-sm placeholder:text-gray-400 focus:border-transparent focus:outline-none'
 
     // 검색바 UI
-    const searchClassName = 'bg-gray-100 py-2.5 pr-12 focus:ring-2 focus:ring-gray-900'
+    const searchClassName = 'bg-gray-100 py-2.5 pr-16 focus:ring-2 focus:ring-gray-900 rounded-full'
 
     // 기본 Input UI
     const defaultClassName = 'py-3 pr-12 focus:ring-2 focus:ring-gray-500'

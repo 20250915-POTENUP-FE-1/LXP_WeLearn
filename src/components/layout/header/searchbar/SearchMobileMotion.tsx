@@ -2,8 +2,7 @@
 
 import { Search, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Input } from '@/components/ui/Input'
-import { toast } from 'react-toastify'
+import SearchInput from './SearchInput'
 
 interface SearchMobileMotionProps {
   isOpen: boolean
@@ -11,12 +10,6 @@ interface SearchMobileMotionProps {
 }
 
 export default function SearchMobileMotion({ isOpen, onClose }: SearchMobileMotionProps) {
-  const handleComingSoon = () => {
-    toast.info('검색 기능은 준비 중입니다.', {
-      toastId: 'header-search-toast',
-    })
-  }
-
   const closeButton = (
     <button
       type="button"
@@ -56,23 +49,14 @@ export default function SearchMobileMotion({ isOpen, onClose }: SearchMobileMoti
           >
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="flex h-16 items-center gap-4">
-                {/* 검색 아이콘 (title 표시) */}
+                {/* 모바일에서 보여지는 용도 아이콘 */}
                 <div className="p-2 text-gray-600">
                   <Search className="h-5 w-5" />
                 </div>
 
                 {/* 모바일 검색바 */}
                 <div className="flex-1">
-                  <Input
-                    type="text"
-                    name="search-mobile"
-                    placeholder="검색어를 입력하세요"
-                    variant="search"
-                    rightButton={closeButton}
-                    autoFocus
-                    aria-label="검색"
-                    onClick={handleComingSoon}
-                  />
+                  <SearchInput name="search-mobile" rightButton={closeButton} autoFocus />
                 </div>
               </div>
             </div>
