@@ -19,7 +19,7 @@ export default function ShortsFormKeywords({
 
   return (
     <div>
-      <label className="mb-2 block text-sm font-medium text-gray-700">태그</label>
+      <label className="mb-2 block text-sm font-medium text-gray-700">키워드</label>
 
       {/* 키워드 목록 */}
       {keywords.length > 0 && (

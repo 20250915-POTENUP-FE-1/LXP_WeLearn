@@ -13,12 +13,7 @@ interface ShortsVideoPreviewProps {
   onCancel: () => void
 }
 
-export default function ShortsVideoPreview({
-  videoData,
-  onChange,
-  onSubmit,
-  onCancel,
-}: ShortsVideoPreviewProps) {
+export default function ShortsVideoPreview({ videoData, onChange }: ShortsVideoPreviewProps) {
   const { videoFile, isDragging } = videoData
   const videoInputRef = useRef<HTMLInputElement>(null)
 
