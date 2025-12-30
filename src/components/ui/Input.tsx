@@ -3,7 +3,7 @@
 import { forwardRef, useState } from 'react'
 import ShowHideButton from './ShowHideButton'
 import { InputProps } from './types'
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils/cnUtils'
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
