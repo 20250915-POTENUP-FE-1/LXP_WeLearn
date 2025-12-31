@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/Button'
 
-interface ShortsSubmitButtonsProps {
+interface ShortsFormSubmitButtonsProps {
   onRegister: () => void
   onCancel: () => void
   registerLabel?: string
@@ -14,10 +14,10 @@ export default function ShortsFormSubmitButtons({
   onCancel,
   registerLabel = '등록하기',
   isLoading = false,
-}: ShortsSubmitButtonsProps) {
+}: ShortsFormSubmitButtonsProps) {
   return (
     <div className="space-y-4">
-      {/* 등록/수정 버튼 */}
+      {/* 등록 버튼 */}
       <Button
         type="button"
         variant="accent"
@@ -25,7 +25,7 @@ export default function ShortsFormSubmitButtons({
         disabled={isLoading}
         className="text-md w-full py-6"
       >
-        {isLoading ? '처리 중...' : registerLabel}
+        {isLoading ? '등록 중...' : registerLabel}
       </Button>
 
       {/* 취소 버튼 */}
