@@ -3,19 +3,19 @@
 import { ChevronDown } from 'lucide-react'
 
 interface ShortsFormCategoryProps {
-  category: string
-  setCategory: (value: string) => void
+  value: string
+  onChange: (value: string) => void
 }
 
-export default function ShortsFormCategory({ category, setCategory }: ShortsFormCategoryProps) {
+export default function ShortsFormCategory({ value, onChange }: ShortsFormCategoryProps) {
   return (
     <div>
       <label className="mb-2 block text-sm font-medium text-gray-700">카테고리</label>
       <div className="relative">
         <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="w-full cursor-pointer appearance-none rounded-lg border border-gray-300 bg-white px-4 py-3 transition-all focus:ring-2 focus:ring-black focus:outline-none"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="w-full cursor-pointer appearance-none rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm transition-all focus:ring-2 focus:ring-black focus:outline-none"
         >
           <option value="">카테고리를 선택하세요.</option>
           <option value="frontend">프론트엔드</option>

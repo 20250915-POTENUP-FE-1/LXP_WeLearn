@@ -1,6 +1,6 @@
 export default function SavedShortsPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="h-full w-full px-4 py-8">
       {/* ==================== Page Header (플레이리스트 제목 + 수정 버튼) ==================== */}
       <div className="mb-6 flex items-center gap-3">
         <h1 className="text-2xl font-bold text-gray-900">Spring Boot 시작하기</h1>

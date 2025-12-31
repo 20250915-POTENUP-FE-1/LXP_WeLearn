@@ -1,6 +1,6 @@
 export default function MyPageDashboard() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="h-full w-full">
       {/* ==================== Main Content ==================== */}
       <main className="mx-auto max-w-7xl px-4 py-8">
         {/* ==================== User Profile Section ==================== */}
@@ -73,7 +73,7 @@ export default function MyPageDashboard() {
           {/* 좋아요 숏츠 가로 스크롤 리스트 */}
           <div className="scrollbar-hide flex gap-4 overflow-x-auto pb-4">
             {/* Liked Shorts Card 1 */}
-            <div className="w-44 flex-shrink-0">
+            <div className="w-56 flex-shrink-0">
               <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
                 {/* 카테고리 뱃지 */}
                 <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
@@ -93,7 +93,7 @@ export default function MyPageDashboard() {
             </div>
 
             {/* Liked Shorts Card 2 */}
-            <div className="w-44 flex-shrink-0">
+            <div className="w-56 flex-shrink-0">
               <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
                   개발
@@ -110,7 +110,7 @@ export default function MyPageDashboard() {
             </div>
 
             {/* Liked Shorts Card 3 */}
-            <div className="w-44 flex-shrink-0">
+            <div className="w-56 flex-shrink-0">
               <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-orange-500 px-2 py-0.5 text-xs text-white">
                   비즈니스
@@ -127,7 +127,7 @@ export default function MyPageDashboard() {
             </div>
 
             {/* Liked Shorts Card 4 */}
-            <div className="w-44 flex-shrink-0">
+            <div className="w-56 flex-shrink-0">
               <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-orange-500 px-2 py-0.5 text-xs text-white">
                   비즈니스
@@ -144,7 +144,7 @@ export default function MyPageDashboard() {
             </div>
 
             {/* Liked Shorts Card 5 */}
-            <div className="w-44 flex-shrink-0">
+            <div className="w-56 flex-shrink-0">
               <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
                   개발

@@ -1,66 +1,57 @@
 'use client'
 
 import { Input } from '@/components/ui/Input'
+import useKeywords from '@/hook/useKeywords'
+import { ShortsFormChangeHandler } from '@/types/shortsRegister'
 
 interface ShortsFormKeywordsProps {
-  tags: string[]
-  setTags: (value: string[]) => void
-  tagInput: string
-  setTagInput: (value: string) => void
+  keywords: string[]
+  keywordInput: string
+  onChange: ShortsFormChangeHandler
 }
 
 export default function ShortsFormKeywords({
-  tags,
-  setTags,
-  tagInput,
-  setTagInput,
+  keywords,
+  keywordInput,
+  onChange,
 }: ShortsFormKeywordsProps) {
-  const handleAddTag = () => {
-    if (tagInput.trim() && !tags.includes(tagInput.trim())) {
-      setTags([...tags, tagInput.trim()])
-      setTagInput('')
-    }
-  }
-
-  const handleRemoveTag = (tagToRemove: string) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove))
-  }
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      handleAddTag()
-    }
-  }
+  const { handleRemoveKeyword, handleKeyDown } = useKeywords({ keywords, keywordInput, onChange })
 
   return (
     <div>
-      <label className="mb-2 block text-sm font-medium text-gray-700">태그</label>
-      <div className="mb-3 flex flex-wrap gap-2">
-        {tags.map((tag, index) => (
-          <span
-            key={index}
-            className="inline-flex items-center gap-1 rounded-full bg-gray-200 px-3 py-1 text-sm text-gray-700"
-          >
-            {tag}
-            <button
-              type="button"
-              onClick={() => handleRemoveTag(tag)}
-              className="hover:text-gray-900"
+      <label className="mb-2 block text-sm font-medium text-gray-700">키워드</label>
+
+      {/* 키워드 목록 */}
+      {keywords.length > 0 && (
+        <div className="mb-3 flex flex-wrap gap-2">
+          {keywords.map((keyword, index) => (
+            <span
+              key={index}
+              className="inline-flex items-center gap-1 rounded-full bg-gray-200 px-3 py-1 text-sm text-gray-700"
             >
-              ✕
-            </button>
-          </span>
-        ))}
-      </div>
+              {keyword}
+              <button
+                type="button"
+                onClick={() => handleRemoveKeyword(keyword)}
+                className="hover:text-gray-900"
+              >
+                ✕
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* 키워드 입력 */}
       <div className="flex gap-2">
         <Input
           type="text"
-          name="shorts-tag"
-          value={tagInput}
-          onChange={(e) => setTagInput(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="태그를 입력하세요."
+          name="shorts-keyword"
+          value={keywordInput}
+          onChange={(e) => onChange('keywordInput', e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="키워드를 입력하세요."
+          className="bg-white focus:ring-black focus:outline-none"
         />
       </div>
     </div>
