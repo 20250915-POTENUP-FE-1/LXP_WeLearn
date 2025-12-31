@@ -22,7 +22,7 @@ export default function ShortsVideoPreview({ videoData, onChange }: ShortsVideoP
     handleDrop,
     handleRemoveVideo,
     handleVideoUpload,
-  } = useVideoUpload({ onChange })
+  } = useVideoUpload({ onChange, inputRef: videoInputRef })
 
   return (
     <div

@@ -34,9 +34,9 @@ export default function ShortsFormKeywords({
       {/* 선택된 키워드 목록 */}
       {keywords.length > 0 && (
         <div className="mb-3 flex flex-wrap gap-2">
-          {keywords.map((keyword, index) => (
+          {keywords.map((keyword) => (
             <span
-              key={index}
+              key={keyword}
               className="inline-flex items-center gap-1 rounded-full bg-gray-200 px-3 py-1 text-sm text-gray-700"
             >
               {keyword}
@@ -76,10 +76,13 @@ export default function ShortsFormKeywords({
         {/* 연관 키워드 추천 목록 */}
         {!isLoading && isOpen && suggestions.length > 0 && (
           <ul className="absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-lg border border-gray-300 bg-white shadow-lg">
-            {suggestions.map((keyword, index) => (
+            {suggestions.map((keyword) => (
               <li
-                key={index}
-                onClick={() => handleSelectKeyword(keyword)}
+                key={keyword}
+                onMouseDown={(e) => {
+                  e.preventDefault()
+                  handleSelectKeyword(keyword)
+                }}
                 className="cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
                 {keyword}

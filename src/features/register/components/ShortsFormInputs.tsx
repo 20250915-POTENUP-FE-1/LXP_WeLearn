@@ -22,7 +22,7 @@ export default function ShortsFormInputs({ formData, onChange }: ShortsFormInput
         <label className="mb-2 block text-sm font-medium text-gray-700">숏츠 제목</label>
         <Input
           type="text"
-          name="shorts-title"
+          name="title"
           value={title}
           onChange={(e) => onChange('title', e.target.value)}
           placeholder="제목을 입력하세요."
@@ -34,6 +34,7 @@ export default function ShortsFormInputs({ formData, onChange }: ShortsFormInput
         <label className="mb-2 block text-sm font-medium text-gray-700">숏츠 설명</label>
         <textarea
           value={description}
+          name="description"
           onChange={(e) => onChange('description', e.target.value)}
           placeholder="내용을 입력하세요."
           rows={4}
