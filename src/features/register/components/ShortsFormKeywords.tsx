@@ -56,7 +56,7 @@ export default function ShortsFormKeywords({
       <div className="relative">
         <Input
           type="text"
-          name="shorts-keyword"
+          name="keyword"
           value={keywordInput}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
