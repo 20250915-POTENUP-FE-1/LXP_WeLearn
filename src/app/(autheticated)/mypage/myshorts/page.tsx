@@ -1,6 +1,9 @@
+import { Plus } from 'lucide-react'
+import Link from 'next/link'
+
 export default function MyShortsPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="h-full w-full px-4 py-8">
       {/* ==================== Main Layout (모바일: 세로, PC: 가로) ==================== */}
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* ==================== Left Section - Fixed Preview (모바일에서 먼저 노출) ==================== */}
@@ -37,23 +40,11 @@ export default function MyShortsPage() {
         {/* ==================== Right Section - My Shorts List ==================== */}
         <div className="order-2 flex-1 lg:order-2">
           {/* ==================== 내 숏츠 만들기 버튼 ==================== */}
-          <button className="mb-6 flex w-full items-center justify-center gap-2 rounded-xl bg-green-500 py-5 text-lg font-medium text-white transition-colors hover:bg-green-600">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-            내 숏츠 만들기
-          </button>
+          <Link href="/mypage/myshorts/new">
+            <button className="mb-6 flex w-full items-center justify-center gap-2 rounded-xl bg-green-500 py-5 text-lg font-medium text-white transition-colors hover:bg-green-600">
+              <Plus strokeWidth={1.5} size={30} />내 숏츠 만들기
+            </button>
+          </Link>
 
           {/* ==================== List Header (총 갯수) ==================== */}
           <div className="mb-4 flex items-center justify-between">

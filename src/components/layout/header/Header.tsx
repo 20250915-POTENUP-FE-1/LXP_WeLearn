@@ -1,8 +1,7 @@
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import HeaderRightSection from './HeaderRightSection'
-import { Search } from 'lucide-react'
-import { HeaderSearchBar } from './HeaderSearchBar'
+import HeaderSearchContainer from './searchbar/SearchContainer'
 
 export const Header = async () => {
   const cookieStore = await cookies()
@@ -20,7 +19,7 @@ export const Header = async () => {
           </Link>
 
           <div className="ml-auto md:mx-auto md:max-w-xl md:flex-1">
-            <HeaderSearchBar />
+            <HeaderSearchContainer />
           </div>
           <HeaderRightSection isLogined={isLogined} />
         </div>

@@ -5,7 +5,7 @@ import ToastProvider from '@/lib/toast/ToastProvider'
 import { suit } from '@/app/font/suit/font'
 
 export const metadata: Metadata = {
-  title: '35FUND',
+  title: 'shorTudy',
   description: '',
 }
 
@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={suit.className}>
-      <body className="flex min-h-screen flex-col overflow-x-hidden bg-white">
+      <body className="flex min-h-screen flex-col">
         {children}
 
         <ToastProvider />
