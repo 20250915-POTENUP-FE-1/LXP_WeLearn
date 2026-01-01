@@ -25,7 +25,11 @@ export default function ShortsFormContainer() {
 
       {/* 오른쪽 - 미리보기 및 업로드 */}
       <div className="w-full space-y-6 lg:w-96">
-        <ShortsVideoPreview videoData={videoData} onChange={handleVideoChange} />
+        <ShortsVideoPreview
+          videoData={videoData}
+          onChange={handleVideoChange}
+          thumbnail={formData.thumbnail}
+        />
 
         <ShortsFormSubmitButtons
           onRegister={handleRegister}

@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify'
 import { ShortsFormData, VideoPreviewData } from '@/types/shortsRegister'
 
-type FieldKey = 'title' | 'categoryId' | 'videoFile'
+type FieldKey = 'title' | 'description' | 'categoryId' | 'videoFile'
 
 interface ValidationResult {
   isValid: boolean
@@ -35,9 +35,10 @@ export function shortsFormValidation(
   // 필드 검증
   const title = formData.title?.trim() ?? ''
   if (!title) return fail('title', '제목을 입력해주세요.')
-
-  // 제목 길이 제한
   if (title.length > 50) return fail('title', '제목은 50자 이내로 입력해주세요.')
+
+  const description = formData.description?.trim() ?? ''
+  if (!description) return fail('description', '설명을 입력해주세요.')
 
   if (formData.categoryId == null) return fail('categoryId', '카테고리를 선택해주세요.')
 
