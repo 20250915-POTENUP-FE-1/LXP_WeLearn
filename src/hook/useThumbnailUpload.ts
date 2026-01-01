@@ -1,3 +1,4 @@
+import { isValidImageFile } from '@/utils/shortsFormValidation'
 import type { RefObject } from 'react'
 import { toast } from 'react-toastify'
 
@@ -6,7 +7,7 @@ interface UseThumbnailParams {
   inputRef?: RefObject<HTMLInputElement>
 }
 
-export default function useThumbnail({ onChange, inputRef }: UseThumbnailParams) {
+export default function useThumbnailUpload({ onChange, inputRef }: UseThumbnailParams) {
   const resetInput = () => {
     if (inputRef?.current) {
       inputRef.current.value = ''
@@ -19,8 +20,8 @@ export default function useThumbnail({ onChange, inputRef }: UseThumbnailParams)
 
     if (!file) return
 
-    if (!file.type.startsWith('image/')) {
-      toast.error('이미지 파일만 업로드할 수 있습니다.')
+    if (!isValidImageFile(file)) {
+      toast.error('지원하지 않는 이미지 형식입니다. (jpg, png, gif, webp만 허용)')
       resetInput()
       return
     }

@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import { Button } from '@/components/ui/Button'
 import { X } from 'lucide-react'
-import useThumbnail from '@/hook/useThumbnail'
+import useThumbnailUpload from '@/hook/useThumbnailUpload'
 
 interface ShortsFormThumbnailProps {
   value: string | null
@@ -12,7 +12,7 @@ interface ShortsFormThumbnailProps {
 
 export default function ShortsFormThumbnail({ value, onChange }: ShortsFormThumbnailProps) {
   const thumbnailInputRef = useRef<HTMLInputElement>(null)
-  const { handleThumbnailUpload, handleRemoveThumbnail } = useThumbnail({ onChange })
+  const { handleThumbnailUpload, handleRemoveThumbnail } = useThumbnailUpload({ onChange })
 
   return (
     <div>

@@ -9,6 +9,18 @@ interface ValidationResult {
   message?: string
 }
 
+// 허용 파일 형식 정의
+export const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/quicktime']
+export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+
+export function isValidVideoFile(file: File): boolean {
+  return ALLOWED_VIDEO_TYPES.includes(file.type)
+}
+
+export function isValidImageFile(file: File): boolean {
+  return ALLOWED_IMAGE_TYPES.includes(file.type)
+}
+
 export function shortsFormValidation(
   formData: ShortsFormData,
   videoData: VideoPreviewData,
@@ -31,5 +43,8 @@ export function shortsFormValidation(
 
   if (!videoData.videoFile) return fail('videoFile', '영상을 업로드해주세요.')
 
+  if (!isValidVideoFile(videoData.videoFile)) {
+    return fail('videoFile', '지원하지 않는 영상 형식입니다. (mp4, webm, mov만 허용)')
+  }
   return { isValid: true }
 }
