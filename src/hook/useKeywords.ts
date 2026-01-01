@@ -18,11 +18,15 @@ export default function useKeywords({ keywords, keywordInput, onChange }: UseKey
   // 로딩 상태
   const [isLoading, setIsLoading] = useState(false)
 
+  // 현재 선택된 항목 인덱스 (키보드 네비게이션용)
+  const [activeIndex, setActiveIndex] = useState(-1)
+
   // 입력값 변경 시 키워드 검색
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (!keywordInput.trim()) {
         setSuggestions([])
+        setActiveIndex(-1)
         return
       }
 
@@ -30,14 +34,12 @@ export default function useKeywords({ keywords, keywordInput, onChange }: UseKey
 
       try {
         // TODO: API 연동 시 실제 API 호출로 교체
-        // const tags = await searchTags(keywordInput)
-
-        // 더미 데이터 필터링
         const input = keywordInput.toLowerCase()
         const filtered = DUMMY_KEYWORDS.filter(
           (keyword) => keyword.toLowerCase().includes(input) && !keywords.includes(keyword),
         )
         setSuggestions(filtered)
+        setActiveIndex(-1)
       } catch (error) {
         console.error('키워드 검색 실패:', error)
         setSuggestions([])
@@ -46,17 +48,17 @@ export default function useKeywords({ keywords, keywordInput, onChange }: UseKey
       }
     }
 
-    // 디바운스 적용 (300ms)
     const debounceTimer = setTimeout(fetchSuggestions, 300)
     return () => clearTimeout(debounceTimer)
   }, [keywordInput, keywords])
 
-  // 키워드 선택 (목록에서 클릭)
+  // 키워드 선택
   const handleSelectKeyword = (keyword: string) => {
     if (!keywords.includes(keyword)) {
       onChange('keywords', [...keywords, keyword])
       onChange('keywordInput', '')
       setIsOpen(false)
+      setActiveIndex(-1)
     }
   }
 
@@ -75,29 +77,50 @@ export default function useKeywords({ keywords, keywordInput, onChange }: UseKey
     setIsOpen(value.trim().length > 0)
   }
 
-  // 키보드 이벤트 (Enter, Escape)
+  // 키보드 이벤트
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Escape' && isOpen) {
-      setIsOpen(false)
-    }
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      if (suggestions.length > 0) {
-        handleSelectKeyword(suggestions[0])
+    if (!isOpen || suggestions.length === 0) {
+      if (e.key === 'Escape') {
+        setIsOpen(false)
       }
+      return
+    }
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault()
+        setActiveIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : 0))
+        break
+      case 'ArrowUp':
+        e.preventDefault()
+        setActiveIndex((prev) => (prev > 0 ? prev - 1 : suggestions.length - 1))
+        break
+      case 'Enter':
+        e.preventDefault()
+        if (activeIndex >= 0 && activeIndex < suggestions.length) {
+          handleSelectKeyword(suggestions[activeIndex])
+        } else if (suggestions.length > 0) {
+          handleSelectKeyword(suggestions[0])
+        }
+        break
+      case 'Escape':
+        e.preventDefault()
+        setIsOpen(false)
+        setActiveIndex(-1)
+        break
     }
   }
 
-  // 포커스 해제 시 목록 닫기
+  // 포커스 해제
   const handleBlur = (e: React.FocusEvent<HTMLElement>) => {
-    // relatedTarget가 현재 컨테이너 내부에 있다면(예: 추천 목록 클릭) 닫지 않음
     if (e.relatedTarget && e.currentTarget.contains(e.relatedTarget as Node)) {
       return
     }
     setIsOpen(false)
+    setActiveIndex(-1)
   }
 
-  // 포커스 시 목록 열기
+  // 포커스
   const handleFocus = () => {
     if (keywordInput.trim().length > 0) {
       setIsOpen(true)
@@ -108,6 +131,7 @@ export default function useKeywords({ keywords, keywordInput, onChange }: UseKey
     isOpen,
     suggestions,
     isLoading,
+    activeIndex,
     handleSelectKeyword,
     handleRemoveKeyword,
     handleInputChange,
