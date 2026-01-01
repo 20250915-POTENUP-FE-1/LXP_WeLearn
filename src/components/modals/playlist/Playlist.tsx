@@ -14,7 +14,7 @@ export default function Playlist({ list }: PlaylistProps) {
       {list.map((item) => (
         <button
           key={item.id}
-          className="mb-2 flex w-full items-center justify-between rounded-lg px-4 py-4 transition-colors hover:bg-gray-50"
+          className="mb-2 flex max-h-96 w-full items-center justify-between overflow-y-auto rounded-lg px-4 py-4 transition-colors hover:bg-gray-50"
         >
           <span className="text-sm font-medium text-gray-900">{item.title}</span>
           <div className="flex items-center gap-2">

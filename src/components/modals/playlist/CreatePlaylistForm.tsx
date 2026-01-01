@@ -8,14 +8,17 @@ interface CratePlaylistFormProps {
   handleActiveTab: () => void
   id: string
 }
-export default function CratePlaylistForm({ handleActiveTab, id }: CratePlaylistFormProps) {
+export default function CreatePlaylistForm({ handleActiveTab, id }: CratePlaylistFormProps) {
   const [playlistTitle, setPlaylistTitle] = useState('')
+  const [isPublic, setIsPublic] = useState(true)
 
   return (
     <>
       <CreatePlaylistFormHeader id={id} />
       <div className="space-y-6 px-6 py-6">
         <CreatePlaylistFormInput
+          isPublic={isPublic}
+          setIsPublic={setIsPublic}
           playlistTitle={playlistTitle}
           setPlaylistTitle={setPlaylistTitle}
         />

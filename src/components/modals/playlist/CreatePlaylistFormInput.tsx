@@ -3,13 +3,15 @@ import { useState } from 'react'
 interface CreatePlaylistFormInputProps {
   playlistTitle: string
   setPlaylistTitle: (title: string) => void
+  isPublic: boolean
+  setIsPublic: (isPublic: boolean) => void
 }
 export default function CreatePlaylistFormInput({
   playlistTitle,
   setPlaylistTitle,
+  isPublic,
+  setIsPublic,
 }: CreatePlaylistFormInputProps) {
-  const [isPublic, setIsPublic] = useState(true)
-
   return (
     <>
       {/* 제목 입력 */}
@@ -29,6 +31,7 @@ export default function CreatePlaylistFormInput({
         <label className="mb-3 block text-sm font-medium text-gray-700">playlistSelect</label>
         <div className="flex items-center gap-4">
           <button
+            type="button"
             onClick={() => setIsPublic(true)}
             className={`flex items-center gap-2 transition-all ${
               isPublic ? 'text-black' : 'text-gray-400'
@@ -45,6 +48,7 @@ export default function CreatePlaylistFormInput({
           </button>
 
           <button
+            type="button"
             onClick={() => setIsPublic(false)}
             className={`flex items-center gap-2 transition-all ${
               !isPublic ? 'text-black' : 'text-gray-400'

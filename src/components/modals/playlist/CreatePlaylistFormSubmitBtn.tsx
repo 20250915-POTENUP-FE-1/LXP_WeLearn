@@ -17,6 +17,7 @@ export default function CreatePlaylistFormSubmitBtn({
         취소
       </button>
       <button
+        type="button"
         // onClick={handleCreatePlaylist}
         disabled={!playlistTitle.trim()}
         className="flex-1 rounded-lg bg-black px-6 py-3 font-medium text-white transition-colors hover:bg-gray-800 disabled:cursor-not-allowed disabled:bg-gray-300"

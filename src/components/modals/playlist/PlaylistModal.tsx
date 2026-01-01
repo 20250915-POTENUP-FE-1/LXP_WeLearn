@@ -1,7 +1,7 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
-import { useParams, usePathname, useRouter } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import { useState } from 'react'
 import PlaylistModalHeader from './PlaylistModalHeader'
 import Playlist from './Playlist'
@@ -10,11 +10,8 @@ import CreatePlaylistForm from './CreatePlaylistForm'
 
 export default function PlaylistModal() {
   const [activeTab, setActiveTab] = useState('save') // 'save' or 'create'
-
   const pathname = usePathname()
-
   const params = useParams()
-
   const id = params.id as string
 
   const isOpen = pathname.endsWith('/playlist')
@@ -33,7 +30,6 @@ export default function PlaylistModal() {
     }
   }
 
-  console.log(activeTab)
   return (
     <AnimatePresence mode="wait">
       {isOpen && (
