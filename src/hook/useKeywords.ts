@@ -77,7 +77,7 @@ export default function useKeywords({ keywords, keywordInput, onChange }: UseKey
 
   // 키보드 이벤트 (Enter, Escape)
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Escape') {
+    if (e.key === 'Escape' && isOpen) {
       setIsOpen(false)
     }
     if (e.key === 'Enter') {
