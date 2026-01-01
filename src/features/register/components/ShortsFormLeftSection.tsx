@@ -12,8 +12,6 @@ interface ShortsFormLeftSectionProps {
 }
 
 export default function ShortsFormLeftSection({ formData, onChange }: ShortsFormLeftSectionProps) {
-  const { category, keywords, keywordInput, thumbnail } = formData
-
   return (
     <div className="rounded-2xl bg-gray-50 p-8">
       <div className="space-y-6">
@@ -21,13 +19,23 @@ export default function ShortsFormLeftSection({ formData, onChange }: ShortsForm
         <ShortsFormInputs formData={formData} onChange={onChange} />
 
         {/* 카테고리 */}
-        <ShortsFormCategory value={category} onChange={(value) => onChange('category', value)} />
+        <ShortsFormCategory
+          value={formData.categoryId}
+          onChange={(value) => onChange('categoryId', value)}
+        />
 
         {/* 키워드 */}
-        <ShortsFormKeywords keywords={keywords} keywordInput={keywordInput} onChange={onChange} />
+        <ShortsFormKeywords
+          keywords={formData.keywords}
+          keywordInput={formData.keywordInput}
+          onChange={onChange}
+        />
 
         {/* 썸네일 이미지 */}
-        <ShortsFormThumbnail value={thumbnail} onChange={(value) => onChange('thumbnail', value)} />
+        <ShortsFormThumbnail
+          value={formData.thumbnail}
+          onChange={(value) => onChange('thumbnail', value)}
+        />
       </div>
     </div>
   )
