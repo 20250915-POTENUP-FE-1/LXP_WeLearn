@@ -3,9 +3,11 @@ import { Header } from '@/components/layout/header/Header'
 export default function FullscreenLayout({
   children,
   comments,
+  playlist,
 }: {
   children: React.ReactNode
   comments: React.ReactNode
+  playlist: React.ReactNode
 }) {
   return (
     <>
@@ -13,6 +15,7 @@ export default function FullscreenLayout({
       <main className="mx-auto box-border flex h-screen max-w-7xl flex-1 items-center justify-center overflow-hidden px-0 py-0 sm:px-6 lg:px-8">
         {children}
         {comments}
+        {playlist}
       </main>
     </>
   )

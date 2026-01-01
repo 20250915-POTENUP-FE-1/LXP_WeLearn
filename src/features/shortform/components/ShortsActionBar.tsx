@@ -12,7 +12,8 @@ interface ShortsActionBarProps {
 export default function ShortsActionBar({ id }: ShortsActionBarProps) {
   const router = useRouter()
   const pathname = usePathname()
-  const isOpen = pathname.endsWith('/comments')
+  const isCommentOpen = pathname.endsWith('/comments')
+  const isPlaylistOpen = pathname.endsWith('/playlist')
 
   const handleComingSoon = (feature: string) => {
     toast.info(`${feature} 서비스 준비 중입니다.`, {
@@ -21,10 +22,18 @@ export default function ShortsActionBar({ id }: ShortsActionBarProps) {
   }
 
   const handleComment = () => {
-    if (isOpen) {
+    if (isCommentOpen) {
       router.push(`/shorts/${id}`, { scroll: false })
     } else {
       router.push(`/shorts/${id}/comments`, { scroll: false })
+    }
+  }
+
+  const handlePlaylist = () => {
+    if (isPlaylistOpen) {
+      router.push(`/shorts/${id}`, { scroll: false })
+    } else {
+      router.push(`/shorts/${id}/playlist`, { scroll: false })
     }
   }
 
@@ -61,7 +70,7 @@ export default function ShortsActionBar({ id }: ShortsActionBarProps) {
         aria-label="저장"
         className="flex cursor-pointer flex-col items-center text-white hover:text-gray-300"
         type="button"
-        onClick={() => handleComingSoon('저장')}
+        onClick={handlePlaylist}
       >
         <ListPlus strokeWidth={1.5} />
         <span className="mt-1 text-xs">저장</span>

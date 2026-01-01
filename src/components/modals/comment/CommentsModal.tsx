@@ -21,7 +21,7 @@ export default function CommentModal() {
     <AnimatePresence mode="wait">
       {isOpen && (
         <motion.aside
-          className="fixed top-32 right-32 z-50 flex items-center justify-center"
+          className="fixed top-32 right-32 z-50 flex min-w-lg items-center justify-center"
           initial={{ x: '130%' }}
           animate={{ x: '0%' }}
           exit={{ x: '130%' }}
@@ -29,7 +29,7 @@ export default function CommentModal() {
         >
           <div>
             {/* ==================== Modal Container ==================== */}
-            <div className="flex h-[84vh] w-full max-w-lg flex-col overflow-hidden rounded-xl border bg-white">
+            <div className="flex h-[84vh] w-full max-w-lg flex-col overflow-hidden rounded-xl border bg-white shadow-lg">
               {/* ==================== Modal Header ==================== */}
               <CommentModalHeader closeHandler={handleClose} />
 
