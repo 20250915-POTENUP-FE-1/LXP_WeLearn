@@ -1,29 +1,27 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import { CirclePlus, X } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
+import { useRef } from 'react'
+import { ImageIcon, VideoIcon } from 'lucide-react'
 import { VideoPreviewData, VideoPreviewChangeHandler } from '@/types/shortsRegister'
-import useVideoUpload from '@/hook/useVideoUpload'
-
-type PreviewType = 'video' | 'thumbnail'
+import useVideoUpload from '@/hook/register/useVideoUpload'
+import usePreviewTab from '@/hook/register/usePreviewTab'
+import ShortsFormPreviewTab from './ShortsFormPreviewTab'
 
 interface ShortsVideoPreviewProps {
   videoData: VideoPreviewData
   onChange: VideoPreviewChangeHandler
   thumbnail?: string | null
+  onThumbnailRemove: () => void
 }
 
 export default function ShortsVideoPreview({
   videoData,
   onChange,
   thumbnail,
+  onThumbnailRemove,
 }: ShortsVideoPreviewProps) {
   const { videoFile, isDragging } = videoData
   const videoInputRef = useRef<HTMLInputElement>(null)
-
-  // 미리보기 타입 상태
-  const [previewType, setPreviewType] = useState<PreviewType>('video')
 
   const {
     handleDragEnter,
@@ -34,104 +32,57 @@ export default function ShortsVideoPreview({
     handleVideoUpload,
   } = useVideoUpload({ onChange, inputRef: videoInputRef })
 
-  // 썸네일과 비디오가 모두 있을 때만 탭 표시
-  const showPreviewTabs = videoFile && thumbnail
+  const { isVideoTab, isThumbnailTab, switchToVideo, switchToThumbnail, handleRemove } =
+    usePreviewTab({
+      onVideoRemove: handleRemoveVideo,
+      onThumbnailRemove,
+    })
 
   return (
     <div className="space-y-4">
       {/* 미리보기 전환 탭 */}
-      {showPreviewTabs && (
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => setPreviewType('video')}
-            className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-              previewType === 'video'
-                ? 'bg-black text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          >
-            동영상
-          </button>
-          <button
-            type="button"
-            onClick={() => setPreviewType('thumbnail')}
-            className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-              previewType === 'thumbnail'
-                ? 'bg-black text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          >
-            썸네일
-          </button>
-        </div>
-      )}
+
+      <div className="flex gap-2">
+        <button
+          type="button"
+          onClick={switchToVideo}
+          className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+            isVideoTab ? 'bg-black text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          <VideoIcon className="h-4 w-4" />
+          동영상
+        </button>
+        <button
+          type="button"
+          onClick={switchToThumbnail}
+          className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+            isThumbnailTab ? 'bg-black text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          <ImageIcon className="h-4 w-4" />
+          썸네일
+        </button>
+      </div>
 
       {/* 미리보기 영역 */}
       <div
         className={`flex aspect-[9/16] items-center justify-center rounded-2xl border-2 border-dashed bg-white transition-all ${
           isDragging ? 'border-black bg-gray-50' : 'border-gray-300'
         }`}
-        onDragEnter={handleDragEnter}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
+        onDragEnter={isVideoTab ? handleDragEnter : undefined}
+        onDragOver={isVideoTab ? handleDragOver : undefined}
+        onDragLeave={isVideoTab ? handleDragLeave : undefined}
+        onDrop={isVideoTab ? handleDrop : undefined}
       >
-        {videoFile ? (
-          <div className="relative h-full w-full">
-            {/* ✅ 수정: 미리보기 타입에 따라 표시 */}
-            {previewType === 'video' ? (
-              // 동영상 미리보기
-              <video className="h-full w-full rounded-2xl object-cover" controls>
-                <source src={URL.createObjectURL(videoFile)} type={videoFile.type} />
-              </video>
-            ) : (
-              // 썸네일 미리보기
-              <img
-                src={thumbnail!}
-                alt="썸네일 미리보기"
-                className="h-full w-full rounded-2xl object-cover"
-              />
-            )}
-
-            {/* 제거 버튼 */}
-            <button
-              type="button"
-              onClick={handleRemoveVideo}
-              className="absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
-        ) : (
-          // 업로드 안내 UI
-          <div className="text-center">
-            <div className="mb-4 flex items-center justify-center">
-              <CirclePlus strokeWidth={0.5} size={102} color="#aaa" />
-            </div>
-
-            <p className="text-sm leading-6 text-gray-500">
-              동영상 파일을 드래그하거나 <br /> 클릭하여 업로드 하세요.
-            </p>
-
-            <input
-              ref={videoInputRef}
-              type="file"
-              accept="video/*"
-              onChange={handleVideoUpload}
-              className="hidden"
-            />
-
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => videoInputRef.current?.click()}
-              className="mt-4"
-            >
-              파일 선택
-            </Button>
-          </div>
-        )}
+        <ShortsFormPreviewTab
+          type={isVideoTab ? 'video' : 'thumbnail'}
+          videoFile={videoFile}
+          videoInputRef={videoInputRef}
+          onVideoUpload={handleVideoUpload}
+          thumbnail={thumbnail}
+          onRemove={handleRemove}
+        />
       </div>
     </div>
   )

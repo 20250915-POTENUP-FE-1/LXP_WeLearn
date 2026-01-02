@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import { Button } from '@/components/ui/Button'
 import { X } from 'lucide-react'
-import useThumbnailUpload from '@/hook/useThumbnailUpload'
+import useThumbnailUpload from '@/hook/register/useThumbnailUpload'
 
 interface ShortsFormThumbnailProps {
   value: string | null
@@ -12,7 +12,10 @@ interface ShortsFormThumbnailProps {
 
 export default function ShortsFormThumbnail({ value, onChange }: ShortsFormThumbnailProps) {
   const thumbnailInputRef = useRef<HTMLInputElement>(null)
-  const { handleThumbnailUpload, handleRemoveThumbnail } = useThumbnailUpload({ onChange })
+  const { handleThumbnailUpload, handleRemoveThumbnail } = useThumbnailUpload({
+    onChange,
+    inputRef: thumbnailInputRef,
+  })
 
   return (
     <div>
@@ -30,7 +33,7 @@ export default function ShortsFormThumbnail({ value, onChange }: ShortsFormThumb
         onClick={() => thumbnailInputRef.current?.click()}
         className="mb-10 w-full"
       >
-        썸네일 업로드
+        {value ? '썸네일 변경' : '썸네일 업로드'}
       </Button>
 
       {/* 썸네일 미리보기 */}
