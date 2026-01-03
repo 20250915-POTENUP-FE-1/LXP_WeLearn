@@ -50,7 +50,7 @@ export default function ShortsFormInputs({ formData, onChange }: ShortsFormInput
             onClick={() => onChange('isPublic', true)}
             className={`flex-1 rounded-lg py-2 text-sm font-medium transition-all ${
               isPublic
-                ? 'border-2 border-gray-900 bg-gray-800 text-white'
+                ? 'border-2 border-black bg-black text-white'
                 : 'border-2 border-gray-200 bg-white text-gray-600'
             }`}
           >
@@ -61,7 +61,7 @@ export default function ShortsFormInputs({ formData, onChange }: ShortsFormInput
             onClick={() => onChange('isPublic', false)}
             className={`flex-1 rounded-lg py-2 text-sm font-medium transition-all ${
               !isPublic
-                ? 'border-2 border-gray-900 bg-gray-800 text-white'
+                ? 'border-2 border-black bg-black text-white'
                 : 'border-2 border-gray-200 bg-white text-gray-600'
             }`}
           >

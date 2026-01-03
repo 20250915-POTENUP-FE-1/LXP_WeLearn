@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { ImageIcon, VideoIcon } from 'lucide-react'
 import { VideoPreviewData, VideoPreviewChangeHandler } from '@/types/shortsRegister'
 import useVideoUpload from '@/hook/register/useVideoUpload'
@@ -22,6 +22,21 @@ export default function ShortsVideoPreview({
 }: ShortsVideoPreviewProps) {
   const { videoFile, isDragging } = videoData
   const videoInputRef = useRef<HTMLInputElement>(null)
+
+  // 비디오 소스 메모이제이션 : 상위에서 videoFile이 변경될 때만 새로 생성
+  const videoSrc = useMemo(() => {
+    if (!videoFile) return null
+    return URL.createObjectURL(videoFile)
+  }, [videoFile])
+
+  // 메모리 누수를 방지하기 위해 URL.revokeObjectURL 호출
+  useEffect(() => {
+    return () => {
+      if (videoSrc) {
+        URL.revokeObjectURL(videoSrc)
+      }
+    }
+  }, [videoSrc])
 
   const {
     handleDragEnter,
@@ -59,7 +74,7 @@ export default function ShortsVideoPreview({
         <button
           type="button"
           id="thumbnail-tab"
-          role="tabMenu"
+          role="tab"
           aria-selected={isThumbnailTab}
           onClick={switchToThumbnail}
           className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
@@ -84,6 +99,7 @@ export default function ShortsVideoPreview({
         <ShortsFormPreviewTab
           type={isVideoTab ? 'video' : 'thumbnail'}
           videoFile={videoFile}
+          videoSrc={videoSrc}
           videoInputRef={videoInputRef}
           onVideoUpload={handleVideoUpload}
           thumbnail={thumbnail}
