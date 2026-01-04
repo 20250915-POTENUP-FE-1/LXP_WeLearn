@@ -88,6 +88,28 @@ export default function api() {
     return res
   }
 
+  /** POST FormData (파일 업로드용) */
+  const postFormData = async (
+    endpoint = '',
+    formData: FormData,
+    options?: FetchOptions,
+  ): Promise<Response> => {
+    const res = await fetchWithAuth(`${baseUrl}${endpoint}`, {
+      method: 'POST',
+      // ⚠️ Content-Type 헤더 생략 (브라우저가 자동 설정)
+      cache: options?.cache ?? 'no-store',
+      next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
+      body: formData,
+    })
+
+    if (!res?.ok) {
+      const errorData = await res?.json().catch(() => null)
+      throw new Error(errorData?.message || '파일 업로드 실패')
+    }
+
+    return res
+  }
+
   /** PATCH (부분 업데이트) */
   const patch = async (endpoint = '', data?: unknown, options?: FetchOptions) => {
     const res = await fetchWithAuth(`${baseUrl}${endpoint}`, {
@@ -112,6 +134,11 @@ export default function api() {
       cache: options?.cache ?? 'no-store',
       next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
     })
+    // 204 no content 처리
+    if (res === undefined) {
+      return true
+    }
+
     if (!res?.ok) {
       const errorData = await res?.json()
       throw new Error(errorData?.message || '알수없는 오류')
@@ -120,7 +147,7 @@ export default function api() {
     return res.json()
   }
 
-  return { get, post, patch, delete: del }
+  return { get, post, postFormData, patch, delete: del }
 }
 
 //예제

@@ -10,6 +10,8 @@ import type {
 // API 응답 타입 (내부용)
 type UpdateShortsApiResponse = operations['updateShorts']['responses'][200]['content']['*/*']
 
+const apiClient = api()
+
 /**
  * 내 숏츠 목록 조회
  */
@@ -21,9 +23,7 @@ export async function getMyShorts({
   size?: number
 } = {}): Promise<PageShortsResponse | null> {
   try {
-    const apiClient = api()
-
-    // 서버가 토큰에서 사용자 식별
+    // get은 json() 파싱된 데이터 반환
     return await apiClient.get('/api/v1/users/me/shorts', {
       cache: 'no-store',
       params: { page, size },
@@ -42,7 +42,7 @@ export async function updateShorts(
   data: ShortsUpdateRequest,
 ): Promise<ShortsResponse | null> {
   try {
-    const apiClient = api()
+    //  patch는 json() 파싱된 데이터 반환
     const response: UpdateShortsApiResponse = await apiClient.patch(
       `/api/v1/shorts/${shortId}`,
       data,
@@ -59,7 +59,7 @@ export async function updateShorts(
  */
 export async function deleteShorts(shortId: number): Promise<boolean> {
   try {
-    const apiClient = api()
+    // delete는 json() 파싱된 데이터 반환 (204일 경우 undefined)
     await apiClient.delete(`/api/v1/shorts/${shortId}`)
     return true
   } catch (error) {

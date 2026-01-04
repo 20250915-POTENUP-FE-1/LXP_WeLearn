@@ -2,11 +2,11 @@ import api from '@/lib/utils/apiUtils'
 import type { components } from '@/types/api-schema'
 import { ShortsFormData, VideoPreviewData } from '@/types/shortsRegister'
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL
-
 // API 타입
 type ShortsUploadRequest = components['schemas']['ShortsUploadRequest']
 type ShortsResponse = components['schemas']['ShortsResponse']
+
+const apiClient = api()
 
 /**
  * 비디오 파일 업로드
@@ -16,18 +16,11 @@ export async function uploadVideoFile(file: File): Promise<string> {
   const formData = new FormData()
   formData.append('file', file)
 
-  const response = await fetch(`${baseUrl}/api/v1/files/videos`, {
-    method: 'POST',
-    credentials: 'include',
-    body: formData,
-  })
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => null)
-    throw new Error(errorData?.message || '비디오 업로드 실패')
-  }
-
+  //  apiClient.postFormData 사용
+  const response = await apiClient.postFormData('/api/v1/files/videos', formData)
   const data = await response.json()
+
+  //  서버 응답 구조에 맞게 URL 추출
   const videoUrl = data.videoUrl ?? data.url ?? Object.values(data)[0]
 
   if (!videoUrl) {
@@ -43,28 +36,21 @@ export async function uploadVideoFile(file: File): Promise<string> {
  */
 export async function uploadThumbnailFile(base64Data: string): Promise<string | null> {
   try {
-    const response = await fetch(base64Data)
-    const blob = await response.blob()
+    // base64를 Blob으로 변환
+    const fetchResponse = await fetch(base64Data)
+    const blob = await fetchResponse.blob()
 
     const formData = new FormData()
     formData.append('file', blob, 'thumbnail.jpg')
 
-    const res = await fetch(`${baseUrl}/api/v1/files/thumbnails`, {
-      method: 'POST',
-      credentials: 'include',
-      body: formData,
-    })
+    //  apiClient.postFormData 사용
+    const response = await apiClient.postFormData('/api/v1/files/thumbnails', formData)
+    const data = await response.json()
 
-    if (!res.ok) {
-      console.error('썸네일 업로드 실패')
-      return null
-    }
-
-    const data = await res.json()
     return data.thumbnailUrl ?? data.url ?? Object.values(data)[0] ?? null
   } catch (error) {
     console.error('썸네일 업로드 실패:', error)
-    return null
+    return null // 썸네일은 선택사항이므로 에러 throw 안 함
   }
 }
 
@@ -73,8 +59,7 @@ export async function uploadThumbnailFile(base64Data: string): Promise<string | 
  * POST /api/v1/shorts
  */
 export async function uploadShorts(request: ShortsUploadRequest): Promise<ShortsResponse> {
-  const apiClient = api()
-
+  // apiClient.post 사용 (JSON 데이터)
   const response = await apiClient.post('/api/v1/shorts', request)
   const data = await response.json()
 
