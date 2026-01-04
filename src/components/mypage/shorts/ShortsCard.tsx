@@ -25,7 +25,7 @@ export default function ShortsCard({
       }`}
     >
       {/* 썸네일 */}
-      <ShortsCardThumbnail thumbnailUrl={shorts.thumbnailUrl} videoUrl={shorts.videoUrl} />
+      <ShortsCardThumbnail thumbnailUrl={shorts.thumbnailUrl} />
 
       {/* 콘텐츠 */}
       <div className="flex min-w-0 flex-1 flex-col">

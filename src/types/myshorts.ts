@@ -14,17 +14,6 @@ export type ShortsUpdateRequest = components['schemas']['ShortsUpdateRequest']
 // ============================================
 export type ShortsStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
 
-// 프론트엔드 표시용 매핑
-export const SHORTS_STATUS_LABEL: Record<ShortsStatus, string> = {
-  DRAFT: '비공개',
-  PUBLISHED: '공개',
-  ARCHIVED: '보관됨',
-}
-
-// ============================================
-// 컴포넌트 Props 타입
-// ============================================
-
 // 미리보기 카드
 export interface ShortsPreviewCardProps {
   shorts?: ShortsResponse | null

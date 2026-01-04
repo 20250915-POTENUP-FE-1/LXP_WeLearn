@@ -1,68 +1,121 @@
+import api from '@/lib/utils/apiUtils'
+import type { components } from '@/types/api-schema'
 import { ShortsFormData, VideoPreviewData } from '@/types/shortsRegister'
 
+const baseUrl = process.env.NEXT_PUBLIC_API_URL
+
+// API 타입
+type ShortsUploadRequest = components['schemas']['ShortsUploadRequest']
+type ShortsResponse = components['schemas']['ShortsResponse']
+
 /**
- * 숏츠 등록 요청 페이로드 타입
+ * 비디오 파일 업로드
+ * POST /api/v1/files/videos
  */
-export interface ShortsUploadPayload {
-  title: string
-  description: string
-  isPublic: boolean
-  categoryId: number
-  keywords: string[]
-  thumbnail: string | null
-  videoFileName: string
-  durationSec: number | null
+export async function uploadVideoFile(file: File): Promise<string> {
+  const formData = new FormData()
+  formData.append('file', file)
+
+  const response = await fetch(`${baseUrl}/api/v1/files/videos`, {
+    method: 'POST',
+    credentials: 'include',
+    body: formData,
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => null)
+    throw new Error(errorData?.message || '비디오 업로드 실패')
+  }
+
+  const data = await response.json()
+  const videoUrl = data.videoUrl ?? data.url ?? Object.values(data)[0]
+
+  if (!videoUrl) {
+    throw new Error('비디오 URL을 받지 못했습니다.')
+  }
+
+  return videoUrl
 }
 
 /**
- * 폼 상태 데이터를 서버 API 요청용 페이로드로 변환
- *
- * - UI에서 사용하는 formData / videoData 구조를 API 스펙에 맞는 형태로 가공
- * - API 변경 시 이 함수만 수정하면 되도록 책임 분리
- *
- * -  ⚠️ categoryId, videoFile은 이미 상위 레이어에서 유효성 검사를 통과했다고 가정함
+ * 썸네일 파일 업로드
+ * POST /api/v1/files/thumbnails
  */
-export function createUploadPayload(
-  formData: ShortsFormData,
-  videoData: VideoPreviewData,
-): ShortsUploadPayload {
-  return {
-    title: formData.title,
-    description: formData.description,
-    isPublic: formData.isPublic,
-    categoryId: formData.categoryId!,
-    keywords: formData.keywords,
-    thumbnail: formData.thumbnail,
-    videoFileName: videoData.videoFile?.name ?? '',
-    durationSec: videoData.durationSec,
+export async function uploadThumbnailFile(base64Data: string): Promise<string | null> {
+  try {
+    const response = await fetch(base64Data)
+    const blob = await response.blob()
+
+    const formData = new FormData()
+    formData.append('file', blob, 'thumbnail.jpg')
+
+    const res = await fetch(`${baseUrl}/api/v1/files/thumbnails`, {
+      method: 'POST',
+      credentials: 'include',
+      body: formData,
+    })
+
+    if (!res.ok) {
+      console.error('썸네일 업로드 실패')
+      return null
+    }
+
+    const data = await res.json()
+    return data.thumbnailUrl ?? data.url ?? Object.values(data)[0] ?? null
+  } catch (error) {
+    console.error('썸네일 업로드 실패:', error)
+    return null
   }
 }
 
 /**
- * 숏츠 등록 API 호출
- * TODO: 실제 API 연동 시 fetch
- *  @param payload - 업로드 페이로드
+ * 숏츠 등록
+ * POST /api/v1/shorts
  */
-export async function uploadShorts(payload: ShortsUploadPayload): Promise<void> {
-  // 임시 로그(디버깅 용도)
-  console.log('등록 요청 데이터:', payload)
+export async function uploadShorts(request: ShortsUploadRequest): Promise<ShortsResponse> {
+  const apiClient = api()
 
-  // 더미 딜레이 (API 호출 시뮬레이션)
-  await new Promise((resolve) => setTimeout(resolve, 500))
+  const response = await apiClient.post('/api/v1/shorts', request)
+  const data = await response.json()
+
+  return data?.data ?? data
 }
 
 /**
- * 숏츠 수정 API 호출
- * TODO: PUT / PATCH 방식 확정 후 API 연동 필요
- * @param id - 숏츠 ID
- * @param payload - 수정 페이로드
+ * 숏츠 등록 전체 프로세스
  */
-export async function updateShorts(
-  id: string,
-  payload: Partial<ShortsUploadPayload>,
-): Promise<void> {
-  // 임시 로그(디버깅 용도)
-  console.log('수정 요청 데이터:', { id, payload })
+export async function registerShorts(
+  formData: ShortsFormData,
+  videoData: VideoPreviewData,
+  userId: number,
+): Promise<ShortsResponse> {
+  // 1. 비디오 파일 업로드
+  if (!videoData.videoFile) {
+    throw new Error('비디오 파일이 없습니다.')
+  }
 
-  await new Promise((resolve) => setTimeout(resolve, 500))
+  const videoUrl = await uploadVideoFile(videoData.videoFile)
+
+  // 2. 썸네일 업로드 (선택)
+  let thumbnailUrl: string | undefined
+  if (formData.thumbnail) {
+    const url = await uploadThumbnailFile(formData.thumbnail)
+    if (url) {
+      thumbnailUrl = url
+    }
+  }
+
+  // 3. 숏츠 등록 요청
+  const request: ShortsUploadRequest = {
+    userId,
+    categoryId: formData.categoryId!,
+    title: formData.title,
+    description: formData.description || undefined,
+    videoUrl,
+    thumbnailUrl,
+    durationSec: videoData.durationSec ?? undefined,
+    tagNames: formData.keywords.length > 0 ? formData.keywords : undefined,
+  }
+
+  return uploadShorts(request)
 }
