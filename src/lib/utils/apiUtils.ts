@@ -1,17 +1,18 @@
 import { buildQueryString } from '@/utils/buildQueryString'
 
 // CORS 이슈 대응
-const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_API_URL : ''
+// const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_API_URL : ''
+const baseUrl = process.env.NEXT_PUBLIC_API_URL
 
 async function fetchWithAuth(
   url: string,
   options: RequestInit & { revalidate?: number; retry?: boolean } = {},
 ) {
-  // 리프레시 토큰을 사용한 토큰 갱신 처리
-  const refreshUrl =
-    typeof window === 'undefined'
-      ? `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/refresh`
-      : '/api/v1/auth/refresh'
+  // // 리프레시 토큰을 사용한 토큰 갱신 처리
+  // const refreshUrl =
+  //   typeof window === 'undefined'
+  //     ? `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/refresh`
+  //     : '/api/v1/auth/refresh'
 
   const response = await fetch(url, {
     ...options,
@@ -89,28 +90,6 @@ export default function api() {
     }
 
     return res
-  }
-
-  // JSON 파싱된 데이터 반환
-  /** POST FormData (파일 업로드용) - JSON 파싱된 데이터 반환 */
-  const postFormData = async <T = unknown>(
-    endpoint = '',
-    formData: FormData,
-    options?: FetchOptions,
-  ): Promise<T> => {
-    const res = await fetchWithAuth(`${baseUrl}${endpoint}`, {
-      method: 'POST',
-      cache: options?.cache ?? 'no-store',
-      next: options?.revalidate ? { revalidate: options.revalidate } : undefined,
-      body: formData,
-    })
-
-    if (!res?.ok) {
-      const errorData = await res?.json().catch(() => null)
-      throw new Error(errorData?.message || '파일 업로드 실패')
-    }
-
-    return res.json()
   }
 
   /** PATCH */
