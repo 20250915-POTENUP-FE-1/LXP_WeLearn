@@ -1,11 +1,17 @@
+import { redirect } from 'next/navigation'
 import MyShortsContainer from '@/features/mypage/myshorts/MyShortsContainer'
-import { getMyShorts } from '@/services/mypage/myshorts.service'
+import { getMyShortsAction } from '@/features/mypage/myshorts/myshorts.action'
 
 export default async function MyShortsPage() {
-  const response = await getMyShorts({ page: 0, size: 20 })
+  const result = await getMyShortsAction(0, 20)
 
-  const shorts = response?.content ?? []
-  const totalCount = response?.totalElements ?? 0
+  // 실패 시 로그인 페이지로 리다이렉트
+  if (!result.success) {
+    redirect('/signin')
+  }
+
+  const shorts = result.data?.content ?? []
+  const totalCount = result.data?.totalElements ?? 0
 
   return <MyShortsContainer initialShorts={shorts} totalCount={totalCount} />
 }
