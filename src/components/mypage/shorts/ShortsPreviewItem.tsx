@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import type { ShortsResponse } from '@/types/myshorts'
+import type { ShortsResponse } from '@/types/mypage-shorts'
 
 interface ShortsPreviewItemProps {
   shorts: ShortsResponse | null
@@ -19,7 +19,7 @@ export function ShortsPreviewItem({
   // 빈 상태
   if (!shorts) {
     return (
-      <div className="relative mx-auto aspect-[9/16] w-[380px] overflow-hidden rounded-2xl bg-gray-700 shadow-lg lg:mx-0">
+      <div className="relative mx-auto aspect-[9/16] w-full overflow-hidden rounded-2xl bg-gray-700 shadow-lg md:w-[360px] lg:mx-0">
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="text-sm text-gray-500">미리보기</span>
         </div>
@@ -29,7 +29,7 @@ export function ShortsPreviewItem({
   }
 
   return (
-    <div className="relative mx-auto aspect-[9/16] w-[380px] overflow-hidden rounded-2xl bg-gray-200 shadow-lg lg:mx-0">
+    <div className="relative mx-auto aspect-[9/16] w-full overflow-hidden rounded-2xl bg-gray-200 shadow-lg md:w-[360px] lg:mx-0">
       {/* 상단 카테고리 뱃지 */}
       <div className="absolute top-3 right-3 left-3 z-10 flex items-center justify-between">
         {shorts.category?.name ? (
@@ -85,12 +85,12 @@ export function ShortsPreviewItem({
 
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium text-gray-200">
-            {shorts.uploader?.nickname ?? '익명'}
+            {shorts.uploader?.nickname ?? '숏터'}
           </span>
 
-          {shorts.category?.name && (
+          {shorts.keywords?.[0] && (
             <span className="rounded-full border border-white/25 px-3 py-1 text-[10px] text-gray-100">
-              #{shorts.category.name}
+              #{shorts.keywords[0]}
             </span>
           )}
         </div>

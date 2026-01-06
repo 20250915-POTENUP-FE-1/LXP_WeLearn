@@ -1,6 +1,6 @@
 'use client'
 
-import type { ShortsResponse } from '@/types/myshorts'
+import type { ShortsResponse } from '@/types/mypage-shorts'
 import { ShortsPreviewItem } from './ShortsPreviewItem'
 import { useShortsAutoPlay } from '@/hook/mypage/useShortsAutoPlay'
 

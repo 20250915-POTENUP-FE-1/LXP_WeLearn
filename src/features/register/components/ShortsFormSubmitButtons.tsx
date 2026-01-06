@@ -24,28 +24,32 @@ export default function ShortsFormSubmitButtons({
   const isDisabled = disabled || isLoading
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-6 pt-4">
       {/* 등록 버튼 */}
-      <Button
-        type="button"
-        variant="accent"
-        onClick={onRegister}
-        disabled={isDisabled}
-        className="text-md w-full py-6"
-      >
-        {isLoading ? loadingLabel : registerLabel}
-      </Button>
+      <div className="rounded-full shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg">
+        <Button
+          type="button"
+          variant="accent"
+          onClick={onRegister}
+          disabled={isDisabled}
+          className="text-md w-full rounded-full py-7"
+        >
+          {isLoading ? loadingLabel : registerLabel}
+        </Button>
+      </div>
 
       {/* 취소 버튼 */}
-      <Button
-        type="button"
-        variant="secondary"
-        onClick={onCancel}
-        disabled={isDisabled}
-        className="text-md w-full py-6"
-      >
-        {cancelLabel}
-      </Button>
+      <div className="rounded-full shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg">
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={onCancel}
+          disabled={isDisabled}
+          className="text-md w-full rounded-full py-7"
+        >
+          {cancelLabel}
+        </Button>
+      </div>
     </div>
   )
 }

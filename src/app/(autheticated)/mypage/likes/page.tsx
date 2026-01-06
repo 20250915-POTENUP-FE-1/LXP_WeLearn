@@ -2,13 +2,15 @@ export default function LikedShortsPage() {
   return (
     <div className="h-full w-full px-4 py-8">
       {/* ==================== Page Title ==================== */}
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">좋아요한 숏츠</h1>
+      <h1 className="text-center text-2xl font-black text-gray-900 uppercase lg:text-left">
+        Liked Shorts
+      </h1>
 
       {/* ==================== Main Layout (모바일: 세로, PC: 가로) ==================== */}
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* ==================== Left Section - Fixed Preview (모바일에서 먼저 노출) ==================== */}
         <div className="order-1 w-full lg:order-1 lg:w-80 lg:flex-shrink-0">
-          <div className="lg:sticky lg:top-24">
+          <div className="flex flex-col gap-6 lg:sticky lg:top-24">
             {/* Preview Card */}
             <div className="relative mx-auto aspect-[9/16] max-w-[280px] overflow-hidden rounded-xl bg-gray-900 lg:mx-0">
               {/* 카테고리 뱃지 */}
@@ -22,7 +24,7 @@ export default function LikedShortsPage() {
               </div>
 
               {/* 하단 정보 영역 */}
-              <div className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+              <div className="absolute right-0 bottom-16 left-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                 <h3 className="mb-1 font-medium text-white">shortsTitle</h3>
                 <p className="mb-3 text-sm text-gray-300">description</p>
                 <div className="flex items-center justify-between">
@@ -30,22 +32,21 @@ export default function LikedShortsPage() {
                   <span className="rounded bg-white/20 px-2 py-0.5 text-xs text-white">#tag</span>
                 </div>
               </div>
-
-              {/* 재생 버튼 */}
-              <button className="absolute right-4 bottom-4 left-4 z-10 flex items-center justify-center gap-2 rounded-lg bg-red-500 py-3 text-white transition-colors hover:bg-red-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  stroke="none"
-                >
-                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                </svg>
-                모두 재생
-              </button>
             </div>
+            {/* 재생 버튼 */}
+            <button className="flex w-full items-center justify-center gap-2 rounded-full bg-green-500 py-3 text-white transition-colors hover:bg-green-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                stroke="none"
+              >
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              모두 재생
+            </button>
           </div>
         </div>
 

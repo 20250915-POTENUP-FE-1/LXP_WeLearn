@@ -125,7 +125,7 @@ export default function ShortPreviewCard({ item }: { item: ShortsItem }) {
             <p className="mb-1 line-clamp-2 text-xs font-semibold text-white">{item.title}</p>
             <p className="mb-2 line-clamp-2 text-[11px] text-gray-200">{item.description}</p>
             <div className="flex items-center justify-between text-[11px] text-gray-300">
-              <span className="font-medium">{item.uploader?.nickname ?? '익명'}</span>
+              <span className="font-medium">{item.uploader?.nickname ?? '숏터'}</span>
               <span className="rounded-full border border-white/25 px-2 py-0.5 text-[10px] text-gray-100">
                 #{item.category?.name ?? '스터디'}
               </span>

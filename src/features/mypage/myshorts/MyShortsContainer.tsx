@@ -4,7 +4,7 @@ import { useState } from 'react'
 import MyShortsCreateButton from './MyShortsCreateButton'
 import ShortsListHeader from '@/components/mypage/shorts/ShortsListHeader'
 import ShortsCard from '@/components/mypage/shorts/ShortsCard'
-import { ShortsResponse } from '@/types/myshorts'
+import { ShortsResponse } from '@/types/mypage-shorts'
 import ShortsPreviewContainer from '@/components/mypage/shorts/ShortsPreviewContainer'
 
 interface MyShortsContainerProps {
@@ -26,19 +26,23 @@ export default function MyShortsContainer({ initialShorts, totalCount }: MyShort
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* 좌측 - 미리보기 */}
         <div className="order-1 w-full lg:order-1 lg:w-100 lg:flex-shrink-0">
-          <div className="lg:sticky lg:top-24">
-            <h1 className="mb-6 text-2xl font-bold text-gray-900">내가 만든 숏츠</h1>
+          <div className="flex flex-col gap-6 lg:sticky lg:top-24">
+            <h1 className="text-center text-2xl font-black text-gray-900 uppercase lg:text-left">
+              My Created Shorts
+            </h1>
             <ShortsPreviewContainer shorts={selectedShorts} loop={true} autoplay={true} />
+            <div className="w-full lg:w-[360px]">
+              <MyShortsCreateButton />
+            </div>
           </div>
         </div>
 
         {/* 우측 - 리스트 */}
         <div className="order-2 flex-1 lg:order-2">
-          <MyShortsCreateButton />
           <ShortsListHeader totalCount={totalCount} />
 
           {/* 숏츠 목록 */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             {initialShorts.length > 0 ? (
               initialShorts.map((shorts) => (
                 <ShortsCard

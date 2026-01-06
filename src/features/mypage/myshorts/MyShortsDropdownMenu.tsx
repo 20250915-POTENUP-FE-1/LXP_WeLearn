@@ -1,6 +1,6 @@
 'use client'
 
-import { ShortsStatus } from '@/types/myshorts'
+import { ShortsStatus } from '@/types/mypage-shorts'
 import { Globe, Lock, Pencil, Trash2 } from 'lucide-react'
 
 interface MyShortsDropdownMenuProps {

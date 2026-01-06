@@ -14,8 +14,8 @@ export type ShortsUpdateRequest = components['schemas']['ShortsUpdateRequest']
 // ============================================
 export type ShortsStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
 
-// 미리보기 카드
-export interface ShortsPreviewCardProps {
+// 미리보기 아이템
+export interface ShortsPreviewItemProps {
   shorts?: ShortsResponse | null
 }
 
