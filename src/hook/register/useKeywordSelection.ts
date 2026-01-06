@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify'
-import { ShortsFormChangeHandler } from '@/types/shortsRegister'
+import { ShortsFormChangeHandler } from '@/features/register/types/shortsRegister'
 
 const MAX_KEYWORDS = 5
 

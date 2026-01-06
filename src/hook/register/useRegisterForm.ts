@@ -6,7 +6,7 @@ import {
   VideoPreviewData,
   INITIAL_SHORTS_FORM_DATA,
   INITIAL_VIDEO_PREVIEW_DATA,
-} from '@/types/shortsRegister'
+} from '@/features/register/types/shortsRegister'
 import { shortsFormValidation } from '@/utils/shortsFormValidation'
 import { registerShortsAction } from '@/features/register/register.action'
 

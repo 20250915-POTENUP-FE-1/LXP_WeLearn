@@ -1,6 +1,6 @@
 'use client'
 
-import { ShortsFormData, ShortsFormChangeHandler } from '@/types/shortsRegister'
+import { ShortsFormData, ShortsFormChangeHandler } from '@/features/register/types/shortsRegister'
 import ShortsFormInputs from './ShortsFormInputs'
 import ShortsFormCategory from './ShortsFormCategory'
 import ShortsFormKeywords from './ShortsFormKeywords'

@@ -1,6 +1,6 @@
 import type { RefObject } from 'react'
 import { toast } from 'react-toastify'
-import { VideoPreviewChangeHandler } from '@/types/shortsRegister'
+import { VideoPreviewChangeHandler } from '@/features/register/types/shortsRegister'
 import { isValidVideoFile } from '@/utils/shortsFormValidation'
 import { extractVideoDuration } from '@/utils/extractVideoDuration'
 

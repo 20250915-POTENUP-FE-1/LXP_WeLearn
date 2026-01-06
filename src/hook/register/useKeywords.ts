@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify'
-import { ShortsFormChangeHandler } from '@/types/shortsRegister'
+import { ShortsFormChangeHandler } from '@/features/register/types/shortsRegister'
 import useKeywordSearch from './useKeywordSearch'
 import useKeywordSelection from './useKeywordSelection'
 import useKeywordsNavigation from './useKeywordsNavigation'

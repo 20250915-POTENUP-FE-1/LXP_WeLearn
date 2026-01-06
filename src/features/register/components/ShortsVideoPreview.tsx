@@ -2,7 +2,10 @@
 
 import { useEffect, useMemo, useRef } from 'react'
 import { ImageIcon, VideoIcon } from 'lucide-react'
-import { VideoPreviewData, VideoPreviewChangeHandler } from '@/types/shortsRegister'
+import {
+  VideoPreviewData,
+  VideoPreviewChangeHandler,
+} from '@/features/register/types/shortsRegister'
 import useVideoUpload from '@/hook/register/useVideoUpload'
 import usePreviewTab from '@/hook/register/usePreviewTab'
 import ShortsFormPreviewTab from './ShortsFormPreviewTab'

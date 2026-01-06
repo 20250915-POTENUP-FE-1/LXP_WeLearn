@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify'
-import { ShortsFormData, VideoPreviewData } from '@/types/shortsRegister'
+import { ShortsFormData, VideoPreviewData } from '@/features/register/types/shortsRegister'
 
 type FieldKey = 'title' | 'description' | 'categoryId' | 'videoFile'
 

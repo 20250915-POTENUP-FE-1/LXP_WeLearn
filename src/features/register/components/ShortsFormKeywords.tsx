@@ -2,7 +2,7 @@
 
 import { Input } from '@/components/ui/Input'
 import useKeywords from '@/hook/register/useKeywords'
-import { ShortsFormChangeHandler } from '@/types/shortsRegister'
+import { ShortsFormChangeHandler } from '@/features/register/types/shortsRegister'
 import KeywordSuggestions from './KeywordSuggestions'
 import KeywordList from './KeywordList'
 
