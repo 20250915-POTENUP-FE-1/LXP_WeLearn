@@ -140,7 +140,7 @@ server.use('/api/v1/posts/:id', (req, res, next) => {
 })
 
 // ==========================================
-// 0. 회원가입 (POST /api/auth/register)
+// 6. 회원가입 (POST /api/auth/register)
 // ==========================================
 server.post('/api/v1/auth/signup', (req, res) => {
   const { email, password, name, nickname, profileUrl } = req.body
@@ -188,9 +188,124 @@ server.post('/api/v1/auth/signup', (req, res) => {
 server.post('/api/v1/auth/logout', (req, res) => {
   return res.status(200).json({ message: '로그아웃 성공' })
 })
+// ==========================================
+// 7. 댓글
+// ==========================================
+// POST 댓글 등록
+server.post('/api/v1/posts/:postId/comments', (req, res) => {
+  const db = router.db
+  const postId = parseInt(req.params.postId)
+
+  const { content, parentId = null } = req.body
+
+  if (!content) {
+    return res.status(400).json({ message: '댓글 내용이 필요합니다.' })
+  }
+
+  const currentUserId = 1
+
+  const newComment = {
+    id: Date.now(),
+    postId,
+    userId: currentUserId,
+    content,
+    parentId,
+    createdAt: new Date().toISOString(),
+  }
+
+  db.get('comments').push(newComment).write()
+
+  return res.status(201).json(newComment)
+})
+
+// GET 댓글 조회
+server.get('/api/v1/shorts/:shortsId/comments', (req, res) => {
+  const db = router.db
+  const shortsId = parseInt(req.params.shortsId, 10)
+
+  const comments = db.get('comments').filter({ shortsId }).sortBy('createdAt').value()
+
+  const map = {}
+  const roots = []
+
+  comments.forEach((c) => {
+    map[c.id] = {
+      id: c.id,
+      content: c.content,
+      createdAt: c.createdAt,
+      user: c.user,
+      replies: [],
+    }
+  })
+
+  comments.forEach((c) => {
+    if (c.parentId) {
+      map[c.parentId]?.replies.push(map[c.id])
+    } else {
+      roots.push(map[c.id])
+    }
+  })
+
+  res.json({
+    totalCount: roots.length,
+    comments: roots,
+  })
+})
+
+// PUT 댓글 수정
+server.put('/api/v1/comments/:id', (req, res) => {
+  const db = router.db
+  const commentId = parseInt(req.params.id)
+  const { content } = req.body
+
+  if (!content) {
+    return res.status(400).json({ message: '댓글 내용이 필요합니다.' })
+  }
+
+  const comment = db.get('comments').find({ id: commentId }).value()
+
+  if (!comment) {
+    return res.status(404).json({ message: '댓글이 없습니다.' })
+  }
+
+  const currentUserId = 1
+
+  if (comment.userId !== currentUserId) {
+    return res.status(403).json({ message: '본인 댓글만 수정할 수 있습니다.' })
+  }
+
+  db.get('comments').find({ id: commentId }).assign({ content }).write()
+
+  res.json({ message: '댓글 수정 성공' })
+})
+
+// delete 댓글 삭제
+server.delete('/api/v1/comments/:id', (req, res) => {
+  const db = router.db
+  const commentId = parseInt(req.params.id)
+
+  const comment = db.get('comments').find({ id: commentId }).value()
+
+  if (!comment) {
+    return res.status(404).json({ message: '댓글이 없습니다.' })
+  }
+
+  const currentUserId = 1
+
+  if (comment.userId !== currentUserId) {
+    return res.status(403).json({ message: '본인 댓글만 삭제할 수 있습니다.' })
+  }
+
+  // 대댓글도 함께 삭제
+  db.get('comments')
+    .remove((c) => c.id === commentId || c.parentId === commentId)
+    .write()
+
+  res.json({ message: '댓글 삭제 성공' })
+})
 
 // ==========================================
-// 6. 라우팅 설정 (Prefix: /api)
+// 8. 라우팅 설정 (Prefix: /api)
 // ==========================================
 // 나머지 라우트는 json-server 기본 동작(db.json CRUD)을 따름
 server.use('/api', router)
@@ -203,4 +318,6 @@ server.listen(PORT, () => {
   console.log(`- Register: POST /api/v1/auth/register`)
   console.log(`- Me:    GET /api/v1/users/me`)
   console.log(`- Posts: GET /api/v1/posts`)
+  console.log('- Comments: GET /api/v1/shorts/:shortsId/comments')
+  console.log('- Comments: POST /api/v1/posts/:postId/comments')
 })

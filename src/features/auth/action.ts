@@ -2,8 +2,6 @@
 
 import { authApi } from '@/services/auth/auth.service'
 import { UserInfo } from '@/types/auth'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 
 type ActionState = {
   success: boolean

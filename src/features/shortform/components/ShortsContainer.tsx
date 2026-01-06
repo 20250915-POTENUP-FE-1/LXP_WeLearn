@@ -131,12 +131,12 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
   }
 
   return (
-    <div className="flex w-full items-center justify-center gap-4">
+    <div className="flex h-dvh w-full items-center justify-center gap-4 md:h-full">
       {/* 메인 숏폼 영역 */}
-      <div className="w-full overflow-hidden md:w-[460px]">
+      <div className="h-dvh w-full overflow-hidden md:h-full md:w-[460px]">
         {/* 세로 슬라이드 영역 (모바일: 전체 높이, 데스크탑: 70vh) */}
         <div
-          className="h-[84vh] w-full overflow-hidden sm:rounded-2xl md:h-[84vh]"
+          className="h-dvh w-full overflow-hidden sm:rounded-2xl md:h-[84vh]"
           onWheel={(e) => {
             handleWheel(e.nativeEvent)
           }}

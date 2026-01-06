@@ -5,7 +5,7 @@ interface CreatePlaylistBtnProps {
 
 export default function CreatePlaylistBtn({ handleActiveTab }: CreatePlaylistBtnProps) {
   return (
-    <div className="absolute bottom-0 left-0 w-full border-t border-gray-200 px-6 py-4">
+    <div className="sticky bottom-0 left-0 w-full border-t border-gray-200 px-6 py-4 md:absolute">
       <button
         onClick={handleActiveTab}
         className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-gray-200 bg-white py-3 transition-colors hover:border-black"

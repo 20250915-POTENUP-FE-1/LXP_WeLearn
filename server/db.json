@@ -161,5 +161,68 @@
       }
     }
   ],
-  "users": []
+  "users": [],
+
+  "comments": [
+    {
+      "id": 1,
+      "shortsId": 2,
+      "content": "첫 댓글입니다 😊",
+      "createdAt": "2026-01-05T09:30:00Z",
+      "user": {
+        "id": 1,
+        "name": "홍길동",
+        "email": "hong@example.com",
+        "nickname": "hong",
+        "profileUrl": null,
+        "createdAt": "2025-12-01T10:00:00Z"
+      },
+      "parentId": null
+    },
+    {
+      "id": 2,
+      "shortsId": 2,
+      "content": "좋은 글이네요!",
+      "createdAt": "2026-01-05T09:32:00Z",
+      "user": {
+        "id": 2,
+        "name": "김철수",
+        "email": "kim@example.com",
+        "nickname": "chulsoo",
+        "profileUrl": null,
+        "createdAt": "2025-12-05T09:00:00Z"
+      },
+      "parentId": null
+    },
+    {
+      "id": 3,
+      "shortsId": 2,
+      "content": "저도 동의합니다 👍",
+      "createdAt": "2026-01-05T09:35:00Z",
+      "user": {
+        "id": 3,
+        "name": "이영희",
+        "email": "lee@example.com",
+        "nickname": "younghee",
+        "profileUrl": null,
+        "createdAt": "2025-12-10T08:30:00Z"
+      },
+      "parentId": 2
+    },
+    {
+      "id": 4,
+      "shortsId": 2,
+      "content": "감사합니다!",
+      "createdAt": "2026-01-05T09:36:00Z",
+      "user": {
+        "id": 1,
+        "name": "홍길동",
+        "email": "hong@example.com",
+        "nickname": "hong",
+        "profileUrl": null,
+        "createdAt": "2025-12-01T10:00:00Z"
+      },
+      "parentId": 2
+    }
+  ]
 }

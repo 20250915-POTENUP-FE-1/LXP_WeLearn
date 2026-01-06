@@ -9,9 +9,9 @@ interface ShortsItemProps {
 
 export default function ShortsItem({ shorts }: ShortsItemProps) {
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-dvh w-full overflow-hidden md:h-full">
       {/* 영상 플레이어  */}
-      <div className="aspect-9/16 h-full w-full">
+      <div className="absolute inset-0">
         <ShortsPlayer videoUrl={shorts.videoUrl} thumbnailUrl={shorts.thumbnailUrl} />
       </div>
 

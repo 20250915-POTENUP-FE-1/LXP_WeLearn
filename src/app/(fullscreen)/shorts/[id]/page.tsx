@@ -16,8 +16,11 @@ export default async function ShortformDetailPage({ params }: ShortDetailPagePro
 
   return (
     <>
-      <div className="relative h-full w-full md:h-auto">
-        <section aria-labelledby="shortform-content" className="flex h-full w-full items-stretch">
+      <div className="relative h-dvh w-full md:h-full">
+        <section
+          aria-labelledby="shortform-content"
+          className="flex h-dvh w-full items-stretch md:h-full"
+        >
           <ShortsContainer shortsList={data.shortsList} initialIndex={data.initialIndex} />
         </section>
       </div>

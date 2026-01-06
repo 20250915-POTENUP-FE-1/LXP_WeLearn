@@ -2,16 +2,23 @@
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { useParams, usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import PlaylistModalHeader from './PlaylistModalHeader'
 import Playlist from './Playlist'
 import CreatePlaylistBtn from './CreatePlaylistBtn'
 import CreatePlaylistForm from './CreatePlaylistForm'
+import useIsMobile from '@/hook/useIsMobile'
 
 export default function PlaylistModal() {
   const [activeTab, setActiveTab] = useState('save') // 'save' or 'create'
   const pathname = usePathname()
   const params = useParams()
+  const isMobile = useIsMobile()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
   const id = params.id as string
 
   const isOpen = pathname.endsWith('/playlist')
@@ -32,18 +39,21 @@ export default function PlaylistModal() {
 
   return (
     <AnimatePresence mode="wait">
-      {isOpen && (
+      {isOpen && mounted && (
         <motion.aside
-          className="fixed top-32 right-32 z-50 flex min-w-lg items-center justify-center"
-          initial={{ x: '130%' }}
-          animate={{ x: '0%' }}
-          exit={{ x: '130%' }}
+          className={`fixed z-50 flex min-w-lg items-center justify-center ${isMobile ? 'right-0 bottom-0 box-border w-screen' : 'top-32 right-32'}`}
+          initial={isMobile ? { y: '100vh' } : { x: '130%' }}
+          animate={isMobile ? { y: 0 } : { x: '0%' }}
+          exit={isMobile ? { y: '100vh' } : { x: '130%' }}
           transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
         >
           {/* 모달 컨테이너 */}
           <div
-            className="relative flex h-[84vh] w-full max-w-lg flex-col overflow-hidden rounded-xl border bg-white shadow-lg"
-            onClick={(e) => e.stopPropagation()}
+            className={`flex flex-col overflow-hidden border bg-white shadow-lg ${
+              isMobile
+                ? 'absolute right-0 bottom-0 w-screen rounded-t-2xl'
+                : 'h-[84vh] max-w-lg min-w-lg rounded-xl'
+            } `}
           >
             {/* 저장 리스트 모달 */}
             {activeTab === 'save' && (

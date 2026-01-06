@@ -1,42 +1,92 @@
 'use client'
+
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import CommentModalHeader from './CommentsModalHeader'
 import Comment from './Comment'
 import CommentInput from './CommentInput'
+import useIsMobile from '@/hook/useIsMobile'
+import { useEffect, useState } from 'react'
+import { commentApi } from '@/services/comments/comments.service'
+import { CommentType } from '@/types/comment'
+
+export interface CommentsResponse {
+  totalCount: number
+  comments: CommentType[]
+}
 
 export default function CommentModal() {
   const router = useRouter()
   const params = useParams()
   const pathname = usePathname()
+  const isMobile = useIsMobile()
+  const [mounted, setMounted] = useState(false)
+  const [shortsId, setShortsId] = useState<string | null>(null)
+
+  const [comments, setComments] = useState<CommentsResponse | null>(null)
+  const [loading, setLoading] = useState(false)
 
   const id = params.id as string
+
+  useEffect(() => {
+    if (params.id) {
+      setShortsId(params.id as string)
+    }
+  }, [params.id])
+  console.log(shortsId)
+
   const isOpen = pathname.endsWith('/comments')
 
+  const fetchComments = async () => {
+    if (!id) return
+
+    setLoading(true)
+
+    const res = await commentApi.getComment(id)
+    setComments(res)
+
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted || !isOpen || !id) return
+
+    fetchComments()
+  }, [mounted, isOpen, id])
+
   const handleClose = () => {
-    router.replace(`/shorts/${id}`, { scroll: false })
+    router.back()
   }
 
   return (
     <AnimatePresence mode="wait">
-      {isOpen && (
+      {isOpen && mounted && (
         <motion.aside
-          className="fixed top-32 right-32 z-50 flex min-w-lg items-center justify-center"
-          initial={{ x: '130%' }}
-          animate={{ x: '0%' }}
-          exit={{ x: '130%' }}
+          className={`fixed z-50 flex min-w-lg items-center justify-center ${isMobile ? 'top-0 right-0 box-border h-full w-screen' : 'top-32 right-32'}`}
+          initial={isMobile ? { y: '100%' } : { x: '130%' }}
+          animate={isMobile ? { y: 0 } : { x: '0%' }}
+          exit={isMobile ? { y: '100%' } : { x: '130%' }}
           transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
         >
           <div>
             {/* ==================== Modal Container ==================== */}
-            <div className="flex h-[84vh] w-full max-w-lg flex-col overflow-hidden rounded-xl border bg-white shadow-lg">
+            <div
+              className={`flex flex-col overflow-hidden border bg-white shadow-lg ${
+                isMobile
+                  ? 'absolute right-0 bottom-0 h-[74vh] w-screen rounded-t-2xl'
+                  : 'h-[84vh] max-w-lg min-w-lg rounded-xl'
+              } `}
+            >
               {/* ==================== Modal Header ==================== */}
               <CommentModalHeader closeHandler={handleClose} />
-
               {/* ==================== Comment List (댓글 목록 영역) ==================== */}
               <div className="flex-1 overflow-y-auto px-4">
                 {/* ==================== Comment Block 1 ==================== */}
-                <Comment />
+                <Comment comments={comments?.comments ?? []} />
 
                 {/* ==================== Empty State (댓글 없을 때) ==================== */}
                 {/* 
@@ -46,7 +96,6 @@ export default function CommentModal() {
           </div>
           */}
               </div>
-
               {/* ==================== Comment Input Section Fixed (하단 고정 입력창) ==================== */}
               <CommentInput />
             </div>

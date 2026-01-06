@@ -12,7 +12,7 @@ export default function FullscreenLayout({
   return (
     <>
       <Header />
-      <main className="mx-auto box-border flex h-screen max-w-7xl flex-1 items-center justify-center overflow-hidden px-0 py-0 sm:px-6 lg:px-8">
+      <main className="mx-auto box-border flex h-screen w-screen max-w-7xl flex-1 items-center justify-center overflow-hidden px-0 py-0 sm:px-6 lg:px-8">
         {children}
         {comments}
         {playlist}
