@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { UserInfo } from '@/types/auth'
 import { toast } from 'react-toastify'
+import Link from 'next/link'
 
 interface UserDropdownProps {
   user: UserInfo | null
@@ -82,17 +83,20 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
           <hr />
 
           <DropdownMenuItem className="cursor-pointer">
-            <button
+            {/* <button
               onClick={() => {
                 toast.info('서비스 준비 중입니다.')
               }}
               className="flex gap-4 p-1"
             >
               <Settings />내 프로필
-            </button>
+            </button> */}
+            <Link href="/mypage/profile" className="flex gap-4 p-1">
+              <Settings />내 프로필
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer">
-            <button
+            {/* <button
               onClick={() => {
                 toast.info('서비스 준비 중입니다.')
               }}
@@ -100,29 +104,23 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
             >
               <Heart />
               좋아요한 숏츠
-            </button>
+            </button> */}
+            <Link href="/mypage/likes" className="flex gap-4 p-1">
+              <Heart />
+              좋아요한 숏츠
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer">
-            <button
-              onClick={() => {
-                toast.info('서비스 준비 중입니다.')
-              }}
-              className="flex gap-4 p-1"
-            >
+            <Link href="/mypage/saved" className="flex gap-4 p-1">
               <Layers />
               저장한 숏츠
-            </button>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer">
-            <button
-              onClick={() => {
-                toast.info('서비스 준비 중입니다.')
-              }}
-              className="flex gap-4 p-1"
-            >
+            <Link href="/mypage/myshorts" className="flex gap-4 p-1">
               <CirclePlay />
               내가 만든 숏츠
-            </button>
+            </Link>
           </DropdownMenuItem>
           <hr />
           <DropdownMenuItem className="cursor-pointer">
