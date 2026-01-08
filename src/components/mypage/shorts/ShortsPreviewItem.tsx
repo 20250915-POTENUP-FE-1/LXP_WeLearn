@@ -19,7 +19,7 @@ export function ShortsPreviewItem({
   // 빈 상태
   if (!shorts) {
     return (
-      <div className="relative mx-auto aspect-[9/16] w-full overflow-hidden rounded-2xl bg-gray-700 shadow-lg md:w-[360px] lg:mx-0">
+      <div className="relative mx-auto aspect-9/16 w-full overflow-hidden rounded-2xl bg-gray-700 shadow-lg md:w-[360px] lg:mx-0">
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="text-sm text-gray-500">미리보기</span>
         </div>
@@ -29,7 +29,7 @@ export function ShortsPreviewItem({
   }
 
   return (
-    <div className="relative mx-auto aspect-[9/16] w-full overflow-hidden rounded-2xl bg-gray-200 shadow-lg md:w-[360px] lg:mx-0">
+    <div className="relative mx-auto aspect-9/16 w-full overflow-hidden rounded-2xl bg-gray-200 shadow-lg md:w-[360px] lg:mx-0">
       {/* 상단 카테고리 뱃지 */}
       <div className="absolute top-3 right-3 left-3 z-10 flex items-center justify-between">
         {shorts.category?.name ? (

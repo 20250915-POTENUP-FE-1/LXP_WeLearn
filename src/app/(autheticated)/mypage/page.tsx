@@ -74,7 +74,7 @@ export default function MyPageDashboard() {
           <div className="scrollbar-hide flex gap-4 overflow-x-auto pb-4">
             {/* Liked Shorts Card 1 */}
             <div className="w-56 flex-shrink-0">
-              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+              <div className="relative mb-2 aspect-9/16 overflow-hidden rounded-lg bg-gray-200">
                 {/* 카테고리 뱃지 */}
                 <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
                   개발
@@ -94,7 +94,7 @@ export default function MyPageDashboard() {
 
             {/* Liked Shorts Card 2 */}
             <div className="w-56 flex-shrink-0">
-              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+              <div className="relative mb-2 aspect-9/16 overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
                   개발
                 </span>
@@ -111,7 +111,7 @@ export default function MyPageDashboard() {
 
             {/* Liked Shorts Card 3 */}
             <div className="w-56 flex-shrink-0">
-              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+              <div className="relative mb-2 aspect-9/16 overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-orange-500 px-2 py-0.5 text-xs text-white">
                   비즈니스
                 </span>
@@ -128,7 +128,7 @@ export default function MyPageDashboard() {
 
             {/* Liked Shorts Card 4 */}
             <div className="w-56 flex-shrink-0">
-              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+              <div className="relative mb-2 aspect-9/16 overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-orange-500 px-2 py-0.5 text-xs text-white">
                   비즈니스
                 </span>
@@ -145,7 +145,7 @@ export default function MyPageDashboard() {
 
             {/* Liked Shorts Card 5 */}
             <div className="w-56 flex-shrink-0">
-              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+              <div className="relative mb-2 aspect-9/16 overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
                   개발
                 </span>
@@ -176,7 +176,7 @@ export default function MyPageDashboard() {
           <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
             {/* Playlist Card 1 */}
             <div className="group cursor-pointer">
-              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+              <div className="relative mb-2 aspect-9/16 overflow-hidden rounded-lg bg-gray-200">
                 {/* 공개/비공개 뱃지 */}
                 <span className="absolute top-2 left-2 rounded bg-gray-800 px-2 py-0.5 text-xs text-white">
                   비공개
@@ -214,7 +214,7 @@ export default function MyPageDashboard() {
 
             {/* Playlist Card 2 */}
             <div className="group cursor-pointer">
-              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+              <div className="relative mb-2 aspect-9/16 overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
                   공개
                 </span>
@@ -249,7 +249,7 @@ export default function MyPageDashboard() {
 
             {/* Playlist Card 3 */}
             <div className="group cursor-pointer">
-              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+              <div className="relative mb-2 aspect-9/16 overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-orange-500 px-2 py-0.5 text-xs text-white">
                   공개
                 </span>
@@ -284,7 +284,7 @@ export default function MyPageDashboard() {
 
             {/* Playlist Card 4 */}
             <div className="group cursor-pointer">
-              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+              <div className="relative mb-2 aspect-9/16 overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
                   공개
                 </span>
@@ -319,7 +319,7 @@ export default function MyPageDashboard() {
 
             {/* Playlist Card 5 */}
             <div className="group cursor-pointer">
-              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+              <div className="relative mb-2 aspect-9/16 overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
                   공개
                 </span>
@@ -354,7 +354,7 @@ export default function MyPageDashboard() {
 
             {/* Playlist Card 6 */}
             <div className="group cursor-pointer">
-              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+              <div className="relative mb-2 aspect-9/16 overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
                   공개
                 </span>
@@ -389,7 +389,7 @@ export default function MyPageDashboard() {
 
             {/* Playlist Card 7 */}
             <div className="group cursor-pointer">
-              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+              <div className="relative mb-2 aspect-9/16 overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-orange-500 px-2 py-0.5 text-xs text-white">
                   공개
                 </span>
@@ -424,7 +424,7 @@ export default function MyPageDashboard() {
 
             {/* Playlist Card 8 */}
             <div className="group cursor-pointer">
-              <div className="relative mb-2 aspect-[9/16] overflow-hidden rounded-lg bg-gray-200">
+              <div className="relative mb-2 aspect-9/16 overflow-hidden rounded-lg bg-gray-200">
                 <span className="absolute top-2 left-2 rounded bg-green-500 px-2 py-0.5 text-xs text-white">
                   공개
                 </span>

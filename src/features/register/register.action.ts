@@ -2,8 +2,10 @@
 
 import { revalidatePath } from 'next/cache'
 import { api } from '@/lib/utils/apiUtils'
+import { userApi } from '@/services/mypage/user.service'
 import type { ActionState } from '@/types/action'
 import type { components } from '@/types/api-schema'
+import { validateRegisterFormData, getFirstErrorMessage } from './register.validation'
 
 // API 타입
 type ShortsUploadRequest = components['schemas']['ShortsUploadRequest']
@@ -16,7 +18,6 @@ interface FileUploadResponse {
 
 // 등록 폼 데이터 타입
 export interface RegisterFormData {
-  userId: number
   categoryId: number
   title: string
   description?: string
@@ -145,7 +146,7 @@ async function uploadThumbnailFromBase64(base64Data: string): Promise<string | n
 
 /**
  * 숏츠 등록 액션 (전체 프로세스)
- * 1. 비디오 업로드
+ * 1. 비디오 업로드 (필수)
  * 2. 썸네일 업로드 (선택)
  * 3. 숏츠 등록
  */
@@ -155,6 +156,12 @@ export async function registerShortsAction(
   durationSec?: number,
 ): Promise<ActionState<ShortsResponse>> {
   try {
+    // 서버에서 현재 사용자 정보 조회
+    const user = await userApi.getMe().catch(() => null)
+    if (!user?.id) {
+      return { success: false, message: '로그인이 필요합니다.' }
+    }
+
     // 1. 비디오 업로드
     const videoFormData = new FormData()
     videoFormData.append('file', videoFile)
@@ -181,7 +188,7 @@ export async function registerShortsAction(
 
     // 3. 숏츠 등록 요청
     const request: ShortsUploadRequest = {
-      userId: registerFormData.userId,
+      userId: user.id,
       categoryId: registerFormData.categoryId,
       title: registerFormData.title,
       description: registerFormData.description || undefined,
@@ -218,7 +225,12 @@ export async function registerShortsFormAction(
   prevState: ActionState<ShortsResponse>,
   formData: FormData,
 ): Promise<ActionState<ShortsResponse>> {
-  const userId = Number(formData.get('userId'))
+  // 서버에서 현재 사용자 정보 조회
+  const user = await userApi.getMe().catch(() => null)
+  if (!user?.id) {
+    return { success: false, message: '로그인이 필요합니다.' }
+  }
+
   const categoryId = Number(formData.get('categoryId'))
   const title = formData.get('title') as string
   const description = formData.get('description') as string | null
@@ -228,19 +240,20 @@ export async function registerShortsFormAction(
   const durationSec = formData.get('durationSec')
 
   // 유효성 검사
-  if (!userId) {
-    return { success: false, message: '로그인이 필요합니다.' }
+  const validation = validateRegisterFormData({
+    categoryId,
+    title,
+    description: description ?? undefined,
+    keywords,
+    videoFile,
+  })
+
+  if (!validation.isValid) {
+    return { success: false, message: getFirstErrorMessage(validation) ?? '유효성 검사 실패' }
   }
 
-  if (!categoryId) {
-    return { success: false, message: '카테고리를 선택해주세요.' }
-  }
-
-  if (!title?.trim()) {
-    return { success: false, message: '제목을 입력해주세요.' }
-  }
-
-  if (!videoFile || videoFile.size === 0) {
+  // 유효성 검사 통과 후 타입 보장
+  if (!videoFile) {
     return { success: false, message: '비디오 파일을 업로드해주세요.' }
   }
 
@@ -271,7 +284,7 @@ export async function registerShortsFormAction(
 
     // 3. 숏츠 등록 요청
     const request: ShortsUploadRequest = {
-      userId,
+      userId: user.id,
       categoryId,
       title,
       description: description || undefined,
