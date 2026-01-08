@@ -38,14 +38,17 @@ export default function useKeywordsNavigation({
     }
 
     switch (e.key) {
+      // 아래 화살표: 다음 항목으로 이동 (마지막이면 처음으로)
       case 'ArrowDown':
         e.preventDefault()
         setActiveIndex((prev) => (prev < itemCount - 1 ? prev + 1 : 0))
         break
+      // 위 화살표: 이전 항목으로 이동 (처음이면 마지막으로)
       case 'ArrowUp':
         e.preventDefault()
         setActiveIndex((prev) => (prev > 0 ? prev - 1 : itemCount - 1))
         break
+      // 엔터: 현재 선택된 항목 확정 (없으면 첫 번째 항목 선택)
       case 'Enter':
         e.preventDefault()
         if (activeIndex >= 0 && activeIndex < itemCount) {
@@ -54,6 +57,7 @@ export default function useKeywordsNavigation({
           onSelect(0)
         }
         break
+      // ESC: 드롭다운 닫기
       case 'Escape':
         e.preventDefault()
         close()

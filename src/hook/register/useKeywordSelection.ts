@@ -16,7 +16,7 @@ export default function useKeywordSelection({ keywords, onChange }: UseKeywordSe
   // 키워드 선택
   const selectKeyword = (keyword: string): boolean => {
     if (isMaxReached) {
-      toast.warning(`키워드는 최대 ${MAX_KEYWORDS}개까지 선택 가능합니다.`)
+      // toast.warning(`키워드는 최대 ${MAX_KEYWORDS}개까지 선택 가능합니다.`)
       return false
     }
 
@@ -37,7 +37,7 @@ export default function useKeywordSelection({ keywords, onChange }: UseKeywordSe
     )
   }
 
-  // 유효성 검증
+  // 필수 입력 유효성 검증
   const validateKeywords = (): boolean => {
     if (!isValid) {
       toast.warning(`키워드를 ${MIN_KEYWORDS}개 이상 입력해주세요.`)
