@@ -18,7 +18,7 @@ export default function SavedShortsPage() {
         <div className="order-1 w-full lg:order-1 lg:w-80 lg:flex-shrink-0">
           <div className="flex flex-col gap-6 lg:sticky lg:top-24">
             {/* Preview Card */}
-            <div className="relative mx-auto aspect-[9/16] max-w-[280px] overflow-hidden rounded-xl bg-gray-900 lg:mx-0">
+            <div className="relative mx-auto aspect-9/16 max-w-[280px] overflow-hidden rounded-xl bg-gray-900 lg:mx-0">
               {/* 카테고리 뱃지 */}
               <span className="absolute top-3 left-3 z-10 rounded bg-green-500 px-2 py-1 text-xs text-white">
                 category

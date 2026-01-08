@@ -11,7 +11,7 @@ export default function KeywordList({ keywords, onRemove }: KeywordListProps) {
   if (keywords.length === 0) return null
 
   return (
-    <div className="mb-3 flex flex-wrap gap-2" role="list" aria-label="선택된 키워드">
+    <div className="my-4 flex flex-wrap gap-2" role="list" aria-label="선택된 키워드">
       {keywords.map((keyword) => (
         <span
           key={keyword}

@@ -97,7 +97,7 @@ export default function ShortsFormRightSection({
 
       {/* 미리보기 영역 */}
       <div
-        className={`flex aspect-[9/16] items-center justify-center rounded-2xl border-2 border-dashed bg-white transition-all ${
+        className={`flex aspect-9/16 items-center justify-center rounded-2xl border-2 border-dashed bg-white transition-all ${
           isDragging ? 'border-black bg-gray-50' : 'border-gray-300'
         }`}
         onDragEnter={isVideoTab ? handleDragEnter : undefined}

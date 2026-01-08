@@ -41,9 +41,6 @@ export default function ShortsFormKeywords({
         키워드 ({keywords.length}/{maxKeywords}) <span className="text-red-600">*</span>
       </label>
 
-      {/* 선택된 키워드 목록 */}
-      <KeywordList keywords={keywords} onRemove={handleRemoveKeyword} />
-
       {/* 키워드 입력 */}
       <div className="relative" onBlur={handleBlur}>
         <Input
@@ -77,6 +74,8 @@ export default function ShortsFormKeywords({
           onSelect={handleSelectKeyword}
         />
       </div>
+      {/* 선택된 키워드 목록 */}
+      <KeywordList keywords={keywords} onRemove={handleRemoveKeyword} />
     </div>
   )
 }

@@ -5,11 +5,7 @@ import ShortsVideoPreview from '@/features/register/components/ShortsFormRightSe
 import ShortsFormSubmitButtons from '@/features/register/components/ShortsFormSubmitButtons'
 import useRegisterForm from '@/hook/register/useRegisterForm'
 
-interface ShortsFormContainerProps {
-  userId: number
-}
-
-export default function ShortsFormContainer({ userId }: ShortsFormContainerProps) {
+export default function ShortsFormContainer() {
   const {
     formData,
     videoData,
@@ -18,7 +14,7 @@ export default function ShortsFormContainer({ userId }: ShortsFormContainerProps
     handleVideoChange,
     handleRegister,
     handleCancel,
-  } = useRegisterForm({ userId })
+  } = useRegisterForm()
 
   return (
     <div className="flex flex-col gap-8 lg:flex-row lg:gap-12">

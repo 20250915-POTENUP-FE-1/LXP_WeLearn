@@ -13,15 +13,14 @@ import { registerShortsAction } from '@/features/register/register.action'
 interface UseRegisterFormParams {
   initialFormData?: Partial<ShortsFormData>
   initialVideoData?: Partial<VideoPreviewData>
-  userId: number
 }
 
 /**
  * 숏츠 등록 폼 상태 및 로직을 관리하는 커스텀 훅
  */
-export default function useRegisterForm(params: UseRegisterFormParams) {
+export default function useRegisterForm(params: UseRegisterFormParams = {}) {
   const router = useRouter()
-  const { initialFormData, initialVideoData, userId } = params
+  const { initialFormData, initialVideoData } = params
 
   // 초기 폼 데이터 생성 함수
   const buildInitialForm = useCallback(
@@ -85,7 +84,6 @@ export default function useRegisterForm(params: UseRegisterFormParams) {
       // 서버 액션 호출 (검증 통과 후이므로 non-null 단언)
       const result = await registerShortsAction(
         {
-          userId,
           categoryId: formData.categoryId!,
           title: formData.title,
           description: formData.description || undefined,
