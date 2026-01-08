@@ -28,6 +28,7 @@ export default function CommentModal() {
 
   const id = params.id as string
 
+  console.log(comments)
   useEffect(() => {
     const match = pathname.match(/\/shorts\/([^\/]+)/)
     if (match?.[1]) {
@@ -82,11 +83,17 @@ export default function CommentModal() {
               } `}
             >
               {/* ==================== Modal Header ==================== */}
-              <CommentModalHeader closeHandler={handleClose} />
+              <CommentModalHeader closeHandler={handleClose} totalCount={comments?.totalCount} />
               {/* ==================== Comment List (댓글 목록 영역) ==================== */}
               <div className="flex-1 overflow-y-auto px-4">
                 {/* ==================== Comment Block 1 ==================== */}
-                <Comment comments={comments?.comments ?? []} />
+                {comments?.totalCount !== 0 ? (
+                  <Comment comments={comments?.comments ?? []} />
+                ) : (
+                  <span className="flex h-full w-full items-center justify-center text-lg text-gray-600">
+                    등록된 댓글이 없습니다.
+                  </span>
+                )}
 
                 {/* ==================== Empty State (댓글 없을 때) ==================== */}
                 {/* 
