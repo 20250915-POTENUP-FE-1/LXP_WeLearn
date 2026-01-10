@@ -14,6 +14,24 @@ export type ShortsUpdateRequest = components['schemas']['ShortsUpdateRequest']
 // ============================================
 export type ShortsStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
 
+// ============================================
+// API 공통 응답 래퍼
+// ============================================
+export interface ApiResponse<T> {
+  success: boolean
+  code: string
+  message: string
+  data: T
+}
+
+// ============================================
+// 페이지네이션 파라미터
+// ============================================
+export interface PaginationParams {
+  page?: number
+  size?: number
+}
+
 // 미리보기 아이템
 export interface ShortsPreviewItemProps {
   shorts?: ShortsResponse | null

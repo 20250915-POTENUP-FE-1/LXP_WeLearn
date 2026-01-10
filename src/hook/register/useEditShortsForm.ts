@@ -17,14 +17,14 @@ import {
 import { updateShortsAction } from '@/features/mypage/myshorts/myshorts.action'
 
 interface UseEditShortsFormParams {
-  shortId: number
+  shortsId: number
   initialData: ShortsEditInitialData
 }
 
 /**
  * 숏츠 수정 폼 상태 및 로직을 관리하는 커스텀 훅
  */
-export default function useEditShortsForm({ shortId, initialData }: UseEditShortsFormParams) {
+export default function useEditShortsForm({ shortsId, initialData }: UseEditShortsFormParams) {
   const router = useRouter()
 
   // 초기 폼 데이터 구성
@@ -112,7 +112,7 @@ export default function useEditShortsForm({ shortId, initialData }: UseEditShort
     try {
       // FormData 생성
       const submitFormData = new FormData()
-      submitFormData.append('shortId', shortId.toString())
+      submitFormData.append('shortsId', shortsId.toString())
       submitFormData.append('title', formData.title)
       submitFormData.append('description', formData.description || '')
       submitFormData.append('categoryId', formData.categoryId?.toString() || '')
@@ -139,7 +139,7 @@ export default function useEditShortsForm({ shortId, initialData }: UseEditShort
     } finally {
       setIsSubmitting(false)
     }
-  }, [isSubmitting, validateEditForm, shortId, formData, router])
+  }, [isSubmitting, validateEditForm, shortsId, formData, router])
 
   // 취소 핸들러
   const handleCancel = useCallback(() => {

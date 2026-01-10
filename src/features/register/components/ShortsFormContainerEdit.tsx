@@ -5,7 +5,7 @@ import useEditShortsForm from '@/hook/register/useEditShortsForm'
 import type { ShortsEditInitialData } from '@/features/register/types/shortsEdit'
 
 interface ShortsFormContainerEditProps {
-  shortId: number
+  shortsId: number
   initialData: ShortsEditInitialData
 }
 
@@ -13,7 +13,7 @@ interface ShortsFormContainerEditProps {
  * 숏츠 수정 폼 컨테이너
  */
 export default function ShortsFormContainerEdit({
-  shortId,
+  shortsId,
   initialData,
 }: ShortsFormContainerEditProps) {
   const {
@@ -26,7 +26,7 @@ export default function ShortsFormContainerEdit({
     handleCancel,
     existingVideoUrl,
     existingThumbnailUrl,
-  } = useEditShortsForm({ shortId, initialData })
+  } = useEditShortsForm({ shortsId, initialData })
 
   return (
     <ShortsFormLayout

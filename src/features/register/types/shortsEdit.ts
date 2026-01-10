@@ -5,7 +5,7 @@ export type ShortsFormMode = 'create' | 'edit'
 
 // 수정 폼 Props
 export interface ShortsEditFormProps {
-  shortId: number
+  shortsId: number
   initialData: ShortsEditInitialData
 }
 
@@ -20,7 +20,7 @@ export interface ShortsEditInitialData {
 // 폼 컨테이너 공통 Props
 export interface ShortsFormContainerProps {
   mode: ShortsFormMode
-  shortId?: number // edit 모드에서만 필요
+  shortsId?: number // edit 모드에서만 필요
   initialData?: ShortsEditInitialData // edit 모드에서만 필요
 }
 

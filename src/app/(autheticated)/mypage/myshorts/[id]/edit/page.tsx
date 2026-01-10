@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { myShortsApi } from '@/services/mypage/myshorts.service'
+import type { ShortsResponse } from '@/types/mypage-shorts'
 import type { ShortsEditInitialData } from '@/features/register/types/shortsEdit'
 import ShortsFormContainerEdit from '@/features/register/components/ShortsFormContainerEdit'
 
@@ -10,7 +11,7 @@ interface EditShortsPageProps {
 /**
  * 서버 응답 데이터를 폼 초기 데이터로 변환
  */
-function transformToEditInitialData(shortsData: any): ShortsEditInitialData {
+function transformToEditInitialData(shortsData: ShortsResponse): ShortsEditInitialData {
   return {
     formData: {
       title: shortsData.title || '',
@@ -33,20 +34,20 @@ function transformToEditInitialData(shortsData: any): ShortsEditInitialData {
 
 export default async function EditShortsPage({ params }: EditShortsPageProps) {
   const { id } = await params
-  const shortId = Number(id)
+  const shortsId = Number(id)
 
-  if (isNaN(shortId) || shortId <= 0) {
+  if (isNaN(shortsId) || shortsId <= 0) {
     notFound()
   }
 
   try {
-    const shortsData = await myShortsApi.getShorts(shortId)
+    const shortsData = await myShortsApi.getShorts(shortsId)
     const initialData = transformToEditInitialData(shortsData)
 
     return (
       <div className="h-full w-full max-w-7xl">
         <div className="px-4 py-6 sm:px-6 sm:py-8">
-          <ShortsFormContainerEdit shortId={shortId} initialData={initialData} />
+          <ShortsFormContainerEdit shortsId={shortsId} initialData={initialData} />
         </div>
       </div>
     )
