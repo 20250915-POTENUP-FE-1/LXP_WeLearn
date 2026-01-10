@@ -1,8 +1,6 @@
 export { default as ShortsFormCategory } from './ShortsFormCategory'
 export { default as ShortsFormInputs } from './ShortsFormInputs'
 export { default as ShortsFormKeywords } from './ShortsFormKeywords'
-export { default as ShortsFormLeftSection } from './ShortsFormLeftSection'
 export { default as ShortsFormSubmitButtons } from './ShortsFormSubmitButtons'
-export { default as ShortsVideoPreview } from './ShortsFormRightSection'
 export { default as KeywordList } from './KeywordList'
 export { default as KeywordSuggestions } from './KeywordSuggestions'
