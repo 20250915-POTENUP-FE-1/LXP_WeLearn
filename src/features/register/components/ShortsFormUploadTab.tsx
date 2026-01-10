@@ -14,12 +14,14 @@ type ShortsFormUploadTabProps =
       videoInputRef: React.RefObject<HTMLInputElement | null>
       onVideoUpload: (e: React.ChangeEvent<HTMLInputElement>) => void
       onRemove: () => void
+      isEditMode?: boolean
     }
   | {
       type: 'thumbnail'
       thumbnail: string | null
       onChange: ShortsFormChangeHandler
       onDraggingChange?: (isDragging: boolean) => void
+      isEditMode?: boolean
     }
 
 export default function ShortsFormUploadTab(props: ShortsFormUploadTabProps) {
@@ -32,6 +34,7 @@ export default function ShortsFormUploadTab(props: ShortsFormUploadTabProps) {
         videoInputRef={props.videoInputRef}
         onVideoUpload={props.onVideoUpload}
         onRemove={props.onRemove}
+        isEditMode={props.isEditMode}
       />
     )
   }
@@ -42,6 +45,7 @@ export default function ShortsFormUploadTab(props: ShortsFormUploadTabProps) {
       thumbnail={props.thumbnail}
       onChange={props.onChange}
       onDraggingChange={props.onDraggingChange}
+      isEditMode={props.isEditMode}
     />
   )
 }

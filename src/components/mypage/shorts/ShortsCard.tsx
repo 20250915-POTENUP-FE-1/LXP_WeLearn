@@ -12,7 +12,6 @@ interface ShortsCardProps {
   isSelected?: boolean
   onSelect?: () => void
   onToggleVisibility?: () => void
-  onEdit?: () => void
   onDelete?: () => void
   viewCount?: number
   durationSec?: number
@@ -25,7 +24,6 @@ export default function ShortsCard({
   isSelected = false,
   onSelect,
   onToggleVisibility,
-  onEdit,
   onDelete,
   viewCount = 100,
   createdAt = '1일 전',
@@ -65,9 +63,9 @@ export default function ShortsCard({
               </button>
             </DropdownMenuTrigger>
             <MyShortsDropdownMenu
+              shortsId={shorts.shortsId!}
               status={shorts.status}
               onToggleVisibility={onToggleVisibility}
-              onEdit={onEdit}
               onDelete={onDelete}
             />
           </DropdownMenu>

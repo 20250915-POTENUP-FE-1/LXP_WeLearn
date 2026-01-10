@@ -305,7 +305,37 @@ server.delete('/api/v1/comments/:id', (req, res) => {
 })
 
 // ==========================================
-// 8. 라우팅 설정 (Prefix: /api)
+// 8. 숏츠 상세 조회 (GET /api/v1/shorts/:id)
+// ==========================================
+server.get('/api/v1/shorts/:id', (req, res) => {
+  const db = router.db
+  const shortsId = parseInt(req.params.id)
+
+  const shorts = db.get('shorts').find({ id: shortsId }).value()
+
+  if (!shorts) {
+    return res.status(404).json({ message: '숏츠를 찾을 수 없습니다.' })
+  }
+
+  // API 스키마에 맞게 응답 형식 조정
+  const response = {
+    shortsId: shorts.id,
+    title: shorts.title,
+    description: shorts.description,
+    videoUrl: shorts.videoUrl,
+    thumbnailUrl: shorts.thumbnailUrl,
+    uploader: shorts.uploader,
+    category: shorts.category,
+    keywords: shorts.keywords || [],
+    status: shorts.status || 'PUBLISHED',
+    durationSec: shorts.durationSec || 60,
+  }
+
+  res.json(response)
+})
+
+// ==========================================
+// 9. 라우팅 설정 (Prefix: /api)
 // ==========================================
 // 나머지 라우트는 json-server 기본 동작(db.json CRUD)을 따름
 server.use('/api', router)
@@ -318,6 +348,7 @@ server.listen(PORT, () => {
   console.log(`- Register: POST /api/v1/auth/register`)
   console.log(`- Me:    GET /api/v1/users/me`)
   console.log(`- Posts: GET /api/v1/posts`)
+  console.log('- Shorts: GET /api/v1/shorts/:id')
   console.log('- Comments: GET /api/v1/shorts/:shortsId/comments')
   console.log('- Comments: POST /api/v1/posts/:postId/comments')
 })

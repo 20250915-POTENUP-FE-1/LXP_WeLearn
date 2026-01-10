@@ -4,20 +4,22 @@ import { useEffect, useRef } from 'react'
 import { ImageIcon } from 'lucide-react'
 import ShortsFormPreviewFrame from './ShortsFormPreviewFrame'
 import ShortsFormEmptyState from './ShortsFormEmptyState'
-import { Button } from '@/components/ui/Button'
 import useThumbnailUpload from '@/hook/register/useThumbnailUpload'
 import { ShortsFormChangeHandler } from '@/features/register/types/shortsRegister'
+import { Button } from '@/components/ui/Button'
 
 interface ShortsFormThumbPreviewTabProps {
   thumbnail: string | null
   onChange: ShortsFormChangeHandler
   onDraggingChange?: (isDragging: boolean) => void
+  isEditMode?: boolean
 }
 
 export default function ShortsFormThumbPreviewTab({
   thumbnail,
   onChange,
   onDraggingChange,
+  isEditMode = false,
 }: ShortsFormThumbPreviewTabProps) {
   const thumbnailInputRef = useRef<HTMLInputElement>(null)
   const {
@@ -39,6 +41,7 @@ export default function ShortsFormThumbPreviewTab({
   }, [isDragging, onDraggingChange])
 
   // 썸네일이 있으면 미리보기 렌더링
+  // 수정 모드에서도 썸네일 변경/삭제 가능
   if (thumbnail) {
     return (
       <ShortsFormPreviewFrame onRemove={handleRemoveThumbnail}>

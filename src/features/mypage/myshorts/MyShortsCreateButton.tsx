@@ -10,7 +10,7 @@ export default function MyShortsCreateButton() {
         <Plus
           strokeWidth={1.5}
           size={30}
-          className="transition-transform duration-500 group-hover:rotate-[180deg]"
+          className="transition-transform duration-500 group-hover:rotate-180"
         />
         숏츠 만들기
       </button>

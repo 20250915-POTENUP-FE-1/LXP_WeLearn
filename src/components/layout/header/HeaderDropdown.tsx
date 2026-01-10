@@ -27,7 +27,7 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
   useEffect(() => {
     if (state.success) {
       localStorage.removeItem('user')
-      toast.success('로그아웃 되셨습니다.')
+      toast.success('로그아웃 되었습니다.')
       router.push('/')
     } else if (state.success === false && state.message) {
       toast.error(state.message)

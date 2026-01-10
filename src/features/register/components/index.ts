@@ -1,5 +1,4 @@
 export { default as ShortsFormCategory } from './ShortsFormCategory'
-export { default as ShortsFormContainer } from './ShortsFormContainer'
 export { default as ShortsFormInputs } from './ShortsFormInputs'
 export { default as ShortsFormKeywords } from './ShortsFormKeywords'
 export { default as ShortsFormLeftSection } from './ShortsFormLeftSection'

@@ -35,7 +35,7 @@ export default function useVideoUpload({ onChange, inputRef }: UseVideoUploadPar
         resetInput() // 삭제 후 같은 파일 재업로드 가능하도록
       }
     },
-    [onChange, resetInput]
+    [onChange, resetInput],
   )
 
   // 드롭된 파일 처리
@@ -47,7 +47,7 @@ export default function useVideoUpload({ onChange, inputRef }: UseVideoUploadPar
       }
       applyVideoFile(file)
     },
-    [applyVideoFile]
+    [applyVideoFile],
   )
 
   // 드래그 상태 변경 핸들러
@@ -55,7 +55,7 @@ export default function useVideoUpload({ onChange, inputRef }: UseVideoUploadPar
     (isDragging: boolean) => {
       onChange('isDragging', isDragging)
     },
-    [onChange]
+    [onChange],
   )
 
   const { handleDragEnter, handleDragLeave, handleDragOver, handleDrop } = useDragAndDrop({
@@ -77,7 +77,7 @@ export default function useVideoUpload({ onChange, inputRef }: UseVideoUploadPar
 
       await applyVideoFile(file)
     },
-    [applyVideoFile, resetInput]
+    [applyVideoFile, resetInput],
   )
 
   // 비디오 삭제

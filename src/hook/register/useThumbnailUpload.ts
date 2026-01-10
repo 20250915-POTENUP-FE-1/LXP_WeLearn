@@ -34,7 +34,7 @@ export default function useThumbnailUpload({ onChange, inputRef }: UseThumbnailU
       }
       reader.readAsDataURL(file)
     },
-    [onChange, resetInput]
+    [onChange, resetInput],
   )
 
   // 드롭된 파일 처리
@@ -46,7 +46,7 @@ export default function useThumbnailUpload({ onChange, inputRef }: UseThumbnailU
       }
       applyThumbnailFile(file)
     },
-    [applyThumbnailFile]
+    [applyThumbnailFile],
   )
 
   const { handleDragEnter, handleDragLeave, handleDragOver, handleDrop } = useDragAndDrop({
@@ -68,7 +68,7 @@ export default function useThumbnailUpload({ onChange, inputRef }: UseThumbnailU
 
       applyThumbnailFile(file)
     },
-    [applyThumbnailFile, resetInput]
+    [applyThumbnailFile, resetInput],
   )
 
   // 썸네일 삭제

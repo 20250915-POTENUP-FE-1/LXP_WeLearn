@@ -16,6 +16,10 @@ interface ShortsFormRightSectionProps {
   onChange: VideoPreviewChangeHandler
   thumbnail?: string | null
   onFormChange: ShortsFormChangeHandler
+  // 수정 모드 전용 props
+  isEditMode?: boolean
+  existingVideoUrl?: string
+  existingThumbnailUrl?: string
 }
 
 export default function ShortsFormRightSection({
@@ -23,26 +27,38 @@ export default function ShortsFormRightSection({
   onChange,
   thumbnail,
   onFormChange,
+  isEditMode = false,
+  existingVideoUrl,
+  existingThumbnailUrl,
 }: ShortsFormRightSectionProps) {
   const { videoFile, isDragging: isVideoDragging } = videoData
   const [isThumbnailDragging, setIsThumbnailDragging] = useState(false)
   const isDragging = isVideoDragging || isThumbnailDragging
   const videoInputRef = useRef<HTMLInputElement>(null)
 
-  // 비디오 소스 메모이제이션 : 상위에서 videoFile이 변경될 때만 새로 생성
+  // 비디오 소스 메모이제이션
+  // 수정 모드: existingVideoUrl 사용
+  // 등록 모드: videoFile에서 URL 생성
   const videoSrc = useMemo(() => {
+    if (isEditMode && existingVideoUrl) {
+      return existingVideoUrl
+    }
     if (!videoFile) return null
     return URL.createObjectURL(videoFile)
-  }, [videoFile])
+  }, [isEditMode, existingVideoUrl, videoFile])
 
   // 메모리 누수를 방지하기 위해 URL.revokeObjectURL 호출
+  // 단, existingVideoUrl은 revoke하지 않음
   useEffect(() => {
     return () => {
-      if (videoSrc) {
+      if (videoSrc && !isEditMode) {
         URL.revokeObjectURL(videoSrc)
       }
     }
-  }, [videoSrc])
+  }, [videoSrc, isEditMode])
+
+  // 썸네일 소스 결정: 새로 업로드한 thumbnail 우선, 없으면 기존 URL
+  const thumbnailSrc = thumbnail ?? existingThumbnailUrl ?? null
 
   const {
     handleDragEnter,
@@ -63,6 +79,16 @@ export default function ShortsFormRightSection({
       onThumbnailRemove: handleThumbnailRemove,
     })
 
+  // 수정 모드에서 드래그/드롭 비활성화
+  const dragHandlers = isEditMode
+    ? {}
+    : {
+        onDragEnter: isVideoTab ? handleDragEnter : undefined,
+        onDragOver: isVideoTab ? handleDragOver : undefined,
+        onDragLeave: isVideoTab ? handleDragLeave : undefined,
+        onDrop: isVideoTab ? handleDrop : undefined,
+      }
+
   return (
     <div className="space-y-4">
       {/* 미리보기 전환 탭 */}
@@ -70,7 +96,7 @@ export default function ShortsFormRightSection({
         <button
           type="button"
           id="video-tab"
-          role="tabMenu"
+          role="tab"
           aria-selected={isVideoTab}
           onClick={switchToVideo}
           className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
@@ -100,10 +126,7 @@ export default function ShortsFormRightSection({
         className={`flex aspect-9/16 items-center justify-center rounded-2xl border-2 border-dashed bg-white transition-all ${
           isDragging ? 'border-black bg-gray-50' : 'border-gray-300'
         }`}
-        onDragEnter={isVideoTab ? handleDragEnter : undefined}
-        onDragOver={isVideoTab ? handleDragOver : undefined}
-        onDragLeave={isVideoTab ? handleDragLeave : undefined}
-        onDrop={isVideoTab ? handleDrop : undefined}
+        {...dragHandlers}
       >
         {isVideoTab ? (
           <ShortsFormUploadTab
@@ -113,13 +136,15 @@ export default function ShortsFormRightSection({
             videoInputRef={videoInputRef}
             onVideoUpload={handleVideoUpload}
             onRemove={handleRemove}
+            isEditMode={isEditMode}
           />
         ) : (
           <ShortsFormUploadTab
             type="thumbnail"
-            thumbnail={thumbnail ?? null}
+            thumbnail={thumbnailSrc}
             onChange={onFormChange}
             onDraggingChange={setIsThumbnailDragging}
+            isEditMode={isEditMode}
           />
         )}
       </div>

@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import {
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -11,20 +12,27 @@ import { Globe, Lock, Pencil, Trash2 } from 'lucide-react'
 import { toast } from 'react-toastify'
 
 interface MyShortsDropdownMenuProps {
+  shortsId: number // 수정 페이지 이동에 필요
   status: ShortsStatus
   onToggleVisibility?: () => void
-  onEdit?: () => void
   onDelete?: () => void
 }
 
 export default function MyShortsDropdownMenu({
+  shortsId,
   status,
   onToggleVisibility,
-  onEdit,
   onDelete,
 }: MyShortsDropdownMenuProps) {
+  const router = useRouter()
+
   // 공개 상태 여부 확인
   const isPublished = status === 'PUBLISHED'
+
+  // 수정 페이지로 이동
+  const handleEdit = () => {
+    router.push(`/mypage/myshorts/${shortsId}/edit`)
+  }
 
   return (
     <DropdownMenuContent className="min-w-[140px]" align="end">
@@ -54,7 +62,7 @@ export default function MyShortsDropdownMenu({
         </DropdownMenuItem>
 
         {/* 수정 */}
-        <DropdownMenuItem className="cursor-pointer" onSelect={onEdit}>
+        <DropdownMenuItem className="cursor-pointer" onSelect={handleEdit}>
           <Pencil size={10} />
           수정
         </DropdownMenuItem>

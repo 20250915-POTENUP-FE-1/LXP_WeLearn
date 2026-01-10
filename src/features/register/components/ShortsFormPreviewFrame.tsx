@@ -8,7 +8,7 @@ export default function ShortsFormPreviewFrame({
   onRemove,
 }: {
   children: React.ReactNode
-  onRemove: () => void
+  onRemove?: () => void
 }) {
   return (
     <div className="relative h-full w-full">
