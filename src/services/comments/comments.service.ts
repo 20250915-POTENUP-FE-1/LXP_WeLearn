@@ -8,6 +8,9 @@ export const commentApi = {
     const response = await fetch(`http://localhost:4000/api/v1/shorts/${id}/comments`, {
       cache: 'no-store',
     })
+    if (!response.ok) {
+      throw new Error('댓글 조회를 실패했습니다.')
+    }
     return response.json()
   },
 

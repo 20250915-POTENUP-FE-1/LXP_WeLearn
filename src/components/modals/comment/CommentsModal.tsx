@@ -23,7 +23,7 @@ export default function CommentModal() {
   const [loading, setLoading] = useState(false)
 
   // 댓글 Action
-  const [Commentstate, CommentAction] = useActionState(postCommentAction, {
+  const [CommentState, CommentAction] = useActionState(postCommentAction, {
     success: false,
     message: '',
     errors: {},
@@ -54,9 +54,18 @@ export default function CommentModal() {
   const fetchComments = async () => {
     if (!shortsId) return
     setLoading(true)
-    const res = await commentApi.getComment(Number(shortsId))
-    setComments(res)
-    setLoading(false)
+
+    try {
+      const res = await commentApi.getComment(Number(shortsId))
+      setComments(res)
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message)
+      }
+      toast.error('댓글 조회를 실패하였습니다.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   // 컴포넌트가 마운트되었는지 체크
@@ -81,13 +90,13 @@ export default function CommentModal() {
 
   // 댓글 성공시 토스트 ui
   useEffect(() => {
-    if (Commentstate.success && shortsId) {
+    if (CommentState.success && shortsId) {
       toast.success('댓글 등록에 성공하였습니다.🚀')
       fetchComments()
-    } else if (Commentstate.success === false && Commentstate.message) {
-      toast.error(Commentstate.message)
+    } else if (CommentState.success === false && CommentState.message) {
+      toast.error(CommentState.message)
     }
-  }, [Commentstate.timestamp])
+  }, [CommentState.timestamp])
 
   // 대댓글 성공시 토스트 ui
   useEffect(() => {

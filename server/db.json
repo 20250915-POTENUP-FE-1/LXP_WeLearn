@@ -1013,6 +1013,110 @@
         "nickname": "먕먕먕",
         "profileImageUrl": null
       }
+    },
+    {
+      "commentId": 1768134751465,
+      "shortsId": 20,
+      "content": "테스트",
+      "createdAt": "2026-01-11T21:32:31.465Z",
+      "isMine": true,
+      "replyCount": 2,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768134756549,
+      "shortsId": 20,
+      "content": "테스트2",
+      "createdAt": "2026-01-11T21:32:36.549Z",
+      "isMine": true,
+      "replyCount": 2,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768135015579,
+      "shortsId": 15,
+      "content": "댓글 테스트",
+      "createdAt": "2026-01-11T21:36:55.579Z",
+      "isMine": true,
+      "replyCount": 2,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768135019707,
+      "shortsId": 15,
+      "content": "댓글 테스트2",
+      "createdAt": "2026-01-11T21:36:59.707Z",
+      "isMine": true,
+      "replyCount": 3,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768135599028,
+      "shortsId": 15,
+      "content": "욥?",
+      "createdAt": "2026-01-11T21:46:39.028Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768136033744,
+      "shortsId": 15,
+      "content": "진짜",
+      "createdAt": "2026-01-11T21:53:53.744Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768136037748,
+      "shortsId": 15,
+      "content": "이게아닌데",
+      "createdAt": "2026-01-11T21:53:57.748Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768140234401,
+      "shortsId": 15,
+      "content": "?",
+      "createdAt": "2026-01-11T23:03:54.401Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
     }
   ],
   "replies": [
@@ -1623,6 +1727,105 @@
       },
       "content": "이것도?",
       "createdAt": "2026-01-11T21:29:47.633Z"
+    },
+    {
+      "replyId": 1768134761893,
+      "parentId": 1768134751465,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "테스트1",
+      "createdAt": "2026-01-11T21:32:41.893Z"
+    },
+    {
+      "replyId": 1768134765917,
+      "parentId": 1768134751465,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "테스트3",
+      "createdAt": "2026-01-11T21:32:45.917Z"
+    },
+    {
+      "replyId": 1768134774500,
+      "parentId": 1768134756549,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "여기도 테스트",
+      "createdAt": "2026-01-11T21:32:54.500Z"
+    },
+    {
+      "replyId": 1768134777895,
+      "parentId": 1768134756549,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "다시 테스트",
+      "createdAt": "2026-01-11T21:32:57.895Z"
+    },
+    {
+      "replyId": 1768135026119,
+      "parentId": 1768135015579,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "대댓글 테스트1",
+      "createdAt": "2026-01-11T21:37:06.119Z"
+    },
+    {
+      "replyId": 1768135029623,
+      "parentId": 1768135015579,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "대댓글 테스트2",
+      "createdAt": "2026-01-11T21:37:09.623Z"
+    },
+    {
+      "replyId": 1768135040240,
+      "parentId": 1768135019707,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "대댓글 테스트3",
+      "createdAt": "2026-01-11T21:37:20.240Z"
+    },
+    {
+      "replyId": 1768135045535,
+      "parentId": 1768135019707,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "대댓글테스트4",
+      "createdAt": "2026-01-11T21:37:25.535Z"
+    },
+    {
+      "replyId": 1768136064140,
+      "parentId": 1768135019707,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "???",
+      "createdAt": "2026-01-11T21:54:24.140Z"
     }
   ]
 }

@@ -1,29 +1,34 @@
+import { KOREAN_DATE_FORMAT } from '@/constants/date.constant'
+import { TIME } from '@/constants/time.consants'
+
 export function timeAgo(date: string) {
-  const seconds = 1
-  const minute = seconds * 60
-  const hour = minute * 60
-  const day = hour * 24
+  const now = new Date()
+  const targetDate = new Date(date.replaceAll('T', ' ').substring(0, 18))
 
-  let now = new Date()
-  let timeresult = new Date(date.replaceAll('T', ' ').substr(0, 18))
-  let timecalc = Math.trunc((now.getTime() - timeresult.getTime()) / 1000)
-  let elapsedText = ''
-  let checkLastText = ''
-  if (timecalc < seconds) {
-    elapsedText = '방금 전'
-  } else if (timecalc < minute) {
-    elapsedText = timecalc + '초 전'
-  } else if (timecalc < hour) {
-    elapsedText = Math.trunc(timecalc / minute) + '분 전'
-  } else if (timecalc < day) {
-    elapsedText = Math.trunc(timecalc / hour) + '시간 전'
-  } else if (timecalc < day * 15) {
-    elapsedText = Math.trunc(timecalc / day) + '일 전'
-  } else {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' } as const
-    elapsedText = timeresult.toLocaleDateString('ko-KR', options).replace(/\//g, '.')
+  const diffSeconds = Math.trunc((now.getTime() - targetDate.getTime()) / 1000)
+
+  if (diffSeconds < TIME.SECOND) {
+    return '방금 전'
   }
-  checkLastText = elapsedText.replace(/\.$/, '')
 
-  return checkLastText
+  if (diffSeconds < TIME.MINUTE) {
+    return `${diffSeconds}초 전`
+  }
+
+  if (diffSeconds < TIME.HOUR) {
+    return `${Math.trunc(diffSeconds / TIME.MINUTE)}분 전`
+  }
+
+  if (diffSeconds < TIME.DAY) {
+    return `${Math.trunc(diffSeconds / TIME.HOUR)}시간 전`
+  }
+
+  if (diffSeconds < TIME.DAY * TIME.MAX_RELATIVE_DAY) {
+    return `${Math.trunc(diffSeconds / TIME.DAY)}일 전`
+  }
+
+  return targetDate
+    .toLocaleDateString('ko-KR', KOREAN_DATE_FORMAT)
+    .replace(/\//g, '.')
+    .replace(/\.$/, '')
 }
