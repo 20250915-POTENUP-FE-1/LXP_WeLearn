@@ -15,7 +15,11 @@
         "id": 1,
         "name": "프로그래밍"
       },
-      "keywords": ["Java", "Spring", "백엔드"],
+      "keywords": [
+        "Java",
+        "Spring",
+        "백엔드"
+      ],
       "uploader": {
         "userId": 1,
         "nickname": "개발자홍길동",
@@ -39,7 +43,11 @@
         "id": 2,
         "name": "UI/UX"
       },
-      "keywords": ["Figma", "디자인", "레이아웃"],
+      "keywords": [
+        "Figma",
+        "디자인",
+        "레이아웃"
+      ],
       "uploader": {
         "userId": 6,
         "nickname": "디자인펭귄",
@@ -63,7 +71,11 @@
         "id": 1,
         "name": "프로그래밍"
       },
-      "keywords": ["React", "상태관리", "프론트엔드"],
+      "keywords": [
+        "React",
+        "상태관리",
+        "프론트엔드"
+      ],
       "uploader": {
         "userId": 9,
         "nickname": "프론트선배",
@@ -87,7 +99,11 @@
         "id": 2,
         "name": "UI/UX"
       },
-      "keywords": ["CSS", "Grid", "웹개발"],
+      "keywords": [
+        "CSS",
+        "Grid",
+        "웹개발"
+      ],
       "uploader": {
         "userId": 11,
         "nickname": "CSS요정",
@@ -111,7 +127,11 @@
         "id": 1,
         "name": "프로그래밍"
       },
-      "keywords": ["Database", "인덱스", "SQL"],
+      "keywords": [
+        "Database",
+        "인덱스",
+        "SQL"
+      ],
       "uploader": {
         "userId": 16,
         "nickname": "백엔드러버",
@@ -135,7 +155,11 @@
         "id": 1,
         "name": "프로그래밍"
       },
-      "keywords": ["Vue", "React", "프레임워크"],
+      "keywords": [
+        "Vue",
+        "React",
+        "프레임워크"
+      ],
       "uploader": {
         "userId": 21,
         "nickname": "프레임워크러버",
@@ -159,7 +183,11 @@
         "id": 1,
         "name": "프로그래밍"
       },
-      "keywords": ["REST", "API", "HTTP"],
+      "keywords": [
+        "REST",
+        "API",
+        "HTTP"
+      ],
       "uploader": {
         "userId": 15,
         "nickname": "API장인",
@@ -183,7 +211,11 @@
         "id": 1,
         "name": "프로그래밍"
       },
-      "keywords": ["알고리즘", "빅오", "자료구조"],
+      "keywords": [
+        "알고리즘",
+        "빅오",
+        "자료구조"
+      ],
       "uploader": {
         "userId": 20,
         "nickname": "알고리즘달인",
@@ -199,7 +231,7 @@
       "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
       "thumbnailUrl": "https://images.pexels.com/photos/35564189/pexels-photo-35564189.jpeg",
       "duration": 52,
-      "status": "PROCESSING",
+      "status": "DRAFT",
       "viewCount": 0,
       "likeCount": 0,
       "commentCount": 0,
@@ -207,7 +239,11 @@
         "id": 2,
         "name": "UI/UX"
       },
-      "keywords": ["디자인시스템", "컴포넌트", "토큰"],
+      "keywords": [
+        "디자인시스템",
+        "컴포넌트",
+        "토큰"
+      ],
       "uploader": {
         "userId": 18,
         "nickname": "시스템디자이너",
@@ -215,34 +251,19 @@
       },
       "createdAt": "2025-01-10T15:45:00Z",
       "updatedAt": "2025-01-10T15:45:00Z"
-    },
-    {
-      "shortsId": 10,
-      "title": "TypeScript 제네릭 쉽게 이해하기",
-      "description": "제네릭의 기본 개념과 실전 활용법을 알아봅니다.",
-      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-      "thumbnailUrl": "https://images.pexels.com/photos/303383/pexels-photo-303383.jpeg",
-      "duration": 68,
-      "status": "PUBLISHED",
-      "viewCount": 1823,
-      "likeCount": 154,
-      "commentCount": 36,
-      "category": {
-        "id": 1,
-        "name": "프로그래밍"
-      },
-      "keywords": ["TypeScript", "제네릭", "타입"],
-      "uploader": {
-        "userId": 1,
-        "nickname": "개발자홍길동",
-        "profileImageUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecie-profilowe-9.webp"
-      },
-      "createdAt": "2025-01-11T09:30:00Z",
-      "updatedAt": "2025-01-11T09:35:00Z"
     }
   ],
-
-  "users": [],
+  "users": [
+    {
+      "id": 1,
+      "email": "test@test.com",
+      "password": "1234",
+      "name": "홍길동",
+      "nickname": "개발자홍길동",
+      "profileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecie-profilowe-9.webp",
+      "createdAt": "2025-12-01T10:00:00Z"
+    }
+  ],
   "comments": [
     {
       "id": 1,

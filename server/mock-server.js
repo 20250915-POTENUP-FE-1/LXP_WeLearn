@@ -323,7 +323,7 @@ server.get('/api/v1/users/me/shorts', (req, res) => {
 
   // API 스키마에 맞게 응답 형식 조정
   const content = paginatedShorts.map((shorts) => ({
-    shortsId: shorts.id,
+    shortsId: shorts.shortsId,
     title: shorts.title,
     description: shorts.description,
     videoUrl: shorts.videoUrl,
@@ -360,7 +360,7 @@ server.get('/api/v1/shorts/:id', (req, res) => {
   const db = router.db
   const shortsId = parseInt(req.params.id)
 
-  const shorts = db.get('shorts').find({ id: shortsId }).value()
+  const shorts = db.get('shorts').find({ shortsId: shortsId }).value()
 
   if (!shorts) {
     return res.status(404).json({ message: '숏츠를 찾을 수 없습니다.' })
@@ -373,7 +373,7 @@ server.get('/api/v1/shorts/:id', (req, res) => {
     data: {
       content: [
         {
-          shortsId: shorts.id,
+          shortsId: shorts.shortsId,
           title: shorts.title,
           description: shorts.description,
           videoUrl: shorts.videoUrl,
@@ -406,7 +406,7 @@ server.patch('/api/v1/shorts/:id', (req, res) => {
   const db = router.db
   const shortsId = parseInt(req.params.id)
 
-  const shorts = db.get('shorts').find({ id: shortsId }).value()
+  const shorts = db.get('shorts').find({ shortsId: shortsId }).value()
 
   if (!shorts) {
     return res.status(404).json({
@@ -454,7 +454,7 @@ server.patch('/api/v1/shorts/:id', (req, res) => {
   }
 
   // DB 업데이트
-  db.get('shorts').find({ id: shortsId }).assign(updatedShorts).write()
+  db.get('shorts').find({ shortsId: shortsId }).assign(updatedShorts).write()
 
   // 실제 API 스키마에 맞는 응답 반환
   const response = {
@@ -484,7 +484,7 @@ server.delete('/api/v1/shorts/:id', (req, res) => {
   const db = router.db
   const shortsId = parseInt(req.params.id)
 
-  const shorts = db.get('shorts').find({ id: shortsId }).value()
+  const shorts = db.get('shorts').find({ shortsId: shortsId }).value()
 
   if (!shorts) {
     return res.status(404).json({
@@ -494,7 +494,7 @@ server.delete('/api/v1/shorts/:id', (req, res) => {
   }
 
   // DB에서 삭제
-  db.get('shorts').remove({ id: shortsId }).write()
+  db.get('shorts').remove({ shortsId: shortsId }).write()
 
   res.json({
     success: true,
