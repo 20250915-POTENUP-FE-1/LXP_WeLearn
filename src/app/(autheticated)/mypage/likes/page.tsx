@@ -1,52 +1,62 @@
+import { ChevronDown, MoreHorizontal, Play } from 'lucide-react'
+import Link from 'next/link'
+
 export default function LikedShortsPage() {
   return (
-    <div className="h-full w-full px-4 py-8">
-      {/* ==================== Page Title ==================== */}
-      <h1 className="text-center text-2xl font-black text-gray-900 uppercase lg:text-left">
-        Liked Shorts
-      </h1>
-
-      {/* ==================== Main Layout (모바일: 세로, PC: 가로) ==================== */}
+    <div className="h-full w-full">
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* ==================== Left Section - Fixed Preview (모바일에서 먼저 노출) ==================== */}
-        <div className="order-1 w-full lg:order-1 lg:w-80 lg:flex-shrink-0">
-          <div className="flex flex-col gap-6 lg:sticky lg:top-24">
+        <div className="order-1 w-full lg:order-1 lg:w-100 lg:shrink-0">
+          <div className="flex flex-col items-center justify-center gap-6 py-8 md:py-0 lg:sticky lg:top-24">
+            {/* Page Title */}
+            <h1 className="pt-8 text-center text-2xl font-black text-gray-900 uppercase md:pt-0 lg:p-0 lg:text-left">
+              Liked Shorts
+            </h1>
+
             {/* Preview Card */}
-            <div className="relative mx-auto aspect-9/16 max-w-[280px] overflow-hidden rounded-xl bg-gray-900 lg:mx-0">
-              {/* 카테고리 뱃지 */}
-              <span className="absolute top-3 left-3 z-10 rounded bg-green-500 px-2 py-1 text-xs text-white">
-                category
-              </span>
+            <div className="relative mx-auto aspect-9/16 w-full overflow-hidden rounded-2xl bg-gray-200 shadow-lg md:w-[360px] lg:mx-0">
+              {/* 상단 카테고리 뱃지 */}
+              <div className="absolute top-3 right-3 left-3 z-10 flex items-center justify-between">
+                <span className="inline-flex items-center rounded-full bg-black/55 px-3 py-1 text-[10px] font-medium text-white">
+                  category
+                </span>
+              </div>
 
               {/* 썸네일 영역 */}
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-700">
                 <span className="text-sm text-gray-500">Video Preview</span>
               </div>
 
+              {/* 하단 그라데이션 */}
+              <div className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-black/85 via-black/45 to-transparent" />
+
               {/* 하단 정보 영역 */}
-              <div className="absolute right-0 bottom-16 left-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                <h3 className="mb-1 font-medium text-white">shortsTitle</h3>
-                <p className="mb-3 text-sm text-gray-300">description</p>
+              <div className="absolute right-0 bottom-0 left-0 p-5">
+                <h3 className="mb-2 line-clamp-2 text-[18px] leading-snug font-semibold text-white">
+                  shortsTitle
+                </h3>
+                <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-gray-200/90">
+                  description
+                </p>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-white">nickName</span>
-                  <span className="rounded bg-white/20 px-2 py-0.5 text-xs text-white">#tag</span>
+                  <span className="text-sm font-medium text-gray-200">nickName</span>
+                  <span className="rounded-full border border-white/25 px-3 py-1 text-[10px] text-gray-100">
+                    #tag
+                  </span>
                 </div>
               </div>
             </div>
+
             {/* 재생 버튼 */}
-            <button className="flex w-full items-center justify-center gap-2 rounded-full bg-green-500 py-3 text-white transition-colors hover:bg-green-600">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                stroke="none"
-              >
-                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-              </svg>
-              모두 재생
-            </button>
+            <Link href="/mypage/liked" className="group">
+              <button className="flex w-full items-center justify-center gap-2 rounded-full bg-green-500 py-5 text-lg font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg md:w-[360px]">
+                <Play
+                  strokeWidth={1.5}
+                  className="transition-transform duration-500 group-hover:rotate-360"
+                />
+                모두 재생
+              </button>
+            </Link>
           </div>
         </div>
 
@@ -58,19 +68,7 @@ export default function LikedShortsPage() {
             <div className="relative">
               <button className="flex items-center gap-1 rounded-md border border-gray-300 px-3 py-1.5 text-sm transition-colors hover:bg-gray-50">
                 최신순
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+                <ChevronDown strokeWidth={1.5} size={14} />
               </button>
 
               {/* ==================== Sort Dropdown (정렬 드롭다운) - hidden 제거하여 표시 ==================== */}
@@ -85,229 +83,177 @@ export default function LikedShortsPage() {
           </div>
 
           {/* ==================== Shorts List ==================== */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             {/* ==================== Shorts Card 1 ==================== */}
             <div className="flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
               {/* 썸네일 */}
-              <div className="relative h-40 w-28 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-44 sm:w-32">
+              <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
                 <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
                   thumbnailUrl
                 </div>
-                <span className="absolute top-2 left-2 rounded bg-green-500 px-1.5 py-0.5 text-[10px] text-white">
+                <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
                   개발
                 </span>
               </div>
               {/* 콘텐츠 */}
-              <div className="flex min-w-0 flex-1 flex-col">
+              <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0 flex-1">
-                    <h3 className="mb-1 line-clamp-2 font-medium text-gray-900">shortsTitle</h3>
-                    <p className="mb-2 text-sm text-gray-500">nickName · createdAt</p>
+                    <h3 className="pt-1 text-lg font-bold text-gray-900">shortsTitle</h3>
+                    <p className="mt-1.5 mb-4 text-sm text-gray-500">
+                      nickName · 조회수 100회 · createdAt
+                    </p>
+                    <p className="mb-1 line-clamp-2 text-sm text-gray-700">description</p>
                   </div>
                   {/* 더보기 버튼 */}
-                  <button className="flex-shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-gray-400"
-                    >
-                      <circle cx="12" cy="12" r="1"></circle>
-                      <circle cx="19" cy="12" r="1"></circle>
-                      <circle cx="5" cy="12" r="1"></circle>
-                    </svg>
+                  <button className="shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
+                    <MoreHorizontal size={18} className="text-black" />
                   </button>
                 </div>
-                {/* 태그 */}
-                <div className="mt-auto flex flex-wrap gap-1">
-                  <span className="text-xs text-gray-400">#tag</span>
+                {/* 키워드 */}
+                <div className="mt-auto flex flex-wrap gap-2">
+                  <span className="px-1 py-1 text-xs text-gray-900">#tag</span>
                 </div>
               </div>
             </div>
 
             {/* ==================== Shorts Card 2 ==================== */}
             <div className="flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
-              <div className="relative h-40 w-28 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-44 sm:w-32">
+              <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
                 <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
                   thumbnailUrl
                 </div>
-                <span className="absolute top-2 left-2 rounded bg-green-500 px-1.5 py-0.5 text-[10px] text-white">
+                <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
                   개발
                 </span>
               </div>
-              <div className="flex min-w-0 flex-1 flex-col">
+              <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0 flex-1">
-                    <h3 className="mb-1 line-clamp-2 font-medium text-gray-900">
+                    <h3 className="pt-1 text-lg font-bold text-gray-900">
                       AI 시대의 필수 지식 MCP 이 영상 하나로 끝내세요!
                     </h3>
-                    <p className="mb-2 text-sm text-gray-500">윤개발 · 3개월 전</p>
+                    <p className="mt-1.5 mb-4 text-sm text-gray-500">
+                      윤개발 · 조회수 1,234회 · 3개월 전
+                    </p>
+                    <p className="mb-1 line-clamp-2 text-sm text-gray-700">
+                      MCP에 대한 모든 것을 알려드립니다.
+                    </p>
                   </div>
-                  <button className="flex-shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-gray-400"
-                    >
-                      <circle cx="12" cy="12" r="1"></circle>
-                      <circle cx="19" cy="12" r="1"></circle>
-                      <circle cx="5" cy="12" r="1"></circle>
-                    </svg>
+                  <button className="shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
+                    <MoreHorizontal size={18} className="text-black" />
                   </button>
                 </div>
-                <div className="mt-auto flex flex-wrap gap-1">
-                  <span className="text-xs text-gray-400">#프로그래밍</span>
-                  <span className="text-xs text-gray-400">#AI</span>
-                  <span className="text-xs text-gray-400">#mcp</span>
+                <div className="mt-auto flex flex-wrap gap-2">
+                  <span className="px-1 py-1 text-xs text-gray-900">#프로그래밍</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#AI</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#mcp</span>
                 </div>
               </div>
             </div>
 
             {/* ==================== Shorts Card 3 ==================== */}
             <div className="flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
-              <div className="relative h-40 w-28 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-44 sm:w-32">
+              <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
                 <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
                   thumbnailUrl
                 </div>
-                <span className="absolute top-2 left-2 rounded bg-green-500 px-1.5 py-0.5 text-[10px] text-white">
+                <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
                   개발
                 </span>
               </div>
-              <div className="flex min-w-0 flex-1 flex-col">
+              <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0 flex-1">
-                    <h3 className="mb-1 line-clamp-2 font-medium text-gray-900">
+                    <h3 className="pt-1 text-lg font-bold text-gray-900">
                       파이썬 일주일 완전 정복 로드맵
                     </h3>
-                    <p className="mb-2 text-sm text-gray-500">조코딩 · 5개월 전</p>
+                    <p className="mt-1.5 mb-4 text-sm text-gray-500">
+                      조코딩 · 조회수 5,678회 · 5개월 전
+                    </p>
+                    <p className="mb-1 line-clamp-2 text-sm text-gray-700">
+                      파이썬을 일주일 만에 마스터하는 방법을 알려드립니다.
+                    </p>
                   </div>
-                  <button className="flex-shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-gray-400"
-                    >
-                      <circle cx="12" cy="12" r="1"></circle>
-                      <circle cx="19" cy="12" r="1"></circle>
-                      <circle cx="5" cy="12" r="1"></circle>
-                    </svg>
+                  <button className="shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
+                    <MoreHorizontal size={18} className="text-black" />
                   </button>
                 </div>
-                <div className="mt-auto flex flex-wrap gap-1">
-                  <span className="text-xs text-gray-400">#프로그래밍</span>
-                  <span className="text-xs text-gray-400">#파이썬</span>
-                  <span className="text-xs text-gray-400">#python</span>
+                <div className="mt-auto flex flex-wrap gap-2">
+                  <span className="px-1 py-1 text-xs text-gray-900">#프로그래밍</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#파이썬</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#python</span>
                 </div>
               </div>
             </div>
 
             {/* ==================== Shorts Card 4 ==================== */}
             <div className="flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
-              <div className="relative h-40 w-28 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-44 sm:w-32">
+              <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
                 <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
                   thumbnailUrl
                 </div>
-                <span className="absolute top-2 left-2 rounded bg-green-500 px-1.5 py-0.5 text-[10px] text-white">
+                <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
                   개발
                 </span>
               </div>
-              <div className="flex min-w-0 flex-1 flex-col">
+              <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0 flex-1">
-                    <h3 className="mb-1 line-clamp-2 font-medium text-gray-900">
+                    <h3 className="pt-1 text-lg font-bold text-gray-900">
                       개발자가 다크 모드를 쓰는 이유
                     </h3>
-                    <p className="mb-2 text-sm text-gray-500">김개발자 · 6개월 전</p>
+                    <p className="mt-1.5 mb-4 text-sm text-gray-500">
+                      김개발자 · 조회수 2,345회 · 6개월 전
+                    </p>
+                    <p className="mb-1 line-clamp-2 text-sm text-gray-700">
+                      다크 모드의 장점과 개발자들이 선호하는 이유를 알아봅니다.
+                    </p>
                   </div>
-                  <button className="flex-shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-gray-400"
-                    >
-                      <circle cx="12" cy="12" r="1"></circle>
-                      <circle cx="19" cy="12" r="1"></circle>
-                      <circle cx="5" cy="12" r="1"></circle>
-                    </svg>
+                  <button className="shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
+                    <MoreHorizontal size={18} className="text-black" />
                   </button>
                 </div>
-                <div className="mt-auto flex flex-wrap gap-1">
-                  <span className="text-xs text-gray-400">#개발자</span>
-                  <span className="text-xs text-gray-400">#develop</span>
-                  <span className="text-xs text-gray-400">#darkmode</span>
+                <div className="mt-auto flex flex-wrap gap-2">
+                  <span className="px-1 py-1 text-xs text-gray-900">#개발자</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#develop</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#darkmode</span>
                 </div>
               </div>
             </div>
 
             {/* ==================== Shorts Card 5 ==================== */}
             <div className="flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
-              <div className="relative h-40 w-28 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-44 sm:w-32">
+              <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
                 <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
                   thumbnailUrl
                 </div>
-                <span className="absolute top-2 left-2 rounded bg-green-500 px-1.5 py-0.5 text-[10px] text-white">
+                <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
                   개발
                 </span>
               </div>
-              <div className="flex min-w-0 flex-1 flex-col">
+              <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0 flex-1">
-                    <h3 className="mb-1 line-clamp-2 font-medium text-gray-900">
+                    <h3 className="pt-1 text-lg font-bold text-gray-900">
                       점프 투 파이썬! 파이썬의 기초
                     </h3>
-                    <p className="mb-2 text-sm text-gray-500">프론트만로해 · 7개월 전</p>
+                    <p className="mt-1.5 mb-4 text-sm text-gray-500">
+                      프론트만로해 · 조회수 987회 · 7개월 전
+                    </p>
+                    <p className="mb-1 line-clamp-2 text-sm text-gray-700">
+                      파이썬의 기초부터 차근차근 배워봅시다.
+                    </p>
                   </div>
-                  <button className="flex-shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-gray-400"
-                    >
-                      <circle cx="12" cy="12" r="1"></circle>
-                      <circle cx="19" cy="12" r="1"></circle>
-                      <circle cx="5" cy="12" r="1"></circle>
-                    </svg>
+                  <button className="shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
+                    <MoreHorizontal size={18} className="text-black" />
                   </button>
                 </div>
-                <div className="mt-auto flex flex-wrap gap-1">
-                  <span className="text-xs text-gray-400">#프로그래밍</span>
-                  <span className="text-xs text-gray-400">#파이썬</span>
-                  <span className="text-xs text-gray-400">#python</span>
-                  <span className="text-xs text-gray-400">#백엔드</span>
+                <div className="mt-auto flex flex-wrap gap-2">
+                  <span className="px-1 py-1 text-xs text-gray-900">#프로그래밍</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#파이썬</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#python</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#백엔드</span>
                 </div>
               </div>
             </div>

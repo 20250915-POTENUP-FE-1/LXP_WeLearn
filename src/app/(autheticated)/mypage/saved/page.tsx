@@ -1,58 +1,85 @@
+import { Button } from '@/components/ui/Button'
+import { GripVertical, MoreHorizontal, Pencil, Play, Tally2 } from 'lucide-react'
+import Link from 'next/link'
+
 export default function SavedShortsPage() {
   return (
-    <div className="h-full w-full px-4 py-8">
-      {/* ==================== Page Header (플레이리스트 제목 + 수정 버튼) ==================== */}
-      <div className="mb-6 flex items-center gap-3">
-        <h1 className="text-center text-2xl font-black text-gray-900 uppercase lg:text-left">
-          Spring Boot 시작하기
-        </h1>
-
-        <button className="rounded bg-yellow-400 px-3 py-1 text-sm text-black transition-colors hover:bg-yellow-500">
-          수정
-        </button>
-      </div>
-
-      {/* ==================== Main Layout (모바일: 세로, PC: 가로) ==================== */}
+    <div className="h-full w-full">
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* ==================== Left Section - Fixed Preview (모바일에서 먼저 노출) ==================== */}
-        <div className="order-1 w-full lg:order-1 lg:w-80 lg:flex-shrink-0">
-          <div className="flex flex-col gap-6 lg:sticky lg:top-24">
+        <div className="order-1 w-full lg:order-1 lg:w-100 lg:shrink-0">
+          <div className="flex flex-col items-center justify-center gap-6 py-8 md:py-0 lg:sticky lg:top-24">
+            {/* Page Header (플레이리스트 제목 + 수정 버튼) */}
+            <div className="flex items-center gap-3 pt-8 md:pt-0 lg:p-0">
+              <h1 className="text-center text-2xl font-black text-gray-900 uppercase lg:text-left">
+                Spring Boot 시작하기
+              </h1>
+              <button className="flex items-center justify-center gap-2 rounded bg-black px-3 py-1.5 text-sm text-white transition-colors hover:bg-black/80">
+                {/* <Pencil strokeWidth={1.5} size={14} /> */}
+                수정
+              </button>
+            </div>
+
             {/* Preview Card */}
-            <div className="relative mx-auto aspect-9/16 max-w-[280px] overflow-hidden rounded-xl bg-gray-900 lg:mx-0">
-              {/* 카테고리 뱃지 */}
-              <span className="absolute top-3 left-3 z-10 rounded bg-green-500 px-2 py-1 text-xs text-white">
-                category
-              </span>
+            <div className="relative mx-auto aspect-9/16 w-full overflow-hidden rounded-2xl bg-gray-200 shadow-lg md:w-[360px] lg:mx-0">
+              {/* 상단 카테고리 뱃지 */}
+              <div className="absolute top-3 right-3 left-3 z-10 flex items-center justify-between">
+                <span className="inline-flex items-center rounded-full bg-black/55 px-3 py-1 text-[10px] font-medium text-white">
+                  category
+                </span>
+              </div>
 
               {/* 썸네일 영역 */}
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-700">
                 <span className="text-sm text-gray-500">Video Preview</span>
               </div>
 
+              {/* 하단 그라데이션 */}
+              <div className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-black/85 via-black/45 to-transparent" />
+
               {/* 하단 정보 영역 */}
-              <div className="absolute right-0 bottom-16 left-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                <h3 className="mb-1 font-medium text-white">shortsTitle</h3>
-                <p className="mb-3 text-sm text-gray-300">description</p>
+              <div className="absolute right-0 bottom-0 left-0 p-5">
+                <h3 className="mb-2 line-clamp-2 text-[18px] leading-snug font-semibold text-white">
+                  shortsTitle
+                </h3>
+                <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-gray-200/90">
+                  description
+                </p>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-white">nickName</span>
-                  <span className="rounded bg-white/20 px-2 py-0.5 text-xs text-white">#tag</span>
+                  <span className="text-sm font-medium text-gray-200">nickName</span>
+                  <span className="rounded-full border border-white/25 px-3 py-1 text-[10px] text-gray-100">
+                    #tag
+                  </span>
                 </div>
               </div>
             </div>
-            {/* 재생 버튼 */}
-            <button className="flex w-full items-center justify-center gap-2 rounded-full bg-green-500 py-3 text-white transition-colors hover:bg-green-600">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                stroke="none"
-              >
-                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-              </svg>
-              모두 재생
-            </button>
+
+            {/* 취소 / 순서 저장 버튼 */}
+            <div className="pt-4-y-4 flex w-full flex-col gap-6 md:w-[360px]">
+              <div className="rounded-full shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg">
+                <Button type="button" variant="accent" className="text-md w-full rounded-full py-6">
+                  저장하기
+                </Button>
+              </div>
+              <div className="rounded-full shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="text-md w-full rounded-full py-6"
+                >
+                  취소
+                </Button>
+              </div>
+            </div>
+            {/* <Link href="/mypage/liked" className="group">
+              <button className="flex w-full items-center justify-center gap-2 rounded-full bg-green-500 py-5 text-lg font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg md:w-[360px]">
+                <Play
+                  strokeWidth={1.5}
+                  className="transition-transform duration-500 group-hover:rotate-360"
+                />
+                모두 재생
+              </button>
+            </Link> */}
           </div>
         </div>
 
@@ -64,46 +91,34 @@ export default function SavedShortsPage() {
           </div>
 
           {/* ==================== Playlist Shorts List (드래그 가능) ==================== */}
-          <div className="space-y-3">
+          <div className="space-y-6">
             {/* ==================== Playlist Shorts Card 1 ==================== */}
-            <div className="group flex cursor-pointer gap-3 rounded-lg border border-gray-200 bg-white p-3 transition-shadow hover:shadow-md">
+            <div className="group flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
               {/* 드래그 핸들 */}
-              <div className="flex w-6 flex-shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-gray-400 group-hover:text-gray-600"
-                >
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <line x1="3" y1="12" x2="21" y2="12"></line>
-                  <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
+              <div className="flex w-6 shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
+                <Tally2 strokeWidth={1.5} />
               </div>
               {/* 썸네일 */}
-              <div className="relative h-28 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-32 sm:w-24">
+              <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
                 <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
                   thumbnailUrl
                 </div>
+                <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
+                  개발
+                </span>
               </div>
               {/* 콘텐츠 */}
-              <div className="flex min-w-0 flex-1 flex-col py-1">
+              <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0 flex-1">
-                    <h3 className="mb-1 line-clamp-2 text-sm font-medium text-gray-900">
-                      shortsTitle
-                    </h3>
-                    <p className="text-xs text-gray-500">nickName</p>
-                    <p className="text-xs text-gray-400">createdAt</p>
+                    <h3 className="pt-1 text-lg font-bold text-gray-900">shortsTitle</h3>
+                    <p className="mt-1.5 mb-4 text-sm text-gray-500">
+                      nickName · 조회수 100회 · createdAt
+                    </p>
+                    <p className="mb-1 line-clamp-2 text-sm text-gray-700">description</p>
                   </div>
                   {/* 더보기 버튼 */}
-                  <button className="flex-shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
+                  <button className="shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="18"
@@ -114,258 +129,174 @@ export default function SavedShortsPage() {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="text-gray-400"
+                      className="text-black"
                     >
                       <circle cx="12" cy="12" r="1"></circle>
                       <circle cx="19" cy="12" r="1"></circle>
                       <circle cx="5" cy="12" r="1"></circle>
                     </svg>
                   </button>
+                </div>
+                {/* 키워드 */}
+                <div className="mt-auto flex flex-wrap gap-2">
+                  <span className="px-1 py-1 text-xs text-gray-900">#tag</span>
                 </div>
               </div>
             </div>
 
             {/* ==================== Playlist Shorts Card 2 ==================== */}
-            <div className="group flex cursor-pointer gap-3 rounded-lg border border-gray-200 bg-white p-3 transition-shadow hover:shadow-md">
-              <div className="flex w-6 flex-shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-gray-400 group-hover:text-gray-600"
-                >
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <line x1="3" y1="12" x2="21" y2="12"></line>
-                  <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
+            <div className="group flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
+              {/* 드래그 핸들 */}
+              <div className="flex w-6 shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
+                <Tally2 strokeWidth={1.5} />
               </div>
-              <div className="relative h-28 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-32 sm:w-24">
+              <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
                 <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
                   thumbnailUrl
                 </div>
+                <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
+                  개발
+                </span>
               </div>
-              <div className="flex min-w-0 flex-1 flex-col py-1">
+              <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0 flex-1">
-                    <h3 className="mb-1 line-clamp-2 text-sm font-medium text-gray-900">
+                    <h3 className="pt-1 text-lg font-bold text-gray-900">
                       Spring Boot란 무엇인가요?
                     </h3>
-                    <p className="text-xs text-gray-500">윤개발</p>
-                    <p className="text-xs text-gray-400">3개월 전</p>
+                    <p className="mt-1.5 mb-4 text-sm text-gray-500">
+                      윤개발 · 조회수 1,234회 · 3개월 전
+                    </p>
+                    <p className="mb-1 line-clamp-2 text-sm text-gray-700">
+                      Spring Boot의 기본 개념을 알려드립니다.
+                    </p>
                   </div>
-                  <button className="flex-shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-gray-400"
-                    >
-                      <circle cx="12" cy="12" r="1"></circle>
-                      <circle cx="19" cy="12" r="1"></circle>
-                      <circle cx="5" cy="12" r="1"></circle>
-                    </svg>
+                  <button className="shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
+                    <MoreHorizontal size={18} className="text-black" />
                   </button>
                 </div>
-                <div className="mt-auto flex flex-wrap gap-1">
-                  <span className="text-xs text-gray-400">#프로그래밍</span>
-                  <span className="text-xs text-gray-400">#AI</span>
-                  <span className="text-xs text-gray-400">#mcp</span>
+                <div className="mt-auto flex flex-wrap gap-2">
+                  <span className="px-1 py-1 text-xs text-gray-900">#프로그래밍</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#AI</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#mcp</span>
                 </div>
               </div>
             </div>
 
             {/* ==================== Playlist Shorts Card 3 ==================== */}
-            <div className="group flex cursor-pointer gap-3 rounded-lg border border-gray-200 bg-white p-3 transition-shadow hover:shadow-md">
-              <div className="flex w-6 flex-shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-gray-400 group-hover:text-gray-600"
-                >
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <line x1="3" y1="12" x2="21" y2="12"></line>
-                  <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
+            <div className="group flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
+              {/* 드래그 핸들 */}
+              <div className="flex w-6 shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
+                <Tally2 strokeWidth={1.5} />
               </div>
-              <div className="relative h-28 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-32 sm:w-24">
+              <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
                 <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
                   thumbnailUrl
                 </div>
+                <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
+                  개발
+                </span>
               </div>
-              <div className="flex min-w-0 flex-1 flex-col py-1">
+              <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0 flex-1">
-                    <h3 className="mb-1 line-clamp-2 text-sm font-medium text-gray-900">
+                    <h3 className="pt-1 text-lg font-bold text-gray-900">
                       Spring vs Spring Boot, 무엇이 다른가요
                     </h3>
-                    <p className="text-xs text-gray-500">조코딩</p>
-                    <p className="text-xs text-gray-400">5개월 전</p>
+                    <p className="mt-1.5 mb-4 text-sm text-gray-500">
+                      조코딩 · 조회수 5,678회 · 5개월 전
+                    </p>
+                    <p className="mb-1 line-clamp-2 text-sm text-gray-700">
+                      Spring과 Spring Boot의 차이점을 비교해봅니다.
+                    </p>
                   </div>
-                  <button className="flex-shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-gray-400"
-                    >
-                      <circle cx="12" cy="12" r="1"></circle>
-                      <circle cx="19" cy="12" r="1"></circle>
-                      <circle cx="5" cy="12" r="1"></circle>
-                    </svg>
+                  <button className="shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
+                    <MoreHorizontal size={18} className="text-black" />
                   </button>
                 </div>
-                <div className="mt-auto flex flex-wrap gap-1">
-                  <span className="text-xs text-gray-400">#프로그래밍</span>
-                  <span className="text-xs text-gray-400">#파이썬</span>
-                  <span className="text-xs text-gray-400">#python</span>
+                <div className="mt-auto flex flex-wrap gap-2">
+                  <span className="px-1 py-1 text-xs text-gray-900">#프로그래밍</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#파이썬</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#python</span>
                 </div>
               </div>
             </div>
 
             {/* ==================== Playlist Shorts Card 4 ==================== */}
-            <div className="group flex cursor-pointer gap-3 rounded-lg border border-gray-200 bg-white p-3 transition-shadow hover:shadow-md">
-              <div className="flex w-6 flex-shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-gray-400 group-hover:text-gray-600"
-                >
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <line x1="3" y1="12" x2="21" y2="12"></line>
-                  <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
+            <div className="group flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
+              {/* 드래그 핸들 */}
+              <div className="flex w-6 shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
+                <Tally2 strokeWidth={1.5} />
               </div>
-              <div className="relative h-28 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-32 sm:w-24">
+              <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
                 <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
                   thumbnailUrl
                 </div>
+                <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
+                  개발
+                </span>
               </div>
-              <div className="flex min-w-0 flex-1 flex-col py-1">
+              <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0 flex-1">
-                    <h3 className="mb-1 line-clamp-2 text-sm font-medium text-gray-900">
+                    <h3 className="pt-1 text-lg font-bold text-gray-900">
                       IntelliJ로 Spring Boot 프로젝트 시작하기
                     </h3>
-                    <p className="text-xs text-gray-500">김개발자</p>
-                    <p className="text-xs text-gray-400">6개월 전</p>
+                    <p className="mt-1.5 mb-4 text-sm text-gray-500">
+                      김개발자 · 조회수 2,345회 · 6개월 전
+                    </p>
+                    <p className="mb-1 line-clamp-2 text-sm text-gray-700">
+                      IntelliJ에서 Spring Boot 프로젝트를 시작하는 방법을 알려드립니다.
+                    </p>
                   </div>
-                  <button className="flex-shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-gray-400"
-                    >
-                      <circle cx="12" cy="12" r="1"></circle>
-                      <circle cx="19" cy="12" r="1"></circle>
-                      <circle cx="5" cy="12" r="1"></circle>
-                    </svg>
+                  <button className="shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
+                    <MoreHorizontal size={18} className="text-black" />
                   </button>
                 </div>
-                <div className="mt-auto flex flex-wrap gap-1">
-                  <span className="text-xs text-gray-400">#개발자</span>
-                  <span className="text-xs text-gray-400">#develop</span>
-                  <span className="text-xs text-gray-400">#darkmode</span>
+                <div className="mt-auto flex flex-wrap gap-2">
+                  <span className="px-1 py-1 text-xs text-gray-900">#개발자</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#develop</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#darkmode</span>
                 </div>
               </div>
             </div>
 
             {/* ==================== Playlist Shorts Card 5 ==================== */}
-            <div className="group flex cursor-pointer gap-3 rounded-lg border border-gray-200 bg-white p-3 transition-shadow hover:shadow-md">
-              <div className="flex w-6 flex-shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-gray-400 group-hover:text-gray-600"
-                >
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <line x1="3" y1="12" x2="21" y2="12"></line>
-                  <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
+            <div className="group flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
+              {/* 드래그 핸들 */}
+              <div className="flex w-6 shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
+                <Tally2 strokeWidth={1.5} />
               </div>
-              <div className="relative h-28 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-32 sm:w-24">
+              <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
                 <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
                   thumbnailUrl
                 </div>
+                <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
+                  개발
+                </span>
               </div>
-              <div className="flex min-w-0 flex-1 flex-col py-1">
+              <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0 flex-1">
-                    <h3 className="mb-1 line-clamp-2 text-sm font-medium text-gray-900">
+                    <h3 className="pt-1 text-lg font-bold text-gray-900">
                       Spring Initializr 제대로 사용하는 방법
                     </h3>
-                    <p className="text-xs text-gray-500">프론트만로해</p>
-                    <p className="text-xs text-gray-400">7개월 전</p>
+                    <p className="mt-1.5 mb-4 text-sm text-gray-500">
+                      프론트만로해 · 조회수 987회 · 7개월 전
+                    </p>
+                    <p className="mb-1 line-clamp-2 text-sm text-gray-700">
+                      Spring Initializr를 사용하여 프로젝트를 설정하는 방법을 알아봅니다.
+                    </p>
                   </div>
-                  <button className="flex-shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-gray-400"
-                    >
-                      <circle cx="12" cy="12" r="1"></circle>
-                      <circle cx="19" cy="12" r="1"></circle>
-                      <circle cx="5" cy="12" r="1"></circle>
-                    </svg>
+                  <button className="shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100">
+                    <MoreHorizontal size={18} className="text-black" />
                   </button>
                 </div>
-                <div className="mt-auto flex flex-wrap gap-1">
-                  <span className="text-xs text-gray-400">#프로그래밍</span>
-                  <span className="text-xs text-gray-400">#파이썬</span>
-                  <span className="text-xs text-gray-400">#python</span>
-                  <span className="text-xs text-gray-400">#백엔드</span>
+                <div className="mt-auto flex flex-wrap gap-2">
+                  <span className="px-1 py-1 text-xs text-gray-900">#프로그래밍</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#파이썬</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#python</span>
+                  <span className="px-1 py-1 text-xs text-gray-900">#백엔드</span>
                 </div>
               </div>
             </div>
