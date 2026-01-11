@@ -161,68 +161,1671 @@
       }
     }
   ],
-  "users": [],
-
+  "users": [
+    {
+      "userId": 16,
+      "nickname": "먕먕먕",
+      "profileImageUrl": null
+    }
+  ],
   "comments": [
     {
-      "id": 1,
-      "shortsId": 2,
-      "content": "첫 댓글입니다 😊",
-      "createdAt": "2026-01-05T09:30:00Z",
-      "user": {
-        "id": 1,
-        "name": "홍길동",
-        "email": "hong@example.com",
-        "nickname": "hong",
-        "profileUrl": null,
-        "createdAt": "2025-12-01T10:00:00Z"
+      "commentId": 1,
+      "shortsId": 3,
+      "content": "이 영상 너무 좋아요",
+      "createdAt": "2026-01-07T10:15:00",
+      "writer": {
+        "userId": 1,
+        "nickname": "hojun",
+        "profileImageUrl": "https://cdn.example.com/profile/1.png"
       },
-      "parentId": null
+      "replyCount": 2,
+      "isMine": false
     },
     {
-      "id": 2,
-      "shortsId": 2,
-      "content": "좋은 글이네요!",
-      "createdAt": "2026-01-05T09:32:00Z",
-      "user": {
-        "id": 2,
-        "name": "김철수",
-        "email": "kim@example.com",
-        "nickname": "chulsoo",
-        "profileUrl": null,
-        "createdAt": "2025-12-05T09:00:00Z"
+      "commentId": 2,
+      "shortsId": 3,
+      "content": "설명 잘 들었습니다",
+      "createdAt": "2026-01-07T10:18:00",
+      "writer": {
+        "userId": 2,
+        "nickname": "alice",
+        "profileImageUrl": "https://cdn.example.com/profile/2.png"
       },
-      "parentId": null
+      "replyCount": 0,
+      "isMine": true
     },
     {
-      "id": 3,
-      "shortsId": 2,
-      "content": "저도 동의합니다 👍",
-      "createdAt": "2026-01-05T09:35:00Z",
-      "user": {
-        "id": 3,
-        "name": "이영희",
-        "email": "lee@example.com",
-        "nickname": "younghee",
-        "profileUrl": null,
-        "createdAt": "2025-12-10T08:30:00Z"
+      "commentId": 3,
+      "shortsId": 4,
+      "content": "덕분에 이해가 잘 됐어요",
+      "createdAt": "2026-01-07T10:22:00",
+      "writer": {
+        "userId": 3,
+        "nickname": "minsu",
+        "profileImageUrl": "https://cdn.example.com/profile/3.png"
       },
-      "parentId": 1
+      "replyCount": 1,
+      "isMine": false
     },
     {
-      "id": 4,
-      "shortsId": 2,
-      "content": "감사합니다!",
-      "createdAt": "2026-01-05T09:36:00Z",
-      "user": {
-        "id": 1,
-        "name": "홍길동",
-        "email": "hong@example.com",
-        "nickname": "hong",
-        "profileUrl": null,
-        "createdAt": "2025-12-01T10:00:00Z"
+      "commentId": 4,
+      "shortsId": 4,
+      "content": "다음 영상도 기대할게요!",
+      "createdAt": "2026-01-07T10:30:00",
+      "writer": {
+        "userId": 4,
+        "nickname": "jiyoon",
+        "profileImageUrl": "https://cdn.example.com/profile/4.png"
       },
-      "parentId": 2
+      "replyCount": 2,
+      "isMine": false
+    },
+    {
+      "commentId": 5,
+      "shortsId": 5,
+      "content": "실무에서 바로 써먹을 수 있겠네요",
+      "createdAt": "2026-01-07T10:35:00",
+      "writer": {
+        "userId": 5,
+        "nickname": "developerK",
+        "profileImageUrl": "https://cdn.example.com/profile/5.png"
+      },
+      "replyCount": 7,
+      "isMine": false
+    },
+    {
+      "commentId": 6,
+      "shortsId": 5,
+      "content": "이 부분 정말 도움됐어요",
+      "createdAt": "2026-01-07T10:38:00",
+      "writer": {
+        "userId": 6,
+        "nickname": "soyeon",
+        "profileImageUrl": "https://cdn.example.com/profile/6.png"
+      },
+      "replyCount": 1,
+      "isMine": false
+    },
+    {
+      "commentId": 7,
+      "shortsId": 6,
+      "content": "이해 안 됐던 게 해결됐어요",
+      "createdAt": "2026-01-07T10:45:00",
+      "writer": {
+        "userId": 7,
+        "nickname": "junho",
+        "profileImageUrl": "https://cdn.example.com/profile/7.png"
+      },
+      "replyCount": 2,
+      "isMine": false
+    },
+    {
+      "commentId": 8,
+      "shortsId": 6,
+      "content": "시간 가는 줄 모르고 봤네요",
+      "createdAt": "2026-01-07T10:50:00",
+      "writer": {
+        "userId": 8,
+        "nickname": "hyeri",
+        "profileImageUrl": "https://cdn.example.com/profile/8.png"
+      },
+      "replyCount": 6,
+      "isMine": false
+    },
+    {
+      "commentId": 9,
+      "shortsId": 6,
+      "content": "이런 콘텐츠 너무 좋아요 👍",
+      "createdAt": "2026-01-07T10:55:00",
+      "writer": {
+        "userId": 9,
+        "nickname": "taeyang",
+        "profileImageUrl": "https://cdn.example.com/profile/9.png"
+      },
+      "replyCount": 1,
+      "isMine": false
+    },
+    {
+      "commentId": 10,
+      "shortsId": 7,
+      "content": "초보자도 이해하기 쉬웠어요",
+      "createdAt": "2026-01-07T11:00:00",
+      "writer": {
+        "userId": 10,
+        "nickname": "beginnerDev",
+        "profileImageUrl": "https://cdn.example.com/profile/10.png"
+      },
+      "replyCount": 0,
+      "isMine": false
+    },
+    {
+      "commentId": 11,
+      "shortsId": 7,
+      "content": "정리 진짜 잘하셨네요",
+      "createdAt": "2026-01-07T11:05:00",
+      "writer": {
+        "userId": 11,
+        "nickname": "seungho",
+        "profileImageUrl": "https://cdn.example.com/profile/11.png"
+      },
+      "replyCount": 0,
+      "isMine": false
+    },
+    {
+      "commentId": 12,
+      "shortsId": 7,
+      "content": "구독하고 갑니다",
+      "createdAt": "2026-01-07T11:10:00",
+      "writer": {
+        "userId": 12,
+        "nickname": "subscriber",
+        "profileImageUrl": "https://cdn.example.com/profile/12.png"
+      },
+      "replyCount": 0,
+      "isMine": false
+    },
+    {
+      "commentId": 13,
+      "shortsId": 8,
+      "content": "이 부분 코드 예제도 있으면 좋겠어요",
+      "createdAt": "2026-01-07T11:15:00",
+      "writer": {
+        "userId": 13,
+        "nickname": "codeLover",
+        "profileImageUrl": "https://cdn.example.com/profile/13.png"
+      },
+      "replyCount": 2,
+      "isMine": false
+    },
+    {
+      "commentId": 14,
+      "shortsId": 8,
+      "content": "영상 퀄리티가 점점 좋아지네요",
+      "createdAt": "2026-01-07T11:20:00",
+      "writer": {
+        "userId": 14,
+        "nickname": "videoFan",
+        "profileImageUrl": "https://cdn.example.com/profile/14.png"
+      },
+      "replyCount": 0,
+      "isMine": false
+    },
+    {
+      "commentId": 15,
+      "shortsId": 8,
+      "content": "덕분에 프로젝트에 적용했어요",
+      "createdAt": "2026-01-07T11:25:00",
+      "writer": {
+        "userId": 15,
+        "nickname": "realWorldDev",
+        "profileImageUrl": "https://cdn.example.com/profile/15.png"
+      },
+      "replyCount": 1,
+      "isMine": false
+    },
+    {
+      "commentId": 16,
+      "shortsId": 3,
+      "content": "이 영상 여러 번 봤어요",
+      "createdAt": "2026-01-07T11:30:00",
+      "writer": {
+        "userId": 16,
+        "nickname": "replayUser",
+        "profileImageUrl": "https://cdn.example.com/profile/16.png"
+      },
+      "replyCount": 0,
+      "isMine": false
+    },
+    {
+      "commentId": 17,
+      "shortsId": 4,
+      "content": "설명 속도가 딱 좋아요",
+      "createdAt": "2026-01-07T11:35:00",
+      "writer": {
+        "userId": 17,
+        "nickname": "steady",
+        "profileImageUrl": "https://cdn.example.com/profile/17.png"
+      },
+      "replyCount": 4,
+      "isMine": false
+    },
+    {
+      "commentId": 18,
+      "shortsId": 5,
+      "content": "북마크 해두고 다시 볼게요",
+      "createdAt": "2026-01-07T11:40:00",
+      "writer": {
+        "userId": 18,
+        "nickname": "bookmarkUser",
+        "profileImageUrl": "https://cdn.example.com/profile/18.png"
+      },
+      "replyCount": 1,
+      "isMine": false
+    },
+    {
+      "commentId": 19,
+      "shortsId": 6,
+      "content": "질문 하나 남겨도 될까요?",
+      "createdAt": "2026-01-07T11:45:00",
+      "writer": {
+        "userId": 19,
+        "nickname": "questioner",
+        "profileImageUrl": "https://cdn.example.com/profile/19.png"
+      },
+      "replyCount": 2,
+      "isMine": false
+    },
+    {
+      "commentId": 20,
+      "shortsId": 7,
+      "content": "오늘도 좋은 영상 감사합니다",
+      "createdAt": "2026-01-07T11:50:00",
+      "writer": {
+        "userId": 20,
+        "nickname": "thanksDev",
+        "profileImageUrl": "https://cdn.example.com/profile/20.png"
+      },
+      "replyCount": 0,
+      "isMine": false
+    },
+    {
+      "commentId": 1768051317924,
+      "shortsId": 3,
+      "content": "먕먕",
+      "createdAt": "2026-01-10T13:21:57.924Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768051547680,
+      "shortsId": 3,
+      "content": "으흠?",
+      "createdAt": "2026-01-10T13:25:47.680Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768056496761,
+      "shortsId": 3,
+      "content": "흐으으음",
+      "createdAt": "2026-01-10T14:48:16.761Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768056624994,
+      "shortsId": 3,
+      "content": "???????",
+      "createdAt": "2026-01-10T14:50:24.994Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768056650051,
+      "shortsId": 3,
+      "content": "호흠?",
+      "createdAt": "2026-01-10T14:50:50.051Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768056799488,
+      "shortsId": 3,
+      "content": "흐으으으으으음",
+      "createdAt": "2026-01-10T23:53:19.488Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768056921058,
+      "shortsId": 3,
+      "content": "크아아아아",
+      "createdAt": "2026-01-10T23:55:21.058Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768074671330,
+      "shortsId": 4,
+      "content": "굿?",
+      "createdAt": "2026-01-11T04:51:11.330Z",
+      "isMine": true,
+      "replyCount": 4,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768075166275,
+      "shortsId": 4,
+      "content": "굿?",
+      "createdAt": "2026-01-11T04:59:26.275Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768075168765,
+      "shortsId": 4,
+      "content": "구굿?",
+      "createdAt": "2026-01-11T04:59:28.765Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768111052123,
+      "shortsId": 4,
+      "content": "아이디가 없는데",
+      "createdAt": "2026-01-11T14:57:32.123Z",
+      "isMine": true,
+      "replyCount": 2,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768111308600,
+      "shortsId": 4,
+      "content": "욥",
+      "createdAt": "2026-01-11T15:01:48.600Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768111423597,
+      "shortsId": 5,
+      "content": "욥?",
+      "createdAt": "2026-01-11T15:03:43.597Z",
+      "isMine": true,
+      "replyCount": 1,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768111486309,
+      "shortsId": 5,
+      "content": "엥",
+      "createdAt": "2026-01-11T15:04:46.309Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768111615609,
+      "shortsId": 4,
+      "content": "굿",
+      "createdAt": "2026-01-11T15:06:55.609Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768111652671,
+      "shortsId": 5,
+      "content": "잘되는가",
+      "createdAt": "2026-01-11T15:07:32.671Z",
+      "isMine": true,
+      "replyCount": 5,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768113411031,
+      "shortsId": 4,
+      "content": "굿?",
+      "createdAt": "2026-01-11T15:36:51.031Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768113456390,
+      "shortsId": 6,
+      "content": "굿?",
+      "createdAt": "2026-01-11T15:37:36.390Z",
+      "isMine": true,
+      "replyCount": 4,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768113463892,
+      "shortsId": 6,
+      "content": "흐음",
+      "createdAt": "2026-01-11T15:37:43.892Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768113620675,
+      "shortsId": 6,
+      "content": "왜 등록된게없어",
+      "createdAt": "2026-01-11T15:40:20.675Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768113632490,
+      "shortsId": 9,
+      "content": "네?",
+      "createdAt": "2026-01-11T15:40:32.490Z",
+      "isMine": true,
+      "replyCount": 5,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768113650705,
+      "shortsId": 9,
+      "content": "뭐지?",
+      "createdAt": "2026-01-11T15:40:50.705Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768113659122,
+      "shortsId": 9,
+      "content": "호오오오",
+      "createdAt": "2026-01-11T15:40:59.122Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768113668988,
+      "shortsId": 9,
+      "content": "이건!",
+      "createdAt": "2026-01-11T15:41:08.988Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768113727912,
+      "shortsId": 9,
+      "content": "귯?",
+      "createdAt": "2026-01-11T15:42:07.912Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768113834348,
+      "shortsId": 9,
+      "content": "등록!",
+      "createdAt": "2026-01-11T15:43:54.348Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768113987111,
+      "shortsId": 9,
+      "content": "귯?",
+      "createdAt": "2026-01-11T15:46:27.111Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768114047130,
+      "shortsId": 9,
+      "content": "?",
+      "createdAt": "2026-01-11T15:47:27.130Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768114096080,
+      "shortsId": 9,
+      "content": "음?",
+      "createdAt": "2026-01-11T15:48:16.080Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768114147637,
+      "shortsId": 9,
+      "content": "예?",
+      "createdAt": "2026-01-11T15:49:07.637Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768114377652,
+      "shortsId": 12,
+      "content": "음?????",
+      "createdAt": "2026-01-11T15:52:57.652Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768114387627,
+      "shortsId": 12,
+      "content": "강력새로고침?",
+      "createdAt": "2026-01-11T15:53:07.627Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768114390277,
+      "shortsId": 12,
+      "content": "음?",
+      "createdAt": "2026-01-11T15:53:10.277Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768114393759,
+      "shortsId": 12,
+      "content": "여전히",
+      "createdAt": "2026-01-11T15:53:13.759Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768114455989,
+      "shortsId": 12,
+      "content": "?",
+      "createdAt": "2026-01-11T15:54:15.989Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768114596043,
+      "shortsId": 12,
+      "content": "규웃",
+      "createdAt": "2026-01-11T15:56:36.043Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768133349061,
+      "shortsId": 4,
+      "content": "으잉",
+      "createdAt": "2026-01-11T21:09:09.061Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768133367892,
+      "shortsId": 12,
+      "content": "으잉",
+      "createdAt": "2026-01-11T21:09:27.892Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768133558206,
+      "shortsId": 16,
+      "content": "욥",
+      "createdAt": "2026-01-11T21:12:38.206Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768133688202,
+      "shortsId": 17,
+      "content": "등록!",
+      "createdAt": "2026-01-11T21:14:48.202Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768134174760,
+      "shortsId": 12,
+      "content": "맞나",
+      "createdAt": "2026-01-11T21:22:54.760Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768134221819,
+      "shortsId": 12,
+      "content": "테스트",
+      "createdAt": "2026-01-11T21:23:41.819Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768134316691,
+      "shortsId": 12,
+      "content": "?",
+      "createdAt": "2026-01-11T21:25:16.691Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768134435382,
+      "shortsId": 17,
+      "content": "?",
+      "createdAt": "2026-01-11T21:27:15.382Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768134579506,
+      "shortsId": 19,
+      "content": "정상?",
+      "createdAt": "2026-01-11T21:29:39.506Z",
+      "isMine": true,
+      "replyCount": 1,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768134751465,
+      "shortsId": 20,
+      "content": "테스트",
+      "createdAt": "2026-01-11T21:32:31.465Z",
+      "isMine": true,
+      "replyCount": 2,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768134756549,
+      "shortsId": 20,
+      "content": "테스트2",
+      "createdAt": "2026-01-11T21:32:36.549Z",
+      "isMine": true,
+      "replyCount": 2,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768135015579,
+      "shortsId": 15,
+      "content": "댓글 테스트",
+      "createdAt": "2026-01-11T21:36:55.579Z",
+      "isMine": true,
+      "replyCount": 2,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768135019707,
+      "shortsId": 15,
+      "content": "댓글 테스트2",
+      "createdAt": "2026-01-11T21:36:59.707Z",
+      "isMine": true,
+      "replyCount": 3,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768135599028,
+      "shortsId": 15,
+      "content": "욥?",
+      "createdAt": "2026-01-11T21:46:39.028Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768136033744,
+      "shortsId": 15,
+      "content": "진짜",
+      "createdAt": "2026-01-11T21:53:53.744Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768136037748,
+      "shortsId": 15,
+      "content": "이게아닌데",
+      "createdAt": "2026-01-11T21:53:57.748Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768140234401,
+      "shortsId": 15,
+      "content": "?",
+      "createdAt": "2026-01-11T23:03:54.401Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    }
+  ],
+  "replies": [
+    {
+      "replyId": 101,
+      "parentId": 1,
+      "content": "저도 이 부분 정말 공감했어요",
+      "createdAt": "2026-01-09T13:10:21",
+      "writer": {
+        "userId": 3,
+        "nickname": "minsu",
+        "profileImageUrl": "https://cdn.example.com/p/3.png"
+      },
+      "isMine": false
+    },
+    {
+      "replyId": 102,
+      "parentId": 1,
+      "content": "댓글 감사합니다!",
+      "createdAt": "2026-01-09T13:11:10",
+      "writer": {
+        "userId": 1,
+        "nickname": "hojun",
+        "profileImageUrl": "https://cdn.example.com/p/1.png"
+      },
+      "isMine": true
+    },
+    {
+      "replyId": 103,
+      "parentId": 3,
+      "content": "도움이 됐다니 다행이에요 🙂",
+      "createdAt": "2026-01-09T13:12:45",
+      "writer": {
+        "userId": 4,
+        "nickname": "jiyoon",
+        "profileImageUrl": "https://cdn.example.com/p/4.png"
+      },
+      "isMine": false
+    },
+    {
+      "replyId": 104,
+      "parentId": 5,
+      "content": "실무 적용 사례도 궁금하네요",
+      "createdAt": "2026-01-09T13:14:03",
+      "writer": {
+        "userId": 6,
+        "nickname": "soyeon",
+        "profileImageUrl": "https://cdn.example.com/p/6.png"
+      },
+      "isMine": false
+    },
+    {
+      "replyId": 105,
+      "parentId": 5,
+      "content": "저도 같은 생각이에요",
+      "createdAt": "2026-01-09T13:15:20",
+      "writer": {
+        "userId": 8,
+        "nickname": "hyeri",
+        "profileImageUrl": "https://cdn.example.com/p/8.png"
+      },
+      "isMine": false
+    },
+    {
+      "replyId": 106,
+      "parentId": 5,
+      "content": "다음 영상에서 다뤄볼게요!",
+      "createdAt": "2026-01-09T13:16:05",
+      "writer": {
+        "userId": 1,
+        "nickname": "hojun",
+        "profileImageUrl": "https://cdn.example.com/p/1.png"
+      },
+      "isMine": true
+    },
+    {
+      "replyId": 107,
+      "parentId": 7,
+      "content": "저도 여기서 막혔었어요",
+      "createdAt": "2026-01-09T13:18:11",
+      "writer": {
+        "userId": 9,
+        "nickname": "taeyang",
+        "profileImageUrl": "https://cdn.example.com/p/9.png"
+      },
+      "isMine": false
+    },
+    {
+      "replyId": 108,
+      "parentId": 7,
+      "content": "타임스탬프 참고해보세요",
+      "createdAt": "2026-01-09T13:19:02",
+      "writer": {
+        "userId": 10,
+        "nickname": "beginnerDev",
+        "profileImageUrl": "https://cdn.example.com/p/10.png"
+      },
+      "isMine": false
+    },
+    {
+      "replyId": 109,
+      "parentId": 9,
+      "content": "👍 완전 공감입니다",
+      "createdAt": "2026-01-09T13:20:44",
+      "writer": {
+        "userId": 11,
+        "nickname": "seungho",
+        "profileImageUrl": "https://cdn.example.com/p/11.png"
+      },
+      "isMine": false
+    },
+    {
+      "replyId": 110,
+      "parentId": 13,
+      "content": "코드 예제 추가되면 좋겠어요",
+      "createdAt": "2026-01-09T13:22:01",
+      "writer": {
+        "userId": 14,
+        "nickname": "videoFan",
+        "profileImageUrl": "https://cdn.example.com/p/14.png"
+      },
+      "isMine": false
+    },
+    {
+      "replyId": 111,
+      "parentId": 13,
+      "content": "깃허브 링크 있으면 최고일 듯",
+      "createdAt": "2026-01-09T13:22:48",
+      "writer": {
+        "userId": 15,
+        "nickname": "realWorldDev",
+        "profileImageUrl": "https://cdn.example.com/p/15.png"
+      },
+      "isMine": false
+    },
+    {
+      "replyId": 112,
+      "parentId": 15,
+      "content": "적용 후기 공유 감사합니다!",
+      "createdAt": "2026-01-09T13:24:30",
+      "writer": {
+        "userId": 1,
+        "nickname": "hojun",
+        "profileImageUrl": "https://cdn.example.com/p/1.png"
+      },
+      "isMine": true
+    },
+    {
+      "replyId": 113,
+      "parentId": 19,
+      "content": "질문 남겨주세요!",
+      "createdAt": "2026-01-09T13:26:10",
+      "writer": {
+        "userId": 20,
+        "nickname": "thanksDev",
+        "profileImageUrl": "https://cdn.example.com/p/20.png"
+      },
+      "isMine": false
+    },
+    {
+      "replyId": 114,
+      "parentId": 19,
+      "content": "저도 같은 궁금증 있어요",
+      "createdAt": "2026-01-09T13:27:00",
+      "writer": {
+        "userId": 7,
+        "nickname": "mina",
+        "profileImageUrl": "https://cdn.example.com/p/7.png"
+      },
+      "isMine": true
+    },
+    {
+      "replyId": 1768073985873,
+      "parentId": 17,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "욥!",
+      "createdAt": "2026-01-11T04:39:45.873Z"
+    },
+    {
+      "replyId": 1768074369159,
+      "parentId": 17,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "?????",
+      "createdAt": "2026-01-11T04:46:09.159Z"
+    },
+    {
+      "replyId": 1768074407562,
+      "parentId": 17,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "잘 되는건가",
+      "createdAt": "2026-01-11T04:46:47.562Z"
+    },
+    {
+      "replyId": 1768074451463,
+      "parentId": 17,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "욥",
+      "createdAt": "2026-01-11T04:47:31.463Z"
+    },
+    {
+      "replyId": 1768074567941,
+      "parentId": 4,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "뭐지?",
+      "createdAt": "2026-01-11T04:49:27.941Z"
+    },
+    {
+      "replyId": 1768074619598,
+      "parentId": 4,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "보자",
+      "createdAt": "2026-01-11T04:50:19.598Z"
+    },
+    {
+      "replyId": 1768074766885,
+      "parentId": 1768074671330,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "?",
+      "createdAt": "2026-01-11T04:52:46.885Z"
+    },
+    {
+      "replyId": 1768074772385,
+      "parentId": 1768074671330,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "??",
+      "createdAt": "2026-01-11T04:52:52.385Z"
+    },
+    {
+      "replyId": 1768074870408,
+      "parentId": 1768074671330,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "흐음",
+      "createdAt": "2026-01-11T04:54:30.408Z"
+    },
+    {
+      "replyId": 1768074886475,
+      "parentId": 1768074671330,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "에?",
+      "createdAt": "2026-01-11T04:54:46.475Z"
+    },
+    {
+      "replyId": 1768075182132,
+      "parentId": 5,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "그러게요",
+      "createdAt": "2026-01-11T04:59:42.132Z"
+    },
+    {
+      "replyId": 1768075186353,
+      "parentId": 5,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "그러게요",
+      "createdAt": "2026-01-11T04:59:46.353Z"
+    },
+    {
+      "replyId": 1768075190137,
+      "parentId": 5,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "되는건가",
+      "createdAt": "2026-01-11T04:59:50.137Z"
+    },
+    {
+      "replyId": 1768075192431,
+      "parentId": 5,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "그럴리없는데",
+      "createdAt": "2026-01-11T04:59:52.431Z"
+    },
+    {
+      "replyId": 1768075221809,
+      "parentId": 6,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "이게 돼?",
+      "createdAt": "2026-01-11T05:00:21.809Z"
+    },
+    {
+      "replyId": 1768111079962,
+      "parentId": 1768111052123,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "되긴하는데에",
+      "createdAt": "2026-01-11T14:57:59.962Z"
+    },
+    {
+      "replyId": 1768111188452,
+      "parentId": 1768111052123,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "되는건가",
+      "createdAt": "2026-01-11T14:59:48.452Z"
+    },
+    {
+      "replyId": 1768111433083,
+      "parentId": 1768111423597,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "???",
+      "createdAt": "2026-01-11T15:03:53.084Z"
+    },
+    {
+      "replyId": 1768111752563,
+      "parentId": 1768111652671,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "등록!",
+      "createdAt": "2026-01-11T15:09:12.563Z"
+    },
+    {
+      "replyId": 1768111979927,
+      "parentId": 1768111652671,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "귯?",
+      "createdAt": "2026-01-11T15:12:59.927Z"
+    },
+    {
+      "replyId": 1768112030463,
+      "parentId": 1768111652671,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "욥?",
+      "createdAt": "2026-01-11T15:13:50.463Z"
+    },
+    {
+      "replyId": 1768112121063,
+      "parentId": 1768111652671,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "등록완료",
+      "createdAt": "2026-01-11T15:15:21.063Z"
+    },
+    {
+      "replyId": 1768112427312,
+      "parentId": 1768111652671,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "등록 다시!",
+      "createdAt": "2026-01-11T15:20:27.312Z"
+    },
+    {
+      "replyId": 1768112468805,
+      "parentId": 18,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "욥!",
+      "createdAt": "2026-01-11T15:21:08.805Z"
+    },
+    {
+      "replyId": 1768113477015,
+      "parentId": 1768113456390,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "놉?",
+      "createdAt": "2026-01-11T15:37:57.015Z"
+    },
+    {
+      "replyId": 1768113520549,
+      "parentId": 1768113456390,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "흐으으음?",
+      "createdAt": "2026-01-11T15:38:40.549Z"
+    },
+    {
+      "replyId": 1768113526381,
+      "parentId": 1768113456390,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "엥?",
+      "createdAt": "2026-01-11T15:38:46.381Z"
+    },
+    {
+      "replyId": 1768113528695,
+      "parentId": 1768113456390,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "왜 안뜸",
+      "createdAt": "2026-01-11T15:38:48.695Z"
+    },
+    {
+      "replyId": 1768113566080,
+      "parentId": 8,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "귯?",
+      "createdAt": "2026-01-11T15:39:26.080Z"
+    },
+    {
+      "replyId": 1768113579995,
+      "parentId": 8,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "엥",
+      "createdAt": "2026-01-11T15:39:39.995Z"
+    },
+    {
+      "replyId": 1768113582822,
+      "parentId": 8,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "음?",
+      "createdAt": "2026-01-11T15:39:42.822Z"
+    },
+    {
+      "replyId": 1768113596519,
+      "parentId": 8,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "그러게[",
+      "createdAt": "2026-01-11T15:39:56.519Z"
+    },
+    {
+      "replyId": 1768113598624,
+      "parentId": 8,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "다시",
+      "createdAt": "2026-01-11T15:39:58.624Z"
+    },
+    {
+      "replyId": 1768113601662,
+      "parentId": 8,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "음?",
+      "createdAt": "2026-01-11T15:40:01.662Z"
+    },
+    {
+      "replyId": 1768113638826,
+      "parentId": 1768113632490,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "음?",
+      "createdAt": "2026-01-11T15:40:38.826Z"
+    },
+    {
+      "replyId": 1768113640986,
+      "parentId": 1768113632490,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "굿?",
+      "createdAt": "2026-01-11T15:40:40.986Z"
+    },
+    {
+      "replyId": 1768113643123,
+      "parentId": 1768113632490,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "오",
+      "createdAt": "2026-01-11T15:40:43.123Z"
+    },
+    {
+      "replyId": 1768113647710,
+      "parentId": 1768113632490,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "이해안됌",
+      "createdAt": "2026-01-11T15:40:47.710Z"
+    },
+    {
+      "replyId": 1768113655419,
+      "parentId": 1768113632490,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "에?",
+      "createdAt": "2026-01-11T15:40:55.419Z"
+    },
+    {
+      "replyId": 1768134587633,
+      "parentId": 1768134579506,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "이것도?",
+      "createdAt": "2026-01-11T21:29:47.633Z"
+    },
+    {
+      "replyId": 1768134761893,
+      "parentId": 1768134751465,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "테스트1",
+      "createdAt": "2026-01-11T21:32:41.893Z"
+    },
+    {
+      "replyId": 1768134765917,
+      "parentId": 1768134751465,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "테스트3",
+      "createdAt": "2026-01-11T21:32:45.917Z"
+    },
+    {
+      "replyId": 1768134774500,
+      "parentId": 1768134756549,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "여기도 테스트",
+      "createdAt": "2026-01-11T21:32:54.500Z"
+    },
+    {
+      "replyId": 1768134777895,
+      "parentId": 1768134756549,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "다시 테스트",
+      "createdAt": "2026-01-11T21:32:57.895Z"
+    },
+    {
+      "replyId": 1768135026119,
+      "parentId": 1768135015579,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "대댓글 테스트1",
+      "createdAt": "2026-01-11T21:37:06.119Z"
+    },
+    {
+      "replyId": 1768135029623,
+      "parentId": 1768135015579,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "대댓글 테스트2",
+      "createdAt": "2026-01-11T21:37:09.623Z"
+    },
+    {
+      "replyId": 1768135040240,
+      "parentId": 1768135019707,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "대댓글 테스트3",
+      "createdAt": "2026-01-11T21:37:20.240Z"
+    },
+    {
+      "replyId": 1768135045535,
+      "parentId": 1768135019707,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "대댓글테스트4",
+      "createdAt": "2026-01-11T21:37:25.535Z"
+    },
+    {
+      "replyId": 1768136064140,
+      "parentId": 1768135019707,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "???",
+      "createdAt": "2026-01-11T21:54:24.140Z"
     }
   ]
 }

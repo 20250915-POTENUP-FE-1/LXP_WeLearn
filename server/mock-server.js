@@ -57,20 +57,35 @@ server.post('/api/v1/auth/login', (req, res) => {
 // ==========================================
 server.use((req, res, next) => {
   // 인증이 필요 없는 공개 경로들
-  const publicPaths = ['/api/v1/auth/login', '/api/v1/auth/signup', '/api/v1/auth/logout']
+  const publicPaths = [
+    '/api/v1/auth/login',
+    '/api/v1/auth/signup',
+    '/api/v1/auth/logout',
+    /^\/api\/v1\/shorts\/\d+\/comments$/, // 댓글 GET/POST
+    /^\/api\/v1\/comments\/\d+\/replies$/, // 대댓글 GET/POST
+  ]
 
-  // GET 요청(조회)은 게시글 목록 같은 경우 공개일 수 있으므로 일단 통과
-  // (단, /users/me 같은 개인정보는 아래에서 별도 처리)
-  if (req.method === 'GET' && !req.path.startsWith('/api/users/me')) {
+  // 1️⃣ GET 요청은 대부분 공개
+  if (req.method === 'GET' && !req.path.startsWith('/api/v1/users/me')) {
     return next()
   }
 
-  // 공개 경로가 아니면 토큰 검사
-  if (!publicPaths.includes(req.path)) {
+  // 2️⃣ 공개 경로인지 체크 (문자열 + 정규식 모두 지원)
+  const isPublic = publicPaths.some((path) => {
+    if (path instanceof RegExp) {
+      return path.test(req.path)
+    }
+    return path === req.path
+  })
+
+  // 3️⃣ 공개 경로가 아니면 토큰 검사
+  if (!isPublic) {
     const authHeader = req.headers.authorization
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ message: '로그인이 필요합니다 (토큰 없음).' })
+      return res.status(401).json({
+        message: '로그인이 필요합니다 (토큰 없음).',
+      })
     }
   }
 
@@ -102,7 +117,7 @@ server.post('/api/v1/posts', (req, res, next) => {
   // 실제라면 토큰을 디코딩해서 userId를 뽑지만,
   // 여기선 테스트를 위해 무조건 id:1 (홍길동)이 쓴 것으로 간주합니다.
   // (다른 유저로 테스트하고 싶으면 이 값을 바꾸세요)
-  const currentUserId = 1
+  const currentUserId = 16
   req.body.userId = currentUserId
   req.body.author = '홍길동'
   req.body.createdAt = new Date().toISOString()
@@ -192,116 +207,224 @@ server.post('/api/v1/auth/logout', (req, res) => {
 // 7. 댓글
 // ==========================================
 // POST 댓글 등록
-server.post('/api/v1/posts/:postId/comments', (req, res) => {
+server.post('/api/v1/shorts/:shortsId/comments', (req, res) => {
   const db = router.db
-  const postId = parseInt(req.params.postId)
-
-  const { content, parentId = null } = req.body
+  const shortsId = Number(req.params.shortsId)
+  const { content } = req.body
 
   if (!content) {
-    return res.status(400).json({ message: '댓글 내용이 필요합니다.' })
+    return res.status(400).json({
+      success: false,
+      message: 'content is required',
+    })
   }
 
-  const currentUserId = 1
+  const CURRENT_USER = {
+    userId: 16,
+    nickname: '먕먕먕',
+    profileImageUrl: null,
+  }
 
   const newComment = {
-    id: Date.now(),
-    postId,
-    userId: currentUserId,
+    commentId: Date.now(),
+    shortsId,
     content,
-    parentId,
-    createdAt: new Date().toISOString(),
+    createdAt: new Date(new Date().getTime() + 9 * 60 * 60 * 1000).toISOString(),
+    isMine: true,
+    replyCount: 0,
+    writer: {
+      userId: CURRENT_USER.userId,
+      nickname: CURRENT_USER.nickname,
+      profileImageUrl: CURRENT_USER.profileImageUrl,
+    },
   }
 
   db.get('comments').push(newComment).write()
 
-  return res.status(201).json(newComment)
+  return res.status(201).json({
+    success: true,
+    data: newComment,
+  })
 })
 
 // GET 댓글 조회
 server.get('/api/v1/shorts/:shortsId/comments', (req, res) => {
   const db = router.db
-  const shortsId = parseInt(req.params.shortsId, 10)
+  const shortsId = Number(req.params.shortsId)
 
-  const comments = db.get('comments').filter({ shortsId }).sortBy('createdAt').value()
+  const comments = db.get('comments').filter({ shortsId }).value()
 
-  const map = {}
-  const roots = []
-
-  comments.forEach((c) => {
-    map[c.id] = {
-      id: c.id,
-      content: c.content,
-      createdAt: c.createdAt,
-      user: c.user,
-      replies: [],
+  const result = comments.map((comment) => {
+    return {
+      commentId: comment.commentId,
+      shortsId: comment.shortsId,
+      content: comment.content,
+      createdAt: comment.createdAt,
+      writer: comment.writer, // ✅ 그대로 사용
+      replyCount: comment.replyCount,
+      isMine: false,
     }
   })
 
-  comments.forEach((c) => {
-    if (c.parentId) {
-      map[c.parentId]?.replies.push(map[c.id])
-    } else {
-      roots.push(map[c.id])
-    }
-  })
-
-  res.json({
-    totalCount: roots.length,
-    comments: roots,
-  })
+  res.json({ success: true, data: result })
 })
 
 // PUT 댓글 수정
-server.put('/api/v1/comments/:id', (req, res) => {
+server.put('/api/v1/comments/:commentId', (req, res) => {
   const db = router.db
-  const commentId = parseInt(req.params.id)
+  const commentId = Number(req.params.commentId)
   const { content } = req.body
-
-  if (!content) {
-    return res.status(400).json({ message: '댓글 내용이 필요합니다.' })
-  }
 
   const comment = db.get('comments').find({ id: commentId }).value()
 
   if (!comment) {
-    return res.status(404).json({ message: '댓글이 없습니다.' })
+    return res.status(404).json({ success: false })
   }
 
-  const currentUserId = 1
-
-  if (comment.userId !== currentUserId) {
-    return res.status(403).json({ message: '본인 댓글만 수정할 수 있습니다.' })
+  if (comment.userId !== CURRENT_USER_ID) {
+    return res.status(403).json({ success: false })
   }
 
   db.get('comments').find({ id: commentId }).assign({ content }).write()
 
-  res.json({ message: '댓글 수정 성공' })
+  res.json({ success: true })
 })
 
 // delete 댓글 삭제
-server.delete('/api/v1/comments/:id', (req, res) => {
+server.delete('/api/v1/comments/:commentId', (req, res) => {
   const db = router.db
-  const commentId = parseInt(req.params.id)
+  const commentId = Number(req.params.commentId)
 
   const comment = db.get('comments').find({ id: commentId }).value()
 
   if (!comment) {
-    return res.status(404).json({ message: '댓글이 없습니다.' })
+    return res.status(404).json({ success: false })
   }
 
-  const currentUserId = 1
-
-  if (comment.userId !== currentUserId) {
-    return res.status(403).json({ message: '본인 댓글만 삭제할 수 있습니다.' })
+  if (comment.userId !== CURRENT_USER_ID) {
+    return res.status(403).json({ success: false })
   }
 
-  // 대댓글도 함께 삭제
   db.get('comments')
     .remove((c) => c.id === commentId || c.parentId === commentId)
     .write()
 
-  res.json({ message: '댓글 삭제 성공' })
+  res.json({ success: true })
+})
+
+// ==========================================
+// 8. 대댓글 api
+// ==========================================
+// 대댓글 목록 조회
+server.get('/api/v1/comments/:commentId/replies', (req, res) => {
+  const db = router.db
+  const commentId = Number(req.params.commentId)
+
+  const replies = db.get('replies').filter({ parentId: commentId }).value()
+
+  const result = replies.map((reply) => {
+    return {
+      replyId: reply.replyId,
+      parentId: reply.parentId,
+      content: reply.content,
+      createdAt: reply.createdAt,
+      writer: reply.writer,
+      isMine: reply.isMine,
+    }
+  })
+
+  res.json({ success: true, data: result })
+})
+
+// 대댓글 작성
+server.post('/api/v1/comments/:commentId/replies', (req, res) => {
+  const db = router.db
+  const parentId = Number(req.params.commentId)
+  const { content } = req.body
+
+  const CURRENT_USER = {
+    userId: 16,
+    nickname: '먕먕먕',
+    profileImageUrl: null,
+  }
+
+  if (!content) {
+    return res.status(400).json({ success: false, message: 'content is required' })
+  }
+
+  // 원본 댓글 가져오기
+  const parentComment = db.get('comments').find({ commentId: parentId }).value()
+  if (!parentComment) {
+    return res.status(404).json({ success: false, message: 'Parent comment not found' })
+  }
+
+  // 새로운 reply 생성
+  const newReply = {
+    replyId: Date.now(),
+    parentId,
+    writer: {
+      userId: CURRENT_USER.userId,
+      nickname: CURRENT_USER.nickname,
+      profileImageUrl: CURRENT_USER.profileImageUrl,
+    },
+    content,
+    createdAt: new Date(new Date().getTime() + 9 * 60 * 60 * 1000).toISOString(), // KST
+  }
+
+  // replies DB에 추가
+  db.get('replies').push(newReply).write()
+
+  // 원본 comment replyCount 1 증가
+  db.get('comments')
+    .find({ commentId: parentId })
+    .assign({ replyCount: (parentComment.replyCount || 0) + 1 })
+    .write()
+
+  res.status(201).json({
+    success: true,
+    data: { replyId: newReply.id },
+  })
+})
+
+// 대댓글 수정
+server.put('/api/v1/replies/:replyId', (req, res) => {
+  const db = router.db
+  const replyId = Number(req.params.replyId)
+  const { content } = req.body
+
+  const reply = db.get('comments').find({ id: replyId }).value()
+
+  if (!reply || reply.parentId === null) {
+    return res.status(404).json({ success: false })
+  }
+
+  if (reply.userId !== CURRENT_USER_ID) {
+    return res.status(403).json({ success: false })
+  }
+
+  db.get('comments').find({ id: replyId }).assign({ content }).write()
+
+  res.json({ success: true })
+})
+
+// 대댓글 삭제
+server.delete('/api/v1/replies/:replyId', (req, res) => {
+  const db = router.db
+  const replyId = Number(req.params.replyId)
+
+  const reply = db.get('comments').find({ id: replyId }).value()
+
+  if (!reply || reply.parentId === null) {
+    return res.status(404).json({ success: false })
+  }
+
+  if (reply.userId !== CURRENT_USER_ID) {
+    return res.status(403).json({ success: false })
+  }
+
+  db.get('comments').remove({ id: replyId }).write()
+
+  res.json({ success: true })
 })
 
 // ==========================================
