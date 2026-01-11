@@ -1,64 +1,77 @@
-import { CommentType } from '@/types/comment'
+import { ReplyActionState } from '@/features/comment/action'
+import { RecommentApi } from '@/services/comments/recomments.service'
+import { ReplyCommentResponse } from '@/types/comment'
+import { timeAgo } from '@/utils/timeAgo'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Ellipsis, User } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 interface ReCommentProps {
-  commentReply: CommentType[]
   openReply: number | null
   commentId: number
+  Replystate: ReplyActionState
 }
 
-export default function ReComment({ commentReply, openReply, commentId }: ReCommentProps) {
+export default function ReComment({ openReply, commentId, Replystate }: ReCommentProps) {
+  const [replyComment, setReplyComment] = useState<ReplyCommentResponse | null>(null)
+
+  const fetchReplyComment = async () => {
+    const res = await RecommentApi.getReplyComment(Number(commentId))
+    setReplyComment(res)
+  }
+
+  useEffect(() => {
+    if (!openReply || !commentId) return
+
+    fetchReplyComment()
+  }, [openReply, commentId, Replystate])
+
   return (
     <>
       <AnimatePresence initial={false}>
-        {commentReply.map(
-          (reply) =>
-            openReply === commentId && (
-              <motion.div
-                key={reply.id}
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25, ease: 'easeInOut' }}
-                className="overflow-hidden"
-              >
-                <div className="mt-3">
-                  <div className="border-gray-100 pt-3 pl-12">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-600">
-                        {reply.user.profileUrl ? (
-                          <img
-                            src={reply.user.profileUrl}
-                            alt={reply.user.name}
-                            className="h-10 w-10 rounded-full object-cover"
-                          />
-                        ) : (
-                          <User strokeWidth={1.5} size={24} />
-                        )}
-                      </div>
-
-                      {/* 댓글 내용 */}
-                      <div className="flex-1">
-                        <div className="mb-1 flex items-center gap-2">
-                          <span className="text-sm font-medium text-gray-900">
-                            {reply.user.name}
-                          </span>
-                          <span className="text-xs text-gray-400">12시간 전</span>
-                        </div>
-                        <p className="mb-2 text-sm leading-relaxed text-gray-700">
-                          {reply.content}
-                        </p>
-                      </div>
-                      <button className="rounded-full p-1 text-gray-400 transition-colors hover:bg-gray-100">
-                        <Ellipsis size={18} />
-                      </button>
+        {openReply === commentId &&
+          replyComment?.data.map((reply) => (
+            <motion.div
+              key={reply.replyId}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
+              className="overflow-hidden"
+            >
+              <div className="mt-3">
+                <div className="border-gray-100 pt-3 pl-12">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-600">
+                      {reply.writer.profileUrl ? (
+                        <img
+                          src={reply.writer.profileUrl}
+                          alt={reply.writer.name}
+                          className="h-8 w-8 rounded-full object-cover"
+                        />
+                      ) : (
+                        <User strokeWidth={1.5} size={20} className="text-gray-400" />
+                      )}
                     </div>
+
+                    {/* 댓글 내용 */}
+                    <div className="flex-1">
+                      <div className="mb-1 flex items-center gap-2">
+                        <span className="text-sm font-medium text-gray-900">
+                          {reply.writer.nickname}
+                        </span>
+                        <span className="text-xs text-gray-400">{timeAgo(reply.createdAt)}</span>
+                      </div>
+                      <p className="mb-2 text-sm leading-relaxed text-gray-700">{reply.content}</p>
+                    </div>
+                    <button className="rounded-full p-1 text-gray-400 transition-colors hover:bg-gray-100">
+                      <Ellipsis size={18} />
+                    </button>
                   </div>
                 </div>
-              </motion.div>
-            ),
-        )}
+              </div>
+            </motion.div>
+          ))}
       </AnimatePresence>
     </>
   )

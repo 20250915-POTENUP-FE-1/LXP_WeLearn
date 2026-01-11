@@ -51,18 +51,6 @@ export default function ShortsActionBar({ id }: ShortsActionBarProps) {
         onClick={handleComment}
       >
         <MessageSquareText strokeWidth={1.5} />
-        <span className="mt-1 text-xs">57</span>
-      </button>
-
-      {/* 자막 */}
-      <button
-        aria-label="자막 보기"
-        className="flex cursor-pointer flex-col items-center text-white hover:text-gray-300"
-        type="button"
-        onClick={() => handleComingSoon('자막')}
-      >
-        <ClosedCaption strokeWidth={1.5} />
-        <span className="text-xs">자막</span>
       </button>
 
       {/* 저장 */}
