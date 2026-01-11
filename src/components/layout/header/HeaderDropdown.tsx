@@ -83,18 +83,18 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
           <hr />
 
           <DropdownMenuItem className="cursor-pointer">
-            {/* <button
-              onClick={() => {
-                toast.info('서비스 준비 중입니다.')
-              }}
-              className="flex gap-4 p-1"
-            >
-              <Settings />내 프로필
-            </button> */}
             <Link href="/mypage/profile" className="flex gap-4 p-1">
               <Settings />내 프로필
             </Link>
           </DropdownMenuItem>
+
+          <DropdownMenuItem className="cursor-pointer">
+            <Link href="/mypage" className="flex gap-4 p-1">
+              <CircleUser />
+              마이페이지
+            </Link>
+          </DropdownMenuItem>
+
           <DropdownMenuItem className="cursor-pointer">
             {/* <button
               onClick={() => {
