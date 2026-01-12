@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import ShortsCard from './ShortsCard'
+import SavedShortsCard from './SavedShortsCard'
 
 interface SavedPlaylist {
   id: string
@@ -25,8 +25,7 @@ export default function SavedShortsList({ playlists }: SavedShortsListProps) {
       <div className="mb-10 grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 md:grid-cols-4">
         {playlists.map((playlist) => (
           <Link key={playlist.id} href={`/mypage/saved/${playlist.id}`}>
-            <ShortsCard
-              variant="saved"
+            <SavedShortsCard
               visibility={playlist.visibility}
               shortsCount={playlist.shortsCount}
               thumbnailUrl={playlist.thumbnailUrl}

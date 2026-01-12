@@ -2,8 +2,8 @@
 
 import React from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import ShortPreviewCard from '@/features/home/ShortFormCarousel/ShortPreviewCard'
 import type { components } from '@/types/api-schema'
+import ShortPreviewCard from './ShortPreviewCard'
 
 type ShortsItem = components['schemas']['ShortsResponse']
 

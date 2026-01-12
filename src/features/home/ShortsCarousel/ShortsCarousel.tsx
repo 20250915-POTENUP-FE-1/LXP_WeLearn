@@ -1,10 +1,10 @@
 import React from 'react'
 import type { components } from '@/types/api-schema'
-import PageNation from '@/features/home/ShortFormCarousel/PageNation'
+import PageNation from './PageNation'
 
 type ShortsItem = components['schemas']['ShortsResponse']
 
-export default function ShortFormCarousel({ data }: { data?: ShortsItem[] }) {
+export default function ShortsCarousel({ data }: { data?: ShortsItem[] }) {
   const items = data ?? []
 
   return (

@@ -68,13 +68,13 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
             </div>
           )}
           <div className="mb-3 flex items-center gap-4 p-1">
-            <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gray-200">
-              <User strokeWidth={1.5} size={24} />
+            <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-gray-200">
+              <User strokeWidth={1.5} size={20} />
             </div>
             <div className="flex flex-col justify-center">
               {user && (
                 <>
-                  <div>{user.name}</div>
+                  <div className="pb-1 text-sm font-bold">{user.name}</div>
                   <div className="text-xs text-gray-600">{user.email}</div>
                 </>
               )}

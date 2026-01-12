@@ -1,19 +1,20 @@
 import React from 'react'
-import ShortFormCarousel from '@/features/home/ShortFormCarousel/ShortFormCarousel'
-import PlaylistSection from '@/features/home/play-list-section/PlaylistSection'
-import CategoryLectureSection from '@/features/home/lecture/CategoryLectureSection'
-import { lectures, playlistGroup } from '@/dummy/data'
+
+import PlaylistSection from '@/features/home/playlist/PlaylistSection'
+import { categoryShortsList, playlistGroup } from '@/dummy/data'
 import { getShortPopular } from '@/services/shorts/getShortPopular'
+import CategoryShortsSection from '@/features/home/categories/CategoryShortsSection'
+import ShortsCarousel from '@/features/home/ShortsCarousel/ShortsCarousel'
 
 export default async function Page() {
   const popularShorts = await getShortPopular()
   return (
     <div className="min-h-screen bg-white">
-      <ShortFormCarousel data={popularShorts?.data?.content} />
+      <ShortsCarousel data={popularShorts?.data?.content} />
 
       <PlaylistSection items={playlistGroup} />
 
-      <CategoryLectureSection lectures={lectures} />
+      <CategoryShortsSection shorts={categoryShortsList} />
     </div>
   )
 }

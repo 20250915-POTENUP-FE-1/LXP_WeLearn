@@ -1,13 +1,13 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import ShortsCard from './ShortsCard'
 import Link from 'next/link'
+import LikeShortsCard from './LikeShortsCard'
 
 interface LikeShort {
   id: string
   category: string
   thumbnailUrl: string
   title: string
-  channelName: string
+  nickname: string
   progress: number
 }
 
@@ -55,13 +55,12 @@ export default function LikeShortsList({
 
       <div className="scrollbar-hide flex gap-4 overflow-x-auto pb-4">
         {shorts.map((short) => (
-          <ShortsCard
+          <LikeShortsCard
             key={short.id}
-            variant="like"
             category={short.category}
             thumbnailUrl={short.thumbnailUrl}
             title={short.title}
-            channelName={short.channelName}
+            nickname={short.nickname}
             progress={short.progress}
           />
         ))}

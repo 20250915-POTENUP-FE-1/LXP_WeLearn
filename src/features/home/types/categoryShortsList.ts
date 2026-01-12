@@ -1,12 +1,13 @@
-export interface Lecture {
+export interface shorts {
   id: string
   thumbnail: string
   category: string
   categoryColor: string
   title: string
   price: string
-  rating: number
+  likeCount: number
   studentCount: string
-  instructor: string
-  reviewCount: number
+  nickname: string
+  viewCount: number
+  description: string
 }

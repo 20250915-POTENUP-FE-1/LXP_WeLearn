@@ -1,4 +1,4 @@
-export interface ShortFormItem {
+export interface ShortsItem {
   id: string
   thumbnail: string
   title: string
