@@ -1,4 +1,3 @@
-import { ReplyActionState } from '@/features/comment/action'
 import { RecommentApi } from '@/services/comments/recomments.service'
 import { ReplyCommentResponse } from '@/types/comment'
 import { timeAgo } from '@/utils/timeAgo'
@@ -9,10 +8,10 @@ import { useEffect, useState } from 'react'
 interface ReCommentProps {
   openReply: number | null
   commentId: number
-  replyPostState: ReplyActionState
+  isReplyUpdate: number
 }
 
-export default function ReComment({ openReply, commentId, replyPostState }: ReCommentProps) {
+export default function ReComment({ openReply, commentId, isReplyUpdate }: ReCommentProps) {
   const [replyComment, setReplyComment] = useState<ReplyCommentResponse | null>(null)
 
   const fetchReplyComment = async () => {
@@ -24,7 +23,7 @@ export default function ReComment({ openReply, commentId, replyPostState }: ReCo
     if (!openReply || !commentId) return
 
     fetchReplyComment()
-  }, [openReply, commentId, replyPostState])
+  }, [openReply, commentId, isReplyUpdate])
 
   return (
     <>

@@ -1,20 +1,40 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Button } from './Button'
+import { useActionState, useEffect } from 'react'
+import { deleteCommentAction } from '@/features/comment/action'
+import { toast } from 'react-toastify'
 
 interface DeleteModalProps {
   isDelete: boolean
-  setIsDelete: (props: boolean) => void
   commentId: number
-  commentDeleteAction: (FormData: FormData) => void
+  setIsDelete: (props: boolean) => void
+  setIsUpdate: React.Dispatch<React.SetStateAction<number>>
 }
 
 export default function DeleteModal({
   isDelete,
   setIsDelete,
   commentId,
-  commentDeleteAction,
+  setIsUpdate,
 }: DeleteModalProps) {
-  console.log(commentId)
+  // 댓글 삭제 Action
+  const [commentDeleteState, commentDeleteAction] = useActionState(deleteCommentAction, {
+    success: false,
+    message: '',
+    errors: {},
+  })
+
+  // 댓글 삭제 성공 시 토스트 ui
+  useEffect(() => {
+    if (commentDeleteState.success) {
+      toast.success('댓글 삭제에 성공하였습니다.🚀')
+      setIsUpdate((prev) => prev + 1)
+      setIsDelete(false)
+    } else if (commentDeleteState.success === false && commentDeleteState.message) {
+      toast.error(commentDeleteState.message)
+    }
+  }, [commentDeleteState])
+
   return (
     <AnimatePresence>
       {isDelete && (

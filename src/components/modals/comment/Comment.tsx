@@ -1,10 +1,10 @@
 import { ChevronDown, Ellipsis, Pencil, Trash2, User } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useActionState, useEffect, useState } from 'react'
 import { CommentType } from '@/types/comment'
 import ReCommentInput from './ReCommentInput'
 import ReComment from './ReComment'
 import { timeAgo } from '@/utils/timeAgo'
-import { CommentActionState, ReplyActionState } from '@/features/comment/action'
+import { patchCommentAction } from '@/features/comment/action'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,35 +13,46 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/Button'
 import DeleteModal from '@/components/ui/DeleteModal'
+import { toast } from 'react-toastify'
 
 interface CommentsProps {
   comments: CommentType[]
-  replyPostState: ReplyActionState
-  commentPatchState: CommentActionState
   shortsId: string
-  replyPostAction: (formData: FormData) => void
-  commentPatchAction: (formData: FormData) => void
-  handleDeleteMode: () => void
   isDelete: boolean
+  handleDeleteMode: () => void
   setIsDelete: (props: boolean) => void
-  commentDeleteAction: (FormData: FormData) => void
+  setIsUpdate: React.Dispatch<React.SetStateAction<number>>
 }
 
 export default function Comment({
   comments,
-  replyPostState,
-  replyPostAction,
   shortsId,
-  commentPatchAction,
-  commentPatchState,
-  handleDeleteMode,
   isDelete,
+  handleDeleteMode,
   setIsDelete,
-  commentDeleteAction,
+  setIsUpdate,
 }: CommentsProps) {
   const [openReply, setOpenReply] = useState<number | null>(null)
   const [openReplyInput, setOpenReplyInput] = useState<number | null>(null)
   const [isEditMode, setIsEditMode] = useState<number | null>(null)
+  const [isReplyUpdate, setIsReplyUpdate] = useState(0)
+
+  // 댓글 수정 Action
+  const [commentPatchState, commentPatchAction] = useActionState(patchCommentAction, {
+    success: false,
+    message: '',
+    errors: {},
+  })
+
+  // 댓글 수정 성공시 토스트 ui
+  useEffect(() => {
+    if (commentPatchState.success) {
+      toast.success('댓글 수정에 성공하였습니다.🚀')
+      setIsUpdate((prev: number) => prev + 1)
+    } else if (commentPatchState.success === false && commentPatchState.message) {
+      toast.error(commentPatchState.message)
+    }
+  }, [commentPatchState])
 
   useEffect(() => {
     setIsEditMode(null)
@@ -65,7 +76,7 @@ export default function Comment({
               isDelete={isDelete}
               setIsDelete={setIsDelete}
               commentId={comment.commentId}
-              commentDeleteAction={commentDeleteAction}
+              setIsUpdate={setIsUpdate}
             />
 
             <div className="flex items-start justify-between">
@@ -184,13 +195,14 @@ export default function Comment({
               commentId={comment.commentId}
               openReplyInput={openReplyInput}
               setOpenReplyInput={setOpenReplyInput}
-              replyPostAction={replyPostAction}
+              setIsReplyUpdate={setIsReplyUpdate}
+              setIsUpdate={setIsUpdate}
             />
             {comment.replyCount > 0 && (
               <ReComment
                 openReply={openReply}
                 commentId={comment.commentId}
-                replyPostState={replyPostState}
+                isReplyUpdate={isReplyUpdate}
               />
             )}
           </div>

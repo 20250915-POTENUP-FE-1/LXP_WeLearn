@@ -1990,6 +1990,42 @@
       "content": "음",
       "isMine": true,
       "createdAt": "2026-01-12T14:06:17.657Z"
+    },
+    {
+      "replyId": 1768208731316,
+      "parentId": 1768208726611,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "잘 됌?",
+      "isMine": true,
+      "createdAt": "2026-01-12T18:05:31.316Z"
+    },
+    {
+      "replyId": 1768208816214,
+      "parentId": 1768208726611,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "진짜?",
+      "isMine": true,
+      "createdAt": "2026-01-12T18:06:56.214Z"
+    },
+    {
+      "replyId": 1768208836520,
+      "parentId": 1768208726611,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "ㅇ?",
+      "isMine": true,
+      "createdAt": "2026-01-12T18:07:16.520Z"
     }
   ]
 }

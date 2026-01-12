@@ -1,23 +1,46 @@
 import { Button } from '@/components/ui/Button'
+import { postReplyAction } from '@/features/comment/action'
 import { UserInfo } from '@/types/auth'
 import { AnimatePresence, motion } from 'framer-motion'
 import { User } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useActionState, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 interface ReCommnetInputProps {
   commentId: number
   openReplyInput: number | null
   setOpenReplyInput: (commentId: number | null) => void
-  replyPostAction: (formData: FormData) => void
+  setIsReplyUpdate: React.Dispatch<React.SetStateAction<number>>
+  setIsUpdate: React.Dispatch<React.SetStateAction<number>>
 }
 
 export default function ReCommentInput({
   commentId,
   openReplyInput,
   setOpenReplyInput,
-  replyPostAction,
+  setIsReplyUpdate,
+  setIsUpdate,
 }: ReCommnetInputProps) {
   const [user, setUser] = useState<UserInfo | null>(null)
+
+  // 대댓글 Action
+  const [replyPostState, replyPostAction] = useActionState(postReplyAction, {
+    success: false,
+    message: '',
+    errors: {},
+  })
+
+  // 대댓글 성공시 토스트 ui
+  useEffect(() => {
+    if (replyPostState.success) {
+      setIsReplyUpdate((prev) => prev + 1)
+      setIsUpdate((prev) => prev + 1)
+      setOpenReplyInput(null)
+      toast.success('댓글 등록에 성공하였습니다.🚀')
+    } else if (replyPostState.success === false && replyPostState.message) {
+      toast.error(replyPostState.message)
+    }
+  }, [replyPostState])
 
   useEffect(() => {
     const localUser = localStorage.getItem('user') as string
