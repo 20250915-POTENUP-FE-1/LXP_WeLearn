@@ -50,7 +50,6 @@ export default function LikeShortsCard({
             </div>
           </div>
         </div>
-        x
       </article>
     </div>
   )
