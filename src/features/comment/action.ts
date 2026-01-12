@@ -24,6 +24,7 @@ export type ReplyActionState = {
   data?: ReplyCommetType
 }
 
+// 댓글 등록 액션
 export const postCommentAction = async (
   prevState: CommentActionState,
   formData: FormData,
@@ -54,6 +55,64 @@ export const postCommentAction = async (
   }
 }
 
+// 댓글 수정 액션
+export const patchCommentAction = async (
+  prevState: CommentActionState,
+  formData: FormData,
+): Promise<CommentActionState> => {
+  const content = formData.get('comment') as string
+  const commentId = Number(formData.get('commentId') || 0)
+
+  if (!content) {
+    return {
+      success: false,
+      errors: { content: '댓글을 입력해주세요' },
+    }
+  }
+
+  try {
+    const res = await commentApi.patchComment(commentId, { content })
+    return {
+      success: true,
+      data: res.data,
+      timestamp: Date.now(),
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: '댓글 수정 중 오류가 발생했습니다.',
+    }
+  }
+}
+
+// 댓글 삭제 액션
+export const deleteCommentAction = async (
+  prevState: CommentActionState,
+  formData: FormData,
+): Promise<CommentActionState> => {
+  const commentId = Number(formData.get('commentId') || 0)
+
+  if (!commentId) {
+    return {
+      success: false,
+      errors: { content: '존재 하지 않는 댓글입니다.' },
+    }
+  }
+
+  try {
+    const res = await commentApi.deleteComment(commentId)
+    return {
+      success: true,
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: '댓글 삭제 중 오류가 발생하였습니다.',
+    }
+  }
+}
+
+// 대댓글 등록 액션
 export const postReplyAction = async (
   prevState: ReplyActionState,
   formData: FormData,

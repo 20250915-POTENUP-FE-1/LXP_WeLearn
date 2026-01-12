@@ -63,6 +63,7 @@ server.use((req, res, next) => {
     '/api/v1/auth/logout',
     /^\/api\/v1\/shorts\/\d+\/comments$/, // 댓글 GET/POST
     /^\/api\/v1\/comments\/\d+\/replies$/, // 대댓글 GET/POST
+    /^\/api\/v1\/comments\/\d+$/,
   ]
 
   // 1️⃣ GET 요청은 대부분 공개
@@ -262,30 +263,26 @@ server.get('/api/v1/shorts/:shortsId/comments', (req, res) => {
       createdAt: comment.createdAt,
       writer: comment.writer, // ✅ 그대로 사용
       replyCount: comment.replyCount,
-      isMine: false,
+      isMine: comment.isMine,
     }
   })
 
   res.json({ success: true, data: result })
 })
 
-// PUT 댓글 수정
-server.put('/api/v1/comments/:commentId', (req, res) => {
+// PATCH 댓글 수정
+server.patch('/api/v1/comments/:commentId', (req, res) => {
   const db = router.db
   const commentId = Number(req.params.commentId)
   const { content } = req.body
 
-  const comment = db.get('comments').find({ id: commentId }).value()
+  const comment = db.get('comments').find({ commentId: commentId }).value()
 
   if (!comment) {
     return res.status(404).json({ success: false })
   }
 
-  if (comment.userId !== CURRENT_USER_ID) {
-    return res.status(403).json({ success: false })
-  }
-
-  db.get('comments').find({ id: commentId }).assign({ content }).write()
+  db.get('comments').find({ commentId: commentId }).assign({ content }).write()
 
   res.json({ success: true })
 })
@@ -295,18 +292,14 @@ server.delete('/api/v1/comments/:commentId', (req, res) => {
   const db = router.db
   const commentId = Number(req.params.commentId)
 
-  const comment = db.get('comments').find({ id: commentId }).value()
+  const comment = db.get('comments').find({ commentId: commentId }).value()
 
   if (!comment) {
     return res.status(404).json({ success: false })
   }
 
-  if (comment.userId !== CURRENT_USER_ID) {
-    return res.status(403).json({ success: false })
-  }
-
   db.get('comments')
-    .remove((c) => c.id === commentId || c.parentId === commentId)
+    .remove((c) => c.commentId === commentId || c.parentId === commentId)
     .write()
 
   res.json({ success: true })
@@ -368,6 +361,7 @@ server.post('/api/v1/comments/:commentId/replies', (req, res) => {
       profileImageUrl: CURRENT_USER.profileImageUrl,
     },
     content,
+    isMine: true,
     createdAt: new Date(new Date().getTime() + 9 * 60 * 60 * 1000).toISOString(), // KST
   }
 
@@ -534,7 +528,7 @@ server.patch('/api/v1/shorts/:id', (req, res) => {
   if (!shorts) {
     return res.status(404).json({
       success: false,
-      message: '숏츠를 찾을 수 없습니다.'
+      message: '숏츠를 찾을 수 없습니다.',
     })
   }
 

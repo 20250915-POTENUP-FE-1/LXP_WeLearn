@@ -5,11 +5,11 @@ import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 interface CommentInputProps {
-  CommentAction: (formData: FormData) => void
+  commentPostAction: (formData: FormData) => void
   shortsId: string
 }
 
-export default function CommentInput({ CommentAction, shortsId }: CommentInputProps) {
+export default function CommentInput({ commentPostAction, shortsId }: CommentInputProps) {
   const [user, setUser] = useState<UserInfo>()
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function CommentInput({ CommentAction, shortsId }: CommentInputPr
           </div>
         </div>
         {/* 입력 필드 */}
-        <form id="comment-form" action={CommentAction} className="flex flex-1">
+        <form id="comment-form" action={commentPostAction} className="flex flex-1">
           <input name="shortsid" type="hidden" value={shortsId} />
           <input
             name="comment"

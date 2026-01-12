@@ -9,10 +9,10 @@ import { useEffect, useState } from 'react'
 interface ReCommentProps {
   openReply: number | null
   commentId: number
-  Replystate: ReplyActionState
+  replyPostState: ReplyActionState
 }
 
-export default function ReComment({ openReply, commentId, Replystate }: ReCommentProps) {
+export default function ReComment({ openReply, commentId, replyPostState }: ReCommentProps) {
   const [replyComment, setReplyComment] = useState<ReplyCommentResponse | null>(null)
 
   const fetchReplyComment = async () => {
@@ -24,7 +24,7 @@ export default function ReComment({ openReply, commentId, Replystate }: ReCommen
     if (!openReply || !commentId) return
 
     fetchReplyComment()
-  }, [openReply, commentId, Replystate])
+  }, [openReply, commentId, replyPostState])
 
   return (
     <>

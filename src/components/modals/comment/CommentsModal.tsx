@@ -9,8 +9,14 @@ import useIsMobile from '@/hook/useIsMobile'
 import { useActionState, useEffect, useState } from 'react'
 import { commentApi } from '@/services/comments/comments.service'
 import { CommentsResponse } from '@/types/comment'
-import { postCommentAction, postReplyAction } from '@/features/comment/action'
+import {
+  deleteCommentAction,
+  patchCommentAction,
+  postCommentAction,
+  postReplyAction,
+} from '@/features/comment/action'
 import { toast } from 'react-toastify'
+import DeleteModal from '@/components/ui/DeleteModal'
 
 export default function CommentModal() {
   const router = useRouter()
@@ -18,24 +24,41 @@ export default function CommentModal() {
   const isMobile = useIsMobile()
   const [mounted, setMounted] = useState(false)
   const [shortsId, setShortsId] = useState<string>('')
+  const [isDelete, setIsDelete] = useState(false)
 
   const [comments, setComments] = useState<CommentsResponse | null>(null)
   const [loading, setLoading] = useState(false)
 
-  // 댓글 Action
-  const [CommentState, CommentAction] = useActionState(postCommentAction, {
+  // 댓글 등록 Action
+  const [commentPostState, commentPostAction] = useActionState(postCommentAction, {
     success: false,
     message: '',
     errors: {},
     timestamp: 0,
   })
 
-  // 대댓글 Action
-  const [Replystate, ReplyAction] = useActionState(postReplyAction, {
+  // 댓글 수정 Action
+  const [commentPatchState, commentPatchAction] = useActionState(patchCommentAction, {
     success: false,
     message: '',
     errors: {},
   })
+
+  // 댓글 삭제 Action
+  const [commentDeleteState, commentDeleteAction] = useActionState(deleteCommentAction, {
+    success: false,
+    message: '',
+    errors: {},
+  })
+
+  // 대댓글 Action
+  const [replyPostState, replyPostAction] = useActionState(postReplyAction, {
+    success: false,
+    message: '',
+    errors: {},
+  })
+
+  console.log(commentDeleteState)
 
   // pathname에서 shortsId 추출
   // 스와이프로 shortsId가 변화하는것을 감지하여 shortsId에 넣어준다.
@@ -88,25 +111,50 @@ export default function CommentModal() {
     router.push(`/shorts/${shortsId}`)
   }
 
-  // 댓글 성공시 토스트 ui
+  // 댓글 등록 성공시 토스트 ui
   useEffect(() => {
-    if (CommentState.success && shortsId) {
+    if (commentPostState.success && shortsId) {
       toast.success('댓글 등록에 성공하였습니다.🚀')
       fetchComments()
-    } else if (CommentState.success === false && CommentState.message) {
-      toast.error(CommentState.message)
+    } else if (commentPostState.success === false && commentPostState.message) {
+      toast.error(commentPostState.message)
     }
-  }, [CommentState.timestamp])
+  }, [commentPostState.timestamp])
+
+  // 댓글 수정 성공시 토스트 ui
+  useEffect(() => {
+    if (commentPatchState.success) {
+      toast.success('댓글 수정에 성공하였습니다.🚀')
+      fetchComments()
+    } else if (commentPatchState.success === false && commentPatchState.message) {
+      toast.error(commentPatchState.message)
+    }
+  }, [commentPatchState])
+
+  // 댓글 삭제 성공 시 토스트 ui
+  useEffect(() => {
+    if (commentDeleteState.success) {
+      toast.success('댓글 삭제에 성공하였습니다.🚀')
+      fetchComments()
+      setIsDelete(false)
+    } else if (commentDeleteState.success === false && commentDeleteState.message) {
+      toast.error(commentDeleteState.message)
+    }
+  }, [commentDeleteState])
+
+  const handleDeleteMode = () => {
+    setIsDelete(true)
+  }
 
   // 대댓글 성공시 토스트 ui
   useEffect(() => {
-    if (Replystate.success) {
+    if (replyPostState.success) {
       toast.success('댓글 등록에 성공하였습니다.🚀')
       fetchComments()
-    } else if (Replystate.success === false && Replystate.message) {
-      toast.error(Replystate.message)
+    } else if (replyPostState.success === false && replyPostState.message) {
+      toast.error(replyPostState.message)
     }
-  }, [Replystate])
+  }, [replyPostState])
 
   return (
     <AnimatePresence mode="wait">
@@ -135,8 +183,15 @@ export default function CommentModal() {
                 {comments?.data?.length !== 0 ? (
                   <Comment
                     comments={comments?.data ?? []}
-                    Replystate={Replystate}
-                    ReplyAction={ReplyAction}
+                    replyPostState={replyPostState}
+                    replyPostAction={replyPostAction}
+                    shortsId={shortsId}
+                    commentPatchAction={commentPatchAction}
+                    commentPatchState={commentPatchState}
+                    handleDeleteMode={handleDeleteMode}
+                    isDelete={isDelete}
+                    setIsDelete={setIsDelete}
+                    commentDeleteAction={commentDeleteAction}
                   />
                 ) : (
                   <span className="flex h-full w-full items-center justify-center text-lg text-gray-600">
@@ -144,21 +199,10 @@ export default function CommentModal() {
                   </span>
                 )}
               </div>
-              <CommentInput CommentAction={CommentAction} shortsId={shortsId} />
+              <CommentInput commentPostAction={commentPostAction} shortsId={shortsId} />
             </div>
 
             {/* ==================== Confirm Modal (삭제 확인 모달) - hidden 제거하여 표시 ==================== */}
-            {/* 
-      <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50">
-        <div className="bg-white rounded-lg p-6 w-[280px] shadow-xl">
-          <p className="text-center text-gray-800 mb-6">댓글을 완전히 삭제할까요?</p>
-          <div className="flex gap-3 justify-center">
-            <button className="px-6 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50 transition-colors">취소</button>
-            <button className="px-6 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition-colors">삭제</button>
-          </div>
-        </div>
-      </div>
-      */}
           </div>
         </motion.aside>
       )}

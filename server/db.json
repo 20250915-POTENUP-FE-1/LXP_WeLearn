@@ -227,17 +227,6 @@
   ],
   "users": [
     {
-      "id": 1,
-      "email": "test@test.com",
-      "password": "1234",
-      "name": "홍길동",
-      "nickname": "개발자홍길동",
-      "profileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecie-profilowe-9.webp",
-      "createdAt": "2025-12-01T10:00:00Z"
-    }
-  ],
-  "users": [
-    {
       "userId": 16,
       "nickname": "먕먕먕",
       "profileImageUrl": null
@@ -1192,6 +1181,71 @@
         "nickname": "먕먕먕",
         "profileImageUrl": null
       }
+    },
+    {
+      "commentId": 1768186086564,
+      "shortsId": 2,
+      "content": "?",
+      "createdAt": "2026-01-12T11:48:06.564Z",
+      "isMine": true,
+      "replyCount": 1,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768187332024,
+      "shortsId": 2,
+      "content": "?",
+      "createdAt": "2026-01-12T12:08:52.024Z",
+      "isMine": true,
+      "replyCount": 1,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768187332033,
+      "shortsId": 2,
+      "content": "크아아아아아아아아",
+      "createdAt": "2026-01-12T12:08:52.024Z",
+      "isMine": false,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "내거아님",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768187332037,
+      "shortsId": 2,
+      "content": "으아아아아아아아아",
+      "createdAt": "2026-01-12T12:08:52.024Z",
+      "isMine": false,
+      "replyCount": 1,
+      "writer": {
+        "userId": 16,
+        "nickname": "내거아님",
+        "profileImageUrl": null
+      }
+    },
+    {
+      "commentId": 1768188359969,
+      "shortsId": 2,
+      "content": "굿?",
+      "createdAt": "2026-01-12T12:25:59.969Z",
+      "isMine": true,
+      "replyCount": 0,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      }
     }
   ],
   "replies": [
@@ -1901,6 +1955,41 @@
       },
       "content": "???",
       "createdAt": "2026-01-11T21:54:24.140Z"
+    },
+    {
+      "replyId": 1768186092242,
+      "parentId": 1768186086564,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "?????",
+      "createdAt": "2026-01-12T11:48:12.242Z"
+    },
+    {
+      "replyId": 1768188374021,
+      "parentId": 1768187332037,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "구우우웃",
+      "isMine": true,
+      "createdAt": "2026-01-12T12:26:14.021Z"
+    },
+    {
+      "replyId": 1768194377657,
+      "parentId": 1768187332024,
+      "writer": {
+        "userId": 16,
+        "nickname": "먕먕먕",
+        "profileImageUrl": null
+      },
+      "content": "음",
+      "isMine": true,
+      "createdAt": "2026-01-12T14:06:17.657Z"
     }
   ]
 }

@@ -8,14 +8,14 @@ interface ReCommnetInputProps {
   commentId: number
   openReplyInput: number | null
   setOpenReplyInput: (commentId: number | null) => void
-  ReplyAction: (formData: FormData) => void
+  replyPostAction: (formData: FormData) => void
 }
 
 export default function ReCommentInput({
   commentId,
   openReplyInput,
   setOpenReplyInput,
-  ReplyAction,
+  replyPostAction,
 }: ReCommnetInputProps) {
   const [user, setUser] = useState<UserInfo | null>(null)
 
@@ -49,7 +49,7 @@ export default function ReCommentInput({
                   <User strokeWidth={1.5} size={20} className="text-gray-400" />
                 )}
               </div>
-              <form className="flex flex-1" action={ReplyAction} id="replycomment-form">
+              <form className="flex flex-1" action={replyPostAction} id="replycomment-form">
                 <input type="hidden" name="commentId" value={commentId} />
                 <input
                   type="text"
