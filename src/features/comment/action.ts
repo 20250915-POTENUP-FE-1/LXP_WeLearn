@@ -128,6 +128,36 @@ export const postReplyAction = async (
   }
 }
 
+// 대댓글 수정 액션
+export const patchReplyCommentAction = async (
+  prevState: CommentActionState,
+  formData: FormData,
+): Promise<CommentActionState> => {
+  const replyId = Number(formData.get('replyId') || 0)
+  const content = formData.get('comment') as string
+
+  if (!replyId) {
+    return {
+      success: false,
+      errors: { content: '존재 하지 않는 답글입니다.' },
+    }
+  }
+
+  try {
+    const res = await RecommentApi.patchReplyComment(replyId, { content })
+    console.log(res)
+    return {
+      success: true,
+      data: res.data,
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: '답글 수정 중 오류가 발생했습니다.',
+    }
+  }
+}
+
 export const deleteReplyCommentAction = async (
   prevState: CommentActionState,
   formData: FormData,
@@ -137,7 +167,7 @@ export const deleteReplyCommentAction = async (
   if (!replyId) {
     return {
       success: false,
-      errors: { content: '존재 하지 않는 댓글입니다.' },
+      errors: { content: '존재 하지 않는 답글입니다.' },
     }
   }
 

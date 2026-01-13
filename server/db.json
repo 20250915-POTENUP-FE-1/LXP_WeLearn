@@ -234,38 +234,12 @@
   ],
   "comments": [
     {
-      "commentId": 1768211684120,
-      "shortsId": 1,
-      "content": "먕?",
-      "createdAt": "2026-01-12T18:54:44.120Z",
+      "commentId": 1768295587571,
+      "shortsId": 4,
+      "content": "댓글 수정",
+      "createdAt": "2026-01-13T18:13:07.571Z",
       "isMine": true,
-      "replyCount": 1,
-      "writer": {
-        "userId": 16,
-        "nickname": "먕먕먕",
-        "profileImageUrl": null
-      }
-    },
-    {
-      "commentId": 1768211718021,
-      "shortsId": 1,
-      "content": "먕먕?",
-      "createdAt": "2026-01-12T18:55:18.021Z",
-      "isMine": false,
       "replyCount": 0,
-      "writer": {
-        "userId": 16,
-        "nickname": "노노노",
-        "profileImageUrl": null
-      }
-    },
-    {
-      "commentId": 1768214062954,
-      "shortsId": 1,
-      "content": "욥",
-      "createdAt": "2026-01-12T19:34:22.954Z",
-      "isMine": true,
-      "replyCount": 1,
       "writer": {
         "userId": 16,
         "nickname": "먕먕먕",
@@ -273,30 +247,5 @@
       }
     }
   ],
-  "replies": [
-    {
-      "replyId": 1768211722544,
-      "parentId": 1768211684120,
-      "writer": {
-        "userId": 16,
-        "nickname": "먕먕먕",
-        "profileImageUrl": null
-      },
-      "content": "욤",
-      "isMine": true,
-      "createdAt": "2026-01-12T18:55:22.544Z"
-    },
-    {
-      "replyId": 1768214066001,
-      "parentId": 1768214062954,
-      "writer": {
-        "userId": 16,
-        "nickname": "먕먕먕",
-        "profileImageUrl": null
-      },
-      "content": "욥욥",
-      "isMine": true,
-      "createdAt": "2026-01-12T19:34:26.001Z"
-    }
-  ]
+  "replies": []
 }

@@ -1,45 +1,29 @@
-import { ChevronDown, Ellipsis, Pencil, Trash2, User } from 'lucide-react'
+import { ChevronDown, User } from 'lucide-react'
 import { useActionState, useEffect, useState } from 'react'
 import { CommentType } from '@/types/comment'
 import ReCommentInput from './ReCommentInput'
 import ReComment from './ReComment'
 import { timeAgo } from '@/utils/timeAgo'
 import { patchCommentAction } from '@/features/comment/action'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/Button'
-import DeleteModal from '@/components/ui/DeleteModal'
 import { toast } from 'react-toastify'
 import CommentDropDownMenu from '@/components/ui/CommentDropdownMenu'
 
 interface CommentsProps {
   comments: CommentType[]
   shortsId: string
-  isDelete: boolean
-  handleDeleteMode: () => void
-  setIsDelete: (props: boolean) => void
   setIsUpdate: React.Dispatch<React.SetStateAction<number>>
 }
 
-type DeleteMode = 'comment' | 'reply'
+export type EditTarget = { mode: 'comment'; id: number } | { mode: 'reply'; id: number } | null
+export type DeleteTarget = { mode: `comment`; id: number } | { mode: 'reply'; id: number } | null
 
-export default function Comment({
-  comments,
-  shortsId,
-  isDelete,
-  handleDeleteMode,
-  setIsDelete,
-  setIsUpdate,
-}: CommentsProps) {
+export default function Comment({ comments, shortsId, setIsUpdate }: CommentsProps) {
   const [openReply, setOpenReply] = useState<number | null>(null)
   const [openReplyInput, setOpenReplyInput] = useState<number | null>(null)
-  const [isEditMode, setIsEditMode] = useState<number | null>(null)
+  const [editTarget, setEditTarget] = useState<EditTarget>(null)
+  const [deleteTarget, setDeleteTarget] = useState<DeleteTarget>(null)
   const [isReplyUpdate, setIsReplyUpdate] = useState(0)
-  const [deleteMode, setDeleteMode] = useState<DeleteMode>('comment')
 
   // 댓글 수정 Action
   const [commentPatchState, commentPatchAction] = useActionState(patchCommentAction, {
@@ -59,7 +43,7 @@ export default function Comment({
   }, [commentPatchState])
 
   useEffect(() => {
-    setIsEditMode(null)
+    setEditTarget(null)
   }, [commentPatchState])
 
   const handleReply = (id: number) => {
@@ -76,14 +60,6 @@ export default function Comment({
       {comments?.map((comment) => {
         return (
           <div className="border-b border-gray-200 py-8" key={comment.commentId}>
-            <DeleteModal
-              mode="comment"
-              isDelete={isDelete}
-              setIsDelete={setIsDelete}
-              commentId={comment.commentId}
-              setIsUpdate={setIsUpdate}
-            />
-
             <div className="flex items-start justify-between">
               <div className="flex flex-1 items-start gap-3">
                 {/* 프로필 이미지 */}
@@ -107,32 +83,36 @@ export default function Comment({
                     </span>
                     <span className="text-xs text-gray-400">{timeAgo(comment.createdAt)}</span>
                   </div>
-                  {isEditMode === comment.commentId ? (
-                    <form className="my-2 flex flex-col gap-2" action={commentPatchAction}>
-                      <input type="hidden" name="commentId" value={comment.commentId} />
-                      <input type="hidden" name="shortsId" value={shortsId} />
-                      <input
-                        type="text"
-                        name="comment"
-                        placeholder="답글을 입력하세요..."
-                        autoComplete="off"
-                        className="w-full flex-1 rounded-full border border-gray-300 px-3 py-2 text-sm no-underline focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
-                        defaultValue={comment.content}
-                      />
-                      <div className="flex justify-end gap-1">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          className="rounded-full"
-                          onClick={() => setIsEditMode(null)}
-                        >
-                          취소
-                        </Button>
-                        <Button variant="accent" className="rounded-full" type="submit">
-                          등록
-                        </Button>
-                      </div>
-                    </form>
+                  {editTarget?.mode === 'comment' ? (
+                    editTarget.id === comment.commentId ? (
+                      <form className="my-2 flex flex-col gap-2" action={commentPatchAction}>
+                        <input type="hidden" name="commentId" value={comment.commentId} />
+                        <input type="hidden" name="shortsId" value={shortsId} />
+                        <input
+                          type="text"
+                          name="comment"
+                          placeholder="답글을 입력하세요..."
+                          autoComplete="off"
+                          className="w-full flex-1 rounded-full border border-gray-300 px-3 py-2 text-sm no-underline focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
+                          defaultValue={comment.content}
+                        />
+                        <div className="flex justify-end gap-1">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            className="rounded-full"
+                            onClick={() => setEditTarget(null)}
+                          >
+                            취소
+                          </Button>
+                          <Button variant="accent" className="rounded-full" type="submit">
+                            등록
+                          </Button>
+                        </div>
+                      </form>
+                    ) : (
+                      ''
+                    )
                   ) : (
                     <p className="mb-2 text-sm leading-relaxed text-gray-700">{comment.content}</p>
                   )}
@@ -162,10 +142,12 @@ export default function Comment({
               {/* 더보기 버튼 */}
               {comment.isMine && (
                 <CommentDropDownMenu
-                  setIsEditMode={setIsEditMode}
-                  commentId={comment.commentId}
-                  handleDeleteMode={handleDeleteMode}
-                  setDeleteMode={setDeleteMode}
+                  deleteTarget={deleteTarget}
+                  id={comment.commentId}
+                  setEditTarget={setEditTarget}
+                  setIsUpdate={setIsUpdate}
+                  mode="comment"
+                  setDeleteTarget={setDeleteTarget}
                 />
               )}
             </div>
@@ -178,16 +160,15 @@ export default function Comment({
             />
             {comment.replyCount > 0 && (
               <ReComment
+                editTarget={editTarget}
                 openReply={openReply}
                 commentId={comment.commentId}
                 isReplyUpdate={isReplyUpdate}
-                isDelete={isDelete}
-                setIsEditMode={setIsEditMode}
-                setIsDelete={setIsDelete}
+                deleteTarget={deleteTarget}
+                setDeleteTarget={setDeleteTarget}
+                setEditTarget={setEditTarget}
                 setIsUpdate={setIsUpdate}
-                handleDeleteMode={handleDeleteMode}
                 setIsReplyUpdate={setIsReplyUpdate}
-                setDeleteMode={setDeleteMode}
               />
             )}
           </div>

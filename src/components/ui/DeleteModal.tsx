@@ -3,25 +3,24 @@ import { Button } from './Button'
 import { useActionState, useEffect } from 'react'
 import { deleteCommentAction, deleteReplyCommentAction } from '@/features/comment/action'
 import { toast } from 'react-toastify'
+import { DeleteTarget } from '../modals/comment/Comment'
 
 interface DeleteModalProps {
-  isDelete: boolean
-  commentId?: number
-  replyId?: number
-  setIsDelete: (props: boolean) => void
+  id: number
+  mode: 'comment' | 'reply'
+  deleteTarget: DeleteTarget
   setIsUpdate: React.Dispatch<React.SetStateAction<number>>
   setIsReplyUpdate?: React.Dispatch<React.SetStateAction<number>>
-  mode: 'comment' | 'reply'
+  setDeleteTarget: React.Dispatch<React.SetStateAction<DeleteTarget>>
 }
 
 export default function DeleteModal({
-  isDelete,
-  setIsDelete,
-  commentId,
-  replyId,
+  id,
+  mode,
+  deleteTarget,
   setIsUpdate,
   setIsReplyUpdate,
-  mode,
+  setDeleteTarget,
 }: DeleteModalProps) {
   // 댓글 삭제 Action
   const [commentDeleteState, commentDeleteAction] = useActionState(deleteCommentAction, {
@@ -44,14 +43,14 @@ export default function DeleteModal({
     if (commentDeleteState.success) {
       toast.success('댓글 삭제에 성공하였습니다.🚀')
       setIsUpdate((prev) => prev + 1)
-      setIsDelete(false)
+      setDeleteTarget(null)
     } else if (replyCommentDeleteState.success) {
-      toast.success('댓글 삭제에 성공하였습니다.🚀')
+      toast.success('답글 삭제에 성공하였습니다.🚀')
       setIsUpdate((prev) => prev + 1)
       if (setIsReplyUpdate) {
         setIsReplyUpdate((prev) => prev + 1)
       }
-      setIsDelete(false)
+      setDeleteTarget(null)
     } else if (
       (commentDeleteState.success === false && commentDeleteState.message) ||
       (replyCommentDeleteState.success === false && replyCommentDeleteState.message)
@@ -62,7 +61,7 @@ export default function DeleteModal({
 
   return (
     <AnimatePresence>
-      {isDelete && (
+      {deleteTarget && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -71,16 +70,22 @@ export default function DeleteModal({
         >
           <div className="absolute inset-0 z-60 flex items-center justify-center rounded-xl bg-black/50">
             <div className="w-[280px] rounded-lg bg-white p-6 shadow-xl">
-              <p className="mb-6 text-center text-gray-800">댓글을 완전히 삭제할까요?</p>
+              <p className="mb-6 text-center text-gray-800">
+                {deleteTarget.mode === 'comment' ? '댓글' : '답글'}을 완전히 삭제할까요?
+              </p>
               <div className="flex justify-center gap-3">
-                <Button variant="outline" onClick={() => setIsDelete(false)}>
+                <Button variant="outline" onClick={() => setDeleteTarget(null)}>
                   취소
                 </Button>
-                <form action={commentId ? commentDeleteAction : replyCommentDeleteAction}>
+                <form
+                  action={
+                    deleteTarget.mode === 'comment' ? commentDeleteAction : replyCommentDeleteAction
+                  }
+                >
                   <input
                     type="hidden"
-                    name={commentId ? 'commentId' : 'replyId'}
-                    value={commentId ? commentId : replyId}
+                    name={deleteTarget.mode === 'comment' ? 'commentId' : 'replyId'}
+                    value={deleteTarget.id}
                   />
                   <Button variant="default">삭제</Button>
                 </form>

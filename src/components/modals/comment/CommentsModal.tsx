@@ -17,9 +17,7 @@ export default function CommentModal() {
   const isMobile = useIsMobile()
   const [mounted, setMounted] = useState(false)
   const [shortsId, setShortsId] = useState<string>('')
-  const [isDelete, setIsDelete] = useState(false)
   const [isUpdate, setIsUpdate] = useState(0)
-
   const [comments, setComments] = useState<CommentsResponse | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -74,10 +72,6 @@ export default function CommentModal() {
     router.push(`/shorts/${shortsId}`)
   }
 
-  const handleDeleteMode = () => {
-    setIsDelete(true)
-  }
-
   return (
     <AnimatePresence mode="wait">
       {isOpen && mounted && (
@@ -106,9 +100,6 @@ export default function CommentModal() {
                   <Comment
                     comments={comments?.data ?? []}
                     shortsId={shortsId}
-                    handleDeleteMode={handleDeleteMode}
-                    isDelete={isDelete}
-                    setIsDelete={setIsDelete}
                     setIsUpdate={setIsUpdate}
                   />
                 ) : (

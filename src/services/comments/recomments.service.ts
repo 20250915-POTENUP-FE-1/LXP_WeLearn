@@ -30,6 +30,21 @@ export const RecommentApi = {
     return result
   },
 
+  patchReplyComment: async (replyId: number, data: PostReCommentRequest) => {
+    const response = await fetch(`http://localhost:4000/api/v1/replies/${replyId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        content: data.content,
+      }),
+    })
+    const result = await response.json()
+    if (!response.ok) throw new Error(result.message || '답글 수정 실패')
+    return result
+  },
+
   deleteReplyComment: async (replyId: number) => {
     const response = await fetch(`http://localhost:4000/api/v1/replies/${replyId}`, {
       method: 'DELETE',
