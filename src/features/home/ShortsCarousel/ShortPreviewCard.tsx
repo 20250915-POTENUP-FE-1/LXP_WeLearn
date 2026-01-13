@@ -6,7 +6,7 @@ import type { components } from '@/types/api-schema'
 
 type ShortsItem = components['schemas']['ShortsResponse']
 
-const PREVIEW_DURATION = 2500 // ms, 2.5초 정도만 재생
+const PREVIEW_DURATION = 3500 // ms, 3.5초 정도만 재생
 
 export default function ShortPreviewCard({ item }: { item: ShortsItem }) {
   const videoRef = useRef<HTMLVideoElement | null>(null)
@@ -119,7 +119,7 @@ export default function ShortPreviewCard({ item }: { item: ShortsItem }) {
 
           {/* 하단 그라데이션 + 텍스트 */}
           <div className="absolute inset-x-0 bottom-0 z-10 bg-linear-to-t from-black/85 via-black/50 to-transparent p-4">
-            <p className="mb-1 line-clamp-2 text-xs font-semibold text-white">{item.title}</p>
+            <p className="mb-1 line-clamp-2 text-sm font-semibold text-white">{item.title}</p>
             <p className="mb-2 line-clamp-2 text-[11px] text-gray-200">{item.description}</p>
             <div className="flex items-center justify-between text-[11px] text-gray-300">
               <span className="font-medium">{item.uploader?.nickname ?? '숏터'}</span>

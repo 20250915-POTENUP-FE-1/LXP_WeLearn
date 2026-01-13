@@ -22,7 +22,7 @@ export default function CategoryShortsCard({ shorts }: { shorts: shorts }) {
 
           {/* 하단 그라데이션 + 텍스트 */}
           <div className="absolute inset-x-0 bottom-0 z-10 flex h-[60%] flex-col justify-end bg-linear-to-t from-black/95 via-black/70 to-transparent p-4">
-            <p className="mb-1 line-clamp-1 text-xs font-semibold text-white">{shorts.title}</p>
+            <p className="mb-1 line-clamp-1 text-sm font-semibold text-white">{shorts.title}</p>
             <p className="my-1 line-clamp-2 text-[11px] leading-relaxed text-gray-300">
               {shorts.description}
             </p>

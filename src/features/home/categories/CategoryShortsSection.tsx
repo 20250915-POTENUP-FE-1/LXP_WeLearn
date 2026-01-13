@@ -7,7 +7,7 @@ import { shorts } from '@/features/home/types/categoryShortsList'
 import { ChevronDown } from 'lucide-react'
 import CategoryShortsCard from '@/features/home/categories/CategoryShortsCard'
 
-const ITEMS_PER_PAGE = 12
+const ITEMS_PER_PAGE = 8
 
 export default function CategoryShortsSection({ shorts }: { shorts: shorts[] }) {
   const [selectedCategory, setSelectedCategory] = useState<Category>('전체')

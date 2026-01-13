@@ -1,6 +1,6 @@
 import React from 'react'
 import type { components } from '@/types/api-schema'
-import PageNation from './PageNation'
+import ShortsCarouselSwipe from './ShortsCarouselSwipe'
 
 type ShortsItem = components['schemas']['ShortsResponse']
 
@@ -8,7 +8,7 @@ export default function ShortsCarousel({ data }: { data?: ShortsItem[] }) {
   const items = data ?? []
 
   return (
-    <section className="mb-12">
+    <section className="my-12 md:mt-5 md:mb-12">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="flex items-center gap-2 text-xl font-extrabold text-gray-900 uppercase">
           Dev's Hot Pick?
@@ -18,7 +18,7 @@ export default function ShortsCarousel({ data }: { data?: ShortsItem[] }) {
         </span>
       </div>
 
-      {!items.length ? <p>오늘의 인기 숏폼 없습니다.</p> : <PageNation items={items} />}
+      {!items.length ? <p>오늘의 인기 숏폼 없습니다.</p> : <ShortsCarouselSwipe items={items} />}
     </section>
   )
 }
