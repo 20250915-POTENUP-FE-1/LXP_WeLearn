@@ -27,7 +27,7 @@ export default function LikeShortsList({
   return (
     <section className="mb-12">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-bold text-gray-900 uppercase">Like Shorts</h2>
+        <h2 className="text-xl font-extrabold text-gray-900 uppercase">Like Shorts</h2>
 
         <div className="flex items-center gap-2">
           <Link href="/mypage/likes">

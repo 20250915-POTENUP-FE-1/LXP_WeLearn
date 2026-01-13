@@ -49,7 +49,7 @@ export default function LikeShortsPage() {
 
             {/* 재생 버튼 */}
             <Link href="/mypage/likes" className="group">
-              <button className="flex w-full items-center justify-center gap-2 rounded-full bg-green-500 py-5 text-lg font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg md:w-[360px]">
+              <button className="flex w-full items-center justify-center gap-2 rounded-full bg-black py-5 text-lg font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg md:w-[360px]">
                 <Play
                   strokeWidth={1.5}
                   className="transition-transform duration-500 group-hover:rotate-360"

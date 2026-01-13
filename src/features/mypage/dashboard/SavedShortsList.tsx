@@ -19,7 +19,7 @@ export default function SavedShortsList({ playlists }: SavedShortsListProps) {
   return (
     <section>
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-bold text-gray-900 uppercase">Saved Shorts</h2>
+        <h2 className="text-xl font-extrabold text-gray-900 uppercase">Saved Shorts</h2>
       </div>
 
       <div className="mb-10 grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 md:grid-cols-4">
