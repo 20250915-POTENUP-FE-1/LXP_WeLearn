@@ -13,6 +13,7 @@ type ShortsCarouselSwipeProps = {
   items: ShortsItem[]
 }
 
+// 화면 너비에 따라 한 페이지에 표시할 아이템 수 반환
 function getItemsPerPage() {
   if (typeof window === 'undefined') return 4
   if (window.innerWidth < 640) return 1
@@ -20,6 +21,7 @@ function getItemsPerPage() {
   return 4
 }
 
+// 숏츠 캐러셀 스와이프 컴포넌트 - 좌우 드래그/버튼으로 탐색 가능
 export default function ShortsCarouselSwipe({ items }: ShortsCarouselSwipeProps) {
   const [startIndex, setStartIndex] = useState(0)
   const [itemsPerPage, setItemsPerPage] = useState(4)
@@ -27,6 +29,7 @@ export default function ShortsCarouselSwipe({ items }: ShortsCarouselSwipeProps)
   const [itemWidth, setItemWidth] = useState(0)
   const gap = 16 // gap-4 = 16px
 
+  // 컨테이너 크기 및 아이템 너비 계산 (리사이즈 대응)
   useEffect(() => {
     const updateDimensions = () => {
       setItemsPerPage(getItemsPerPage())
@@ -58,12 +61,14 @@ export default function ShortsCarouselSwipe({ items }: ShortsCarouselSwipeProps)
     setStartIndex((prev) => Math.min(maxStartIndex, prev + 1))
   }, [maxStartIndex])
 
+  // 드래그 제스처 처리 훅 연결
   const handleDragEnd = useDragNavigation({
     onPrev: handlePrev,
     onNext: handleNext,
     direction: 'horizontal',
   })
 
+  // 현재 인덱스 기반 X축 이동 거리 계산
   const translateX = -startIndex * (itemWidth + gap)
 
   return (
@@ -89,11 +94,13 @@ export default function ShortsCarouselSwipe({ items }: ShortsCarouselSwipeProps)
           className="flex cursor-grab touch-pan-y active:cursor-grabbing"
           style={{ gap }}
         >
+          {/* 숏츠 아이템 목록 렌더링 - 각 아이템은 반응형 너비를 가지며 gap 간격으로 배치됨 */}
           {items.map((item) => (
             <div
               key={item.shortsId}
               className="shrink-0"
               style={{
+                // itemWidth가 계산되면 고정 너비 사용, 아니면 CSS calc로 동적 계산
                 width:
                   itemWidth || `calc((100% - ${gap * (itemsPerPage - 1)}px) / ${itemsPerPage})`,
               }}
