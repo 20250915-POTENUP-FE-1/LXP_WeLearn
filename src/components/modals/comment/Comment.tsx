@@ -1,20 +1,61 @@
-import { ChevronDown, Ellipsis, User } from 'lucide-react'
-import { useState } from 'react'
+import { ChevronDown, User } from 'lucide-react'
+import { useActionState, useEffect, useState } from 'react'
 import { CommentType } from '@/types/comment'
 import ReCommentInput from './ReCommentInput'
 import ReComment from './ReComment'
 import { timeAgo } from '@/utils/timeAgo'
-import { ReplyActionState } from '@/features/comment/action'
+import { patchCommentAction } from '@/features/comment/action'
+import { Button } from '@/components/ui/Button'
+import { toast } from 'react-toastify'
+import CommentDropDownMenu from '@/components/ui/CommentDropdownMenu'
+import { DeleteTarget } from './CommentsModal'
+import { AnimatePresence, motion } from 'framer-motion'
 
 interface CommentsProps {
   comments: CommentType[]
-  Replystate: ReplyActionState
-  ReplyAction: (formData: FormData) => void
+  shortsId: string
+  deleteTarget: DeleteTarget
+  isReplyUpdate: number
+  setIsUpdate: React.Dispatch<React.SetStateAction<number>>
+  setDeleteTarget: React.Dispatch<React.SetStateAction<DeleteTarget>>
+  setIsReplyUpdate: React.Dispatch<React.SetStateAction<number>>
 }
 
-export default function Comment({ comments, Replystate, ReplyAction }: CommentsProps) {
+export type EditTarget = { mode: 'comment'; id: number } | { mode: 'reply'; id: number } | null
+
+export default function Comment({
+  comments,
+  shortsId,
+  deleteTarget,
+  isReplyUpdate,
+  setIsUpdate,
+  setDeleteTarget,
+  setIsReplyUpdate,
+}: CommentsProps) {
   const [openReply, setOpenReply] = useState<number | null>(null)
   const [openReplyInput, setOpenReplyInput] = useState<number | null>(null)
+  const [editTarget, setEditTarget] = useState<EditTarget>(null)
+
+  // 댓글 수정 Action
+  const [commentPatchState, commentPatchAction] = useActionState(patchCommentAction, {
+    success: false,
+    message: '',
+    errors: {},
+  })
+
+  // 댓글 수정 성공시 토스트 ui
+  useEffect(() => {
+    if (commentPatchState.success) {
+      toast.success('댓글 수정에 성공하였습니다.🚀')
+      setIsUpdate((prev: number) => prev + 1)
+    } else if (commentPatchState.success === false && commentPatchState.message) {
+      toast.error(commentPatchState.message)
+    }
+  }, [commentPatchState])
+
+  useEffect(() => {
+    setEditTarget(null)
+  }, [commentPatchState])
 
   const handleReply = (id: number) => {
     setOpenReply(openReply === id ? null : id)
@@ -53,7 +94,39 @@ export default function Comment({ comments, Replystate, ReplyAction }: CommentsP
                     </span>
                     <span className="text-xs text-gray-400">{timeAgo(comment.createdAt)}</span>
                   </div>
-                  <p className="mb-2 text-sm leading-relaxed text-gray-700">{comment.content}</p>
+                  {editTarget?.mode === 'comment' ? (
+                    editTarget.id === comment.commentId ? (
+                      <form className="my-2 flex flex-col gap-2" action={commentPatchAction}>
+                        <input type="hidden" name="commentId" value={comment.commentId} />
+                        <input type="hidden" name="shortsId" value={shortsId} />
+                        <input
+                          type="text"
+                          name="comment"
+                          placeholder="답글을 입력하세요..."
+                          autoComplete="off"
+                          className="w-full flex-1 rounded-full border border-gray-300 px-3 py-2 text-sm no-underline focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
+                          defaultValue={comment.content}
+                        />
+                        <div className="flex justify-end gap-1">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            className="rounded-full"
+                            onClick={() => setEditTarget(null)}
+                          >
+                            취소
+                          </Button>
+                          <Button variant="accent" className="rounded-full" type="submit">
+                            등록
+                          </Button>
+                        </div>
+                      </form>
+                    ) : (
+                      ''
+                    )
+                  ) : (
+                    <p className="mb-2 text-sm leading-relaxed text-gray-700">{comment.content}</p>
+                  )}
 
                   {/* 답글 토글 & 답글달기 */}
                   <div className="flex items-center gap-4">
@@ -64,7 +137,17 @@ export default function Comment({ comments, Replystate, ReplyAction }: CommentsP
                       }}
                     >
                       답글 {comment.replyCount}개
-                      <ChevronDown size={12} />
+                      <AnimatePresence>
+                        <motion.div
+                          animate={{
+                            rotate:
+                              openReply === comment.commentId && comment.replyCount > 0 ? 180 : 0,
+                          }}
+                          transition={{ duration: 0.25, ease: 'easeInOut' }}
+                        >
+                          <ChevronDown size={12} />
+                        </motion.div>
+                      </AnimatePresence>
                     </button>
                     <button
                       className="text-xs text-gray-500 transition-colors hover:text-black"
@@ -78,21 +161,35 @@ export default function Comment({ comments, Replystate, ReplyAction }: CommentsP
                 </div>
               </div>
               {/* 더보기 버튼 */}
-              <button className="rounded-full p-1 text-gray-400 transition-colors hover:bg-gray-100">
-                <Ellipsis size={18} />
-              </button>
+              {comment.isMine && (
+                <CommentDropDownMenu
+                  deleteTarget={deleteTarget}
+                  id={comment.commentId}
+                  setEditTarget={setEditTarget}
+                  setIsUpdate={setIsUpdate}
+                  mode="comment"
+                  setDeleteTarget={setDeleteTarget}
+                />
+              )}
             </div>
             <ReCommentInput
               commentId={comment.commentId}
               openReplyInput={openReplyInput}
               setOpenReplyInput={setOpenReplyInput}
-              ReplyAction={ReplyAction}
+              setIsReplyUpdate={setIsReplyUpdate}
+              setIsUpdate={setIsUpdate}
             />
             {comment.replyCount > 0 && (
               <ReComment
+                editTarget={editTarget}
                 openReply={openReply}
                 commentId={comment.commentId}
-                Replystate={Replystate}
+                isReplyUpdate={isReplyUpdate}
+                deleteTarget={deleteTarget}
+                setDeleteTarget={setDeleteTarget}
+                setEditTarget={setEditTarget}
+                setIsUpdate={setIsUpdate}
+                setIsReplyUpdate={setIsReplyUpdate}
               />
             )}
           </div>

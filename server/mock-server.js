@@ -63,6 +63,8 @@ server.use((req, res, next) => {
     '/api/v1/auth/logout',
     /^\/api\/v1\/shorts\/\d+\/comments$/, // 댓글 GET/POST
     /^\/api\/v1\/comments\/\d+\/replies$/, // 대댓글 GET/POST
+    /^\/api\/v1\/comments\/\d+$/,
+    /^\/api\/v1\/replies\/\d+$/,
   ]
 
   // 1️⃣ GET 요청은 대부분 공개
@@ -262,30 +264,30 @@ server.get('/api/v1/shorts/:shortsId/comments', (req, res) => {
       createdAt: comment.createdAt,
       writer: comment.writer, // ✅ 그대로 사용
       replyCount: comment.replyCount,
-      isMine: false,
+      isMine: comment.isMine,
     }
   })
 
   res.json({ success: true, data: result })
 })
 
-// PUT 댓글 수정
-server.put('/api/v1/comments/:commentId', (req, res) => {
+// PATCH 댓글 수정
+server.patch('/api/v1/comments/:commentId', (req, res) => {
   const db = router.db
   const commentId = Number(req.params.commentId)
   const { content } = req.body
 
-  const comment = db.get('comments').find({ id: commentId }).value()
+  const comment = db.get('comments').find({ commentId: commentId }).value()
+
+  if (!content || typeof content !== 'string' || !content.trim()) {
+    return res.status(400).json({ success: false, message: '내용이 필요합니다.' })
+  }
 
   if (!comment) {
     return res.status(404).json({ success: false })
   }
 
-  if (comment.userId !== CURRENT_USER_ID) {
-    return res.status(403).json({ success: false })
-  }
-
-  db.get('comments').find({ id: commentId }).assign({ content }).write()
+  db.get('comments').find({ commentId: commentId }).assign({ content }).write()
 
   res.json({ success: true })
 })
@@ -295,18 +297,20 @@ server.delete('/api/v1/comments/:commentId', (req, res) => {
   const db = router.db
   const commentId = Number(req.params.commentId)
 
-  const comment = db.get('comments').find({ id: commentId }).value()
+  const comment = db.get('comments').find({ commentId }).value()
 
   if (!comment) {
     return res.status(404).json({ success: false })
   }
 
-  if (comment.userId !== CURRENT_USER_ID) {
-    return res.status(403).json({ success: false })
-  }
+  // 2️⃣ 해당 댓글의 모든 대댓글 삭제
+  db.get('replies')
+    .remove((r) => r.parentId === commentId)
+    .write()
 
+  // 3️⃣ 댓글 삭제
   db.get('comments')
-    .remove((c) => c.id === commentId || c.parentId === commentId)
+    .remove((c) => c.commentId === commentId)
     .write()
 
   res.json({ success: true })
@@ -368,6 +372,7 @@ server.post('/api/v1/comments/:commentId/replies', (req, res) => {
       profileImageUrl: CURRENT_USER.profileImageUrl,
     },
     content,
+    isMine: true,
     createdAt: new Date(new Date().getTime() + 9 * 60 * 60 * 1000).toISOString(), // KST
   }
 
@@ -387,24 +392,27 @@ server.post('/api/v1/comments/:commentId/replies', (req, res) => {
 })
 
 // 대댓글 수정
-server.put('/api/v1/replies/:replyId', (req, res) => {
+server.patch('/api/v1/replies/:replyId', (req, res) => {
   const db = router.db
   const replyId = Number(req.params.replyId)
   const { content } = req.body
 
-  const reply = db.get('comments').find({ id: replyId }).value()
+  if (!content || typeof content !== 'string' || !content.trim()) {
+    return res.status(400).json({ success: false, message: '내용이 필요합니다.' })
+  }
+
+  const reply = db.get('replies').find({ replyId }).value()
 
   if (!reply || reply.parentId === null) {
     return res.status(404).json({ success: false })
   }
 
-  if (reply.userId !== CURRENT_USER_ID) {
-    return res.status(403).json({ success: false })
-  }
+  db.get('replies').find({ replyId }).assign({ content }).write()
 
-  db.get('comments').find({ id: replyId }).assign({ content }).write()
-
-  res.json({ success: true })
+  res.json({
+    success: true,
+    data: { replyId, content },
+  })
 })
 
 // 대댓글 삭제
@@ -412,17 +420,34 @@ server.delete('/api/v1/replies/:replyId', (req, res) => {
   const db = router.db
   const replyId = Number(req.params.replyId)
 
-  const reply = db.get('comments').find({ id: replyId }).value()
+  // 1️⃣ 대댓글 찾기
+  const reply = db.get('replies').find({ replyId }).value()
 
   if (!reply || reply.parentId === null) {
     return res.status(404).json({ success: false })
   }
 
-  if (reply.userId !== CURRENT_USER_ID) {
-    return res.status(403).json({ success: false })
+  const parentId = reply.parentId
+
+  // 2️⃣ 부모 댓글 찾기
+  const parentComment = db.get('comments').find({ commentId: parentId }).value()
+
+  if (!parentComment) {
+    return res.status(404).json({ success: false })
   }
 
-  db.get('comments').remove({ id: replyId }).write()
+  // 3️⃣ replyCount 감소 (0 이하 방지)
+  db.get('comments')
+    .find({ commentId: parentId })
+    .assign({
+      replyCount: Math.max((parentComment.replyCount || 0) - 1, 0),
+    })
+    .write()
+
+  // 4️⃣ 대댓글 삭제
+  db.get('replies')
+    .remove((r) => r.replyId === replyId)
+    .write()
 
   res.json({ success: true })
 })
@@ -534,7 +559,7 @@ server.patch('/api/v1/shorts/:id', (req, res) => {
   if (!shorts) {
     return res.status(404).json({
       success: false,
-      message: '숏츠를 찾을 수 없습니다.'
+      message: '숏츠를 찾을 수 없습니다.',
     })
   }
 

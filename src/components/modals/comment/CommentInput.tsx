@@ -1,16 +1,35 @@
 import { Button } from '@/components/ui/Button'
+import { postCommentAction } from '@/features/comment/action'
 import { UserInfo } from '@/types/comment'
 import { User } from 'lucide-react'
-import { useParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useActionState, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 interface CommentInputProps {
-  CommentAction: (formData: FormData) => void
   shortsId: string
+  setIsUpdate: React.Dispatch<React.SetStateAction<number>>
 }
 
-export default function CommentInput({ CommentAction, shortsId }: CommentInputProps) {
+export default function CommentInput({ shortsId, setIsUpdate }: CommentInputProps) {
   const [user, setUser] = useState<UserInfo>()
+
+  // 댓글 등록 Action
+  const [commentPostState, commentPostAction] = useActionState(postCommentAction, {
+    success: false,
+    message: '',
+    errors: {},
+    timestamp: 0,
+  })
+
+  // 댓글 등록 성공시 토스트 ui
+  useEffect(() => {
+    if (commentPostState.success && shortsId) {
+      toast.success('댓글 등록에 성공하였습니다.🚀')
+      setIsUpdate((prev) => prev + 1)
+    } else if (commentPostState.success === false && commentPostState.message) {
+      toast.error(commentPostState.message)
+    }
+  }, [commentPostState.timestamp])
 
   useEffect(() => {
     const localUser = localStorage.getItem('user') as string
@@ -36,7 +55,7 @@ export default function CommentInput({ CommentAction, shortsId }: CommentInputPr
           </div>
         </div>
         {/* 입력 필드 */}
-        <form id="comment-form" action={CommentAction} className="flex flex-1">
+        <form id="comment-form" action={commentPostAction} className="flex flex-1">
           <input name="shortsid" type="hidden" value={shortsId} />
           <input
             name="comment"

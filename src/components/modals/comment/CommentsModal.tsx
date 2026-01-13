@@ -6,11 +6,13 @@ import CommentModalHeader from './CommentsModalHeader'
 import Comment from './Comment'
 import CommentInput from './CommentInput'
 import useIsMobile from '@/hook/useIsMobile'
-import { useActionState, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { commentApi } from '@/services/comments/comments.service'
 import { CommentsResponse } from '@/types/comment'
-import { postCommentAction, postReplyAction } from '@/features/comment/action'
 import { toast } from 'react-toastify'
+import DeleteModal from '@/components/ui/DeleteModal'
+
+export type DeleteTarget = { mode: 'comment'; id: number } | { mode: 'reply'; id: number } | null
 
 export default function CommentModal() {
   const router = useRouter()
@@ -18,24 +20,11 @@ export default function CommentModal() {
   const isMobile = useIsMobile()
   const [mounted, setMounted] = useState(false)
   const [shortsId, setShortsId] = useState<string>('')
-
+  const [isUpdate, setIsUpdate] = useState(0)
   const [comments, setComments] = useState<CommentsResponse | null>(null)
   const [loading, setLoading] = useState(false)
-
-  // 댓글 Action
-  const [CommentState, CommentAction] = useActionState(postCommentAction, {
-    success: false,
-    message: '',
-    errors: {},
-    timestamp: 0,
-  })
-
-  // 대댓글 Action
-  const [Replystate, ReplyAction] = useActionState(postReplyAction, {
-    success: false,
-    message: '',
-    errors: {},
-  })
+  const [deleteTarget, setDeleteTarget] = useState<DeleteTarget>(null)
+  const [isReplyUpdate, setIsReplyUpdate] = useState(0)
 
   // pathname에서 shortsId 추출
   // 스와이프로 shortsId가 변화하는것을 감지하여 shortsId에 넣어준다.
@@ -80,33 +69,13 @@ export default function CommentModal() {
     if (!mounted || !isOpen || !shortsId) return
 
     fetchComments()
-  }, [mounted, isOpen, shortsId])
+  }, [mounted, isOpen, shortsId, isUpdate])
 
   // 모달 닫기 함수
   // 모달을 닫으면 /shorts/{shortsId} 경로로 이동
   const handleClose = () => {
     router.push(`/shorts/${shortsId}`)
   }
-
-  // 댓글 성공시 토스트 ui
-  useEffect(() => {
-    if (CommentState.success && shortsId) {
-      toast.success('댓글 등록에 성공하였습니다.🚀')
-      fetchComments()
-    } else if (CommentState.success === false && CommentState.message) {
-      toast.error(CommentState.message)
-    }
-  }, [CommentState.timestamp])
-
-  // 대댓글 성공시 토스트 ui
-  useEffect(() => {
-    if (Replystate.success) {
-      toast.success('댓글 등록에 성공하였습니다.🚀')
-      fetchComments()
-    } else if (Replystate.success === false && Replystate.message) {
-      toast.error(Replystate.message)
-    }
-  }, [Replystate])
 
   return (
     <AnimatePresence mode="wait">
@@ -135,8 +104,12 @@ export default function CommentModal() {
                 {comments?.data?.length !== 0 ? (
                   <Comment
                     comments={comments?.data ?? []}
-                    Replystate={Replystate}
-                    ReplyAction={ReplyAction}
+                    shortsId={shortsId}
+                    setIsUpdate={setIsUpdate}
+                    isReplyUpdate={isReplyUpdate}
+                    setIsReplyUpdate={setIsReplyUpdate}
+                    deleteTarget={deleteTarget}
+                    setDeleteTarget={setDeleteTarget}
                   />
                 ) : (
                   <span className="flex h-full w-full items-center justify-center text-lg text-gray-600">
@@ -144,21 +117,17 @@ export default function CommentModal() {
                   </span>
                 )}
               </div>
-              <CommentInput CommentAction={CommentAction} shortsId={shortsId} />
+              <CommentInput shortsId={shortsId} setIsUpdate={setIsUpdate} />
             </div>
 
-            {/* ==================== Confirm Modal (삭제 확인 모달) - hidden 제거하여 표시 ==================== */}
-            {/* 
-      <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50">
-        <div className="bg-white rounded-lg p-6 w-[280px] shadow-xl">
-          <p className="text-center text-gray-800 mb-6">댓글을 완전히 삭제할까요?</p>
-          <div className="flex gap-3 justify-center">
-            <button className="px-6 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50 transition-colors">취소</button>
-            <button className="px-6 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition-colors">삭제</button>
-          </div>
-        </div>
-      </div>
-      */}
+            {deleteTarget && (
+              <DeleteModal
+                deleteTarget={deleteTarget}
+                setIsUpdate={setIsUpdate}
+                setIsReplyUpdate={setIsReplyUpdate}
+                setDeleteTarget={setDeleteTarget}
+              />
+            )}
           </div>
         </motion.aside>
       )}

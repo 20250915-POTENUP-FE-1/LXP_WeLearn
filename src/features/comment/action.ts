@@ -24,19 +24,13 @@ export type ReplyActionState = {
   data?: ReplyCommetType
 }
 
+// 댓글 등록 액션
 export const postCommentAction = async (
   prevState: CommentActionState,
   formData: FormData,
 ): Promise<CommentActionState> => {
   const content = formData.get('comment') as string
   const shortsId = Number(formData.get('shortsid') || 0)
-
-  if (!content) {
-    return {
-      success: false,
-      errors: { content: '댓글을 입력해주세요' },
-    }
-  }
 
   try {
     const res = await commentApi.postComment(shortsId, { content })
@@ -54,6 +48,64 @@ export const postCommentAction = async (
   }
 }
 
+// 댓글 수정 액션
+export const patchCommentAction = async (
+  prevState: CommentActionState,
+  formData: FormData,
+): Promise<CommentActionState> => {
+  const content = formData.get('comment') as string
+  const commentId = Number(formData.get('commentId') || 0)
+
+  if (!content) {
+    return {
+      success: false,
+      errors: { content: '댓글을 입력해주세요' },
+    }
+  }
+
+  try {
+    const res = await commentApi.patchComment(commentId, { content })
+    return {
+      success: true,
+      data: res.data,
+      timestamp: Date.now(),
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: '댓글 수정 중 오류가 발생했습니다.',
+    }
+  }
+}
+
+// 댓글 삭제 액션
+export const deleteCommentAction = async (
+  prevState: CommentActionState,
+  formData: FormData,
+): Promise<CommentActionState> => {
+  const commentId = Number(formData.get('commentId') || 0)
+
+  if (!commentId) {
+    return {
+      success: false,
+      errors: { content: '존재 하지 않는 댓글입니다.' },
+    }
+  }
+
+  try {
+    const res = await commentApi.deleteComment(commentId)
+    return {
+      success: true,
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: '댓글 삭제 중 오류가 발생하였습니다.',
+    }
+  }
+}
+
+// 대댓글 등록 액션
 export const postReplyAction = async (
   prevState: ReplyActionState,
   formData: FormData,
@@ -73,5 +125,61 @@ export const postReplyAction = async (
   return {
     success: true,
     data: res.data,
+  }
+}
+
+// 대댓글 수정 액션
+export const patchReplyCommentAction = async (
+  prevState: CommentActionState,
+  formData: FormData,
+): Promise<CommentActionState> => {
+  const replyId = Number(formData.get('replyId') || 0)
+  const content = formData.get('comment') as string
+
+  if (!replyId) {
+    return {
+      success: false,
+      errors: { content: '존재 하지 않는 답글입니다.' },
+    }
+  }
+
+  try {
+    const res = await RecommentApi.patchReplyComment(replyId, { content })
+    console.log(res)
+    return {
+      success: true,
+      data: res.data,
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: '답글 수정 중 오류가 발생했습니다.',
+    }
+  }
+}
+
+export const deleteReplyCommentAction = async (
+  prevState: CommentActionState,
+  formData: FormData,
+): Promise<CommentActionState> => {
+  const replyId = Number(formData.get('replyId') || 0)
+
+  if (!replyId) {
+    return {
+      success: false,
+      errors: { content: '존재 하지 않는 답글입니다.' },
+    }
+  }
+
+  try {
+    const res = await RecommentApi.deleteReplyComment(replyId)
+    return {
+      success: true,
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: '댓글 삭제 중 오류가 발생하였습니다.',
+    }
   }
 }
