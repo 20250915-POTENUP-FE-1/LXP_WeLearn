@@ -1,15 +1,9 @@
 import { api } from '@/lib/utils/apiUtils'
-import { operations } from '@/types/api-schema'
-
-type GetShortsOperation = operations['getShortsList']
-
-// 2) 200 응답 바디 타입
-type GetShortsResponse = GetShortsOperation['responses'][200]['content']['*/*']
+import type { PageShortsResponse } from '@/types/mypage-shorts'
 
 export async function getShortPopular({ page = 0, size = 8 } = {}) {
   try {
-    // apiClient.get 이 제네릭을 받도록 만들어져 있다면 이렇게:
-    const popularShorts: GetShortsResponse = await api.get('/api/v1/shorts', {
+    const popularShorts = await api.get<PageShortsResponse>('/api/v1/shorts', {
       cache: 'no-store', // 항상 최신 데이터
       params: {
         page,

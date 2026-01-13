@@ -5,19 +5,19 @@ import { useState } from 'react'
 
 interface ShortsLikeButtonProps {
   initialLikeCount: number // 초기 좋아요 수
-  initialIsLiked?: boolean // 기본값은 false
+  initialIsLike?: boolean // 기본값은 false
 }
 
-function ShortsLikeButton({ initialLikeCount, initialIsLiked = false }: ShortsLikeButtonProps) {
-  const [isLiked, setIsLiked] = useState(initialIsLiked)
+function ShortsLikeButton({ initialLikeCount, initialIsLike = false }: ShortsLikeButtonProps) {
+  const [isLike, setIsLike] = useState(initialIsLike)
   const [likeCount, setLikeCount] = useState(initialLikeCount)
 
   // 좋아요 토글 핸들러
   const handleLike = () => {
-    setIsLiked((prev) => !prev)
+    setIsLike((prev) => !prev)
     // 좋아요 상태에 따라 숫자 증가/감소
-    // isLiked가 현재 true라면(이미 좋아요한 상태라면) 감소
-    setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1))
+    // isLike가 현재 true라면 감소
+    setLikeCount((prev) => (isLike ? prev - 1 : prev + 1))
   }
 
   return (
@@ -29,8 +29,8 @@ function ShortsLikeButton({ initialLikeCount, initialIsLiked = false }: ShortsLi
     >
       <Heart
         strokeWidth={1.5}
-        fill={isLiked ? 'currentColor' : 'none'}
-        className={isLiked ? 'text-red-500' : ''}
+        fill={isLike ? 'currentColor' : 'none'}
+        className={isLike ? 'text-red-500' : ''}
       />
       <span className="mt-1 text-xs">{likeCount.toLocaleString()}</span>
     </button>

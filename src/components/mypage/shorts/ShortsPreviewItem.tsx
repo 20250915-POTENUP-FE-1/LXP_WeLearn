@@ -23,7 +23,7 @@ export function ShortsPreviewItem({
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="text-sm text-gray-500">미리보기</span>
         </div>
-        <div className="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-[45%] bg-linear-to-t from-black/80 via-black/40 to-transparent" />
       </div>
     )
   }
@@ -69,7 +69,7 @@ export function ShortsPreviewItem({
       </div>
 
       {/* 하단 그라데이션 */}
-      <div className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-black/85 via-black/45 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-[48%] bg-linear-to-t from-black/85 via-black/45 to-transparent" />
 
       {/* 하단 정보 영역 */}
       <div className="absolute right-0 bottom-0 left-0 p-5">

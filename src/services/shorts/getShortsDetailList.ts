@@ -1,4 +1,4 @@
-import { ShortsDetail } from '@/types/shortform'
+import { ShortsDetail } from '@/types/shorts'
 import { shortsApi } from './shorts.service'
 
 export interface ShortsListProps {

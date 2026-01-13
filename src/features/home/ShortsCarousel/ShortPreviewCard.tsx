@@ -2,11 +2,9 @@
 
 import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
-import type { components } from '@/types/api-schema'
+import type { ShortsItem } from './ShortsCarousel'
 
-type ShortsItem = components['schemas']['ShortsResponse']
-
-const PREVIEW_DURATION = 2500 // ms, 2.5초 정도만 재생
+const PREVIEW_DURATION = 3500 // ms, 3.5초 정도만 재생
 
 export default function ShortPreviewCard({ item }: { item: ShortsItem }) {
   const videoRef = useRef<HTMLVideoElement | null>(null)
@@ -84,7 +82,7 @@ export default function ShortPreviewCard({ item }: { item: ShortsItem }) {
       onMouseLeave={handleMouseLeave}
     >
       <article className="flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white/90 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg">
-        <div className="relative aspect-9/16 w-full overflow-hidden rounded-2xl bg-gradient-to-br from-gray-200 to-gray-300">
+        <div className="relative aspect-9/16 w-full overflow-hidden rounded-2xl bg-linear-to-br from-gray-200 to-gray-300">
           {/* 비디오가 썸네일 + 프리뷰를 둘 다 담당 */}
           {item.videoUrl ? (
             <video
@@ -105,29 +103,26 @@ export default function ShortPreviewCard({ item }: { item: ShortsItem }) {
               className="absolute inset-0 h-full w-full object-cover"
             />
           ) : (
-            <div className="absolute inset-0 h-full w-full bg-gradient-to-br from-gray-200 to-gray-300" />
+            <div className="absolute inset-0 h-full w-full bg-linear-to-br from-gray-200 to-gray-300" />
           )}
 
           {/* 상단 배지 */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex justify-between p-4">
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 pt-1.5 pl-4">
             {item.category?.name && (
               <span className="rounded-full bg-black/55 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur">
                 {item.category.name}
               </span>
             )}
-            <span className="rounded-full bg-black/45 px-2 py-0.5 text-[10px] text-gray-100 backdrop-blur">
-              숏강의
-            </span>
           </div>
 
           {/* 하단 그라데이션 + 텍스트 */}
-          <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/85 via-black/50 to-transparent p-4">
-            <p className="mb-1 line-clamp-2 text-xs font-semibold text-white">{item.title}</p>
+          <div className="absolute inset-x-0 bottom-0 z-10 bg-linear-to-t from-black/85 via-black/50 to-transparent p-4">
+            <p className="mb-1 line-clamp-2 text-sm font-semibold text-white">{item.title}</p>
             <p className="mb-2 line-clamp-2 text-[11px] text-gray-200">{item.description}</p>
             <div className="flex items-center justify-between text-[11px] text-gray-300">
               <span className="font-medium">{item.uploader?.nickname ?? '숏터'}</span>
               <span className="rounded-full border border-white/25 px-2 py-0.5 text-[10px] text-gray-100">
-                #{item.category?.name ?? '스터디'}
+                #{item.category?.name ?? 'IT'}
               </span>
             </div>
           </div>

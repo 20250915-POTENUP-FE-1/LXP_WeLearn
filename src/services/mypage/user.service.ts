@@ -1,8 +1,17 @@
 import { api } from '@/lib/utils/apiUtils'
-import type { components } from '@/types/api-schema'
 
-type UserResponse = components['schemas']['UserResponse']
+// 사용자 응답 타입
+export interface UserResponse {
+  id?: number
+  email?: string
+  nickname?: string
+  name?: string
+  profileUrl?: string
+  createdAt?: string
+  updatedAt?: string
+}
 
+// 사용자 수정 요청 타입
 interface UserUpdateRequest {
   nickname: string
   profileUrl?: string
