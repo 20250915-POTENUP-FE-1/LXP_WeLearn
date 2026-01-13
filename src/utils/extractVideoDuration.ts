@@ -1,5 +1,5 @@
 /**
- * 비디오 파일에서 duration(초)을 추출한다.
+ * 비디오 파일에서 duration(초) 추출
  * - <video> + onloadedmetadata 기반
  * - Object URL은 항상 revoke하여 누수 방지
  */

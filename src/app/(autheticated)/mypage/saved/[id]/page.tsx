@@ -35,7 +35,7 @@ export default function SavedShortsPage() {
               </div>
 
               {/* 하단 그라데이션 */}
-              <div className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-black/85 via-black/45 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 h-[48%] bg-linear-to-t from-black/85 via-black/45 to-transparent" />
 
               {/* 하단 정보 영역 */}
               <div className="absolute right-0 bottom-0 left-0 p-5">
@@ -71,8 +71,8 @@ export default function SavedShortsPage() {
                 </Button>
               </div>
             </div>
-            {/* <Link href="/mypage/liked" className="group">
-              <button className="flex w-full items-center justify-center gap-2 rounded-full bg-green-500 py-5 text-lg font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg md:w-[360px]">
+            {/* <Link href="/mypage/likes" className="group">
+              <button className="flex w-full items-center justify-center gap-2 rounded-full bg-black py-5 text-lg font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg md:w-[360px]">
                 <Play
                   strokeWidth={1.5}
                   className="transition-transform duration-500 group-hover:rotate-360"

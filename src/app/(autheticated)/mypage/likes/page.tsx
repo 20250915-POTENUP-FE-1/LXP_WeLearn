@@ -1,7 +1,7 @@
 import { ChevronDown, MoreHorizontal, Play } from 'lucide-react'
 import Link from 'next/link'
 
-export default function LikedShortsPage() {
+export default function LikeShortsPage() {
   return (
     <div className="h-full w-full">
       <div className="flex flex-col gap-8 lg:flex-row">
@@ -10,7 +10,7 @@ export default function LikedShortsPage() {
           <div className="flex flex-col items-center justify-center gap-6 py-8 md:py-0 lg:sticky lg:top-24">
             {/* Page Title */}
             <h1 className="pt-8 text-center text-2xl font-black text-gray-900 uppercase md:pt-0 lg:p-0 lg:text-left">
-              Liked Shorts
+              Like Shorts
             </h1>
 
             {/* Preview Card */}
@@ -28,7 +28,7 @@ export default function LikedShortsPage() {
               </div>
 
               {/* 하단 그라데이션 */}
-              <div className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-black/85 via-black/45 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 h-[48%] bg-linear-to-t from-black/85 via-black/45 to-transparent" />
 
               {/* 하단 정보 영역 */}
               <div className="absolute right-0 bottom-0 left-0 p-5">
@@ -48,8 +48,8 @@ export default function LikedShortsPage() {
             </div>
 
             {/* 재생 버튼 */}
-            <Link href="/mypage/liked" className="group">
-              <button className="flex w-full items-center justify-center gap-2 rounded-full bg-green-500 py-5 text-lg font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg md:w-[360px]">
+            <Link href="/mypage/likes" className="group">
+              <button className="flex w-full items-center justify-center gap-2 rounded-full bg-black py-5 text-lg font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg md:w-[360px]">
                 <Play
                   strokeWidth={1.5}
                   className="transition-transform duration-500 group-hover:rotate-360"

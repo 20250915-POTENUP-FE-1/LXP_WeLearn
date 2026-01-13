@@ -1,5 +1,5 @@
 import { KOREAN_DATE_FORMAT } from '@/constants/date.constant'
-import { TIME } from '@/constants/time.consants'
+import { TIME } from '@/constants/time.constant'
 
 export function timeAgo(date: string) {
   const now = new Date()

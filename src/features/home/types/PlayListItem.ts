@@ -1,6 +1,10 @@
 export interface PlaylistItem {
   id: string
-  thumbnail: string
+  thumbnailUrl: string
   title: string
-  videoCount: number
+  shortsCount: number
+  category: string
+  progress?: number
+  viewCount: number
+  likeCount: number
 }

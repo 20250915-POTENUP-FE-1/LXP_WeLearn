@@ -1,4 +1,4 @@
-import { ShortsDetail } from '@/types/shortform'
+import { ShortsDetail } from '@/types/shorts'
 import ShortsPlayer from './ShortsPlayer'
 import ShortsCreateInfo from './ShortsCreateInfo'
 import ShortsActionBar from './ShortsActionBar'

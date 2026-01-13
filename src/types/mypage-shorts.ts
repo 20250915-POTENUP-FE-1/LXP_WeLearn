@@ -1,18 +1,68 @@
-import type { components } from '@/types/api-schema'
-
 // ============================================
-// API 스키마 기반 타입
-// ============================================
-export type ShortsResponse = components['schemas']['ShortsResponse']
-export type CategoryDto = components['schemas']['CategoryDto']
-export type UploaderDto = components['schemas']['UploaderDto']
-export type PageShortsResponse = components['schemas']['PageShortsResponse']
-export type ShortsUpdateRequest = components['schemas']['ShortsUpdateRequest']
-
-// ============================================
-// 공개 상태 (API 스키마 기준)
+// 숏츠 상태
 // ============================================
 export type ShortsStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
+
+// ============================================
+// 업로더 정보
+// ============================================
+export interface UploaderDto {
+  userId?: number
+  nickname?: string
+  profileUrl?: string
+}
+
+// ============================================
+// 카테고리 정보
+// ============================================
+export interface CategoryDto {
+  categoryId?: number
+  name?: string
+}
+
+// ============================================
+// 숏츠 응답 타입
+// ============================================
+export interface ShortsResponse {
+  shortsId?: number
+  title?: string
+  description?: string
+  videoUrl?: string
+  thumbnailUrl?: string
+  durationSec?: number
+  keywords?: string[]
+  status: ShortsStatus
+  uploader?: UploaderDto
+  category?: CategoryDto
+  createdAt?: string
+  updatedAt?: string
+}
+
+// ============================================
+// 페이지네이션 숏츠 응답
+// ============================================
+export interface PageShortsResponse {
+  content?: ShortsResponse[]
+  totalElements?: number
+  totalPages?: number
+  size?: number
+  number?: number
+  first?: boolean
+  last?: boolean
+  empty?: boolean
+}
+
+// ============================================
+// 숏츠 수정 요청
+// ============================================
+export interface ShortsUpdateRequest {
+  title?: string
+  description?: string
+  categoryId?: number
+  keywords?: string[]
+  status?: ShortsStatus
+  thumbnailUrl?: string | null
+}
 
 // ============================================
 // API 공통 응답 래퍼

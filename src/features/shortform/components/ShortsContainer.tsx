@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ShortsDetail } from '@/types/shortform'
+import { ShortsDetail } from '@/types/shorts'
 import ShortsItem from './ShortsItem'
 import ShortsNavigationButtons from './ShortsNavigationButtons'
 import { useKeyboardNavigation } from '@/hook/useKeyboardNavigation'

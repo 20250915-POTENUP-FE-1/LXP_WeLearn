@@ -4,11 +4,19 @@ import { revalidatePath } from 'next/cache'
 import { api } from '@/lib/utils/apiUtils'
 import { userApi } from '@/services/mypage/user.service'
 import type { ActionState } from '@/types/action'
-import type { components } from '@/types/api-schema'
+import type { ShortsResponse } from '@/types/mypage-shorts'
 
-// API 타입
-type ShortsUploadRequest = components['schemas']['ShortsUploadRequest']
-type ShortsResponse = components['schemas']['ShortsResponse']
+// 숏츠 업로드 요청 타입
+interface ShortsUploadRequest {
+  userId: number
+  categoryId: number
+  title: string
+  description?: string
+  videoUrl: string
+  thumbnailUrl?: string
+  durationSec?: number
+  keywords?: string[]
+}
 
 // 파일 업로드 응답 타입
 interface FileUploadResponse {

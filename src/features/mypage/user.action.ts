@@ -1,11 +1,8 @@
 'use server'
 
-import { userApi } from '@/services/mypage/user.service'
+import { userApi, type UserResponse } from '@/services/mypage/user.service'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import type { components } from '@/types/api-schema'
-
-type UserResponse = components['schemas']['UserResponse']
 
 interface UserUpdateRequest {
   nickname: string
