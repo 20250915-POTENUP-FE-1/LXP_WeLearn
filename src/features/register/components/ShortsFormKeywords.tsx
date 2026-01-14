@@ -1,10 +1,10 @@
 'use client'
 
 import { Input } from '@/components/ui/Input'
-import useKeywords from '@/hook/register/useKeywords'
 import { ShortsFormChangeHandler } from '@/features/register/types/shortsRegister'
 import KeywordSuggestions from './KeywordSuggestions'
 import KeywordList from './KeywordList'
+import useKeywords from '@/hook/keyword/useKeywords'
 
 interface ShortsFormKeywordsProps {
   keywords: string[]
