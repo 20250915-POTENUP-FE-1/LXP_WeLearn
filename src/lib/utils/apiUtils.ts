@@ -18,6 +18,7 @@ async function getAuthHeaders(customHeaders: HeadersInit = {}) {
   // 백엔드 ACCESS_TOKEN_COOKIE 설정값인 'accessToken'으로 가져옴
   const accessToken = cookieStore.get('accessToken')?.value
 
+  console.log(accessToken)
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
     ...customHeaders,
@@ -98,7 +99,7 @@ export const api = {
       body: JSON.stringify(data || {}),
     })
     if (!res.ok) throw await handleError(res)
-    return res.status === 204 ? ({} as T) : res
+    return res.status === 204 ? ({} as T) : res.json()
   },
 
   async patch<T>(endpoint: string, data?: unknown, options?: FetchOptions): Promise<T> {

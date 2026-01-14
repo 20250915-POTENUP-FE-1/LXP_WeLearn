@@ -1,5 +1,6 @@
 import { api } from '@/lib/utils/apiUtils'
 import { parseSetCookie } from '@/lib/utils/parseSetCookie'
+import { setAuthCookies } from '@/lib/utils/setAuthCookies'
 import { cookies } from 'next/headers'
 
 interface SignupRequest {
@@ -19,6 +20,7 @@ interface SigninRequest {
  * 쿠키 헤더를 파싱하여 현재 요청의 cookieStore에 적용하는 헬퍼 함수
  */
 async function applySetCookie(response: Response) {
+  console.log(response)
   const cookieHeader = response.headers.get('set-cookie')
   if (cookieHeader) {
     const cookieStore = await cookies()
@@ -35,8 +37,9 @@ export const authApi = {
    * 회원가입
    */
   signup: async (data: SignupRequest) => {
+    console.log(data)
     // 일반적인 POST 요청 (데이터만 반환)
-    return api.post('/api/v1/auth/signup', data, { cache: 'no-store' })
+    return api.post('/api/v1/users', data, { cache: 'no-store' })
   },
 
   /**
@@ -48,15 +51,13 @@ export const authApi = {
     // 여기서는 api.post가 내부에서 res.json()을 리턴하므로,
     // 만약 헤더 접근이 필요하다면 apiUtils의 post가 Response를 반환하도록 유지해야 합니다.
     const res = await api.post<Response>('/api/v1/auth/login', data, { cache: 'no-store' })
-
     // 1. 쿠키 적용
-    await applySetCookie(res)
+    const { accessToken, refreshToken } = res.data
 
+    setAuthCookies({ accessToken, refreshToken })
     // 2. 바디 파싱 및 에러 체크
-    const result = await res.json()
-    if (!res.ok) throw new Error(result.message || '로그인 실패')
 
-    return result
+    return res
   },
 
   /**
