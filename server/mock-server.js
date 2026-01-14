@@ -663,7 +663,7 @@ server.get('/api/v1/keywords', (req, res) => {
   // 검색어가 있는 경우 필터링
   if (name_like) {
     keywords = keywords.filter((keyword) =>
-      keyword.name.toLowerCase().includes(name_like.toLowerCase())
+      keyword.name.toLowerCase().includes(name_like.toLowerCase()),
     )
   }
 
@@ -691,5 +691,4 @@ server.listen(PORT, () => {
   console.log('- Comments: GET /api/v1/shorts/:shortsId/comments')
   console.log('- Comments: POST /api/v1/posts/:postId/comments')
   console.log('- Keywords: GET /api/v1/keywords')
-  console.log('- Keywords: GET /api/v1/keywords?name_like={query}')
 })
