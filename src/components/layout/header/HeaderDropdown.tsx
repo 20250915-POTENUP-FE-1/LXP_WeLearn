@@ -1,4 +1,5 @@
-import { CirclePlay, CircleUser, Heart, Layers, LogOut, Settings, User } from 'lucide-react'
+'use client'
+import { CirclePlay, CircleUser, Heart, LogOut, Settings, User } from 'lucide-react'
 import { startTransition, useActionState, useEffect } from 'react'
 import { LogoutAction } from '@/features/auth/action'
 import { useRouter } from 'next/navigation'
@@ -17,22 +18,24 @@ interface UserDropdownProps {
   user: UserInfo | null
 }
 export default function HeaderDropdown({ user }: UserDropdownProps) {
-  const [state, action, isPending] = useActionState(LogoutAction, {
-    success: false,
-    message: '',
-  })
-
   const router = useRouter()
 
-  useEffect(() => {
-    if (state.success) {
+  const handleLogout = async () => {
+    // 1. 서버 액션 직접 실행
+    const res = await LogoutAction({
+      success: false,
+      message: '',
+    })
+
+    // 2. 결과가 true면 즉시 처리
+    if (res.success === true) {
       localStorage.removeItem('user')
       toast.success('로그아웃 되었습니다.')
       router.push('/')
-    } else if (state.success === false && state.message) {
-      toast.error(state.message)
+    } else {
+      toast.error(res.message)
     }
-  }, [state])
+  }
 
   return (
     <>
@@ -74,7 +77,7 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
             <div className="flex flex-col justify-center">
               {user && (
                 <>
-                  <div className="pb-1 text-sm font-bold">{user.name}</div>
+                  <div className="pb-1 text-sm font-bold">{user.nickName}</div>
                   <div className="text-xs text-gray-600">{user.email}</div>
                 </>
               )}
@@ -124,14 +127,7 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
           </DropdownMenuItem>
           <hr />
           <DropdownMenuItem className="cursor-pointer">
-            <button
-              onClick={() => {
-                startTransition(() => {
-                  action()
-                })
-              }}
-              className="flex gap-4 p-1"
-            >
+            <button type="button" onClick={() => handleLogout()} className="flex gap-4 p-1">
               <LogOut />
               로그아웃
             </button>
