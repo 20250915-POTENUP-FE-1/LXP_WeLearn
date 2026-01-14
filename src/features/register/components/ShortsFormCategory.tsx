@@ -1,8 +1,9 @@
 'use client'
 
-import { DUMMY_CATEGORIES } from '@/dummy/categories'
+import { getCategoriesAction } from '@/features/category.action'
+import type { CategoryResponse } from '@/services/category/category.service'
 import { ChevronDown } from 'lucide-react'
-import type { ChangeEvent } from 'react'
+import { useEffect, useState, type ChangeEvent } from 'react'
 
 interface ShortsFormCategoryProps {
   value: number | null
@@ -10,8 +11,16 @@ interface ShortsFormCategoryProps {
 }
 
 export default function ShortsFormCategory({ value, onChange }: ShortsFormCategoryProps) {
-  // TODO: API 연동 시 useEffect로 카테고리 목록 fetch
-  const categories = DUMMY_CATEGORIES
+  const [categories, setCategories] = useState<CategoryResponse[]>([])
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const data = await getCategoriesAction()
+      setCategories(data)
+    }
+
+    fetchCategories()
+  }, [])
 
   // select value를 문자열로 변환
   const selectValue = value?.toString() ?? ''
@@ -32,7 +41,7 @@ export default function ShortsFormCategory({ value, onChange }: ShortsFormCatego
           id="category"
           value={selectValue}
           onChange={handleChange}
-          className="w-full cursor-pointer appearance-none rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-400 transition-all focus:ring-2 focus:ring-black focus:outline-none"
+          className={`w-full cursor-pointer appearance-none rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm transition-all focus:ring-2 focus:ring-black focus:outline-none ${selectValue ? 'text-black' : 'text-gray-400'}`}
         >
           <option value="">카테고리를 선택하세요.</option>
           {categories.map((category) => (

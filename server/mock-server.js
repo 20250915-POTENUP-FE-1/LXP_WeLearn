@@ -651,7 +651,27 @@ server.delete('/api/v1/shorts/:id', (req, res) => {
 })
 
 // ==========================================
-// 9. 라우팅 설정 (Prefix: /api)
+// 9. 키워드 API
+// ==========================================
+// GET 키워드 전체 목록 조회
+server.get('/api/v1/keywords', (req, res) => {
+  const db = router.db
+  const { name_like } = req.query
+
+  let keywords = db.get('keywords').value()
+
+  // 검색어가 있는 경우 필터링
+  if (name_like) {
+    keywords = keywords.filter((keyword) =>
+      keyword.name.toLowerCase().includes(name_like.toLowerCase()),
+    )
+  }
+
+  res.json(keywords)
+})
+
+// ==========================================
+// 10. 라우팅 설정 (Prefix: /api)
 // ==========================================
 // 나머지 라우트는 json-server 기본 동작(db.json CRUD)을 따름
 server.use('/api', router)
@@ -670,4 +690,5 @@ server.listen(PORT, () => {
   console.log('- Shorts: DELETE /api/v1/shorts/:id')
   console.log('- Comments: GET /api/v1/shorts/:shortsId/comments')
   console.log('- Comments: POST /api/v1/posts/:postId/comments')
+  console.log('- Keywords: GET /api/v1/keywords')
 })

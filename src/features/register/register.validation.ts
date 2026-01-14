@@ -1,15 +1,9 @@
+import {
+  ALLOWED_IMAGE_TYPES,
+  ALLOWED_VIDEO_TYPES,
+  VALIDATION_LIMITS,
+} from '@/constants/form.validation'
 import type { ShortsFormData, VideoPreviewData } from './types/shortsRegister'
-
-// ========== 상수 정의 ==========
-export const VALIDATION_LIMITS = {
-  TITLE_MAX_LENGTH: 50,
-  DESCRIPTION_MAX_LENGTH: 500,
-  KEYWORDS_MIN: 1,
-  KEYWORDS_MAX: 5,
-} as const
-
-export const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/quicktime']
-export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
 
 // ========== 타입 정의 ==========
 export type ValidationField = 'title' | 'description' | 'categoryId' | 'videoFile' | 'keywords'

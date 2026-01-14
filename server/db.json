@@ -15,11 +15,7 @@
         "id": 1,
         "name": "프로그래밍"
       },
-      "keywords": [
-        "Java",
-        "Spring",
-        "백엔드"
-      ],
+      "keywords": ["Java", "Spring", "백엔드"],
       "uploader": {
         "userId": 1,
         "nickname": "개발자홍길동",
@@ -43,11 +39,7 @@
         "id": 2,
         "name": "UI/UX"
       },
-      "keywords": [
-        "Figma",
-        "디자인",
-        "레이아웃"
-      ],
+      "keywords": ["Figma", "디자인", "레이아웃"],
       "uploader": {
         "userId": 6,
         "nickname": "디자인펭귄",
@@ -71,11 +63,7 @@
         "id": 1,
         "name": "프로그래밍"
       },
-      "keywords": [
-        "React",
-        "상태관리",
-        "프론트엔드"
-      ],
+      "keywords": ["React", "상태관리", "프론트엔드"],
       "uploader": {
         "userId": 9,
         "nickname": "프론트선배",
@@ -99,11 +87,7 @@
         "id": 2,
         "name": "UI/UX"
       },
-      "keywords": [
-        "CSS",
-        "Grid",
-        "웹개발"
-      ],
+      "keywords": ["CSS", "Grid", "웹개발"],
       "uploader": {
         "userId": 11,
         "nickname": "CSS요정",
@@ -127,11 +111,7 @@
         "id": 1,
         "name": "프로그래밍"
       },
-      "keywords": [
-        "Database",
-        "인덱스",
-        "SQL"
-      ],
+      "keywords": ["Database", "인덱스", "SQL"],
       "uploader": {
         "userId": 16,
         "nickname": "백엔드러버",
@@ -155,11 +135,7 @@
         "id": 1,
         "name": "프로그래밍"
       },
-      "keywords": [
-        "Vue",
-        "React",
-        "프레임워크"
-      ],
+      "keywords": ["Vue", "React", "프레임워크"],
       "uploader": {
         "userId": 21,
         "nickname": "프레임워크러버",
@@ -183,11 +159,7 @@
         "id": 1,
         "name": "프로그래밍"
       },
-      "keywords": [
-        "REST",
-        "API",
-        "HTTP"
-      ],
+      "keywords": ["REST", "API", "HTTP"],
       "uploader": {
         "userId": 15,
         "nickname": "API장인",
@@ -211,11 +183,7 @@
         "id": 1,
         "name": "프로그래밍"
       },
-      "keywords": [
-        "알고리즘",
-        "빅오",
-        "자료구조"
-      ],
+      "keywords": ["알고리즘", "빅오", "자료구조"],
       "uploader": {
         "userId": 20,
         "nickname": "알고리즘달인",
@@ -375,5 +343,49 @@
       "isMine": true,
       "createdAt": "2026-01-13T20:23:59.547Z"
     }
+  ],
+  "keywords": [
+    { "id": 1, "name": "프론트엔드" },
+    { "id": 2, "name": "프론트엔드 개발" },
+    { "id": 3, "name": "프론트엔드 면접" },
+    { "id": 4, "name": "프론트엔드 포트폴리오" },
+    { "id": 5, "name": "백엔드" },
+    { "id": 6, "name": "백엔드 개발" },
+    { "id": 7, "name": "백엔드 면접" },
+    { "id": 8, "name": "개발" },
+    { "id": 9, "name": "면접" },
+    { "id": 10, "name": "웹 개발" },
+    { "id": 11, "name": "모바일 개발" },
+    { "id": 12, "name": "풀스택 개발" },
+    { "id": 13, "name": "웹사이트 제작" },
+    { "id": 14, "name": "웹 애플리케이션" },
+    { "id": 15, "name": "앱 개발" },
+    { "id": 16, "name": "NextJS" },
+    { "id": 17, "name": "NextJS 14" },
+    { "id": 18, "name": "NextJS App Router" },
+    { "id": 19, "name": "React" },
+    { "id": 20, "name": "React Native" },
+    { "id": 21, "name": "TypeScript" },
+    { "id": 22, "name": "JavaScript" },
+    { "id": 23, "name": "TailwindCSS" },
+    { "id": 24, "name": "CSS" },
+    { "id": 25, "name": "HTML" },
+    { "id": 26, "name": "Node.js" },
+    { "id": 27, "name": "Python" },
+    { "id": 28, "name": "Java" },
+    { "id": 29, "name": "알고리즘" },
+    { "id": 30, "name": "자료구조" },
+    { "id": 31, "name": "코딩테스트" },
+    { "id": 32, "name": "개발자 취업" },
+    { "id": 33, "name": "개발자 이직" },
+    { "id": 34, "name": "프로젝트" },
+    { "id": 35, "name": "Git" },
+    { "id": 36, "name": "GitHub" },
+    { "id": 37, "name": "데브옵스" },
+    { "id": 38, "name": "클라우드 컴퓨팅" },
+    { "id": 39, "name": "데이터" },
+    { "id": 40, "name": "데이터 분석" },
+    { "id": 41, "name": "머신러닝" },
+    { "id": 42, "name": "인공지능" }
   ]
 }
