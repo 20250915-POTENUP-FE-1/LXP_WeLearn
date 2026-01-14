@@ -1,10 +1,7 @@
 import { toast } from 'react-toastify'
 import { ShortsFormChangeHandler } from '@/features/register/types/shortsRegister'
-import {
-  VALIDATION_LIMITS,
-  isKeywordsMaxReached,
-  isKeywordsValid,
-} from '@/features/register/register.validation'
+import { isKeywordsMaxReached, isKeywordsValid } from '@/features/register/register.validation'
+import { VALIDATION_LIMITS } from '@/constants/form.validation'
 
 interface UseKeywordSelectionParams {
   keywords: string[]

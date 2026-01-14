@@ -1,6 +1,7 @@
 'use client'
 
 import { Input } from '@/components/ui/Input'
+import { VALIDATION_LIMITS } from '@/constants/form.validation'
 
 interface FormInputData {
   title: string
@@ -19,29 +20,41 @@ export default function ShortsFormInputs({ formData, onChange }: ShortsFormInput
   return (
     <>
       <div>
-        <label className="mb-2 block text-sm font-medium text-gray-700">
-          숏츠 제목 <span className="text-red-600">*</span>
-        </label>
+        <div className="flex flex-row justify-between">
+          <label className="mb-2 block text-sm font-medium text-gray-700">
+            숏츠 제목 <span className="text-red-600">*</span>
+          </label>
+          <p className="mt-1 pr-2 text-right text-xs text-gray-500">
+            {title.length}/{VALIDATION_LIMITS.TITLE_MAX_LENGTH}
+          </p>
+        </div>
         <Input
           type="text"
           name="title"
           value={title}
           onChange={(e) => onChange('title', e.target.value)}
           placeholder="제목을 입력하세요."
+          maxLength={VALIDATION_LIMITS.TITLE_MAX_LENGTH}
           className="border-gray-300 bg-white text-sm focus:ring-black focus:outline-none"
         />
       </div>
 
       <div>
-        <label className="mb-2 block text-sm font-medium text-gray-700">
-          숏츠 설명 <span className="text-red-600">*</span>
-        </label>
+        <div className="flex flex-row justify-between">
+          <label className="mb-2 block text-sm font-medium text-gray-700">
+            숏츠 설명 <span className="text-red-600">*</span>
+          </label>
+          <p className="mt-1 pr-2 text-right text-xs text-gray-500">
+            {description.length}/{VALIDATION_LIMITS.DESCRIPTION_MAX_LENGTH}
+          </p>
+        </div>
         <textarea
           value={description}
           name="description"
           onChange={(e) => onChange('description', e.target.value)}
           placeholder="내용을 입력하세요."
           rows={4}
+          maxLength={VALIDATION_LIMITS.DESCRIPTION_MAX_LENGTH}
           className="w-full resize-none rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm transition-all placeholder:text-gray-400 focus:ring-2 focus:ring-black focus:outline-none"
         />
       </div>
