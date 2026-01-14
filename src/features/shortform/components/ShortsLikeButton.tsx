@@ -1,23 +1,47 @@
 'use client'
 
+import { useDebounce } from '@/hook/useDebounce'
+import { likeApi } from '@/services/shorts/likes.service'
 import { Heart } from 'lucide-react'
 import { useState } from 'react'
 
 interface ShortsLikeButtonProps {
   initialLikeCount: number // 초기 좋아요 수
   initialIsLike?: boolean // 기본값은 false
+  shortsId: number
 }
 
-function ShortsLikeButton({ initialLikeCount, initialIsLike = false }: ShortsLikeButtonProps) {
+function ShortsLikeButton({
+  initialLikeCount,
+  initialIsLike = false,
+  shortsId,
+}: ShortsLikeButtonProps) {
   const [isLike, setIsLike] = useState(initialIsLike)
   const [likeCount, setLikeCount] = useState(initialLikeCount)
 
-  // 좋아요 토글 핸들러
+  const sendLike = useDebounce(async (nextIsLike: boolean) => {
+    try {
+      if (nextIsLike) {
+        await likeApi.like(shortsId)
+      } else {
+        await likeApi.unlike(shortsId)
+      }
+    } catch (error) {
+      // 실패 시 롤백
+      setIsLike((prev) => !prev)
+      setLikeCount((prev) => (nextIsLike ? prev - 1 : prev + 1))
+    }
+  }, 300)
+
   const handleLike = () => {
-    setIsLike((prev) => !prev)
-    // 좋아요 상태에 따라 숫자 증가/감소
-    // isLike가 현재 true라면 감소
-    setLikeCount((prev) => (isLike ? prev - 1 : prev + 1))
+    const nextIsLike = !isLike
+
+    // optimistic update
+    setIsLike(nextIsLike)
+    setLikeCount((prev) => (nextIsLike ? prev + 1 : prev - 1))
+
+    // 서버에는 "최종 상태" 전달
+    sendLike(nextIsLike)
   }
 
   return (

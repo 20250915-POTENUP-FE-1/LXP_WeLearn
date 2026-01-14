@@ -1,6 +1,6 @@
 'use client'
 
-import { ClosedCaption, Heart, ListPlus, MessageSquareText, Send } from 'lucide-react'
+import { ListPlus, MessageSquareText, Send } from 'lucide-react'
 import { toast } from 'react-toastify'
 import ShortsLikeButton from './ShortsLikeButton'
 import { usePathname, useRouter } from 'next/navigation'
@@ -40,7 +40,7 @@ export default function ShortsActionBar({ id }: ShortsActionBarProps) {
   return (
     <aside className="absolute right-5 bottom-20 flex flex-col items-center gap-6">
       {/* 좋아요 */}
-      <ShortsLikeButton initialLikeCount={127} />
+      <ShortsLikeButton initialLikeCount={127} shortsId={id} />
 
       {/* 댓글 */}
 

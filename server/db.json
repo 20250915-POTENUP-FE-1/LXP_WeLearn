@@ -310,32 +310,6 @@
         "nickname": "먕먕먕",
         "profileImageUrl": null
       }
-    },
-    {
-      "commentId": 1768303159182,
-      "shortsId": 4,
-      "content": "욥",
-      "createdAt": "2026-01-13T20:19:19.182Z",
-      "isMine": true,
-      "replyCount": 1,
-      "writer": {
-        "userId": 16,
-        "nickname": "먕먕먕",
-        "profileImageUrl": null
-      }
-    },
-    {
-      "commentId": 1768303160110,
-      "shortsId": 4,
-      "content": "욥",
-      "createdAt": "2026-01-13T20:19:20.110Z",
-      "isMine": true,
-      "replyCount": 0,
-      "writer": {
-        "userId": 16,
-        "nickname": "먕먕먕",
-        "profileImageUrl": null
-      }
     }
   ],
   "replies": [
@@ -362,18 +336,6 @@
       "content": "답글답글답글",
       "isMine": true,
       "createdAt": "2026-01-13T19:57:25.318Z"
-    },
-    {
-      "replyId": 1768303439547,
-      "parentId": 1768303159182,
-      "writer": {
-        "userId": 16,
-        "nickname": "먕먕먕",
-        "profileImageUrl": null
-      },
-      "content": "욥",
-      "isMine": true,
-      "createdAt": "2026-01-13T20:23:59.547Z"
     }
   ]
 }

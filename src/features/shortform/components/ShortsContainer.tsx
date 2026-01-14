@@ -9,7 +9,6 @@ import { useKeyboardNavigation } from '@/hook/useKeyboardNavigation'
 import { getSafeIndex } from '@/lib/utils/getSafeIndex'
 import { useDragNavigation } from '@/hook/useDragNavigation'
 import { useScrollNavigation } from '@/hook/useScrollNavigation'
-import { getShortsDetailList } from '@/services/shorts/getShortsDetailList'
 
 interface ShortsContainerProps {
   shortsList: ShortsDetail[]
@@ -23,8 +22,6 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
   const [currentIndex, setCurrentIndex] = useState(safeInitialIndex)
   const [slideDirection, setSlideDirection] = useState<SlideDirection>(null)
   const [isAnimating, setIsAnimating] = useState(false)
-  const [list, setList] = useState(shortsList)
-  const [isFetching, setIsFetching] = useState(false)
 
   const currentShorts = shortsList[currentIndex] ?? null
   const hasPrev = currentIndex > 0
