@@ -26,10 +26,9 @@ export interface PresignedUrlResponse {
 
 // 업로드 완료 확정 요청
 export interface ConfirmUploadRequest {
-  shortsId: string
   uploadId: string
   videoUrl: string
-  thumbnailUrl: string
+  thumbnailurl: string
 }
 
 // 업로드 완료 확정 응답
@@ -76,15 +75,15 @@ export const shortsUploadApi = {
    * 3단계: 업로드 완료 확정
    */
   async confirmUpload(params: ConfirmUploadRequest): Promise<ConfirmUploadResponse> {
-    const { shortsId, uploadId, videoUrl, thumbnailUrl } = params
+    const { uploadId, videoUrl, thumbnailurl } = params
 
     console.log('파람스', params)
     const response = await api.post<{
       data: ConfirmUploadResponse
-    }>(`/api/v1/shorts/${shortsId}/upload-complete`, {
+    }>(`/api/v1/shorts/${uploadId}/upload-complete`, {
       uploadId,
       videoUrl,
-      thumbnailUrl,
+      thumbnailurl,
     })
 
     return response.data
@@ -110,10 +109,9 @@ export const shortsUploadApi = {
 
     // 3️⃣ 업로드 확정
     return this.confirmUpload({
-      shortsId: presigned.shortsId,
       uploadId: presigned.uploadId,
       videoUrl: presigned.videoPresignedUrl,
-      thumbnailUrl: presigned.thumbnailPresignedUrl,
+      thumbnailurl: presigned.thumbnailPresignedUrl,
     })
   },
 }
