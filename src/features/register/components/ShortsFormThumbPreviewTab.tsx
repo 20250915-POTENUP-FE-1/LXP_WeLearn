@@ -72,6 +72,7 @@ export default function ShortsFormThumbPreviewTab({
         action={
           <>
             <input
+              name="thumbnail"
               ref={thumbnailInputRef}
               type="file"
               accept="image/*"

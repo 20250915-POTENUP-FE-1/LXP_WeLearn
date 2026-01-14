@@ -5,10 +5,22 @@ import { api } from '@/lib/utils/apiUtils'
 import { userApi } from '@/services/mypage/user.service'
 import type { ActionState } from '@/types/action'
 import type { ShortsResponse } from '@/types/mypage-shorts'
+import { shortsApi } from '@/services/shorts/shorts.service'
+import { shortsUploadApi } from '@/services/shorts/upload.service'
+import { extractVideoDuration } from '@/utils/extractVideoDuration'
+import { video } from 'framer-motion/client'
+
+// Server Action용 FormData 타입 정의
+export interface ShortsUploadFormData {
+  categoryId: number
+  title: string
+  description?: string
+  keywords?: string[]
+  durationSec: number
+}
 
 // 숏츠 업로드 요청 타입
 interface ShortsUploadRequest {
-  userId: number
   categoryId: number
   title: string
   description?: string
@@ -43,6 +55,16 @@ export interface RegisterShortsMetadata {
   durationSec?: number
 }
 
+export interface UploadShortsPayload {
+  title: string
+  description: string
+  categoryId: number
+  keywords: string[]
+  durationSec: number
+  videoFile: File
+  thumbnailFile?: File | null
+}
+
 const baseUrl = process.env.NEXT_PUBLIC_API_URL
 
 /**
@@ -70,38 +92,38 @@ async function uploadFormData<T = unknown>(endpoint: string, formData: FormData)
  * - 썸네일 파일을 서버로 직접 업로드
  * - FormData 기반 업로드 지원
  */
+/**
+ * 썸네일 업로드 액션 (null-safe)
+ * - 파일이 없으면 서버에 null로 처리
+ */
 export async function uploadThumbnailAction(
   formData: FormData,
-): Promise<ActionState<{ thumbnailUrl: string }>> {
+): Promise<ActionState<{ thumbnailUrl: string | null }>> {
   const file = formData.get('file') as File | null
-
-  if (!file) {
-    return {
-      success: false,
-      message: '썸네일 파일이 없습니다.',
-    }
-  }
 
   try {
     const uploadData = new FormData()
-    uploadData.append('file', file)
 
+    // 파일이 있을 때만 append
+    if (file) {
+      uploadData.append('file', file)
+    }
+
+    // 서버에 파일 없으면 uploadData는 비어있음
     const data = await uploadFormData<FileUploadResponse>('/api/v1/files/thumbnails', uploadData)
 
-    const thumbnailUrl = data.thumbnailUrl ?? data.url ?? Object.values(data)[0]
-
-    if (!thumbnailUrl) {
-      throw new Error('썸네일 URL을 받지 못했습니다.')
-    }
+    // 서버에서 실제로 URL을 받지 못하면 null 처리
+    const thumbnailUrl = data.thumbnailUrl ?? data.url ?? Object.values(data)[0] ?? null
 
     return {
       success: true,
-      data: { thumbnailUrl },
+      data: { thumbnailUrl }, // null 가능
     }
   } catch (error) {
     return {
       success: false,
       message: error instanceof Error ? error.message : '썸네일 업로드 실패',
+      data: { thumbnailUrl: null },
     }
   }
 }
@@ -138,52 +160,38 @@ async function uploadThumbnailFromBase64(base64Data: string): Promise<string | n
  * @param metadata - S3 비디오 URL과 메타데이터
  * @returns 숏츠 등록 결과
  */
-export async function registerShortsAction(
-  metadata: RegisterShortsMetadata,
+// Server Action 예시
+export async function uploadShortsAction(
+  prevState: ActionState,
+  payload: UploadShortsPayload,
 ): Promise<ActionState<ShortsResponse>> {
   try {
-    // 서버에서 현재 사용자 정보 조회
-    const user = await userApi.getMe().catch(() => null)
-    if (!user?.id) {
-      return { success: false, message: '로그인이 필요합니다.' }
-    }
+    const { videoFile, thumbnailFile, ...meta } = payload
 
-    // 썸네일 업로드 (Base64 → 서버 업로드)
-    let thumbnailUrl: string | undefined
-    if (metadata.thumbnail) {
-      const url = await uploadThumbnailFromBase64(metadata.thumbnail)
-      if (url) {
-        thumbnailUrl = url
-      }
-    }
+    // 비디오 길이 계산
 
-    // 숏츠 등록 요청 (S3 비디오 URL + 서버 업로드된 썸네일 URL)
-    const request: ShortsUploadRequest = {
-      userId: user.id,
-      categoryId: metadata.categoryId,
-      title: metadata.title,
-      description: metadata.description || undefined,
-      videoUrl: metadata.videoUrl, // S3에 직접 업로드된 비디오 URL
-      thumbnailUrl, // 서버에 업로드된 썸네일 URL (Base64 → 서버)
-      durationSec: metadata.durationSec ?? undefined,
-      keywords: metadata.keywords?.length ? metadata.keywords : undefined,
-    }
+    // Presigned URL 발급 + S3 업로드 + 업로드 확정
+    const result = await shortsUploadApi.uploadShorts(
+      {
+        ...meta,
+        fileName: videoFile.name,
+        fileSize: videoFile.size,
+        contentType: videoFile.type,
+      },
+      videoFile,
+      thumbnailFile,
+    )
 
-    const res = await api.post<Response>('/api/v1/shorts', request)
-    const response = await res.json()
+    console.log('결과: ', result)
 
-    // 캐시 무효화
+    // 페이지 재검증
     revalidatePath('/mypage/myshorts')
 
     return {
       success: true,
-      message: '숏츠가 등록되었습니다.',
-      data: response?.data ?? response,
+      data: result,
     }
   } catch (error) {
-    return {
-      success: false,
-      message: error instanceof Error ? error.message : '숏츠 등록 실패',
-    }
+    return { success: false, message: error instanceof Error ? error.message : '업로드 실패' }
   }
 }

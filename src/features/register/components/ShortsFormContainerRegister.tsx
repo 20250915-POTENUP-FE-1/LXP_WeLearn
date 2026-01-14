@@ -13,7 +13,7 @@ export default function ShortsFormContainerRegister() {
     isSubmitting,
     handleFormChange,
     handleVideoChange,
-    handleRegister,
+    // handleRegister,
     handleCancel,
   } = useRegisterForm()
 
@@ -23,7 +23,7 @@ export default function ShortsFormContainerRegister() {
       videoData={videoData}
       onFormChange={handleFormChange}
       onVideoChange={handleVideoChange}
-      onSubmit={handleRegister}
+      // onSubmit={handleRegister}
       onCancel={handleCancel}
       isSubmitting={isSubmitting}
       submitText="등록하기"

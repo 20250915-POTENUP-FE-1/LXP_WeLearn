@@ -11,16 +11,16 @@ interface ShortsFormCategoryProps {
 }
 
 export default function ShortsFormCategory({ value, onChange }: ShortsFormCategoryProps) {
-  const [categories, setCategories] = useState<CategoryResponse[]>([])
+  const [categories, setCategories] = useState<CategoryResponse[]>([{ id: 1, name: '프로그래머' }])
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const data = await getCategoriesAction()
-      setCategories(data)
-    }
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     const data = await getCategoriesAction()
+  //     setCategories(data)
+  //   }
 
-    fetchCategories()
-  }, [])
+  //   fetchCategories()
+  // }, [])
 
   // select value를 문자열로 변환
   const selectValue = value?.toString() ?? ''
@@ -39,6 +39,7 @@ export default function ShortsFormCategory({ value, onChange }: ShortsFormCatego
       <div className="relative">
         <select
           id="category"
+          name="categoryId"
           value={selectValue}
           onChange={handleChange}
           className={`w-full cursor-pointer appearance-none rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm transition-all focus:ring-2 focus:ring-black focus:outline-none ${selectValue ? 'text-black' : 'text-gray-400'}`}

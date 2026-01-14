@@ -50,7 +50,7 @@ export default function ShortsFormKeywords({
           aria-activedescendant={activeIndex >= 0 ? getOptionId(activeIndex) : undefined}
           aria-autocomplete="list"
           type="text"
-          name="keyword"
+          name="keywords"
           value={keywordInput}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}

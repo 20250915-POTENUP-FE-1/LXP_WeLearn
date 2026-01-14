@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button'
 import { Loader2 } from 'lucide-react'
 
 interface ShortsFormSubmitButtonsProps {
-  onRegister: () => void
+  // onRegister: () => void
   onCancel: () => void
   isLoading?: boolean
   submitText?: string // 버튼 텍스트 커스터마이징
@@ -12,7 +12,7 @@ interface ShortsFormSubmitButtonsProps {
 }
 
 export default function ShortsFormSubmitButtons({
-  onRegister,
+  // onRegister,
   onCancel,
   isLoading = false,
   submitText = '등록하기',
@@ -22,10 +22,9 @@ export default function ShortsFormSubmitButtons({
     <div className="pt-4-y-4 flex flex-col gap-6">
       <div className="rounded-full shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg">
         <Button
-          type="button"
+          type="submit"
           variant="accent"
           className="text-md w-full rounded-full py-6"
-          onClick={onRegister}
           disabled={isLoading}
         >
           {isLoading ? (
