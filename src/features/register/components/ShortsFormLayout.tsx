@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { startTransition, useActionState, useEffect, useMemo, useRef, useState } from 'react'
 import { ImageIcon, VideoIcon } from 'lucide-react'
 import ShortsFormInputs from '@/features/register/components/ShortsFormInputs'
 import ShortsFormCategory from '@/features/register/components/ShortsFormCategory'
@@ -10,6 +10,9 @@ import ShortsFormUploadTab from '@/features/register/components/ShortsFormUpload
 import useVideoUpload from '@/hook/register/useVideoUpload'
 import usePreviewTab from '@/hook/register/usePreviewTab'
 import type { ShortsFormData, VideoPreviewData } from '@/features/register/types/shortsRegister'
+import { uploadShortsAction, UploadShortsPayload } from '../register.action'
+import { toast } from 'react-toastify'
+import { extractVideoDuration } from '@/utils/extractVideoDuration'
 
 interface ShortsFormLayoutProps {
   // 폼 데이터
@@ -19,7 +22,7 @@ interface ShortsFormLayoutProps {
   // 핸들러
   onFormChange: <K extends keyof ShortsFormData>(field: K, value: ShortsFormData[K]) => void
   onVideoChange: <K extends keyof VideoPreviewData>(field: K, value: VideoPreviewData[K]) => void
-  onSubmit: () => void
+  // onSubmit: () => void
   onCancel: () => void
 
   // 상태
@@ -43,7 +46,7 @@ export default function ShortsFormLayout({
   videoData,
   onFormChange,
   onVideoChange,
-  onSubmit,
+  // onSubmit,
   onCancel,
   isSubmitting,
   isEditMode = false,
@@ -57,6 +60,22 @@ export default function ShortsFormLayout({
   const [isThumbnailDragging, setIsThumbnailDragging] = useState(false)
   const isDragging = isVideoDragging || isThumbnailDragging
   const videoInputRef = useRef<HTMLInputElement>(null)
+
+  const [state, action, isPending] = useActionState(uploadShortsAction, {
+    success: false,
+    message: '',
+    errors: {},
+  })
+
+  useEffect(() => {
+    if (state.success === true) {
+      toast.success('업로드가 완료되었습니다.')
+    }
+    if (state.success === false && state.message) {
+      console.log(state)
+      toast.error(state.message)
+    }
+  }, [state])
 
   // 비디오 소스 메모이제이션
   const videoSrc = useMemo(() => {
@@ -75,6 +94,32 @@ export default function ShortsFormLayout({
       }
     }
   }, [videoSrc, isEditMode])
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault() // 페이지 리로드 방지
+
+    if (!videoData.videoFile) {
+      toast.error('비디오 파일이 필요합니다.')
+      return
+    }
+
+    const durationSec = await extractVideoDuration(videoData.videoFile)
+
+    const payload: UploadShortsPayload = {
+      title: formData.title,
+      description: formData.description || '', // undefined 방지
+      categoryId: formData.categoryId || 0,
+      keywords: ['Java', 'Spring'], // 테스트용
+      durationSec,
+      videoFile: videoData.videoFile,
+      thumbnailFile: formData.thumbnailFile ?? null,
+    }
+
+    // Server Action 호출
+    startTransition(() => {
+      action(payload) // 이제 isPending이 정상 작동
+    })
+  }
 
   /**
    * 썸네일 이미지 소스
@@ -141,101 +186,103 @@ export default function ShortsFormLayout({
   const dragHandlers = getDragHandlers()
 
   return (
-    <div className="flex flex-col gap-8 lg:flex-row lg:gap-12">
-      {/* 왼쪽 - 숏츠 정보 입력 폼  */}
-      <div className="w-full lg:flex-1">
-        <div className="rounded-2xl bg-gray-50 p-8">
-          <div className="space-y-6">
-            {/* 제목, 설명, 공개여부 */}
-            <ShortsFormInputs formData={formData} onChange={onFormChange} />
+    <form onSubmit={handleSubmit}>
+      <div className="flex flex-col gap-8 lg:flex-row lg:gap-12">
+        {/* 왼쪽 - 숏츠 정보 입력 폼  */}
+        <div className="w-full lg:flex-1">
+          <div className="rounded-2xl bg-gray-50 p-8">
+            <div className="space-y-6">
+              {/* 제목, 설명, 공개여부 */}
+              <ShortsFormInputs formData={formData} onChange={onFormChange} />
 
-            {/* 카테고리 */}
-            <ShortsFormCategory
-              value={formData.categoryId}
-              onChange={(value) => onFormChange('categoryId', value)}
-            />
-
-            {/* 키워드 */}
-            <ShortsFormKeywords
-              keywords={formData.keywords}
-              keywordInput={formData.keywordInput}
-              onChange={onFormChange}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* 오른쪽 - 미리보기 및 업로드 */}
-      <div className="w-full space-y-6 lg:w-96">
-        <div className="space-y-4">
-          {/* 미리보기 전환 탭 */}
-          <div className="flex gap-2" role="tablist" aria-label="미리보기 전환 탭">
-            <button
-              type="button"
-              id="video-tab"
-              role="tab"
-              aria-selected={isVideoTab}
-              onClick={switchToVideo}
-              className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                isVideoTab ? 'bg-black text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              <VideoIcon className="h-4 w-4" />
-              동영상
-            </button>
-            <button
-              type="button"
-              id="thumbnail-tab"
-              role="tab"
-              aria-selected={isThumbnailTab}
-              onClick={switchToThumbnail}
-              className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                isThumbnailTab
-                  ? 'bg-black text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              <ImageIcon className="h-4 w-4" />
-              썸네일
-            </button>
-          </div>
-
-          {/* 미리보기 영역 */}
-          <div
-            className={`flex aspect-9/16 items-center justify-center rounded-2xl border-2 border-dashed bg-white transition-all ${
-              isDragging ? 'border-black bg-gray-50' : 'border-gray-300'
-            }`}
-            {...dragHandlers}
-          >
-            {isVideoTab ? (
-              <ShortsFormUploadTab
-                type="video"
-                videoFile={videoFile}
-                videoSrc={videoSrc}
-                videoInputRef={videoInputRef}
-                onVideoUpload={handleVideoUpload}
-                onRemove={handleRemove}
-                isEditMode={isEditMode}
+              {/* 카테고리 */}
+              <ShortsFormCategory
+                value={formData.categoryId}
+                onChange={(value) => onFormChange('categoryId', value)}
               />
-            ) : (
-              <ShortsFormUploadTab
-                type="thumbnail"
-                thumbnail={thumbnailSrc}
+
+              {/* 키워드 */}
+              <ShortsFormKeywords
+                keywords={formData.keywords}
+                keywordInput={formData.keywordInput}
                 onChange={onFormChange}
-                onDraggingChange={setIsThumbnailDragging}
-                isEditMode={isEditMode}
               />
-            )}
+            </div>
           </div>
         </div>
 
-        <ShortsFormSubmitButtons
-          onRegister={onSubmit}
-          onCancel={onCancel}
-          isLoading={isSubmitting}
-          submitText={submitText}
-        />
+        {/* 오른쪽 - 미리보기 및 업로드 */}
+        <div className="w-full space-y-6 lg:w-96">
+          <div className="space-y-4">
+            {/* 미리보기 전환 탭 */}
+            <div className="flex gap-2" role="tablist" aria-label="미리보기 전환 탭">
+              <button
+                type="button"
+                id="video-tab"
+                role="tab"
+                aria-selected={isVideoTab}
+                onClick={switchToVideo}
+                className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                  isVideoTab ? 'bg-black text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <VideoIcon className="h-4 w-4" />
+                동영상
+              </button>
+              <button
+                type="button"
+                id="thumbnail-tab"
+                role="tab"
+                aria-selected={isThumbnailTab}
+                onClick={switchToThumbnail}
+                className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                  isThumbnailTab
+                    ? 'bg-black text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <ImageIcon className="h-4 w-4" />
+                썸네일
+              </button>
+            </div>
+
+            {/* 미리보기 영역 */}
+            <div
+              className={`flex aspect-9/16 items-center justify-center rounded-2xl border-2 border-dashed bg-white transition-all ${
+                isDragging ? 'border-black bg-gray-50' : 'border-gray-300'
+              }`}
+              {...dragHandlers}
+            >
+              {isVideoTab ? (
+                <ShortsFormUploadTab
+                  type="video"
+                  videoFile={videoFile}
+                  videoSrc={videoSrc}
+                  videoInputRef={videoInputRef}
+                  onVideoUpload={handleVideoUpload}
+                  onRemove={handleRemove}
+                  isEditMode={isEditMode}
+                />
+              ) : (
+                <ShortsFormUploadTab
+                  type="thumbnail"
+                  thumbnail={thumbnailSrc}
+                  onChange={onFormChange}
+                  onDraggingChange={setIsThumbnailDragging}
+                  isEditMode={isEditMode}
+                />
+              )}
+            </div>
+          </div>
+
+          <ShortsFormSubmitButtons
+            // onRegister={onSubmit}
+            onCancel={onCancel}
+            isLoading={isSubmitting}
+            submitText={submitText}
+          />
+        </div>
       </div>
-    </div>
+    </form>
   )
 }

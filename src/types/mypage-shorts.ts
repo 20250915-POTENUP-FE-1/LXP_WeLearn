@@ -31,7 +31,7 @@ export interface ShortsResponse {
   thumbnailUrl?: string
   durationSec?: number
   keywords?: string[]
-  status: ShortsStatus
+  status?: ShortsStatus
   uploader?: UploaderDto
   category?: CategoryDto
   createdAt?: string

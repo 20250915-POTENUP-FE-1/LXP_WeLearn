@@ -11,9 +11,8 @@ export interface SignupFormData {
 }
 
 export interface UserInfo {
-  name: string
   email: string
-  nickname: string
+  nickName: string
   profileUrl?: string
   createdAt?: string
 }

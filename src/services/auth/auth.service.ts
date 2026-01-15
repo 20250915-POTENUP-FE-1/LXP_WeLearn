@@ -37,7 +37,6 @@ export const authApi = {
    * 회원가입
    */
   signup: async (data: SignupRequest) => {
-    console.log(data)
     // 일반적인 POST 요청 (데이터만 반환)
     return api.post('/api/v1/users', data, { cache: 'no-store' })
   },
@@ -64,15 +63,17 @@ export const authApi = {
    * 로그아웃
    */
   logout: async () => {
-    const res = await api.post<Response>('/api/v1/auth/logout')
+    try {
+      const res = await api.post<Response>('/api/v1/auth/logout')
 
-    // 1. 쿠키 만료 처리 (백엔드가 Max-Age=0 등으로 보낸 쿠키 적용)
-    await applySetCookie(res)
+      const cookieStore = await cookies()
+      cookieStore.delete('accessToken')
+      cookieStore.delete('refreshToken')
 
-    // 2. 바디 파싱
-    const result = await res.json()
-    if (!res.ok) throw new Error(result.message || '로그아웃 실패')
-
-    return result
+      return { success: true }
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
   },
 }

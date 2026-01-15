@@ -18,7 +18,6 @@ async function getAuthHeaders(customHeaders: HeadersInit = {}) {
   // 백엔드 ACCESS_TOKEN_COOKIE 설정값인 'accessToken'으로 가져옴
   const accessToken = cookieStore.get('accessToken')?.value
 
-  console.log(accessToken)
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
     ...customHeaders,

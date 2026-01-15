@@ -1,13 +1,13 @@
 'use server'
 
 import { authApi } from '@/services/auth/auth.service'
-import { UserInfo } from '@/types/auth'
+import { userApi, UserResponse } from '@/services/mypage/user.service'
 
 type ActionState = {
   success: boolean
   message?: string
   errors?: Record<string, string>
-  user?: UserInfo
+  user?: UserResponse
 }
 
 export const SignupAction = async (
@@ -51,9 +51,10 @@ export const SigninAction = async (
   try {
     response = await authApi.signin(payload)
 
+    const userData = await userApi.getMe()
     return {
       success: true,
-      user: response.data.user,
+      user: userData.data,
     }
   } catch (error) {
     return {
@@ -63,14 +64,18 @@ export const SigninAction = async (
   }
 }
 
-export const LogoutAction = async (prevState: ActionState) => {
+export const LogoutAction = async (prevState: ActionState): Promise<ActionState> => {
   try {
     await authApi.logout()
+    return {
+      success: true,
+      message: '성공',
+    }
   } catch (error) {
+    console.log('LogoutAction 실패', error)
     return {
       success: false,
       message: error instanceof Error ? error.message : '알수없는 오류 발생',
     }
   }
-  return { success: true }
 }

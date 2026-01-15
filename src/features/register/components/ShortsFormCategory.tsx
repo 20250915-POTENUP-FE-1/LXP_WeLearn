@@ -11,16 +11,16 @@ interface ShortsFormCategoryProps {
 }
 
 export default function ShortsFormCategory({ value, onChange }: ShortsFormCategoryProps) {
-  const [categories, setCategories] = useState<CategoryResponse[]>([])
+  const [categories, setCategories] = useState<CategoryResponse[]>([{ id: 5, name: '테스트' }])
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const data = await getCategoriesAction()
-      setCategories(data)
-    }
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     const data = await getCategoriesAction()
+  //     setCategories(data)
+  //   }
 
-    fetchCategories()
-  }, [])
+  //   fetchCategories()
+  // }, [])
 
   // select value를 문자열로 변환
   const selectValue = value?.toString() ?? ''

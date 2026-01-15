@@ -64,53 +64,6 @@ export default function useRegisterForm(params: UseRegisterFormParams = {}) {
     setVideoData((prev) => ({ ...prev, [field]: value }))
   }
 
-  // 숏츠 등록 핸들러 (S3 직접 업로드 방식)
-  const handleRegister = async () => {
-    if (isSubmitting) return
-
-    const validation = validateShortsForm(formData, videoData)
-    if (!validation.isValid) {
-      // 첫 번째 에러 메시지만 표시
-      const firstError = validation.errors[0]
-      if (firstError) {
-        toast.error(firstError.message)
-      }
-      return
-    }
-
-    setIsSubmitting(true)
-
-    try {
-      const videoFile = videoData.videoFile!
-      const thumbnailFile = formData.thumbnailFile!
-
-      toast.info('숏츠 업로드 중...')
-
-      // 전체 업로드 플로우 실행 (Presigned URL 발급 → S3 업로드 → 완료 확정)
-      const result = await shortsUploadApi.uploadShorts(
-        {
-          title: formData.title,
-          description: formData.description || '',
-          categoryId: formData.categoryId!,
-          keywords: formData.keywords,
-          fileName: videoFile.name,
-          fileSize: videoFile.size,
-          contentType: videoFile.type,
-          durationSec: videoData.durationSec ?? 0,
-        },
-        videoFile,
-        thumbnailFile,
-      )
-
-      toast.success('등록이 완료되었습니다.')
-      router.push('/mypage/myshorts')
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : '등록에 실패했습니다.')
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
   // 취소 핸들러
   const handleCancel = () => router.back()
 
@@ -126,7 +79,7 @@ export default function useRegisterForm(params: UseRegisterFormParams = {}) {
     isSubmitting,
     handleFormChange,
     handleVideoChange,
-    handleRegister,
+    // handleRegister,
     handleCancel,
     resetForm,
   }
