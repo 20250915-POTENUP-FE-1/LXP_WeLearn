@@ -1,5 +1,5 @@
 import { api } from '@/lib/utils/apiUtils'
-import { param } from 'framer-motion/client'
+import { param, video } from 'framer-motion/client'
 import { ParkingMeter } from 'lucide-react'
 
 // Presigned URL 요청 파라미터
@@ -16,7 +16,7 @@ export interface PresignedUrlRequest {
 
 // Presigned URL 응답 타입
 export interface PresignedUrlResponse {
-  shortsId: string
+  shortId: number
   videoPresignedUrl: string
   thumbnailPresignedUrl: string
   uploadId: string
@@ -26,14 +26,15 @@ export interface PresignedUrlResponse {
 
 // 업로드 완료 확정 요청
 export interface ConfirmUploadRequest {
+  shortId: number
   uploadId: string
   videoUrl: string
-  thumbnailurl: string
+  thumbnailUrl: string
 }
 
 // 업로드 완료 확정 응답
 export interface ConfirmUploadResponse {
-  shortsId: string
+  shortId: number
   uploadId: string
   videoUrl: string
   thumbnailUrl: string
@@ -45,10 +46,11 @@ export const shortsUploadApi = {
    */
   async getPresignedUrl(params: PresignedUrlRequest): Promise<PresignedUrlResponse> {
     const payload = { body: params }
+    console.log(params)
     const response = await api.post<{
       data: PresignedUrlResponse
     }>('/api/v1/shorts/upload', payload)
-
+    console.log(response)
     return response.data
   },
 
@@ -75,15 +77,20 @@ export const shortsUploadApi = {
    * 3단계: 업로드 완료 확정
    */
   async confirmUpload(params: ConfirmUploadRequest): Promise<ConfirmUploadResponse> {
-    const { uploadId, videoUrl, thumbnailurl } = params
+    const { uploadId, videoUrl, thumbnailUrl, shortId } = params
 
+    const payload = {
+      uploadId: params.uploadId,
+      videoUrl: params.videoUrl,
+      thumbnailUrl: params.thumbnailUrl,
+    }
+    console.log('-------------------------------')
     console.log('파람스', params)
+    console.log('페이로드', payload)
     const response = await api.post<{
       data: ConfirmUploadResponse
-    }>(`/api/v1/shorts/${uploadId}/upload-complete`, {
-      uploadId,
-      videoUrl,
-      thumbnailurl,
+    }>(`/api/v1/shorts/${shortId}/upload-complete`, {
+      payload,
     })
 
     return response.data
@@ -99,19 +106,21 @@ export const shortsUploadApi = {
   ): Promise<ConfirmUploadResponse> {
     // 1️⃣ Presigned URL 발급
     const presigned = await this.getPresignedUrl(params)
+    console.log('프리사인드', presigned)
 
     // 2️⃣ S3 업로드
     await this.uploadToS3(presigned.videoPresignedUrl, videoFile)
 
-    if (thumbnailFile) {
+    if (thumbnailFile && presigned.thumbnailPresignedUrl) {
       await this.uploadToS3(presigned.thumbnailPresignedUrl, thumbnailFile)
     }
 
     // 3️⃣ 업로드 확정
     return this.confirmUpload({
+      shortId: presigned.shortId,
       uploadId: presigned.uploadId,
-      videoUrl: presigned.videoPresignedUrl,
-      thumbnailurl: presigned.thumbnailPresignedUrl,
+      videoUrl: presigned.videoPresignedUrl.split('?')[0],
+      thumbnailUrl: presigned.thumbnailPresignedUrl,
     })
   },
 }

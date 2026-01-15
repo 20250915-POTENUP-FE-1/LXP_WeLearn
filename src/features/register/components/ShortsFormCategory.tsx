@@ -11,7 +11,7 @@ interface ShortsFormCategoryProps {
 }
 
 export default function ShortsFormCategory({ value, onChange }: ShortsFormCategoryProps) {
-  const [categories, setCategories] = useState<CategoryResponse[]>([{ id: 1, name: '프로그래머' }])
+  const [categories, setCategories] = useState<CategoryResponse[]>([{ id: 5, name: '프로그래머' }])
 
   // useEffect(() => {
   //   const fetchCategories = async () => {
