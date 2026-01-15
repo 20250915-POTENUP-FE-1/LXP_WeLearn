@@ -86,14 +86,12 @@ export const shortsUploadApi = {
     }
     console.log('-------------------------------')
     console.log('파람스', params)
-    console.log('페이로드', payload)
+    console.log('페이로드', JSON.stringify(payload))
     const response = await api.post<{
       data: ConfirmUploadResponse
-    }>(`/api/v1/shorts/${shortId}/upload-complete`, {
-      payload,
-    })
+    }>(`/api/v1/shorts/${shortId}/upload-complete`, payload)
 
-    return response.data
+    return response
   },
 
   /**
@@ -115,12 +113,15 @@ export const shortsUploadApi = {
       await this.uploadToS3(presigned.thumbnailPresignedUrl, thumbnailFile)
     }
 
-    // 3️⃣ 업로드 확정
-    return this.confirmUpload({
+    const res = await this.confirmUpload({
       shortId: presigned.shortId,
       uploadId: presigned.uploadId,
       videoUrl: presigned.videoPresignedUrl.split('?')[0],
       thumbnailUrl: presigned.thumbnailPresignedUrl,
     })
+    console.log('--------마지막 과정')
+    console.log(res)
+    // 3️⃣ 업로드 확정
+    return res
   },
 }
