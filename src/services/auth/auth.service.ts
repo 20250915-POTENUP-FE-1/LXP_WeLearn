@@ -20,7 +20,6 @@ interface SigninRequest {
  * 쿠키 헤더를 파싱하여 현재 요청의 cookieStore에 적용하는 헬퍼 함수
  */
 async function applySetCookie(response: Response) {
-  console.log(response)
   const cookieHeader = response.headers.get('set-cookie')
   if (cookieHeader) {
     const cookieStore = await cookies()

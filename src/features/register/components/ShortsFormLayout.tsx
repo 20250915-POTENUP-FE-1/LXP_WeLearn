@@ -72,7 +72,6 @@ export default function ShortsFormLayout({
       toast.success('업로드가 완료되었습니다.')
     }
     if (state.success === false && state.message) {
-      console.log(state)
       toast.error(state.message)
     }
   }, [state])

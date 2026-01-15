@@ -13,10 +13,10 @@ export default function ShortsCreateInfo({ uploader, title, description }: Short
     <div className="w-[86%] from-black/80 to-transparent px-4 py-8 text-white">
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full">
-          {uploader.profileUrl ? (
+          {uploader.userProfileUrl ? (
             <img
-              src={uploader.profileUrl}
-              alt={`${uploader.nickname} 프로필`}
+              src={uploader.userProfileUrl}
+              alt={`${uploader.userNickName} 프로필`}
               className="h-full w-full object-cover"
             />
           ) : (
@@ -28,7 +28,7 @@ export default function ShortsCreateInfo({ uploader, title, description }: Short
           )}
         </div>
 
-        <p className="block font-medium">{uploader.nickname}</p>
+        <p className="block font-medium">{uploader.userNickName}</p>
       </div>
       <div className="pt-4">
         <p className="text-lg font-bold opacity-90">{title}</p>

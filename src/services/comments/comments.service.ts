@@ -1,4 +1,7 @@
-import CommentInput from '@/components/modals/comment/CommentInput'
+'use server'
+import { api } from '@/lib/utils/apiUtils'
+import { ReplyCommentResponse } from '@/types/comment'
+import { ApiResponse } from '@/types/mypage-shorts'
 
 interface CommentRequest {
   content: string
@@ -6,29 +9,19 @@ interface CommentRequest {
 
 export const commentApi = {
   // 해당 숏폼 댓글 조회
-  getComment: async (id: number) => {
-    const response = await fetch(`http://localhost:4000/api/v1/shorts/${id}/comments`, {
-      cache: 'no-store',
-    })
-    if (!response.ok) {
-      throw new Error('댓글 조회를 실패했습니다.')
-    }
-    return response.json()
+  getComment: async (id: number): Promise<ApiResponse<ReplyCommentResponse>> => {
+    const response = await api.get<ApiResponse<ReplyCommentResponse>>(
+      `/api/v1/shorts/${id}/comments`,
+      {
+        cache: 'no-store',
+      },
+    )
+
+    return response
   },
 
-  // postComment: async (data: PostCommentRequest) => {
-  //   const response = await fetch('POST',
-  //     `http://localhost:4000/api/v1/shorts/${data.shortsId}/comments`,
-  //     data,
-  //     { cache: 'no-store' },
-  //   )
-  //   const result = await response.json()
-  //   if (!response.ok) throw new Error(result.message || '댓글 등록 실패')
-  //   return result
-  // },
-
   postComment: async (shortsId: number, data: CommentRequest) => {
-    const response = await fetch(`http://localhost:4000/api/v1/shorts/${shortsId}/comments`, {
+    const response = api.post(`/api/v1/shorts/${shortsId}/comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,13 +30,11 @@ export const commentApi = {
         content: data.content,
       }),
     })
-    const result = await response.json()
-    if (!response.ok) throw new Error(result.message || '댓글 등록 실패')
-    return result
+    return response
   },
 
   patchComment: async (commentId: number, data: CommentRequest) => {
-    const response = await fetch(`http://localhost:4000/api/v1/comments/${commentId}`, {
+    const response = api.patch(`http://localhost:4000/api/v1/comments/${commentId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -52,17 +43,13 @@ export const commentApi = {
         content: data.content,
       }),
     })
-    const result = await response.json()
-    if (!response.ok) throw new Error(result.message || '댓글 수정 실패')
-    return result
+    return response
   },
 
   deleteComment: async (commentId: number) => {
-    const response = await fetch(`http://localhost:4000/api/v1/comments/${commentId}`, {
+    const response = api.delete(`http://localhost:4000/api/v1/comments/${commentId}`, {
       method: 'DELETE',
     })
-    const result = await response.json()
-    if (!response.ok) throw new Error(result.message || '댓글 삭제 실패')
-    return true
+    return response
   },
 }

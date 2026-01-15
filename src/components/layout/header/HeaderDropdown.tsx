@@ -38,87 +38,89 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
 
   return (
     <>
-      <DropdownMenu modal={false}>
-        <DropdownMenuTrigger asChild>
-          <div
-            className="cursor-pointer p-2 text-gray-600 transition-colors hover:text-gray-900"
-            aria-label="프로필"
-          >
-            {/* 유저 프로필 영역 */}
-            {user?.profileUrl ? (
+      {user && (
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger asChild>
+            <div
+              className="flex w-30 cursor-pointer justify-center p-2 text-gray-600 transition-colors hover:text-gray-900"
+              aria-label="프로필"
+            >
+              {/* 유저 프로필 영역 */}
+              {user?.profileUrl ? (
+                <div
+                  className="cursor-pointer rounded-full border-gray-100 transition-colors hover:border-gray-600"
+                  aria-label="프로필 이미지"
+                >
+                  <img src={user?.profileUrl} alt="user-profile-image" />
+                </div>
+              ) : (
+                <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gray-200">
+                  <User strokeWidth={1.5} size={24} />
+                </div>
+              )}
+            </div>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end" className="flex flex-col gap-2 pt-5 pr-10 pb-3 pl-8">
+            {user?.profileUrl && (
               <div
                 className="cursor-pointer rounded-full border-gray-100 transition-colors hover:border-gray-600"
                 aria-label="프로필 이미지"
               >
                 <img src={user?.profileUrl} alt="user-profile-image" />
               </div>
-            ) : (
-              <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gray-200">
-                <User strokeWidth={1.5} size={24} />
-              </div>
             )}
-          </div>
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent align="end" className="flex flex-col gap-2 px-6 pt-5 pb-3">
-          {user?.profileUrl && (
-            <div
-              className="cursor-pointer rounded-full border-gray-100 transition-colors hover:border-gray-600"
-              aria-label="프로필 이미지"
-            >
-              <img src={user?.profileUrl} alt="user-profile-image" />
+            <div className="mb-3 flex items-center gap-4">
+              <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-gray-200">
+                <User strokeWidth={1.5} size={20} />
+              </div>
+              <div className="flex flex-col justify-center">
+                {user && (
+                  <>
+                    <div className="pb-1 text-sm font-bold">{user.nickName}</div>
+                    <div className="text-xs text-gray-600">{user.email}</div>
+                  </>
+                )}
+              </div>
             </div>
-          )}
-          <div className="mb-3 flex items-center gap-4 p-1">
-            <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-gray-200">
-              <User strokeWidth={1.5} size={20} />
-            </div>
-            <div className="flex flex-col justify-center">
-              {user && (
-                <>
-                  <div className="pb-1 text-sm font-bold">{user.nickName}</div>
-                  <div className="text-xs text-gray-600">{user.email}</div>
-                </>
-              )}
-            </div>
-          </div>
-          <hr />
+            <hr />
 
-          <DropdownMenuItem className="cursor-pointer">
-            <Link href="/mypage/profile" className="flex gap-4 p-1">
-              <Settings />내 프로필
+            <Link href="/mypage/profile" className="py-1">
+              <DropdownMenuItem className="flex w-full cursor-pointer gap-4 px-0 py-1">
+                <Settings />내 프로필
+              </DropdownMenuItem>
             </Link>
-          </DropdownMenuItem>
 
-          <DropdownMenuItem className="cursor-pointer">
-            <Link href="/mypage" className="flex gap-4 p-1">
-              <CircleUser />
-              마이페이지
+            <Link href="/mypage" className="py-1">
+              <DropdownMenuItem className="flex w-full cursor-pointer gap-4 px-0 py-1">
+                <CircleUser />
+                마이페이지
+              </DropdownMenuItem>
             </Link>
-          </DropdownMenuItem>
 
-          <DropdownMenuItem className="cursor-pointer">
-            <Link href="/mypage/likes" className="flex gap-4 p-1">
-              <Heart />
-              좋아요 숏츠
+            <Link href="/mypage/likes" className="py-1">
+              <DropdownMenuItem className="flex w-full cursor-pointer gap-4 px-0 py-1">
+                <Heart />
+                좋아요 숏츠
+              </DropdownMenuItem>
             </Link>
-          </DropdownMenuItem>
 
-          <DropdownMenuItem className="cursor-pointer">
-            <Link href="/mypage/myshorts" className="flex gap-4 p-1">
-              <CirclePlay />
-              내가 만든 숏츠
+            <Link href="/mypage/myshorts" className="py-1">
+              <DropdownMenuItem className="flex w-full cursor-pointer gap-4 px-0 py-1">
+                <CirclePlay />
+                내가 만든 숏츠
+              </DropdownMenuItem>
             </Link>
-          </DropdownMenuItem>
-          <hr />
-          <DropdownMenuItem className="cursor-pointer">
-            <button type="button" onClick={() => handleLogout()} className="flex gap-4 p-1">
-              <LogOut />
-              로그아웃
+            <hr className="w-full" />
+            <button type="button" onClick={() => handleLogout()} className="py-1">
+              <DropdownMenuItem className="flex w-full cursor-pointer gap-4 px-0 py-1">
+                <LogOut />
+                로그아웃
+              </DropdownMenuItem>
             </button>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
     </>
   )
 }

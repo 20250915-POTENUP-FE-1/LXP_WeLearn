@@ -1,5 +1,6 @@
 import React from 'react'
 import ShortsCarouselSwipe from './ShortsCarouselSwipe'
+import { ShortsItemType } from '@/types/shorts'
 
 export interface ShortsUploader {
   userId: number
@@ -12,19 +13,23 @@ export interface ShortsCategory {
   name: string
 }
 
-export interface ShortsItem {
-  shortsId: number
-  title: string
-  description: string
-  videoUrl: string
-  thumbnailUrl: string
-  uploader: ShortsUploader
-  category: ShortsCategory
+export interface PageShortsItem {
+  content: ShortsItemType
 }
 
-export default function ShortsCarousel({ data }: { data?: ShortsItem[] }) {
-  const items = data ?? []
+export interface PageResponse<T> {
+  content: T[]
+  totalElements: number
+  totalPages: number
+  size: number
+  number: number
+  first: boolean
+  last: boolean
+  empty: boolean
+}
 
+export default function ShortsCarousel({ data }: { data?: ShortsItemType[] }) {
+  const items = data ?? []
   return (
     <section className="my-12 md:mt-5 md:mb-12">
       <div className="mb-4 flex items-center justify-between">

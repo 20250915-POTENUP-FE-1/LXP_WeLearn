@@ -2,16 +2,16 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ShortsDetail } from '@/types/shorts'
-import ShortsItem from './ShortsItem'
 import ShortsNavigationButtons from './ShortsNavigationButtons'
 import { useKeyboardNavigation } from '@/hook/useKeyboardNavigation'
 import { getSafeIndex } from '@/lib/utils/getSafeIndex'
 import { useDragNavigation } from '@/hook/useDragNavigation'
 import { useScrollNavigation } from '@/hook/useScrollNavigation'
+import { ShortsItemType } from '@/types/shorts'
+import ShortsItem from './ShortsItem'
 
 interface ShortsContainerProps {
-  shortsList: ShortsDetail[]
+  shortsList: ShortsItemType[]
   initialIndex: number
 }
 

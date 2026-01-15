@@ -64,13 +64,13 @@ export const patchCommentAction = async (
   }
 
   try {
-    const res = await commentApi.patchComment(commentId, { content })
+    await commentApi.patchComment(commentId, { content })
+
     return {
       success: true,
-      data: res.data,
       timestamp: Date.now(),
     }
-  } catch (error) {
+  } catch {
     return {
       success: false,
       message: '댓글 수정 중 오류가 발생했습니다.',
@@ -145,7 +145,6 @@ export const patchReplyCommentAction = async (
 
   try {
     const res = await RecommentApi.patchReplyComment(replyId, { content })
-    console.log(res)
     return {
       success: true,
       data: res.data,
