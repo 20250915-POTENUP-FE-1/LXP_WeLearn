@@ -26,7 +26,7 @@ export default function ShortsItem({ shorts, userProfileUrl }: ShortsItemProps) 
           <ShortsCreateInfo
             uploader={{
               userId: shorts.userId,
-              userNickName: shorts.userNickName,
+              userNickname: shorts.userNickname,
               userProfileUrl: profileUrl,
             }}
             title={shorts.title}

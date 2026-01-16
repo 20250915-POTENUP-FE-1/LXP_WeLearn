@@ -2,7 +2,7 @@ import { ShortsStatus } from './mypage-shorts'
 
 export interface ShortsUploader {
   userId: number
-  userNickName: string
+  userNickname: string
   userProfileUrl: string | null
 }
 

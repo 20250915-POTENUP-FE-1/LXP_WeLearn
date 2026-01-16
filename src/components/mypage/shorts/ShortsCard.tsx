@@ -6,6 +6,7 @@ import ShortsCardThumbnail from './ShortsCardThumbnail'
 import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import MyShortsDropdownMenu from '@/features/mypage/myshorts/MyShortsDropdownMenu'
 import ShortsStatusBadge from './ShortsStatusBadge'
+import { timeAgo } from '@/utils/timeAgo'
 
 interface ShortsCardProps {
   shorts: ShortsResponse
@@ -40,7 +41,7 @@ export default function ShortsCard({
             <h3 className="pt-1 text-lg font-bold text-gray-900">{shorts.title}</h3>
             <p className="mt-1.5 mb-4 text-sm text-gray-500">
               {shorts.userNickname ?? '숏터'}
-              {shorts.createdAt && ` · ${shorts.createdAt}`}
+              {shorts.createdAt && ` · ${timeAgo(shorts.createdAt)}`}
             </p>
             <p className="mb-1 line-clamp-2 text-sm text-gray-700">{shorts.description}</p>
           </div>

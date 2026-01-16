@@ -11,14 +11,14 @@ export default function ShortsToggleDescription({ description }: ShortsToggleDes
 
   return (
     <div className="mt-3">
-      <p className={`text-xs leading-relaxed opacity-90 ${isToggled ? '' : 'line-clamp-2'}`}>
+      <p className={`text-sm leading-relaxed opacity-90 ${isToggled ? '' : 'line-clamp-2'}`}>
         {description}
       </p>
 
       {description.length > 60 && (
         <button
           onClick={() => setIsToggled(!isToggled)}
-          className="mt-1 text-xs font-medium opacity-70 transition-opacity hover:opacity-100"
+          className="mt-1 text-sm font-medium opacity-70 transition-opacity hover:opacity-100"
         >
           {isToggled ? '접기' : '더보기'}
         </button>
