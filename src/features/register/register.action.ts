@@ -67,7 +67,6 @@ export async function uploadShortsAction(
 ): Promise<ActionState<ShortsResponse>> {
   try {
     const { videoFile, thumbnailFile, ...meta } = payload
-    console.log(payload)
 
     // 비디오 길이 계산
 

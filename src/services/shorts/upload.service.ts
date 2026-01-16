@@ -63,9 +63,7 @@ export const shortsUploadApi = {
         'Content-Type': file.type,
       },
     })
-    console.log('presignedUrl')
     if (!res.ok) {
-      console.log('업로드 실패')
       throw new Error('S3 업로드 실패')
     }
   },
