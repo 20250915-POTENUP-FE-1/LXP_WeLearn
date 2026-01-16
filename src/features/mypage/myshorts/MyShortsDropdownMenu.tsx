@@ -13,21 +13,21 @@ import { toast } from 'react-toastify'
 
 interface MyShortsDropdownMenuProps {
   shortsId: number // 수정 페이지 이동에 필요
-  status: ShortsStatus
+  shortsStatus: ShortsStatus
   onToggleVisibility?: () => void
   onDelete?: () => void
 }
 
 export default function MyShortsDropdownMenu({
   shortsId,
-  status,
+  shortsStatus,
   onToggleVisibility,
   onDelete,
 }: MyShortsDropdownMenuProps) {
   const router = useRouter()
 
   // 공개 상태 여부 확인
-  const isPublished = status === 'PUBLISHED'
+  const isPublished = shortsStatus === 'PUBLISHED'
 
   // 수정 페이지로 이동
   const handleEdit = () => {

@@ -4,7 +4,7 @@ export const SHORTS_STATUS_CONFIG = {
   PUBLISHED: {
     icon: Globe,
     label: '공개',
-    bgColor: 'bg-green-600',
+    bgColor: 'bg-green-500',
   },
   DRAFT: {
     icon: Lock,

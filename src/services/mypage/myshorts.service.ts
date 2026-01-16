@@ -13,9 +13,12 @@ export const myShortsApi = {
     page = 0,
     size = 20,
   }: PaginationParams = {}): Promise<PageShortsResponse> => {
+    console.log('[getMyShorts] 요청 시작 - page:', page, 'size:', size)
     const res = await api.get<ApiResponse<PageShortsResponse>>('/api/v1/shorts/me', {
       cache: 'no-cache',
     })
+    console.log('[getMyShorts] 응답:', res)
+    console.log('[getMyShorts] 응답 data:', res.data)
     return res.data
   },
 
