@@ -1,10 +1,10 @@
-import { ShortsDetail } from '@/types/shorts'
 import ShortsPlayer from './ShortsPlayer'
 import ShortsCreateInfo from './ShortsCreateInfo'
 import ShortsActionBar from './ShortsActionBar'
+import { ShortsItemType } from '@/types/shorts'
 
 interface ShortsItemProps {
-  shorts: ShortsDetail
+  shorts: ShortsItemType
 }
 
 export default function ShortsItem({ shorts }: ShortsItemProps) {
@@ -20,7 +20,11 @@ export default function ShortsItem({ shorts }: ShortsItemProps) {
         {/* 업로더 정보  */}
         <div className="pointer-events-auto w-full">
           <ShortsCreateInfo
-            uploader={shorts.uploader}
+            uploader={{
+              userId: shorts.userId,
+              userNickName: shorts.userNickName,
+              userProfileUrl: shorts.userProfileUrl,
+            }}
             title={shorts.title}
             description={shorts.description}
           />

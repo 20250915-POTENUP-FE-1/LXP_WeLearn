@@ -25,6 +25,9 @@ export interface ReplyCommetType {
 
 export interface ReplyCommentResponse {
   success: boolean
+  code: string
+  message: string | null
+  request: string | null
   data: ReplyCommetType[]
 }
 

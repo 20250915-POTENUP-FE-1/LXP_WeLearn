@@ -47,8 +47,7 @@ export const shortsUploadApi = {
 
     const response = await api.post<{
       data: PresignedUrlResponse
-    }>('/api/v1/shorts/upload', payload)
-
+    }>('/api/v1/shorts-upload/upload', payload)
     return response.data
   },
 
@@ -75,13 +74,11 @@ export const shortsUploadApi = {
    */
   async confirmUpload(params: ConfirmUploadRequest): Promise<ConfirmUploadResponse> {
     const { uploadId, videoUrl, thumbnailUrl, shortId } = params
-
     const payload = {
       uploadId: params.uploadId,
       videoUrl: params.videoUrl,
       thumbnailUrl: params.thumbnailUrl,
     }
-
     const response = await api.post<{
       data: ConfirmUploadResponse
     }>(`/api/v1/shorts/${shortId}/upload-complete`, payload)

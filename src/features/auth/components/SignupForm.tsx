@@ -44,17 +44,6 @@ export default function SignupForm() {
         <CircleUserRound size={120} strokeWidth={1} />
       </label>
       <input type="file" id="profile-image" name="profile-image" className="hidden" />
-      {/* 이름 입력 */}
-      <Input
-        label="이름"
-        type="text"
-        id="name"
-        name="name"
-        placeholder="김코드"
-        required
-        // value={userName}
-        // onChange={(e) => setUserName(e.target.value)}
-      />
 
       {/* 닉네임 입력 */}
       <Input

@@ -17,24 +17,24 @@ export default function HeaderRightSection({ isLogined }: HeaderRightSectionProp
   }, [])
 
   return (
-    <div className="flex items-center gap-3">
-      {!isLogined ? (
-        <>
+    <div className="flex gap-3">
+      {isLogined && user ? (
+        <HeaderDropdown user={user} />
+      ) : (
+        <div className="flex w-30 justify-end gap-3">
           <Link
             href="/signin"
-            className="rounded-lg p-0 text-sm font-medium text-gray-700 transition-colors hover:font-extrabold hover:text-gray-900 md:px-2 md:py-1"
+            className="shrink-0 rounded-lg p-0 text-sm font-medium text-gray-700 transition-colors hover:font-extrabold hover:text-gray-900 md:px-2 md:py-1"
           >
             로그인
           </Link>
           <Link
             href="/signup"
-            className="rounded-lg p-0 text-sm font-medium text-gray-700 transition-colors hover:font-extrabold hover:text-gray-900 md:px-2 md:py-1"
+            className="shrink-0 rounded-lg p-0 text-sm font-medium text-gray-700 transition-colors hover:font-extrabold hover:text-gray-900 md:px-2 md:py-1"
           >
             회원가입
           </Link>
-        </>
-      ) : (
-        <HeaderDropdown user={user} />
+        </div>
       )}
     </div>
   )

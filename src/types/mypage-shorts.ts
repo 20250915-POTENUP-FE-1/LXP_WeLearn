@@ -1,7 +1,7 @@
 // ============================================
 // 숏츠 상태
 // ============================================
-export type ShortsStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
+export type ShortsStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' | null | undefined
 
 // ============================================
 // 업로더 정보
@@ -65,7 +65,7 @@ export interface ShortsUpdateRequest {
 }
 
 // ============================================
-// API 공통 응답 래퍼
+// API 공통 응답 래퍼 // api 반환값에 대한 타입 정의
 // ============================================
 export interface ApiResponse<T> {
   success: boolean

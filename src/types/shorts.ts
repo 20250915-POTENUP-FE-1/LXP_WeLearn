@@ -1,7 +1,9 @@
+import { ShortsStatus } from './mypage-shorts'
+
 export interface ShortsUploader {
   userId: number
-  nickname: string
-  profileUrl: string
+  userNickName: string
+  userProfileUrl: string | null
 }
 
 export interface ShortsCategory {
@@ -10,6 +12,7 @@ export interface ShortsCategory {
 }
 
 export interface ShortsDetail {
+  categoryId: number
   shortsId: number
   title: string
   description: string
@@ -17,4 +20,19 @@ export interface ShortsDetail {
   thumbnailUrl: string
   uploader: ShortsUploader
   category: ShortsCategory
+}
+
+export interface ShortsItemType {
+  categoryId: number
+  categoryName: string
+  durationSec: number
+  shortsId: number
+  status: ShortsStatus
+  thumbnailUrl?: string
+  title: string
+  description: string
+  videoUrl: string
+  userId: number
+  userNickName: string
+  userProfileUrl: string | null
 }

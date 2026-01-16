@@ -1,5 +1,3 @@
-import React from 'react'
-
 import PlaylistSection from '@/features/home/playlist/PlaylistSection'
 import { categoryShortsList, playlistGroup } from '@/dummy/data'
 import { getShortPopular } from '@/services/shorts/getShortPopular'
