@@ -1,17 +1,13 @@
 import { api } from '@/lib/utils/apiUtils'
+import { ApiResponse } from '@/types/mypage-shorts'
 
-export interface Category {
+export interface CategoryResponse {
   id: number
   name: string
 }
 
-interface CategoryListResponse {
-  data: CategoryResponse[]
-}
-
 export const categoryApi = {
-  getAll: async (): Promise<CategoryResponse[]> => {
-    const response = await api.get<CategoryListResponse>('/api/v1/categories')
-    return response.data ?? []
+  getAll: async (): Promise<ApiResponse<CategoryResponse[]>> => {
+    return api.get<ApiResponse<CategoryResponse[]>>('/api/v1/categories')
   },
 }

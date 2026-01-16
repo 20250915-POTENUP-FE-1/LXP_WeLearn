@@ -1,7 +1,7 @@
 'use client'
 
 import { getCategoriesAction } from '@/features/category.action'
-import type { Category } from '@/services/category/category.service'
+import { CategoryResponse } from '@/services/category/category.service'
 import { ChevronDown } from 'lucide-react'
 import { useEffect, useState, type ChangeEvent } from 'react'
 
@@ -15,8 +15,8 @@ export default function ShortsFormCategory({ value, onChange }: ShortsFormCatego
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const data = await getCategoriesAction()
-      setCategories(data)
+      const res = await getCategoriesAction()
+      setCategories(res.data)
     }
 
     fetchCategories()

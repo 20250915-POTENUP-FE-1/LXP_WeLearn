@@ -44,8 +44,10 @@ export default function useKeywordSearch({
     isFetchingRef.current = true
     try {
       const result = await getKeywordsAction()
-      keywordCacheRef.current = result
-      return result
+      if (result.success && result.data) {
+        keywordCacheRef.current = result.data
+      }
+      return result.data
     } finally {
       isFetchingRef.current = false
     }
