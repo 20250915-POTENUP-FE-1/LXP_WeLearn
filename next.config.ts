@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.pexels.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'minji-test-3rd-lxp1.s3.ap-northeast-2.amazonaws.com',
+      },
     ],
   },
   experimental: {

@@ -40,13 +40,13 @@ export async function updateShortsAction(
   }
 
   try {
-    const data = await myShortsApi.updateShorts(shortsId, payload)
+    const response = await myShortsApi.updateShorts(shortsId, payload)
     revalidatePath('/mypage/myshorts')
 
     return {
       success: true,
       message: '숏츠가 수정되었습니다.',
-      data,
+      data: response.data,
     }
   } catch (error) {
     return {

@@ -5,6 +5,9 @@ export default async function MyShortsPage() {
   const data = await myShortsApi.getMyShorts({ page: 0, size: 20 })
 
   return (
-    <MyShortsContainer initialShorts={data.content ?? []} totalCount={data.totalElements ?? 0} />
+    <MyShortsContainer
+      initialShorts={data?.content ?? []}
+      totalCount={data?.totalElements ?? 0}
+    />
   )
 }

@@ -23,7 +23,7 @@ interface ShortsFormLayoutProps {
   // 핸들러
   onFormChange: <K extends keyof ShortsFormData>(field: K, value: ShortsFormData[K]) => void
   onVideoChange: <K extends keyof VideoPreviewData>(field: K, value: VideoPreviewData[K]) => void
-  // onSubmit: () => void
+  onSubmit?: () => void
   onCancel: () => void
 
   // 상태
@@ -47,7 +47,7 @@ export default function ShortsFormLayout({
   videoData,
   onFormChange,
   onVideoChange,
-  // onSubmit,
+  onSubmit,
   onCancel,
   isSubmitting,
   isEditMode = false,
@@ -101,6 +101,13 @@ export default function ShortsFormLayout({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault() // 페이지 리로드 방지
 
+    // 수정 모드: onSubmit 핸들러 사용
+    if (isEditMode && onSubmit) {
+      onSubmit()
+      return
+    }
+
+    // 등록 모드: 기존 로직
     if (!videoData.videoFile) {
       toast.error('비디오 파일이 필요합니다.')
       return

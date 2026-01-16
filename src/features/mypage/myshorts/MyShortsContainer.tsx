@@ -86,7 +86,6 @@ export default function MyShortsContainer({ initialShorts, totalCount }: MyShort
                 <ShortsCard
                   key={shorts.shortsId}
                   shorts={shorts}
-                  status={shorts.status}
                   isSelected={selectedShorts?.shortsId === shorts.shortsId}
                   onSelect={() => handleSelectShorts(shorts)}
                   onDelete={() => handleDelete(shorts.shortsId!)}

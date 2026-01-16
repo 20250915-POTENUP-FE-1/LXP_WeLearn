@@ -16,7 +16,7 @@ export interface UploaderDto {
 // 카테고리 정보
 // ============================================
 export interface CategoryDto {
-  categoryId?: number
+  id?: number
   name?: string
 }
 
