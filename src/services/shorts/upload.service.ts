@@ -44,10 +44,13 @@ export const shortsUploadApi = {
    */
   async getPresignedUrl(params: PresignedUrlRequest): Promise<PresignedUrlResponse> {
     const payload = { body: params }
-
+    console.log('=== [getPresignedUrl] 요청 payload ===')
+    console.log(JSON.stringify(payload, null, 2))
+    console.log('categoryId 타입:', typeof params.categoryId, '값:', params.categoryId)
     const response = await api.post<{
       data: PresignedUrlResponse
-    }>('/api/v1/shorts-upload/upload', payload)
+    }>('/api/v1/shorts/upload', payload)
+    console.log('=== [getPresignedUrl] 응답 ===', response)
     return response.data
   },
 
@@ -63,8 +66,9 @@ export const shortsUploadApi = {
         'Content-Type': file.type,
       },
     })
-
+    console.log('presignedUrl')
     if (!res.ok) {
+      console.log('업로드 실패')
       throw new Error('S3 업로드 실패')
     }
   },
@@ -79,9 +83,16 @@ export const shortsUploadApi = {
       videoUrl: params.videoUrl,
       thumbnailUrl: params.thumbnailUrl,
     }
+
+    console.log('=== [confirmUpload] 3단계 업로드 완료 확정 요청 ===')
+    console.log('shortId:', shortId)
+    console.log('payload:', JSON.stringify(payload, null, 2))
+
     const response = await api.post<{
       data: ConfirmUploadResponse
     }>(`/api/v1/shorts/${shortId}/upload-complete`, payload)
+
+    console.log('=== [confirmUpload] 3단계 업로드 완료 확정 응답 ===', response)
 
     return response
   },

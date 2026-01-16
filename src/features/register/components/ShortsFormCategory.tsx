@@ -11,12 +11,13 @@ interface ShortsFormCategoryProps {
 }
 
 export default function ShortsFormCategory({ value, onChange }: ShortsFormCategoryProps) {
-  const [categories, setCategories] = useState<Category[]>()
+  const [categories, setCategories] = useState<CategoryResponse[]>([])
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const res = await getCategoriesAction()
-      setCategories(res.data) // ✅ data만 저장
+      const data = await getCategoriesAction()
+      console.log(data)
+      setCategories(data)
     }
 
     fetchCategories()

@@ -108,11 +108,25 @@ export default function ShortsFormLayout({
       title: formData.title,
       description: formData.description || '', // undefined 방지
       categoryId: formData.categoryId || 0,
-      keywords: ['Java', 'Spring'], // 테스트용
+      keywords: formData.keywords,
       durationSec,
       videoFile: videoData.videoFile,
       thumbnailFile: formData.thumbnailFile ?? null,
     }
+
+    // 디버깅용 로그
+    console.log('=== [handleSubmit] 제출 payload ===')
+    console.log({
+      title: payload.title,
+      description: payload.description,
+      categoryId: payload.categoryId,
+      'categoryId 타입': typeof payload.categoryId,
+      'formData.categoryId 원본': formData.categoryId,
+      keywords: payload.keywords,
+      durationSec: payload.durationSec,
+      videoFileName: payload.videoFile?.name,
+      thumbnailFileName: payload.thumbnailFile?.name,
+    })
 
     // Server Action 호출
     startTransition(() => {

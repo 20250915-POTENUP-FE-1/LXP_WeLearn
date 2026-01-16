@@ -68,8 +68,8 @@ export default function useKeywordSearch({
 
         // 로컬 필터링: 입력값을 포함하는 키워드 검색
         const filtered = allKeywords
-          .filter((item) => item.name.toLowerCase().includes(query))
-          .map((item) => item.name)
+          .filter((item) => item.normalizedName.includes(query))
+          .map((item) => item.displayName)
           .filter((name) => !keywords.includes(name)) // 이미 선택된 키워드 제외
 
         setSuggestions(filtered)
