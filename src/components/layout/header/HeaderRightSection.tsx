@@ -18,7 +18,9 @@ export default function HeaderRightSection({ isLogined }: HeaderRightSectionProp
 
   return (
     <div className="flex gap-3">
-      {!isLogined ? (
+      {isLogined && user ? (
+        <HeaderDropdown user={user} />
+      ) : (
         <div className="flex w-30 justify-end gap-3">
           <Link
             href="/signin"
@@ -33,8 +35,6 @@ export default function HeaderRightSection({ isLogined }: HeaderRightSectionProp
             회원가입
           </Link>
         </div>
-      ) : (
-        <HeaderDropdown user={user} />
       )}
     </div>
   )
