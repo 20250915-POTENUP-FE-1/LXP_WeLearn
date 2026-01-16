@@ -1,4 +1,3 @@
-'use server'
 import { api } from '@/lib/utils/apiUtils'
 import { CommentType } from '@/types/comment'
 import { ApiResponse } from '@/types/mypage-shorts'

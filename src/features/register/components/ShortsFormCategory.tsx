@@ -16,7 +16,6 @@ export default function ShortsFormCategory({ value, onChange }: ShortsFormCatego
   useEffect(() => {
     const fetchCategories = async () => {
       const data = await getCategoriesAction()
-      console.log(data)
       setCategories(data)
     }
 

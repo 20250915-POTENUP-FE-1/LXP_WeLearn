@@ -4,6 +4,8 @@ import { ListPlus, MessageSquareText, Send } from 'lucide-react'
 import { toast } from 'react-toastify'
 import ShortsLikeButton from './ShortsLikeButton'
 import { usePathname, useRouter } from 'next/navigation'
+import { useActionState } from 'react'
+import { getCommentAction } from '@/features/comment/action'
 
 interface ShortsActionBarProps {
   id: number

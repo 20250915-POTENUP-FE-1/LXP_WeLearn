@@ -12,7 +12,6 @@ import {
 import { UserInfo } from '@/types/auth'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
-import { useState } from 'react'
 
 interface UserDropdownProps {
   user: UserInfo | null

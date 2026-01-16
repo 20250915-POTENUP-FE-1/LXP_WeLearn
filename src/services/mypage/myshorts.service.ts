@@ -17,11 +17,7 @@ export const myShortsApi = {
         cache: 'no-cache',
         params: { page, size },
       })
-      console.log('[getMyShorts] 응답 성공:', {
-        contentLength: res?.content?.length ?? 0,
-        totalElements: res?.totalElements ?? 0,
-        rawResponse: res,
-      })
+
       return res
     } catch (error) {
       return { content: [], totalElements: 0 }

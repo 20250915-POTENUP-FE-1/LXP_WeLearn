@@ -114,20 +114,6 @@ export default function ShortsFormLayout({
       thumbnailFile: formData.thumbnailFile ?? null,
     }
 
-    // 디버깅용 로그
-    console.log('=== [handleSubmit] 제출 payload ===')
-    console.log({
-      title: payload.title,
-      description: payload.description,
-      categoryId: payload.categoryId,
-      'categoryId 타입': typeof payload.categoryId,
-      'formData.categoryId 원본': formData.categoryId,
-      keywords: payload.keywords,
-      durationSec: payload.durationSec,
-      videoFileName: payload.videoFile?.name,
-      thumbnailFileName: payload.thumbnailFile?.name,
-    })
-
     // Server Action 호출
     startTransition(() => {
       action(payload) // 이제 isPending이 정상 작동

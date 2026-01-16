@@ -7,22 +7,22 @@ import Comment from './Comment'
 import CommentInput from './CommentInput'
 import useIsMobile from '@/hook/useIsMobile'
 import { useEffect, useState } from 'react'
-import { commentApi } from '@/services/comments/comments.service'
-import { CommentsResponse, CommentType } from '@/types/comment'
-import { toast } from 'react-toastify'
+import { CommentType } from '@/types/comment'
 import DeleteModal from '@/components/ui/DeleteModal'
 
 export type DeleteTarget = { mode: 'comment'; id: number } | { mode: 'reply'; id: number } | null
 
-export default function CommentModal() {
+interface CommentModalProps {
+  comment: CommentType[] | null
+}
+export default function CommentModal({ comment }: CommentModalProps) {
   const router = useRouter()
   const pathname = usePathname()
   const isMobile = useIsMobile()
   const [mounted, setMounted] = useState(false)
   const [shortsId, setShortsId] = useState<string>('')
   const [isUpdate, setIsUpdate] = useState(0)
-  const [comments, setComments] = useState<CommentType[] | null>(null)
-  const [loading, setLoading] = useState(false)
+  const [comments, setComments] = useState<CommentType[] | null>(comment)
   const [deleteTarget, setDeleteTarget] = useState<DeleteTarget>(null)
   const [isReplyUpdate, setIsReplyUpdate] = useState(0)
 
@@ -40,22 +40,6 @@ export default function CommentModal() {
   const isOpen = pathname.endsWith('/comments')
 
   // 댓글 목록 불러오기
-  const fetchComments = async () => {
-    if (!shortsId) return
-    setLoading(true)
-
-    try {
-      const res = await commentApi.getComment(Number(shortsId))
-      setComments(res.data)
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message)
-      }
-      toast.error('댓글 조회를 실패하였습니다.')
-    } finally {
-      setLoading(false)
-    }
-  }
 
   // 컴포넌트가 마운트되었는지 체크
   // mounted가 true가 되어야 fetchComments 실행
@@ -67,8 +51,6 @@ export default function CommentModal() {
   // mounted가 true이고, 모달이 열려 있으며, shortsId가 존재할 때 fetchComments 실행
   useEffect(() => {
     if (!mounted || !isOpen || !shortsId) return
-
-    fetchComments()
   }, [mounted, isOpen, shortsId, isUpdate])
 
   // 모달 닫기 함수

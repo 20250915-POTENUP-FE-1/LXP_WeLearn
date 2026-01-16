@@ -24,6 +24,35 @@ export type ReplyActionState = {
   data?: ReplyCommetType
 }
 
+export type GetCommentType = {
+  success: boolean
+  message?: string
+  errors?: {
+    content?: string
+  }
+  data?: CommentType[]
+  timestamp?: number
+}
+
+// 댓글 조회 액션
+export const getCommentAction = async (
+  prevState: CommentActionState,
+  id: number,
+): Promise<GetCommentType> => {
+  try {
+    const commentData = await commentApi.getComment(id)
+    return {
+      success: true,
+      data: commentData?.data,
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : '답글 조회실패',
+    }
+  }
+}
+
 // 댓글 등록 액션
 export const postCommentAction = async (
   prevState: CommentActionState,
@@ -101,6 +130,25 @@ export const deleteCommentAction = async (
     return {
       success: false,
       message: '댓글 삭제 중 오류가 발생하였습니다.',
+    }
+  }
+}
+
+// 대댓글 조회 액션
+export const getReplyAction = async (
+  prevState: ReplyActionState,
+  id: number,
+): Promise<ReplyActionState> => {
+  try {
+    const replyData = await RecommentApi.getReplyComment(id)
+    return {
+      success: true,
+      data: replyData.data,
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : '답글 조회실패',
     }
   }
 }
