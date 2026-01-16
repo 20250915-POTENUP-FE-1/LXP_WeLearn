@@ -1,6 +1,6 @@
 import { api } from '@/lib/utils/apiUtils'
 
-export interface CategoryResponse {
+export interface Category {
   id: number
   name: string
 }

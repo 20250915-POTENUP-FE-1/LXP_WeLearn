@@ -78,7 +78,6 @@ export const shortsUploadApi = {
    */
   async confirmUpload(params: ConfirmUploadRequest): Promise<ConfirmUploadResponse> {
     const { uploadId, videoUrl, thumbnailUrl, shortId } = params
-
     const payload = {
       uploadId: params.uploadId,
       videoUrl: params.videoUrl,

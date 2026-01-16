@@ -95,19 +95,24 @@ export const api = {
     const res = await fetchWithAuth(`${baseUrl}${endpoint}`, {
       ...options,
       method: 'POST',
-      body: JSON.stringify(data || {}),
+      body: JSON.stringify(data),
     })
     if (!res.ok) throw await handleError(res)
     return res.status === 204 ? ({} as T) : res.json()
   },
 
-  async patch<T>(endpoint: string, data?: unknown, options?: FetchOptions): Promise<T> {
+  async patch<T>(endpoint: string, data?: unknown, options?: FetchOptions): Promise<T | null> {
     const res = await fetchWithAuth(`${baseUrl}${endpoint}`, {
       ...options,
       method: 'PATCH',
-      body: JSON.stringify(data || {}),
+      body: JSON.stringify(data),
     })
+
     if (!res.ok) throw await handleError(res)
+
+    // ✅ PATCH 성공 + No Content 대응
+    if (res.status === 204) return null
+
     return res.json()
   },
 

@@ -1,7 +1,7 @@
 import { Category } from '@/features/home/types/Category'
 import { ShortsItem } from '@/features/home/types/shortsItem'
-import { PlaylistItem } from '@/features/home/types/playListItem'
 import { shorts } from '@/features/home/types/categoryShortsList'
+import { PlaylistItem } from '@/features/home/types/PlayListItem'
 
 export const shortsItems: ShortsItem[] = [
   {

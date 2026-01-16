@@ -1,8 +1,8 @@
-import { ShortsDetail } from '@/types/shorts'
+import { ShortsItemType } from '@/types/shorts'
 import { shortsApi } from './shorts.service'
 
 export interface ShortsListProps {
-  shortsList: ShortsDetail[]
+  shortsList: ShortsItemType[]
   initialIndex: number
 }
 
@@ -13,7 +13,7 @@ export async function getShortsDetailList(startId: string): Promise<ShortsListPr
     const response: any = await shortsApi.shortsDetailList({ page: 0, size: 20 })
 
     // 2: 페이징 응답에서 실제 배열 추출 (기존 로직 유지)
-    let allShorts: ShortsDetail[] = []
+    let allShorts: ShortsItemType[] = []
 
     // Spring Boot 스타일의 페이징 응답 처리 (data.content)
     if (response?.data?.content && Array.isArray(response.data.content)) {
