@@ -65,7 +65,7 @@ export default function ReCommentInput({
                 {user?.profileUrl ? (
                   <img
                     src={user.profileUrl}
-                    alt={user.name}
+                    alt={user.nickName}
                     className="h-8 w-8 rounded-full object-cover"
                   />
                 ) : (

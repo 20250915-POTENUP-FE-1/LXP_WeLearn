@@ -2,11 +2,11 @@
 
 import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
-import type { ShortsItem } from './ShortsCarousel'
+import { ShortsItemType } from '@/types/shorts'
 
 const PREVIEW_DURATION = 3500 // ms, 3.5초 정도만 재생
 
-export default function ShortPreviewCard({ item }: { item: ShortsItem }) {
+export default function ShortPreviewCard({ item }: { item: ShortsItemType }) {
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const timeoutRef = useRef<number | null>(null)
 
@@ -108,9 +108,9 @@ export default function ShortPreviewCard({ item }: { item: ShortsItem }) {
 
           {/* 상단 배지 */}
           <div className="pointer-events-none absolute inset-x-0 top-0 z-10 pt-1.5 pl-4">
-            {item.category?.name && (
+            {item.categoryName && (
               <span className="rounded-full bg-black/55 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur">
-                {item.category.name}
+                {item.categoryName}
               </span>
             )}
           </div>
@@ -120,9 +120,9 @@ export default function ShortPreviewCard({ item }: { item: ShortsItem }) {
             <p className="mb-1 line-clamp-2 text-sm font-semibold text-white">{item.title}</p>
             <p className="mb-2 line-clamp-2 text-[11px] text-gray-200">{item.description}</p>
             <div className="flex items-center justify-between text-[11px] text-gray-300">
-              <span className="font-medium">{item.uploader?.nickname ?? '숏터'}</span>
+              <span className="font-medium">{item.userNickName ?? '숏터'}</span>
               <span className="rounded-full border border-white/25 px-2 py-0.5 text-[10px] text-gray-100">
-                #{item.category?.name ?? 'IT'}
+                #{item.categoryName ?? 'IT'}
               </span>
             </div>
           </div>

@@ -1,6 +1,6 @@
 'use server'
 import { api } from '@/lib/utils/apiUtils'
-import { ReplyCommentResponse } from '@/types/comment'
+import { CommentType } from '@/types/comment'
 import { ApiResponse } from '@/types/mypage-shorts'
 
 interface CommentRequest {
@@ -9,13 +9,10 @@ interface CommentRequest {
 
 export const commentApi = {
   // 해당 숏폼 댓글 조회
-  getComment: async (id: number): Promise<ApiResponse<ReplyCommentResponse>> => {
-    const response = await api.get<ApiResponse<ReplyCommentResponse>>(
-      `/api/v1/shorts/${id}/comments`,
-      {
-        cache: 'no-store',
-      },
-    )
+  getComment: async (id: number): Promise<ApiResponse<CommentType[]>> => {
+    const response = await api.get<ApiResponse<CommentType[]>>(`/api/v1/shorts/${id}/comments`, {
+      cache: 'no-store',
+    })
 
     return response
   },

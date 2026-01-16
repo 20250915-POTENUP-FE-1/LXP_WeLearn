@@ -8,7 +8,7 @@ import CommentInput from './CommentInput'
 import useIsMobile from '@/hook/useIsMobile'
 import { useEffect, useState } from 'react'
 import { commentApi } from '@/services/comments/comments.service'
-import { CommentsResponse } from '@/types/comment'
+import { CommentsResponse, CommentType } from '@/types/comment'
 import { toast } from 'react-toastify'
 import DeleteModal from '@/components/ui/DeleteModal'
 
@@ -21,7 +21,7 @@ export default function CommentModal() {
   const [mounted, setMounted] = useState(false)
   const [shortsId, setShortsId] = useState<string>('')
   const [isUpdate, setIsUpdate] = useState(0)
-  const [comments, setComments] = useState<CommentsResponse | null>(null)
+  const [comments, setComments] = useState<CommentType[] | null>(null)
   const [loading, setLoading] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState<DeleteTarget>(null)
   const [isReplyUpdate, setIsReplyUpdate] = useState(0)
@@ -46,7 +46,7 @@ export default function CommentModal() {
 
     try {
       const res = await commentApi.getComment(Number(shortsId))
-      setComments(res)
+      setComments(res.data)
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message)
@@ -97,13 +97,13 @@ export default function CommentModal() {
               } `}
             >
               {/* ==================== Modal Header ==================== */}
-              <CommentModalHeader closeHandler={handleClose} totalCount={comments?.data?.length} />
+              <CommentModalHeader closeHandler={handleClose} totalCount={comments?.length} />
               {/* ==================== Comment List (댓글 목록 영역) ==================== */}
               <div className="flex-1 overflow-y-auto px-4">
                 {/* ==================== Comment Block 1 ==================== */}
-                {comments?.data?.length !== 0 ? (
+                {comments?.length !== 0 ? (
                   <Comment
-                    comments={comments?.data ?? []}
+                    comments={comments ?? []}
                     shortsId={shortsId}
                     setIsUpdate={setIsUpdate}
                     isReplyUpdate={isReplyUpdate}

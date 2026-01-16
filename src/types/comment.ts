@@ -6,6 +6,7 @@ export interface UserInfo {
 }
 
 export interface CommentType {
+  shortsId: number
   commentId: number
   content: string
   createdAt: string
