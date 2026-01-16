@@ -2,9 +2,11 @@
 
 import Image from 'next/image'
 import type { ShortsResponse } from '@/types/mypage-shorts'
+import { DEFAULT_IMAGES } from '@/constants/shortsImages'
 
 interface ShortsPreviewItemProps {
   shorts: ShortsResponse | null
+  userProfileUrl?: string | null
   videoRef?: React.RefObject<HTMLVideoElement | null>
   onLoadedData?: () => void
   loop?: boolean
@@ -12,6 +14,7 @@ interface ShortsPreviewItemProps {
 
 export function ShortsPreviewItem({
   shorts,
+  userProfileUrl,
   videoRef,
   onLoadedData,
   loop = true,
@@ -28,13 +31,15 @@ export function ShortsPreviewItem({
     )
   }
 
+  const profileUrl = userProfileUrl || shorts.userProfileUrl || DEFAULT_IMAGES.AVATAR
+
   return (
     <div className="relative mx-auto aspect-9/16 w-full overflow-hidden rounded-2xl bg-gray-200 shadow-lg md:w-[360px] lg:mx-0">
       {/* 상단 카테고리 뱃지 */}
       <div className="absolute top-3 right-3 left-3 z-10 flex items-center justify-between">
-        {shorts.category?.name ? (
+        {shorts.categoryName ? (
           <span className="inline-flex items-center rounded-full bg-black/55 px-3 py-1 text-[10px] font-medium text-white">
-            {shorts.category.name}
+            {shorts.categoryName}
           </span>
         ) : (
           <span />
@@ -73,21 +78,25 @@ export function ShortsPreviewItem({
 
       {/* 하단 정보 영역 */}
       <div className="absolute right-0 bottom-0 left-0 p-5">
+        <div className="mb-3 flex items-center gap-3">
+          <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full">
+            {profileUrl && (
+              <img src={profileUrl} alt={'프로필'} className="h-full w-full object-cover" />
+            )}
+          </div>
+          <span className="text-md font-medium text-gray-200">{shorts.userNickname ?? '숏터'}</span>
+        </div>
         <h3 className="mb-2 line-clamp-2 text-[18px] leading-snug font-semibold text-white">
           {shorts.title}
         </h3>
 
         {shorts.description && (
-          <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-gray-200/90">
+          <p className="mb-4 line-clamp-2 h-[3.25em] text-sm leading-relaxed text-gray-200/90">
             {shorts.description}
           </p>
         )}
 
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-gray-200">
-            {shorts.uploader?.nickname ?? '숏터'}
-          </span>
-
           {shorts.keywords?.[0] && (
             <span className="rounded-full border border-white/25 px-3 py-1 text-[10px] text-gray-100">
               #{shorts.keywords[0]}

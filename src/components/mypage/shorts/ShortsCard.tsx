@@ -64,13 +64,7 @@ export default function ShortsCard({
           </DropdownMenu>
         </div>
 
-        {/* 카테고리 및 키워드 */}
         <div className="mt-auto flex flex-wrap items-center gap-2">
-          {shorts.categoryName && (
-            <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700">
-              {shorts.categoryName}
-            </span>
-          )}
           {/* 키워드 표시 */}
           {shorts.keywords?.map((keyword: string, index: number) => (
             <span key={index} className="px-1 py-1 text-xs text-gray-900">

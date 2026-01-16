@@ -118,9 +118,11 @@ export default function ShortPreviewCard({ item }: { item: ShortsItemType }) {
           {/* 하단 그라데이션 + 텍스트 */}
           <div className="absolute inset-x-0 bottom-0 z-10 bg-linear-to-t from-black/85 via-black/50 to-transparent p-4">
             <p className="mb-1 line-clamp-2 text-sm font-semibold text-white">{item.title}</p>
-            <p className="mb-2 line-clamp-2 text-[11px] text-gray-200">{item.description}</p>
+            <p className="mb-2 line-clamp-2 h-[3.25em] text-[11px] text-gray-200">
+              {item.description}
+            </p>
             <div className="flex items-center justify-between text-[11px] text-gray-300">
-              <span className="font-medium">{item.userNickName ?? '숏터'}</span>
+              <span className="font-medium">{item.userNickname ?? '숏터'}</span>
               <span className="rounded-full border border-white/25 px-2 py-0.5 text-[10px] text-gray-100">
                 #{item.categoryName ?? 'IT'}
               </span>

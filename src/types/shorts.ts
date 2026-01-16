@@ -33,6 +33,6 @@ export interface ShortsItemType {
   description: string
   videoUrl: string
   userId: number
-  userNickName: string
+  userNickname: string
   userProfileUrl: string | null
 }

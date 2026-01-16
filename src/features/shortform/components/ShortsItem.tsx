@@ -2,12 +2,16 @@ import ShortsPlayer from './ShortsPlayer'
 import ShortsCreateInfo from './ShortsCreateInfo'
 import ShortsActionBar from './ShortsActionBar'
 import { ShortsItemType } from '@/types/shorts'
+import { DEFAULT_IMAGES } from '@/constants/shortsImages'
 
 interface ShortsItemProps {
   shorts: ShortsItemType
+  userProfileUrl?: string | null
 }
 
-export default function ShortsItem({ shorts }: ShortsItemProps) {
+export default function ShortsItem({ shorts, userProfileUrl }: ShortsItemProps) {
+  const profileUrl = userProfileUrl || shorts.userProfileUrl || DEFAULT_IMAGES.AVATAR
+
   return (
     <div className="relative h-dvh w-full overflow-hidden md:h-full">
       {/* 영상 플레이어  */}
@@ -23,7 +27,7 @@ export default function ShortsItem({ shorts }: ShortsItemProps) {
             uploader={{
               userId: shorts.userId,
               userNickName: shorts.userNickName,
-              userProfileUrl: shorts.userProfileUrl,
+              userProfileUrl: profileUrl,
             }}
             title={shorts.title}
             description={shorts.description}
