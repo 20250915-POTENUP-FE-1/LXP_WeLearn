@@ -1,3 +1,5 @@
+'use client'
+
 import { ChevronDown } from 'lucide-react'
 import { toast } from 'react-toastify'
 
