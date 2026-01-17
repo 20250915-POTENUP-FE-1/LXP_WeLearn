@@ -11,7 +11,6 @@ export const myShortsApi = {
   /** 내 숏츠 목록 조회 */
   getMyShorts: async (params: PaginationParams = {}): Promise<PageShortsResponse> => {
     const { page = 0, size = 20 } = params
-    console.log('[getMyShorts] 요청 파라미터:', { page, size })
     try {
       const res = await api.get<PageShortsResponse>('/api/v1/shorts/me', {
         cache: 'no-cache',

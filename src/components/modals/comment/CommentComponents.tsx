@@ -2,18 +2,49 @@ import { Button } from '@/components/ui/Button'
 import CommentDropDownMenu from '@/components/ui/CommentDropdownMenu'
 import { timeAgo } from '@/utils/timeAgo'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, User } from 'lucide-react'
 import ReCommentInput from './ReCommentInput'
 import ReComment from './ReComment'
-import { CommentType } from '@/types/comment'
+import { CommentType, ReplyCommentType } from '@/types/comment'
+import { EditTarget } from './Comment'
+import { DeleteTarget } from './CommentsModal'
 
 interface CommentComponent {
+  shortsId: string
   comment: CommentType
-  commentPatchAction: (formData: FormData) => void
   openReply: number | null
-  handleReply: (id: number) => Promise<void>
+  replies: ReplyCommentType[] | null | undefined
+  deleteTarget: DeleteTarget
+  editTarget: EditTarget | null
+  openReplyInput: number | null
+  isReplyUpdate: number
+  commentPatchAction: (formData: FormData) => void
+  handleReply: (id: number) => void
+  handleReplyInput: (id: number) => void
+  setEditTarget: React.Dispatch<React.SetStateAction<EditTarget | null>>
+  setDeleteTarget: React.Dispatch<React.SetStateAction<DeleteTarget>>
+  setIsUpdate: React.Dispatch<React.SetStateAction<number>>
+  setOpenReplyInput: React.Dispatch<React.SetStateAction<number | null>>
+  setIsReplyUpdate: React.Dispatch<React.SetStateAction<number>>
 }
-export default function CommentComponent({ comment }: CommentComponent) {
+export default function CommentComponent({
+  shortsId,
+  comment,
+  openReply,
+  deleteTarget,
+  editTarget,
+  openReplyInput,
+  replies,
+  isReplyUpdate,
+  commentPatchAction,
+  handleReply,
+  handleReplyInput,
+  setEditTarget,
+  setDeleteTarget,
+  setIsUpdate,
+  setOpenReplyInput,
+  setIsReplyUpdate,
+}: CommentComponent) {
   return (
     <div className="border-b border-gray-200 py-8" key={comment.commentId}>
       <div className="flex items-start justify-between">

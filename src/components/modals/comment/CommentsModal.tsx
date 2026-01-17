@@ -7,7 +7,6 @@ import Comment from './Comment'
 import CommentInput from './CommentInput'
 import useIsMobile from '@/hook/useIsMobile'
 import { useEffect, useState } from 'react'
-import { commentApi } from '@/services/comments/comments.service'
 import { CommentType } from '@/types/comment'
 import DeleteModal from '@/components/ui/DeleteModal'
 
@@ -23,7 +22,6 @@ export default function CommentModal({ comment }: CommentModalProps) {
   const [mounted, setMounted] = useState(false)
   const [shortsId, setShortsId] = useState<string>('')
   const [isUpdate, setIsUpdate] = useState(0)
-  const [comments, setComments] = useState<CommentType[] | null>(comment)
   const [deleteTarget, setDeleteTarget] = useState<DeleteTarget>(null)
   const [isReplyUpdate, setIsReplyUpdate] = useState(0)
 

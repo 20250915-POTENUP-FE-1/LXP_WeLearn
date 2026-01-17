@@ -1,6 +1,6 @@
 import { api } from '@/lib/utils/apiUtils'
 import { ApiResponse } from '@/types/mypage-shorts'
-import { ReplyCommetType } from '@/types/comment'
+import { ReplyCommentType } from '@/types/comment'
 
 interface PostReCommentRequest {
   content: string
@@ -8,8 +8,8 @@ interface PostReCommentRequest {
 
 export const RecommentApi = {
   // 해당 숏폼 댓글 조회
-  getReplyComment: async (id: number): Promise<ApiResponse<ReplyCommetType[]>> => {
-    const response = await api.get<ApiResponse<ReplyCommetType[]>>(
+  getReplyComment: async (id: number): Promise<ApiResponse<ReplyCommentType[]>> => {
+    const response = await api.get<ApiResponse<ReplyCommentType[]>>(
       `/api/v1/comments/${id}/replies`,
       {
         cache: 'no-store',
@@ -26,15 +26,16 @@ export const RecommentApi = {
   patchReplyComment: async (
     replyId: number,
     data: PostReCommentRequest,
-  ): Promise<ApiResponse<ReplyCommetType[]>> => {
-    const response = await api.patch<ApiResponse<ReplyCommetType[]>>(`/api/v1/replies/${replyId}`, {
+  ): Promise<ApiResponse<ReplyCommentType[]>> => {
+    const response = await api.patch<ApiResponse<ReplyCommentType[]>>(
+      `/api/v1/replies/${replyId}`,
       data,
-    })
+    )
     return response
   },
 
   deleteReplyComment: async (replyId: number) => {
-    const response = await fetch(`/api/v1/replies/${replyId}`)
+    await fetch(`/api/v1/replies/${replyId}`)
     return true
   },
 }

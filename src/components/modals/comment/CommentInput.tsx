@@ -18,7 +18,6 @@ export default function CommentInput({ shortsId, setIsUpdate }: CommentInputProp
     success: false,
     message: '',
     errors: {},
-    timestamp: 0,
   })
 
   // 댓글 등록 성공시 토스트 ui
@@ -29,7 +28,7 @@ export default function CommentInput({ shortsId, setIsUpdate }: CommentInputProp
     } else if (commentPostState.success === false && commentPostState.message) {
       toast.error(commentPostState.message)
     }
-  }, [commentPostState.timestamp])
+  }, [commentPostState])
 
   useEffect(() => {
     const localUser = localStorage.getItem('user') as string
@@ -46,7 +45,7 @@ export default function CommentInput({ shortsId, setIsUpdate }: CommentInputProp
             {user?.profileUrl ? (
               <img
                 src={user.profileUrl}
-                alt={user.name}
+                alt={user.nickname}
                 className="h-8 w-8 rounded-full object-cover"
               />
             ) : (

@@ -47,11 +47,13 @@ export default function DeleteModal({
         setIsReplyUpdate((prev) => prev + 1)
       }
       setDeleteTarget(null)
+    } else if (commentDeleteState.success === false && commentDeleteState.errors?.content) {
+      toast.error(commentDeleteState.errors.content)
     } else if (
-      (commentDeleteState.success === false && commentDeleteState.message) ||
-      (replyCommentDeleteState.success === false && replyCommentDeleteState.message)
+      replyCommentDeleteState.success === false &&
+      replyCommentDeleteState.errors?.content
     ) {
-      toast.error(commentDeleteState.message)
+      toast.error(replyCommentDeleteState.errors.content)
     }
   }, [commentDeleteState, replyCommentDeleteState])
 

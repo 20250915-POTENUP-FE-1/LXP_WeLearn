@@ -14,7 +14,7 @@ export interface CommentType {
   writer: UserInfo
 }
 
-export interface ReplyCommetType {
+export interface ReplyCommentType {
   replyId: number
   parentId: number
   content: string
@@ -28,7 +28,7 @@ export interface ReplyCommentResponse {
   code: string
   message: string | null
   request: string | null
-  data: ReplyCommetType[]
+  data: ReplyCommentType[]
 }
 
 export interface CommentsResponse {

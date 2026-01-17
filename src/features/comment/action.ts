@@ -2,7 +2,7 @@
 
 import { commentApi } from '@/services/comments/comments.service'
 import { RecommentApi } from '@/services/comments/recomments.service'
-import { CommentType, ReplyCommetType } from '@/types/comment'
+import { CommentType, ReplyCommentType } from '@/types/comment'
 import { revalidatePath } from 'next/cache'
 
 export type CommentActionState = {
@@ -20,7 +20,7 @@ export type ReplyActionState = {
   errors?: {
     content?: string
   }
-  data?: ReplyCommetType
+  data?: ReplyCommentType
 }
 
 export type GetCommentType = {
@@ -38,8 +38,15 @@ export type GetReplyType = {
   errors?: {
     content?: string
   }
-  data?: ReplyCommetType[]
+  data?: ReplyCommentType[]
 }
+
+export type GetReplyState = {
+  success: boolean
+  data: ReplyCommentType[]
+  message?: string
+}
+
 // 댓글 조회 액션
 export const getCommentAction = async (
   prevState: CommentActionState,
@@ -137,16 +144,18 @@ export const deleteCommentAction = async (
   } catch (error) {
     return {
       success: false,
-      message: '댓글 삭제 중 오류가 발생하였습니다.',
+      errors: {
+        content: error instanceof Error ? error.message : '댓글 삭제 중 오류가 발생했습니다.',
+      },
     }
   }
 }
 
 // 대댓글 조회 액션
 export const getReplyAction = async (
-  prevState: ReplyActionState,
+  prevState: GetReplyState,
   id: number,
-): Promise<GetReplyType> => {
+): Promise<GetReplyState> => {
   try {
     const replyData = await RecommentApi.getReplyComment(id)
     return {
@@ -157,6 +166,7 @@ export const getReplyAction = async (
     return {
       success: false,
       message: error instanceof Error ? error.message : '답글 조회실패',
+      data: [],
     }
   }
 }
@@ -235,7 +245,9 @@ export const deleteReplyCommentAction = async (
   } catch (error) {
     return {
       success: false,
-      message: '댓글 삭제 중 오류가 발생하였습니다.',
+      errors: {
+        content: error instanceof Error ? error.message : '답글 삭제 중 오류가 발생하였습니다.',
+      },
     }
   }
 }

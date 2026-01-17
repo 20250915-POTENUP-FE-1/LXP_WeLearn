@@ -1,6 +1,5 @@
 import CommentDropDownMenu from '@/components/ui/CommentDropdownMenu'
-import { RecommentApi } from '@/services/comments/recomments.service'
-import { ReplyCommentResponse, ReplyCommetType } from '@/types/comment'
+import { ReplyCommentType } from '@/types/comment'
 import { timeAgo } from '@/utils/timeAgo'
 import { AnimatePresence, motion } from 'framer-motion'
 import { User } from 'lucide-react'
@@ -14,7 +13,7 @@ import { DeleteTarget } from './CommentsModal'
 interface ReCommentProps {
   openReply: number | null
   commentId: number
-  replies: ReplyCommetType[] | null | undefined
+  replies: ReplyCommentType[] | null | undefined
   isReplyUpdate: number
   deleteTarget: DeleteTarget
   editTarget: EditTarget
@@ -36,8 +35,6 @@ export default function ReComment({
   setEditTarget,
   setIsReplyUpdate,
 }: ReCommentProps) {
-  const [replyComment, setReplyComment] = useState<ReplyCommetType[] | null | undefined>(replies)
-
   const [replyPatchState, replyPatchAction] = useActionState(patchReplyCommentAction, {
     success: false,
     message: '',
@@ -57,12 +54,11 @@ export default function ReComment({
       toast.error(replyPatchState.message)
     }
   }, [replyPatchState])
-
   return (
     <>
       <AnimatePresence initial={false}>
         {openReply === commentId &&
-          replyComment?.map((reply) => (
+          replies?.map((reply) => (
             <motion.div
               key={reply.replyId}
               initial={{ height: 0, opacity: 0 }}
@@ -132,17 +128,17 @@ export default function ReComment({
                         )}
                       </div>
                     </div>
-                    {reply.isMine && (
-                      <CommentDropDownMenu
-                        setIsUpdate={setIsUpdate}
-                        setIsReplyUpdate={setIsReplyUpdate}
-                        setEditTarget={setEditTarget}
-                        setDeleteTarget={setDeleteTarget}
-                        id={reply.replyId}
-                        deleteTarget={deleteTarget}
-                        mode="reply"
-                      />
-                    )}
+                    {/* {reply.isMine && ( */}
+                    <CommentDropDownMenu
+                      setIsUpdate={setIsUpdate}
+                      setIsReplyUpdate={setIsReplyUpdate}
+                      setEditTarget={setEditTarget}
+                      setDeleteTarget={setDeleteTarget}
+                      id={reply.replyId}
+                      deleteTarget={deleteTarget}
+                      mode="reply"
+                    />
+                    {/* )} */}
                   </div>
                 </div>
               </div>

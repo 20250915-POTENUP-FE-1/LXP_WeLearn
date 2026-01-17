@@ -1,17 +1,9 @@
-import { ChevronDown, User } from 'lucide-react'
-import { useActionState, useEffect, useState } from 'react'
-import { CommentType, ReplyCommetType } from '@/types/comment'
-import ReCommentInput from './ReCommentInput'
-import ReComment from './ReComment'
-import { timeAgo } from '@/utils/timeAgo'
+import { startTransition, useActionState, useEffect, useState } from 'react'
+import { CommentType, ReplyCommentType } from '@/types/comment'
 import { getReplyAction, patchCommentAction } from '@/features/comment/action'
-import { Button } from '@/components/ui/Button'
 import { toast } from 'react-toastify'
-import CommentDropDownMenu from '@/components/ui/CommentDropdownMenu'
 import { DeleteTarget } from './CommentsModal'
-import { AnimatePresence, motion } from 'framer-motion'
-import { RecommentApi } from '@/services/comments/recomments.service'
-import CommentCompone from './CommentComponents'
+
 import CommentComponent from './CommentComponents'
 
 interface CommentsProps {
@@ -38,7 +30,7 @@ export default function Comment({
   const [openReply, setOpenReply] = useState<number | null>(null)
   const [openReplyInput, setOpenReplyInput] = useState<number | null>(null)
   const [editTarget, setEditTarget] = useState<EditTarget>(null)
-  const [replies, setReplies] = useState<ReplyCommetType[] | null | undefined>(null)
+  const [replies, setReplies] = useState<ReplyCommentType[] | null | undefined>(null)
 
   // 댓글 수정 Action
   const [commentPatchState, commentPatchAction] = useActionState(patchCommentAction, {
@@ -48,6 +40,11 @@ export default function Comment({
   })
 
   // 대댓글 조회 action
+  const [getReplyCommentState, getReplyCommentAction] = useActionState(getReplyAction, {
+    success: false,
+    data: [],
+    message: '',
+  })
 
   // 댓글 수정 성공시 토스트 ui
   useEffect(() => {
@@ -60,20 +57,24 @@ export default function Comment({
   }, [commentPatchState])
 
   useEffect(() => {
+    if (getReplyCommentState.success === true) {
+      setReplies(getReplyCommentState.data)
+    }
+  }, [getReplyCommentState])
+
+  useEffect(() => {
+    if (openReply !== null) {
+      startTransition(() => {
+        getReplyCommentAction(openReply)
+      })
+    }
+  }, [openReply, isReplyUpdate])
+
+  useEffect(() => {
     setEditTarget(null)
   }, [commentPatchState])
 
   const handleReply = async (id: number) => {
-    const res = await getReplyAction(
-      {
-        success: false,
-        message: '',
-      },
-      id,
-    )
-    if (res.success === true) {
-      setReplies(res.data)
-    }
     setOpenReply(openReply === id ? null : id)
   }
 
@@ -85,18 +86,25 @@ export default function Comment({
   return (
     <>
       {comments?.map((comment) => {
-        console.log(comment)
         return (
           <CommentComponent
+            key={comment.commentId}
+            shortsId={shortsId}
             comment={comment}
-            commentPatchAction={commentPatchAction}
             openReply={openReply}
+            deleteTarget={deleteTarget}
+            editTarget={editTarget}
+            openReplyInput={openReplyInput}
+            replies={replies}
+            isReplyUpdate={isReplyUpdate}
+            commentPatchAction={commentPatchAction}
             handleReply={handleReply}
             handleReplyInput={handleReplyInput}
             setEditTarget={setEditTarget}
-            deleteTarget={deleteTarget}
             setDeleteTarget={setDeleteTarget}
             setIsUpdate={setIsUpdate}
+            setOpenReplyInput={setOpenReplyInput}
+            setIsReplyUpdate={setIsReplyUpdate}
           />
         )
       })}

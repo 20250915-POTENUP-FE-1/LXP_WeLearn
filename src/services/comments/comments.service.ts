@@ -19,7 +19,6 @@ export const commentApi = {
 
   postComment: async (shortsId: number, data: CommentRequest) => {
     const response = api.post(`/api/v1/shorts/${shortsId}/comments`, data)
-    console.log(response)
     revalidatePath(`/shorts/${2}/comments`)
     return response
   },
