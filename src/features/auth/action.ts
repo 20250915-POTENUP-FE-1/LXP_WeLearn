@@ -2,7 +2,6 @@
 
 import { authApi } from '@/services/auth/auth.service'
 import { userApi, UserResponse } from '@/services/mypage/user.service'
-import { revalidatePath } from 'next/cache'
 
 type ActionState = {
   success: boolean
@@ -53,7 +52,6 @@ export const SigninAction = async (
     response = await authApi.signin(payload)
 
     const userData = await userApi.getMe()
-
     return {
       success: true,
       user: userData.data,
@@ -74,6 +72,7 @@ export const LogoutAction = async (prevState: ActionState): Promise<ActionState>
       message: '성공',
     }
   } catch (error) {
+    console.log('LogoutAction 실패', error)
     return {
       success: false,
       message: error instanceof Error ? error.message : '알수없는 오류 발생',

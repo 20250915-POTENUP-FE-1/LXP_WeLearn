@@ -83,7 +83,6 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
                 )}
               </div>
             </div>
-            <hr />
 
             <Link href="/mypage/profile" className="py-1">
               <DropdownMenuItem className="flex w-full cursor-pointer gap-4 px-0 py-1">

@@ -97,7 +97,6 @@ export const api = {
       method: 'POST',
       body: JSON.stringify(data),
     })
-
     if (!res.ok) throw await handleError(res)
     return res.status === 204 ? ({} as T) : res.json()
   },
