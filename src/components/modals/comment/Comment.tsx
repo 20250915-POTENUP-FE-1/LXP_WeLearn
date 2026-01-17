@@ -1,4 +1,4 @@
-import { startTransition, useActionState, useEffect, useState } from 'react'
+import { useActionState, useEffect, useState } from 'react'
 import { CommentType, ReplyCommentType } from '@/types/comment'
 import { getReplyAction, patchCommentAction } from '@/features/comment/action'
 import { toast } from 'react-toastify'
@@ -38,14 +38,6 @@ export default function Comment({
     message: '',
     errors: {},
   })
-
-  // 대댓글 조회 action
-  const [getReplyCommentState, getReplyCommentAction] = useActionState(getReplyAction, {
-    success: false,
-    data: [],
-    message: '',
-  })
-
   // 댓글 수정 성공시 토스트 ui
   useEffect(() => {
     if (commentPatchState.success) {
@@ -57,16 +49,8 @@ export default function Comment({
   }, [commentPatchState])
 
   useEffect(() => {
-    if (getReplyCommentState.success === true) {
-      setReplies(getReplyCommentState.data)
-    }
-  }, [getReplyCommentState])
-
-  useEffect(() => {
     if (openReply !== null) {
-      startTransition(() => {
-        getReplyCommentAction(openReply)
-      })
+      fetchReplies(openReply)
     }
   }, [openReply, isReplyUpdate])
 
@@ -74,8 +58,17 @@ export default function Comment({
     setEditTarget(null)
   }, [commentPatchState])
 
-  const handleReply = async (id: number) => {
-    setOpenReply(openReply === id ? null : id)
+  const fetchReplies = async (commentId: number) => {
+    try {
+      setReplies(null) // 로딩 상태
+      const data = await getReplyAction({ success: false, data: [] }, commentId)
+      setReplies(data.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const handleReply = (commentId: number) => {
+    setOpenReply((prev) => (prev === commentId ? null : commentId))
   }
 
   const handleReplyInput = (id: number) => {
@@ -85,8 +78,11 @@ export default function Comment({
 
   return (
     <>
-      {comments?.map((comment) => {
-        return (
+      {comments
+        ?.filter((comment) => {
+          return comment.content !== '삭제된 댓글입니다.'
+        })
+        .map((comment) => (
           <CommentComponent
             key={comment.commentId}
             shortsId={shortsId}
@@ -106,8 +102,7 @@ export default function Comment({
             setOpenReplyInput={setOpenReplyInput}
             setIsReplyUpdate={setIsReplyUpdate}
           />
-        )
-      })}
+        ))}
     </>
   )
 }

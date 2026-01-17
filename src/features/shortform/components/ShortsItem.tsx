@@ -8,6 +8,7 @@ interface ShortsItemProps {
 }
 
 export default function ShortsItem({ shorts }: ShortsItemProps) {
+  console.log(shorts)
   return (
     <div className="relative h-dvh w-full overflow-hidden md:h-full">
       {/* 영상 플레이어  */}
@@ -32,7 +33,11 @@ export default function ShortsItem({ shorts }: ShortsItemProps) {
 
         {/* 액션 버튼 - 하단 우측 정렬 */}
         <div className="pointer-events-auto mr-2 self-end">
-          <ShortsActionBar id={shorts.shortsId} />
+          <ShortsActionBar
+            id={shorts.shortsId}
+            likeCount={shorts.likeCount}
+            commentCount={shorts.commentCount}
+          />
         </div>
       </div>
     </div>

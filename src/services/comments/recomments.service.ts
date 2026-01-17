@@ -27,15 +27,17 @@ export const RecommentApi = {
     replyId: number,
     data: PostReCommentRequest,
   ): Promise<ApiResponse<ReplyCommentType[]>> => {
+    console.log(data)
     const response = await api.patch<ApiResponse<ReplyCommentType[]>>(
       `/api/v1/replies/${replyId}`,
       data,
     )
+
     return response
   },
 
   deleteReplyComment: async (replyId: number) => {
-    await fetch(`/api/v1/replies/${replyId}`)
+    const res = await api.delete(`/api/v1/replies/${replyId}`)
     return true
   },
 }

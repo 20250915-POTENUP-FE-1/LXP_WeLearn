@@ -1,9 +1,9 @@
 'use client'
 
 import { useDebounce } from '@/hook/useDebounce'
-import { likeApi } from '@/services/shorts/likes.service'
 import { Heart } from 'lucide-react'
 import { useState } from 'react'
+import { likeAction, unlikeAction } from '../like.action'
 
 interface ShortsLikeButtonProps {
   initialLikeCount: number // 초기 좋아요 수
@@ -13,7 +13,7 @@ interface ShortsLikeButtonProps {
 
 function ShortsLikeButton({
   initialLikeCount,
-  initialIsLike = false,
+  initialIsLike = true,
   shortsId,
 }: ShortsLikeButtonProps) {
   const [isLike, setIsLike] = useState(initialIsLike)
@@ -22,14 +22,21 @@ function ShortsLikeButton({
   const sendLike = useDebounce(async (nextIsLike: boolean) => {
     try {
       if (nextIsLike) {
-        await likeApi.like(shortsId)
+        console.log('좋아요 누름!')
+        await likeAction(
+          { success: false, message: '', errors: {}, data: null, code: '' },
+          shortsId,
+        )
       } else {
-        await likeApi.unlike(shortsId)
+        console.log('좋아요 취소!!')
+        await unlikeAction(
+          { success: false, message: '', errors: {}, data: null, code: '' },
+          shortsId,
+        )
       }
     } catch (error) {
       // 실패 시 롤백
-      setIsLike((prev) => !prev)
-      setLikeCount((prev) => (nextIsLike ? prev - 1 : prev + 1))
+      console.log(error)
     }
   }, 300)
 
@@ -56,7 +63,7 @@ function ShortsLikeButton({
         fill={isLike ? 'currentColor' : 'none'}
         className={isLike ? 'text-red-500' : ''}
       />
-      <span className="mt-1 text-xs">{likeCount.toLocaleString()}</span>
+      <span className="mt-1 text-xs">{likeCount}</span>
     </button>
   )
 }

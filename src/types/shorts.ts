@@ -29,10 +29,16 @@ export interface ShortsItemType {
   shortsId: number
   status: ShortsStatus
   thumbnailUrl?: string
+  keywords: []
   title: string
   description: string
   videoUrl: string
   userId: number
   userNickName: string
   userProfileUrl: string | null
+  likeCount: number
+  viewCount: number
+  updateAt: string | null
+  createdAt: string
+  commentCount: number
 }

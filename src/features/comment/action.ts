@@ -11,7 +11,7 @@ export type CommentActionState = {
   errors?: {
     content?: string
   }
-  data?: CommentType
+  data?: CommentType[]
 }
 
 export type ReplyActionState = {
@@ -106,9 +106,10 @@ export const patchCommentAction = async (
   }
 
   try {
-    await commentApi.patchComment(commentId, { content })
+    const res = await commentApi.patchComment(commentId, { content })
+    console.log('-------액션')
+    console.log(res)
     revalidatePath(`/shorts/${commentId}`)
-
     return {
       success: true,
     }

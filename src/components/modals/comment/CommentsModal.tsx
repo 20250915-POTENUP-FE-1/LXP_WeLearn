@@ -6,16 +6,14 @@ import CommentModalHeader from './CommentsModalHeader'
 import Comment from './Comment'
 import CommentInput from './CommentInput'
 import useIsMobile from '@/hook/useIsMobile'
-import { useEffect, useState } from 'react'
+import { startTransition, useActionState, useEffect, useState } from 'react'
 import { CommentType } from '@/types/comment'
 import DeleteModal from '@/components/ui/DeleteModal'
+import { getCommentAction } from '@/features/comment/action'
 
 export type DeleteTarget = { mode: 'comment'; id: number } | { mode: 'reply'; id: number } | null
 
-interface CommentModalProps {
-  comment: CommentType[] | null
-}
-export default function CommentModal({ comment }: CommentModalProps) {
+export default function CommentModal() {
   const router = useRouter()
   const pathname = usePathname()
   const isMobile = useIsMobile()
@@ -24,6 +22,13 @@ export default function CommentModal({ comment }: CommentModalProps) {
   const [isUpdate, setIsUpdate] = useState(0)
   const [deleteTarget, setDeleteTarget] = useState<DeleteTarget>(null)
   const [isReplyUpdate, setIsReplyUpdate] = useState(0)
+  const [comments, setComments] = useState<CommentType[] | []>()
+  const [CommentState, CommentAction] = useActionState(getCommentAction, {
+    success: false,
+    message: '',
+    errors: { content: '' },
+    data: [],
+  })
 
   // pathname에서 shortsId 추출
   // 스와이프로 shortsId가 변화하는것을 감지하여 shortsId에 넣어준다.
@@ -38,8 +43,6 @@ export default function CommentModal({ comment }: CommentModalProps) {
   // 현재 모달이 열려 있는지 판단
   const isOpen = pathname.endsWith('/comments')
 
-  // 댓글 목록 불러오기
-
   // 컴포넌트가 마운트되었는지 체크
   // mounted가 true가 되어야 fetchComments 실행
   useEffect(() => {
@@ -50,7 +53,16 @@ export default function CommentModal({ comment }: CommentModalProps) {
   // mounted가 true이고, 모달이 열려 있으며, shortsId가 존재할 때 fetchComments 실행
   useEffect(() => {
     if (!mounted || !isOpen || !shortsId) return
+    startTransition(() => {
+      CommentAction(Number(shortsId))
+    })
   }, [mounted, isOpen, shortsId, isUpdate])
+
+  useEffect(() => {
+    if (CommentState.success) {
+      setComments(CommentState.data ?? [])
+    }
+  }, [CommentState.success, CommentState.data])
 
   // 모달 닫기 함수
   // 모달을 닫으면 /shorts/{shortsId} 경로로 이동
@@ -78,13 +90,13 @@ export default function CommentModal({ comment }: CommentModalProps) {
               } `}
             >
               {/* ==================== Modal Header ==================== */}
-              <CommentModalHeader closeHandler={handleClose} totalCount={comment?.length} />
+              <CommentModalHeader closeHandler={handleClose} />
               {/* ==================== Comment List (댓글 목록 영역) ==================== */}
               <div className="flex-1 overflow-y-auto px-4">
                 {/* ==================== Comment Block 1 ==================== */}
-                {comment?.length !== 0 ? (
+                {comments?.length !== 0 ? (
                   <Comment
-                    comments={comment ?? []}
+                    comments={comments ?? []}
                     shortsId={shortsId}
                     setIsUpdate={setIsUpdate}
                     isReplyUpdate={isReplyUpdate}

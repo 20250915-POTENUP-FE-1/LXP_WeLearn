@@ -91,6 +91,7 @@ export const api = {
   },
 
   async post<T>(endpoint: string, data?: unknown, options?: FetchOptions) {
+    console.log(endpoint)
     const res = await fetchWithAuth(`${baseUrl}${endpoint}`, {
       ...options,
       method: 'POST',
@@ -107,6 +108,8 @@ export const api = {
       method: 'PATCH',
       body: JSON.stringify(data),
     })
+    console.log('--------유틸')
+    console.log(res)
 
     if (!res.ok) throw await handleError(res)
 

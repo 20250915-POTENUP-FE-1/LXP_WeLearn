@@ -25,6 +25,8 @@ export const commentApi = {
 
   patchComment: async (commentId: number, data: CommentRequest) => {
     const response = api.patch(`/api/v1/comments/${commentId}`, data)
+    console.log('-----서비스')
+    console.log(response)
     return response
   },
 

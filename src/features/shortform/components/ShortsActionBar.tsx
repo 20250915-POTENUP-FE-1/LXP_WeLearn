@@ -4,14 +4,13 @@ import { ListPlus, MessageSquareText, Send } from 'lucide-react'
 import { toast } from 'react-toastify'
 import ShortsLikeButton from './ShortsLikeButton'
 import { usePathname, useRouter } from 'next/navigation'
-import { useActionState } from 'react'
-import { getCommentAction } from '@/features/comment/action'
-
 interface ShortsActionBarProps {
   id: number
+  likeCount: number
+  commentCount: number
 }
 
-export default function ShortsActionBar({ id }: ShortsActionBarProps) {
+export default function ShortsActionBar({ id, likeCount, commentCount }: ShortsActionBarProps) {
   const router = useRouter()
   const pathname = usePathname()
   const isCommentOpen = pathname.endsWith('/comments')
@@ -27,7 +26,7 @@ export default function ShortsActionBar({ id }: ShortsActionBarProps) {
     if (isCommentOpen) {
       router.push(`/shorts/${id}`, { scroll: false })
     } else {
-      router.push(`/shorts/${id}/comments`, { scroll: false })
+      router.push(`/shorts/${id}/comments?commentCount=${commentCount}`, { scroll: false })
     }
   }
 
@@ -42,7 +41,7 @@ export default function ShortsActionBar({ id }: ShortsActionBarProps) {
   return (
     <aside className="absolute right-5 bottom-20 flex flex-col items-center gap-6">
       {/* 좋아요 */}
-      <ShortsLikeButton initialLikeCount={127} shortsId={id} />
+      <ShortsLikeButton initialLikeCount={likeCount} shortsId={id} />
 
       {/* 댓글 */}
 
@@ -53,6 +52,7 @@ export default function ShortsActionBar({ id }: ShortsActionBarProps) {
         onClick={handleComment}
       >
         <MessageSquareText strokeWidth={1.5} />
+        <span className="mt-1 text-xs">{commentCount}</span>
       </button>
 
       {/* 저장 */}
