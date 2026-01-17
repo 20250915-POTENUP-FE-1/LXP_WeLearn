@@ -2,6 +2,7 @@
 
 import { startTransition, useActionState, useEffect, useMemo, useRef, useState } from 'react'
 import { ImageIcon, VideoIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import ShortsFormInputs from '@/features/register/components/ShortsFormInputs'
 import ShortsFormCategory from '@/features/register/components/ShortsFormCategory'
 import ShortsFormKeywords from '@/features/register/components/ShortsFormKeywords'
@@ -10,10 +11,10 @@ import ShortsFormUploadTab from '@/features/register/components/ShortsFormUpload
 import useVideoUpload from '@/hook/register/useVideoUpload'
 import usePreviewTab from '@/hook/register/usePreviewTab'
 import type { ShortsFormData, VideoPreviewData } from '@/features/register/types/shortsRegister'
-import { uploadShortsAction, UploadShortsPayload } from '../register.action'
+import { getPresignedUrlAction, confirmUploadAction } from '../register.action'
+import type { PresignedUrlResponse } from '@/services/shorts/upload.service'
 import { toast } from 'react-toastify'
 import { extractVideoDuration } from '@/utils/extractVideoDuration'
-import { useRouter } from 'next/navigation'
 
 interface ShortsFormLayoutProps {
   // 폼 데이터
@@ -65,20 +66,71 @@ export default function ShortsFormLayout({
   const isDragging = isVideoDragging || isThumbnailDragging
   const videoInputRef = useRef<HTMLInputElement>(null)
 
-  const [state, action, isPending] = useActionState(uploadShortsAction, {
+  // S3 업로드용 상태
+  const [isUploading, setIsUploading] = useState(false)
+  const [uploadData, setUploadData] = useState<{
+    videoFile: File
+    thumbnailFile: File | null
+  } | null>(null)
+
+  // 1단계: Presigned URL 발급 (useActionState)
+  const [presignedState, presignedAction, isPending] = useActionState(getPresignedUrlAction, {
     success: false,
     message: '',
-    errors: {},
   })
 
+  // 2단계: Presigned URL 발급 성공 시 S3 업로드 + 3단계 확정
   useEffect(() => {
-    if (state.success === true) {
-      toast.success('업로드가 완료되었습니다.')
-      router.push('/mypage/myshorts')
-    } else if (state.success === false && state.message) {
-      toast.error(state.message)
+    if (presignedState.success && presignedState.data && uploadData) {
+      const handleS3UploadAndConfirm = async () => {
+        const presigned = presignedState.data as PresignedUrlResponse
+
+        try {
+          // 2️⃣ S3 업로드 (클라이언트 직접)
+          const uploadToS3 = async (presignedUrl: string, file: File) => {
+            const res = await fetch(presignedUrl, {
+              method: 'PUT',
+              body: file,
+              headers: { 'Content-Type': file.type },
+            })
+            if (!res.ok) throw new Error('S3 업로드 실패')
+          }
+
+          await uploadToS3(presigned.videoPresignedUrl, uploadData.videoFile)
+
+          if (uploadData.thumbnailFile && presigned.thumbnailPresignedUrl) {
+            await uploadToS3(presigned.thumbnailPresignedUrl, uploadData.thumbnailFile)
+          }
+
+          // 3️⃣ 업로드 확정 (Server Action 직접 호출)
+          const confirmResult = await confirmUploadAction({
+            shortId: presigned.shortId,
+            uploadId: presigned.uploadId,
+            videoUrl: presigned.videoPresignedUrl.split('?')[0],
+            thumbnailUrl: presigned.thumbnailPresignedUrl?.split('?')[0] || '',
+          })
+
+          if (confirmResult.success) {
+            toast.success('업로드가 완료되었습니다.')
+            router.push('/mypage/myshorts')
+          } else {
+            toast.error(confirmResult.message || '업로드 확정 실패')
+          }
+        } catch (error) {
+          toast.error(error instanceof Error ? error.message : '업로드 중 오류 발생')
+        } finally {
+          setIsUploading(false)
+          setUploadData(null)
+        }
+      }
+
+      handleS3UploadAndConfirm()
+    } else if (presignedState.success === false && presignedState.message) {
+      toast.error(presignedState.message)
+      setIsUploading(false)
+      setUploadData(null)
     }
-  }, [state])
+  }, [presignedState, uploadData, router])
 
   // 비디오 소스 메모이제이션
   const videoSrc = useMemo(() => {
@@ -99,7 +151,7 @@ export default function ShortsFormLayout({
   }, [videoSrc, isEditMode])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault() // 페이지 리로드 방지
+    e.preventDefault()
 
     // 수정 모드: onSubmit 핸들러 사용
     if (isEditMode && onSubmit) {
@@ -107,27 +159,34 @@ export default function ShortsFormLayout({
       return
     }
 
-    // 등록 모드: 기존 로직
+    // 등록 모드
     if (!videoData.videoFile) {
       toast.error('비디오 파일이 필요합니다.')
       return
     }
 
+    setIsUploading(true)
+
     const durationSec = await extractVideoDuration(videoData.videoFile)
 
-    const payload: UploadShortsPayload = {
-      title: formData.title,
-      description: formData.description || '', // undefined 방지
-      categoryId: formData.categoryId || 0,
-      keywords: formData.keywords,
-      durationSec,
+    // 업로드할 파일 저장 (useEffect에서 사용)
+    setUploadData({
       videoFile: videoData.videoFile,
       thumbnailFile: formData.thumbnailFile ?? null,
-    }
+    })
 
-    // Server Action 호출
+    // 1️⃣ Presigned URL 발급 요청 (useActionState)
     startTransition(() => {
-      action(payload) // 이제 isPending이 정상 작동
+      presignedAction({
+        title: formData.title,
+        description: formData.description || '',
+        categoryId: formData.categoryId || 0,
+        keywords: formData.keywords,
+        durationSec,
+        fileName: videoData.videoFile!.name,
+        fileSize: videoData.videoFile!.size,
+        contentType: videoData.videoFile!.type,
+      })
     })
   }
 
@@ -286,9 +345,8 @@ export default function ShortsFormLayout({
           </div>
 
           <ShortsFormSubmitButtons
-            // onRegister={onSubmit}
             onCancel={onCancel}
-            isLoading={isSubmitting}
+            isLoading={isSubmitting || isUploading || isPending}
             submitText={submitText}
           />
         </div>
