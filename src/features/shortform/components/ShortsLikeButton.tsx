@@ -23,16 +23,10 @@ function ShortsLikeButton({
     try {
       if (nextIsLike) {
         console.log('좋아요 누름!')
-        await likeAction(
-          { success: false, message: '', errors: {}, data: null, code: '' },
-          shortsId,
-        )
+        await likeAction({ success: false, message: '', data: null, code: '' }, shortsId)
       } else {
         console.log('좋아요 취소!!')
-        await unlikeAction(
-          { success: false, message: '', errors: {}, data: null, code: '' },
-          shortsId,
-        )
+        await unlikeAction({ success: false, message: '', data: null, code: '' }, shortsId)
       }
     } catch (error) {
       // 실패 시 롤백
