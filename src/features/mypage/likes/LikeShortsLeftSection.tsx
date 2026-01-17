@@ -27,6 +27,7 @@ export default function LikeShortsLeftSection() {
               alt="Spring Boot 시작하기"
               fill
               className="object-cover"
+              sizes="(max-width: 640px) 112px, 144px"
             />
 
             {/* 하단 그라데이션 */}
@@ -51,10 +52,11 @@ export default function LikeShortsLeftSection() {
           </div>
 
           {/* 재생 버튼 */}
-          <Link href="/mypage/likes" className="group">
-            <button className="flex w-full items-center justify-center gap-2 rounded-full bg-black py-5 text-lg font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg md:w-[360px]">
+          <Link href="/mypage/likes" className="group w-full md:w-[360px]">
+            <button className="flex w-full items-center justify-center gap-2 rounded-full bg-black py-5 text-lg font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg">
               <Play
                 strokeWidth={1.5}
+                size={30}
                 className="transition-transform duration-500 group-hover:rotate-360"
               />
               모두 재생

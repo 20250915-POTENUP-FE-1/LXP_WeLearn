@@ -1,5 +1,8 @@
 import { cookies } from 'next/headers'
 import { buildQueryString } from '@/utils/buildQueryString'
+import { setAuthCookies } from './setAuthCookies'
+import { ApiResponse } from '@/types/mypage-shorts'
+import { SetAuthCookies } from '@/types/cookie'
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL
 
@@ -55,6 +58,8 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
     const refreshToken = cookieStore.get('refreshToken')?.value // 리프레시 쿠키 이름 확인 필요
 
     if (!refreshToken) {
+      cookieStore.delete('accessToken')
+      cookieStore.delete('refreshToken')
       throw new Error('UNAUTHORIZED')
     }
 
@@ -65,8 +70,13 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
       body: JSON.stringify({ refreshToken }),
     })
 
+    const refreshData = (await refreshRes.json()) as ApiResponse<SetAuthCookies>
+
     if (refreshRes.ok) {
-      console.log('🔄 Refresh success. Retrying...')
+      await setAuthCookies({
+        accessToken: refreshData.data.accessToken,
+        refreshToken: refreshData.data.refreshToken,
+      })
       return fetchWithAuth(url, { ...options, retry: true })
     }
 
@@ -91,7 +101,6 @@ export const api = {
   },
 
   async post<T>(endpoint: string, data?: unknown, options?: FetchOptions) {
-    console.log(endpoint)
     const res = await fetchWithAuth(`${baseUrl}${endpoint}`, {
       ...options,
       method: 'POST',
@@ -107,8 +116,6 @@ export const api = {
       method: 'PATCH',
       body: JSON.stringify(data),
     })
-    console.log('--------유틸')
-    console.log(res)
 
     if (!res.ok) throw await handleError(res)
 

@@ -9,7 +9,7 @@ interface HeaderRightSectionProps {
 
 export default function HeaderRightSection({ isLogined, userData }: HeaderRightSectionProps) {
   return (
-    <div className="flex gap-3">
+    <div className="flex items-center gap-1 md:gap-3">
       {userData && isLogined ? (
         <HeaderDropdown user={userData} />
       ) : (

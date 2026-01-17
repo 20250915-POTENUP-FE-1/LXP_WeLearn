@@ -58,9 +58,11 @@ export default function ShortPreviewCard({ item }: { item: ShortsItemType }) {
             </p>
             <div className="flex items-center justify-between text-[11px] text-gray-300">
               <span className="font-medium">{item.userNickname ?? '숏터'}</span>
-              <span className="rounded-full border border-white/25 px-2 py-0.5 text-[10px] text-gray-100">
-                #{item.categoryName ?? 'IT'}
-              </span>
+              {item.keywords?.[0] && (
+                <span className="rounded-full border border-white/25 px-2 py-0.5 text-[10px] text-gray-100">
+                  #{item.keywords[0]}
+                </span>
+              )}
             </div>
           </div>
         </div>

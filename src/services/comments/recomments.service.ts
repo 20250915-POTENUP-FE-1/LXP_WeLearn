@@ -27,7 +27,6 @@ export const RecommentApi = {
     replyId: number,
     data: PostReCommentRequest,
   ): Promise<ApiResponse<ReplyCommentType[]>> => {
-    console.log(data)
     const response = await api.patch<ApiResponse<ReplyCommentType[]>>(
       `/api/v1/replies/${replyId}`,
       data,

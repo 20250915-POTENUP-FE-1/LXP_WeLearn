@@ -1,9 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useAnimation, PanInfo } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useDragNavigation } from '@/hook/useDragNavigation'
 import ShortPreviewCard from './ShortPreviewCard'
 import { ShortsItemType } from '@/types/shorts'
 
@@ -25,7 +24,9 @@ export default function ShortsCarouselSwipe({ items }: ShortsCarouselSwipeProps)
   const [itemsPerPage, setItemsPerPage] = useState(4)
   const containerRef = useRef<HTMLDivElement>(null)
   const [itemWidth, setItemWidth] = useState(0)
+  const controls = useAnimation()
   const gap = 16 // gap-4 = 16px
+  const dragThreshold = 80 // 스와이프 감지 임계값 (높을수록 더 많이 드래그해야 넘어감)
 
   // 컨테이너 크기 및 아이템 너비 계산 (리사이즈 대응)
   useEffect(() => {
@@ -51,6 +52,15 @@ export default function ShortsCarouselSwipe({ items }: ShortsCarouselSwipeProps)
     }
   }, [maxStartIndex, startIndex])
 
+  // startIndex 변경 시 애니메이션 실행
+  useEffect(() => {
+    const translateX = -startIndex * (itemWidth + gap)
+    controls.start({
+      x: translateX,
+      transition: { type: 'tween', duration: 0.35, ease: [0.25, 0.1, 0.25, 1] },
+    })
+  }, [startIndex, itemWidth, gap, controls])
+
   const handlePrev = useCallback(() => {
     setStartIndex((prev) => Math.max(0, prev - 1))
   }, [])
@@ -59,15 +69,29 @@ export default function ShortsCarouselSwipe({ items }: ShortsCarouselSwipeProps)
     setStartIndex((prev) => Math.min(maxStartIndex, prev + 1))
   }, [maxStartIndex])
 
-  // 드래그 제스처 처리 훅 연결
-  const handleDragEnd = useDragNavigation({
-    onPrev: handlePrev,
-    onNext: handleNext,
-    direction: 'horizontal',
-  })
+  // 드래그 종료 시 처리
+  const handleDragEnd = useCallback(
+    (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+      const { offset, velocity } = info
 
-  // 현재 인덱스 기반 X축 이동 거리 계산
-  const translateX = -startIndex * (itemWidth + gap)
+      // 충분한 거리 이동 또는 빠른 스와이프 시 페이지 전환 (한 장씩만)
+      const shouldMove = Math.abs(offset.x) > dragThreshold || Math.abs(velocity.x) > 800
+
+      if (shouldMove && (offset.x < 0 || velocity.x < -800)) {
+        handleNext()
+      } else if (shouldMove && (offset.x > 0 || velocity.x > 800)) {
+        handlePrev()
+      } else {
+        // 원래 위치로 복귀
+        const translateX = -startIndex * (itemWidth + gap)
+        controls.start({
+          x: translateX,
+          transition: { type: 'tween', duration: 0.2, ease: 'easeOut' },
+        })
+      }
+    },
+    [handleNext, handlePrev, startIndex, itemWidth, gap, controls, dragThreshold],
+  )
 
   return (
     <>
@@ -85,12 +109,13 @@ export default function ShortsCarouselSwipe({ items }: ShortsCarouselSwipeProps)
         <motion.div
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.2}
+          dragElastic={0.1}
+          dragMomentum={false}
+          dragDirectionLock
           onDragEnd={handleDragEnd}
-          animate={{ x: translateX }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          className="flex cursor-grab touch-pan-y active:cursor-grabbing"
-          style={{ gap }}
+          animate={controls}
+          className="flex cursor-grab active:cursor-grabbing"
+          style={{ gap, willChange: 'transform', touchAction: 'pan-y' }}
         >
           {/* 숏츠 아이템 목록 렌더링 - 각 아이템은 반응형 너비를 가지며 gap 간격으로 배치됨 */}
           {items.map((item) => (

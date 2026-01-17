@@ -1,30 +1,32 @@
 'use client'
 
 import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import LikeShortsDropdownMenu from '@/features/mypage/likes/LikeShortsDropdownMenu'
-import { MoreHorizontal } from 'lucide-react'
-import Image from 'next/image'
+import SavedShortsDropdownMenu from '@/features/mypage/saved-edit/SavedShortsDropdownMenu'
+import { MoreHorizontal, Tally2 } from 'lucide-react'
 
-export default function LikeShortsCard() {
+export default function SavedShortsCard() {
   return (
     <div>
       <div className="space-y-6">
-        {/* ==================== Shorts Card 1 ==================== */}
-        <div className="flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
+        {/* ==================== Playlist Shorts Card 1 ==================== */}
+        <div className="group flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
+          {/* 드래그 핸들 */}
+          <div className="flex w-6 shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
+            <Tally2 strokeWidth={1.5} />
+          </div>
           {/* 썸네일 */}
           <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
-            <Image
-              src="https://images.pexels.com/photos/303383/pexels-photo-303383.jpeg"
-              alt="Spring Boot 시작하기"
-              fill
-              className="object-cover"
-              sizes="(max-width: 640px) 112px, 144px"
+            <img
+              src="https://images.pexels.com/photos/2182863/pexels-photo-2182863.jpeg"
+              alt="썸네일"
+              className="absolute inset-0 h-full w-full object-cover"
             />
             <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
               개발
             </span>
           </div>
           {/* 콘텐츠 */}
+
           <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0 flex-1">
@@ -32,12 +34,12 @@ export default function LikeShortsCard() {
                   CI/CD? 처음 들으면 주문 같죠?
                 </h3>
                 <p className="mt-1.5 mb-4 text-sm text-gray-500">
-                  배포전문가 · 조회수 100회 · createdAt
+                  코드읽어주는개발자 · 조회수 100회 · createdAt
                 </p>
                 <p className="mb-1 line-clamp-2 text-sm text-gray-700">
-                  {' '}
-                  실수는 줄이고, 배포는 빠르게! 이 영상으로 CI/CD 개념, 웃으면서 한 번에
-                  정리해보시죠 ☕🚀
+                  코드 짜고, 테스트하고, 배포까지… 예전엔 사람이 일일이 하느라 커피 식을 틈도
+                  없었습니다. CI/CD 파이프라인은 이 모든 과정을 자동으로 처리해주는 개발자의 든든한
+                  자동화
                 </p>
               </div>
               {/* 더보기 드롭다운 메뉴 */}
@@ -50,25 +52,27 @@ export default function LikeShortsCard() {
                     <MoreHorizontal size={18} className="text-black" />
                   </button>
                 </DropdownMenuTrigger>
-                <LikeShortsDropdownMenu />
+                <SavedShortsDropdownMenu />
               </DropdownMenu>
             </div>
             {/* 키워드 */}
             <div className="mt-auto flex flex-wrap gap-2">
-              <span className="px-1 py-1 text-xs text-gray-900">#CI/CD #DOCKER</span>
+              <span className="px-1 py-1 text-xs text-gray-900">#tag</span>
             </div>
           </div>
         </div>
 
-        {/* ==================== Shorts Card 2 ==================== */}
-        <div className="flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
+        {/* ==================== Playlist Shorts Card 2 ==================== */}
+        <div className="group flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
+          {/* 드래그 핸들 */}
+          <div className="flex w-6 shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
+            <Tally2 strokeWidth={1.5} />
+          </div>
           <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
-            <Image
-              src="https://images.pexels.com/photos/35008891/pexels-photo-35008891.jpeg"
-              alt="Figma 오토 레이아웃 기초"
-              fill
-              className="object-cover"
-              sizes="(max-width: 640px) 112px, 144px"
+            <img
+              src="https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg"
+              alt="썸네일"
+              className="absolute inset-0 h-full w-full object-cover"
             />
             <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
               개발
@@ -77,14 +81,12 @@ export default function LikeShortsCard() {
           <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0 flex-1">
-                <h3 className="pt-1 text-lg font-bold text-gray-900">
-                  AI 시대의 필수 지식 MCP 이 영상 하나로 끝내세요!
-                </h3>
+                <h3 className="pt-1 text-lg font-bold text-gray-900">Spring Boot란 무엇인가요?</h3>
                 <p className="mt-1.5 mb-4 text-sm text-gray-500">
                   윤개발 · 조회수 1,234회 · 3개월 전
                 </p>
                 <p className="mb-1 line-clamp-2 text-sm text-gray-700">
-                  MCP에 대한 모든 것을 알려드립니다.
+                  Spring Boot의 기본 개념을 알려드립니다.
                 </p>
               </div>
               {/* 더보기 드롭다운 메뉴 */}
@@ -97,7 +99,7 @@ export default function LikeShortsCard() {
                     <MoreHorizontal size={18} className="text-black" />
                   </button>
                 </DropdownMenuTrigger>
-                <LikeShortsDropdownMenu />
+                <SavedShortsDropdownMenu />
               </DropdownMenu>
             </div>
             <div className="mt-auto flex flex-wrap gap-2">
@@ -108,15 +110,17 @@ export default function LikeShortsCard() {
           </div>
         </div>
 
-        {/* ==================== Shorts Card 3 ==================== */}
-        <div className="flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
+        {/* ==================== Playlist Shorts Card 3 ==================== */}
+        <div className="group flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
+          {/* 드래그 핸들 */}
+          <div className="flex w-6 shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
+            <Tally2 strokeWidth={1.5} />
+          </div>
           <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
-            <Image
-              src="https://images.pexels.com/photos/35383162/pexels-photo-35383162.jpeg"
-              alt="React 상태 관리 30초 요약"
-              fill
-              className="object-cover"
-              sizes="(max-width: 640px) 112px, 144px"
+            <img
+              src="https://images.pexels.com/photos/270488/pexels-photo-270488.jpeg"
+              alt="썸네일"
+              className="absolute inset-0 h-full w-full object-cover"
             />
             <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
               개발
@@ -126,13 +130,13 @@ export default function LikeShortsCard() {
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0 flex-1">
                 <h3 className="pt-1 text-lg font-bold text-gray-900">
-                  파이썬 일주일 완전 정복 로드맵
+                  Spring vs Spring Boot, 무엇이 다른가요
                 </h3>
                 <p className="mt-1.5 mb-4 text-sm text-gray-500">
                   조코딩 · 조회수 5,678회 · 5개월 전
                 </p>
                 <p className="mb-1 line-clamp-2 text-sm text-gray-700">
-                  파이썬을 일주일 만에 마스터하는 방법을 알려드립니다.
+                  Spring과 Spring Boot의 차이점을 비교해봅니다.
                 </p>
               </div>
               {/* 더보기 드롭다운 메뉴 */}
@@ -145,7 +149,7 @@ export default function LikeShortsCard() {
                     <MoreHorizontal size={18} className="text-black" />
                   </button>
                 </DropdownMenuTrigger>
-                <LikeShortsDropdownMenu />
+                <SavedShortsDropdownMenu />
               </DropdownMenu>
             </div>
             <div className="mt-auto flex flex-wrap gap-2">
@@ -156,15 +160,17 @@ export default function LikeShortsCard() {
           </div>
         </div>
 
-        {/* ==================== Shorts Card 4 ==================== */}
-        <div className="flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
+        {/* ==================== Playlist Shorts Card 4 ==================== */}
+        <div className="group flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
+          {/* 드래그 핸들 */}
+          <div className="flex w-6 shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
+            <Tally2 strokeWidth={1.5} />
+          </div>
           <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
-            <Image
-              src="https://images.pexels.com/photos/2182863/pexels-photo-2182863.jpeg"
-              alt="CSS Grid 1분 이해"
-              fill
-              className="object-cover"
-              sizes="(max-width: 640px) 112px, 144px"
+            <img
+              src="https://images.pexels.com/photos/5483075/pexels-photo-5483075.jpeg"
+              alt="썸네일"
+              className="absolute inset-0 h-full w-full object-cover"
             />
             <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
               개발
@@ -174,13 +180,13 @@ export default function LikeShortsCard() {
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0 flex-1">
                 <h3 className="pt-1 text-lg font-bold text-gray-900">
-                  개발자가 다크 모드를 쓰는 이유
+                  IntelliJ로 Spring Boot 프로젝트 시작하기
                 </h3>
                 <p className="mt-1.5 mb-4 text-sm text-gray-500">
                   김개발자 · 조회수 2,345회 · 6개월 전
                 </p>
                 <p className="mb-1 line-clamp-2 text-sm text-gray-700">
-                  다크 모드의 장점과 개발자들이 선호하는 이유를 알아봅니다.
+                  IntelliJ에서 Spring Boot 프로젝트를 시작하는 방법을 알려드립니다.
                 </p>
               </div>
               {/* 더보기 드롭다운 메뉴 */}
@@ -193,7 +199,7 @@ export default function LikeShortsCard() {
                     <MoreHorizontal size={18} className="text-black" />
                   </button>
                 </DropdownMenuTrigger>
-                <LikeShortsDropdownMenu />
+                <SavedShortsDropdownMenu />
               </DropdownMenu>
             </div>
             <div className="mt-auto flex flex-wrap gap-2">
@@ -204,15 +210,17 @@ export default function LikeShortsCard() {
           </div>
         </div>
 
-        {/* ==================== Shorts Card 5 ==================== */}
-        <div className="flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
+        {/* ==================== Playlist Shorts Card 5 ==================== */}
+        <div className="group flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
+          {/* 드래그 핸들 */}
+          <div className="flex w-6 shrink-0 cursor-grab items-center justify-center active:cursor-grabbing">
+            <Tally2 strokeWidth={1.5} />
+          </div>
           <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
-            <Image
-              src="https://images.pexels.com/photos/5483075/pexels-photo-5483075.jpeg"
-              alt="DB 인덱스는 왜 필요할까?"
-              fill
-              className="object-cover"
-              sizes="(max-width: 640px) 112px, 144px"
+            <img
+              src="https://images.pexels.com/photos/35308304/pexels-photo-35308304.jpeg"
+              alt="썸네일"
+              className="absolute inset-0 h-full w-full object-cover"
             />
             <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
               개발
@@ -222,13 +230,13 @@ export default function LikeShortsCard() {
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0 flex-1">
                 <h3 className="pt-1 text-lg font-bold text-gray-900">
-                  점프 투 파이썬! 파이썬의 기초
+                  Spring Initializr 제대로 사용하는 방법
                 </h3>
                 <p className="mt-1.5 mb-4 text-sm text-gray-500">
                   프론트만로해 · 조회수 987회 · 7개월 전
                 </p>
                 <p className="mb-1 line-clamp-2 text-sm text-gray-700">
-                  파이썬의 기초부터 차근차근 배워봅시다.
+                  Spring Initializr를 사용하여 프로젝트를 설정하는 방법을 알아봅니다.
                 </p>
               </div>
               {/* 더보기 드롭다운 메뉴 */}
@@ -241,7 +249,7 @@ export default function LikeShortsCard() {
                     <MoreHorizontal size={18} className="text-black" />
                   </button>
                 </DropdownMenuTrigger>
-                <LikeShortsDropdownMenu />
+                <SavedShortsDropdownMenu />
               </DropdownMenu>
             </div>
             <div className="mt-auto flex flex-wrap gap-2">

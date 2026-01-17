@@ -42,7 +42,7 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <div
-              className="flex w-30 cursor-pointer justify-center p-2 text-gray-600 transition-colors hover:text-gray-900"
+              className="flex cursor-pointer items-center justify-center text-gray-600 transition-colors hover:text-gray-900"
               aria-label="프로필"
             >
               {/* 유저 프로필 영역 */}

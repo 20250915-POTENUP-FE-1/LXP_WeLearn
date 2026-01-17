@@ -44,7 +44,6 @@ export const shortsUploadApi = {
    */
   async getPresignedUrl(params: PresignedUrlRequest): Promise<PresignedUrlResponse> {
     const payload = { body: params }
-
     const response = await api.post<{
       data: PresignedUrlResponse
     }>('/api/v1/shorts/upload', payload)
@@ -72,11 +71,12 @@ export const shortsUploadApi = {
    * 3단계: 업로드 완료 확정
    */
   async confirmUpload(params: ConfirmUploadRequest): Promise<ConfirmUploadResponse> {
-    const { uploadId, videoUrl, thumbnailUrl, shortId } = params
+    // const { uploadId, videoUrl, thumbnailUrl, shortId } = params
+    const { shortId, uploadId, videoUrl, thumbnailUrl } = params
     const payload = {
-      uploadId: params.uploadId,
-      videoUrl: params.videoUrl,
-      thumbnailUrl: params.thumbnailUrl,
+      uploadId,
+      videoUrl,
+      thumbnailUrl,
     }
 
     const response = await api.post<{
@@ -86,32 +86,4 @@ export const shortsUploadApi = {
     return response
   },
 
-  /**
-   * 전체 업로드 플로우 (서버 전용)
-   */
-  async uploadShorts(
-    params: PresignedUrlRequest,
-    videoFile: File,
-    thumbnailFile?: File | null, // optional + nullable
-  ): Promise<ConfirmUploadResponse> {
-    // 1️⃣ Presigned URL 발급
-    const presigned = await this.getPresignedUrl(params)
-
-    // 2️⃣ S3 업로드
-    await this.uploadToS3(presigned.videoPresignedUrl, videoFile)
-
-    if (thumbnailFile && presigned.thumbnailPresignedUrl) {
-      await this.uploadToS3(presigned.thumbnailPresignedUrl, thumbnailFile)
-    }
-
-    const res = await this.confirmUpload({
-      shortId: presigned.shortId,
-      uploadId: presigned.uploadId,
-      videoUrl: presigned.videoPresignedUrl.split('?')[0],
-      thumbnailUrl: presigned.thumbnailPresignedUrl,
-    })
-
-    // 3️⃣ 업로드 확정
-    return res
-  },
 }

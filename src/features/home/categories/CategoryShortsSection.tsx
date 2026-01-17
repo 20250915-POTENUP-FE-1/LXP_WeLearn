@@ -3,8 +3,8 @@
 import React, { useState, useTransition } from 'react'
 import { PageShortsResponse } from '@/types/mypage-shorts'
 import CategoryShortsCard from '@/features/home/categories/CategoryShortsCard'
-import SortSection from './sort/Sort'
 import { getShortsAction, getShortsByCategoryAction } from '@/features/category.action'
+import SortSection from '@/features/sort/SortSection'
 
 const ITEMS_PER_PAGE = 8
 

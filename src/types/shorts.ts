@@ -29,7 +29,7 @@ export interface ShortsItemType {
   shortsId: number
   status: ShortsStatus
   thumbnailUrl?: string
-  keywords: []
+  keywords: string[]
   title: string
   description: string
   videoUrl: string
@@ -41,4 +41,5 @@ export interface ShortsItemType {
   updateAt: string | null
   createdAt: string
   commentCount: number
+  isLiked: boolean
 }

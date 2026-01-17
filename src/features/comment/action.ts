@@ -2,7 +2,7 @@
 
 import { commentApi } from '@/services/comments/comments.service'
 import { RecommentApi } from '@/services/comments/recomments.service'
-import { CommentType, ReplyCommentType } from '@/types/comment'
+import { CommentType, CommnetData, ReplyCommentType } from '@/types/comment'
 import { revalidatePath } from 'next/cache'
 
 export type CommentActionState = {
@@ -29,7 +29,7 @@ export type GetCommentType = {
   errors?: {
     content?: string
   }
-  data?: CommentType[]
+  data?: CommnetData
 }
 
 export type GetReplyType = {
@@ -49,7 +49,7 @@ export type GetReplyState = {
 
 // 댓글 조회 액션
 export const getCommentAction = async (
-  prevState: CommentActionState,
+  prevState: GetCommentType,
   id: number,
 ): Promise<GetCommentType> => {
   try {
@@ -107,8 +107,7 @@ export const patchCommentAction = async (
 
   try {
     const res = await commentApi.patchComment(commentId, { content })
-    console.log('-------액션')
-    console.log(res)
+
     revalidatePath(`/shorts/${commentId}`)
     return {
       success: true,

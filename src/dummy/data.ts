@@ -168,7 +168,7 @@ export const savedPlaylists: {
 export const user = {
   name: '김코딩',
   email: 'test@test.com',
-  profileImageUrl: 'https://images.pexels.com/photos/35308304/pexels-photo-35308304.jpeg',
+  profileImageUrl: '/images/favicon_shortudy.png',
 }
 
 export const playlistGroup: PlaylistItem[] = [

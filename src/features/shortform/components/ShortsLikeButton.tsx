@@ -4,6 +4,7 @@ import { useDebounce } from '@/hook/useDebounce'
 import { Heart } from 'lucide-react'
 import { useState } from 'react'
 import { likeAction, unlikeAction } from '../like.action'
+import { toast } from 'react-toastify'
 
 interface ShortsLikeButtonProps {
   initialLikeCount: number // 초기 좋아요 수
@@ -11,26 +12,19 @@ interface ShortsLikeButtonProps {
   shortsId: number
 }
 
-function ShortsLikeButton({
-  initialLikeCount,
-  initialIsLike = true,
-  shortsId,
-}: ShortsLikeButtonProps) {
+function ShortsLikeButton({ initialLikeCount, initialIsLike, shortsId }: ShortsLikeButtonProps) {
   const [isLike, setIsLike] = useState(initialIsLike)
   const [likeCount, setLikeCount] = useState(initialLikeCount)
 
   const sendLike = useDebounce(async (nextIsLike: boolean) => {
     try {
       if (nextIsLike) {
-        console.log('좋아요 누름!')
         await likeAction({ success: false, message: '', data: null, code: '' }, shortsId)
       } else {
-        console.log('좋아요 취소!!')
         await unlikeAction({ success: false, message: '', data: null, code: '' }, shortsId)
       }
     } catch (error) {
-      // 실패 시 롤백
-      console.log(error)
+      toast.error('좋아요 기능 사용 중 오류가 발생했습니다.')
     }
   }, 300)
 

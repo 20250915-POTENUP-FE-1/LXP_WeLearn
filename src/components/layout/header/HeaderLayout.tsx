@@ -13,8 +13,17 @@ export default function HeaderLayout({ isLogined }: HeaderRightSectionProps) {
   const [user, setUser] = useState<UserInfo | null>()
 
   useEffect(() => {
-    const user = (JSON.parse(localStorage.getItem('user') || 'null') as UserInfo) || null
-    if (user) setUser(user)
+    const updateUser = () => {
+      const user = JSON.parse(localStorage.getItem('user') || 'null') as UserInfo | null
+      setUser(user)
+    }
+
+    // 수정해야함 추후에
+    window.addEventListener('userChanged', updateUser)
+
+    updateUser()
+
+    return () => window.removeEventListener('userChanged', updateUser)
   }, [])
 
   return (

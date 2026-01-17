@@ -1,5 +1,5 @@
-import { User } from 'lucide-react'
 import Image from 'next/image'
+import { DEFAULT_IMAGES } from '@/constants/shortsImages'
 
 interface UserProfileProps {
   userName: string
@@ -11,11 +11,13 @@ export default function UserProfile({ userName, userEmail, profileImageUrl }: Us
   return (
     <section className="mb-10 flex items-center gap-4">
       <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-gray-200">
-        {profileImageUrl ? (
-          <Image src={profileImageUrl} alt={userName} fill className="object-cover" sizes="64px" />
-        ) : (
-          <User strokeWidth={1.5} size={24} className="text-gray-400" />
-        )}
+        <Image
+          src={profileImageUrl || DEFAULT_IMAGES.AVATAR}
+          alt={userName}
+          fill
+          className="object-cover"
+          sizes="64px"
+        />
       </div>
       <div>
         <h1 className="text-xl font-bold text-gray-900">{userName}</h1>

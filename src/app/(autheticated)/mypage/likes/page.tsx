@@ -1,6 +1,6 @@
 import LikeShortsCard from '@/features/mypage/likes/LikeShortsCard'
 import LikeShortsLeftSection from '@/features/mypage/likes/LikeShortsLeftSection'
-import LikeSort from '@/features/mypage/likes/LikeSort'
+import SortSection from '@/features/sort/SortSection'
 
 export default function LikeShortsPage() {
   return (
@@ -11,7 +11,9 @@ export default function LikeShortsPage() {
         {/* ==================== Right Section - Shorts List ==================== */}
         <div className="order-2 flex-1 lg:order-2">
           {/* ==================== List Header (총 갯수 + 정렬) ==================== */}
-          <LikeSort />
+          <div className="my-4 flex justify-end">
+            <SortSection />
+          </div>
           {/* ==================== Shorts List ==================== */}
           <LikeShortsCard />
         </div>

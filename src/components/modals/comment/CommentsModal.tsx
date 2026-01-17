@@ -23,11 +23,12 @@ export default function CommentModal() {
   const [deleteTarget, setDeleteTarget] = useState<DeleteTarget>(null)
   const [isReplyUpdate, setIsReplyUpdate] = useState(0)
   const [comments, setComments] = useState<CommentType[] | []>()
+  const [totalCount, setTotalCount] = useState<number>(0)
   const [CommentState, CommentAction] = useActionState(getCommentAction, {
     success: false,
     message: '',
     errors: { content: '' },
-    data: [],
+    data: { totalCommentCount: 0, comments: [] },
   })
 
   // pathname에서 shortsId 추출
@@ -60,7 +61,8 @@ export default function CommentModal() {
 
   useEffect(() => {
     if (CommentState.success) {
-      setComments(CommentState.data ?? [])
+      setComments(CommentState.data?.comments ?? [])
+      setTotalCount(CommentState.data?.totalCommentCount || 0)
     }
   }, [CommentState.success, CommentState.data])
 
@@ -90,7 +92,7 @@ export default function CommentModal() {
               } `}
             >
               {/* ==================== Modal Header ==================== */}
-              <CommentModalHeader closeHandler={handleClose} />
+              <CommentModalHeader closeHandler={handleClose} totalCount={totalCount} />
               {/* ==================== Comment List (댓글 목록 영역) ==================== */}
               <div className="flex-1 overflow-y-auto px-4">
                 {/* ==================== Comment Block 1 ==================== */}

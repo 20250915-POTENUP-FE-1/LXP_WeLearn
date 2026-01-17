@@ -1,11 +1,7 @@
+import { SetAuthCookies } from '@/types/cookie'
 import { cookies } from 'next/headers'
 
-interface SetAuthCookiesParams {
-  accessToken: string
-  refreshToken: string
-}
-
-export async function setAuthCookies({ accessToken, refreshToken }: SetAuthCookiesParams) {
+export async function setAuthCookies({ accessToken, refreshToken }: SetAuthCookies) {
   const cookieStore = await cookies()
 
   // Access Token

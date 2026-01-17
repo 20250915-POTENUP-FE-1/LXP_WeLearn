@@ -40,6 +40,7 @@ export default function ShortsItem({ shorts, userProfileUrl }: ShortsItemProps) 
             id={shorts.shortsId}
             likeCount={shorts.likeCount}
             commentCount={shorts.commentCount}
+            isLiked={shorts.isLiked}
           />
         </div>
       </div>
