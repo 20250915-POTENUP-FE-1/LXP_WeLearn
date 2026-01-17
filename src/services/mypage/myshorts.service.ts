@@ -13,9 +13,12 @@ export const myShortsApi = {
     page = 0,
     size = 20,
   }: PaginationParams = {}): Promise<PageShortsResponse> => {
-    const res = await api.get<ApiResponse<PageShortsResponse>>('/api/v1/shorts/me', {
-      cache: 'no-cache',
-    })
+    const res = await api.get<ApiResponse<PageShortsResponse>>(
+      `/api/v1/shorts/me?page=${page}&size=${size}`,
+      {
+        cache: 'no-cache',
+      },
+    )
     return res.data
   },
 

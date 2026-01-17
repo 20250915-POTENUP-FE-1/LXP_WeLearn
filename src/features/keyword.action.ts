@@ -6,8 +6,7 @@ import { ApiResponse } from '@/types/mypage-shorts'
 export async function getKeywordsAction(): Promise<ApiResponse<KeywordResponse[]>> {
   try {
     return await keywordApi.getAll()
-  } catch (error) {
-    console.log('키워드 조회 실패', error)
+  } catch {
     return { success: false, code: 'ERROR', message: '키워드 조회 실패', data: [] }
   }
 }

@@ -6,6 +6,7 @@ import ShortsCardThumbnail from './ShortsCardThumbnail'
 import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import MyShortsDropdownMenu from '@/features/mypage/myshorts/MyShortsDropdownMenu'
 import ShortsStatusBadge from './ShortsStatusBadge'
+import { timeAgo } from '@/utils/timeAgo'
 
 interface ShortsCardProps {
   shorts: ShortsResponse
@@ -36,13 +37,13 @@ export default function ShortsCard({
       <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 flex-1">
-            {shorts.status && <ShortsStatusBadge status={shorts.status} />}
+            {shorts.status && <ShortsStatusBadge shortsStatus={shorts.status} />}
             <h3 className="pt-1 text-lg font-bold text-gray-900">{shorts.title}</h3>
             <p className="mt-1.5 mb-4 text-sm text-gray-500">
-              {shorts.uploader?.nickname ?? '숏터'}
-              {shorts.createdAt && ` · ${shorts.createdAt}`}
+              {shorts.userNickname ?? '숏터'}
+              {shorts.createdAt && ` · ${timeAgo(shorts.createdAt)}`}
             </p>
-            <p className="mb-1 line-clamp-2 text-sm text-gray-700"> {shorts.description}</p>
+            <p className="mb-1 line-clamp-2 text-sm text-gray-700">{shorts.description}</p>
           </div>
 
           {/* 더보기 드롭다운 메뉴 */}
@@ -57,24 +58,19 @@ export default function ShortsCard({
             </DropdownMenuTrigger>
             <MyShortsDropdownMenu
               shortsId={shorts.shortsId!}
-              status={shorts.status}
+              shortsStatus={shorts.status}
               onToggleVisibility={onToggleVisibility}
               onDelete={onDelete}
             />
           </DropdownMenu>
         </div>
 
-        {/* 카테고리 및 키워드 */}
         <div className="mt-auto flex flex-wrap items-center gap-2">
-          {/* 카테고리 표시 */}
-          {shorts.category?.name && (
-            <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700">
-              {shorts.category.name}
-            </span>
-          )}
           {/* 키워드 표시 */}
           {shorts.keywords?.map((keyword: string, index: number) => (
-            <span className="px-1 py-1 text-xs text-gray-900">#{keyword}</span>
+            <span key={index} className="px-1 py-1 text-xs text-gray-900">
+              #{keyword}
+            </span>
           ))}
         </div>
       </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { ImageIcon } from 'lucide-react'
+import { ImageIcon, Lock } from 'lucide-react'
 import ShortsFormPreviewFrame from './ShortsFormPreviewFrame'
 import ShortsFormEmptyState from './ShortsFormEmptyState'
 import useThumbnailUpload from '@/hook/register/useThumbnailUpload'
@@ -41,16 +41,37 @@ export default function ShortsFormThumbPreviewTab({
   }, [isDragging, onDraggingChange])
 
   // 썸네일이 있으면 미리보기 렌더링
-  // 수정 모드에서도 썸네일 변경/삭제 가능
+  // 수정 모드에서는 삭제 버튼 숨김 (onRemove를 undefined로)
   if (thumbnail) {
     return (
-      <ShortsFormPreviewFrame onRemove={handleRemoveThumbnail}>
+      <ShortsFormPreviewFrame onRemove={isEditMode ? undefined : handleRemoveThumbnail}>
         <img
           src={thumbnail}
           alt="썸네일 미리보기"
           className="h-full w-full rounded-2xl object-cover"
         />
+        {/* 수정 모드 안내 */}
+        {isEditMode && (
+          <div className="absolute top-6 left-1/2 flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full bg-black/70 px-3 py-1.5 text-sm text-white">
+            <Lock size={12} />
+            썸네일은 수정할 수 없습니다.
+          </div>
+        )}
       </ShortsFormPreviewFrame>
+    )
+  }
+
+  // 수정 모드인데 썸네일이 없는 경우 (비정상 상태)
+  if (isEditMode) {
+    return (
+      <ShortsFormEmptyState
+        icon={<Lock strokeWidth={0.5} size={102} color="#aaa" />}
+        description={
+          <>
+            썸네일을 불러올 수 없습니다. <br /> 페이지를 새로고침 해주세요.
+          </>
+        }
+      />
     )
   }
 

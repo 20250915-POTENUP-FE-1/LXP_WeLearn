@@ -17,7 +17,7 @@ function transformToEditInitialData(shortsData: ShortsResponse): ShortsEditIniti
       title: shortsData.title || '',
       description: shortsData.description || '',
       isPublic: shortsData.status === 'PUBLISHED',
-      categoryId: shortsData.category?.id || null,
+      categoryId: shortsData.categoryId || null,
       keywords: shortsData.keywords || [],
       keywordInput: '',
       thumbnail: null,

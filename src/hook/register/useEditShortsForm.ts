@@ -65,7 +65,7 @@ export default function useEditShortsForm({ shortsId, initialData }: UseEditShor
     [initialData.thumbnailUrl],
   )
 
-  // 비디오 데이터 변경 핸들러 (수정 모드에서는 영상 파일 변경 불가)
+  // 비디오 데이터 변경 핸들러 (수정 모드에서는 영상, 썸네일 파일 변경 불가)
   const handleVideoChange = useCallback(
     <K extends keyof VideoPreviewData>(field: K, value: VideoPreviewData[K]) => {
       // 영상 파일 변경 시도 시 무시 (수정 모드에서는 영상 변경 불가)

@@ -2,7 +2,7 @@ import { ShortsStatus } from './mypage-shorts'
 
 export interface ShortsUploader {
   userId: number
-  userNickName: string
+  userNickname: string
   userProfileUrl: string | null
 }
 
@@ -33,6 +33,6 @@ export interface ShortsItemType {
   description: string
   videoUrl: string
   userId: number
-  userNickName: string
+  userNickname: string
   userProfileUrl: string | null
 }
