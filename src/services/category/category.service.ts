@@ -19,7 +19,7 @@ export const categoryApi = {
   ): Promise<ApiResponse<PageShortsResponse>> => {
     return api.get<ApiResponse<PageShortsResponse>>(`/api/v1/categories/${categoryId}/shorts`, {
       cache: 'no-store',
-      params: { page, size },
+      params: { page, size, sort: 'createdAt,desc' },
     })
   },
 }
