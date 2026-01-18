@@ -9,12 +9,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { UserInfo } from '@/types/auth'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
+import { UserResponse } from '@/services/mypage/user.service'
 
 interface UserDropdownProps {
-  user: UserInfo | null
+  user: UserResponse | null
 }
 export default function HeaderDropdown({ user }: UserDropdownProps) {
   const router = useRouter()
@@ -70,6 +70,7 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
                 <img src={user?.profileUrl} alt="user-profile-image" />
               </div>
             )}
+
             <div className="mb-3 flex items-center gap-4">
               <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-gray-200">
                 <User strokeWidth={1.5} size={20} />
@@ -83,7 +84,6 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
                 )}
               </div>
             </div>
-
             <Link href="/mypage/profile" className="py-1">
               <DropdownMenuItem className="flex w-full cursor-pointer gap-4 px-0 py-1">
                 <Settings />내 프로필

@@ -1,18 +1,16 @@
 'use client'
 import Link from 'next/link'
-import { UserInfo } from '@/types/auth'
 import HeaderDropdown from './HeaderDropdown'
 import { useEffect, useState } from 'react'
 import { GetUserInfoAction } from '@/features/auth/action'
+import { UserResponse } from '@/services/mypage/user.service'
 
 interface HeaderRightSectionProps {
   isLogined: boolean
 }
 
 export default function HeaderRightSection({ isLogined }: HeaderRightSectionProps) {
-  const [userData, setUserData] = useState<UserInfo | null>(null)
-  console.log(isLogined)
-  console.log(userData)
+  const [userData, setUserData] = useState<UserResponse | null>(null)
 
   useEffect(() => {
     if (!isLogined) {
