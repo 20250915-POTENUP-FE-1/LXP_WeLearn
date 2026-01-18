@@ -78,8 +78,7 @@ export default function useKeywordSearch({
         const filtered = allKeywords
           .filter(
             (item) =>
-              item.normalizedName.includes(query) ||
-              item.displayName.toLowerCase().includes(query),
+              item.normalizedName.includes(query) || item.displayName.toLowerCase().includes(query),
           )
           .filter((item) => !keywords.includes(item.normalizedName)) // 이미 선택된 키워드 제외
           .map((item) => ({
