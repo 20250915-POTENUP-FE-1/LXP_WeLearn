@@ -30,6 +30,7 @@ export default function ShortsFormKeywords({
     handleKeyDown,
     handleBlur,
     handleFocus,
+    getDisplayName,
   } = useKeywords({ keywords, keywordInput, onChange })
 
   const listboxId = 'keyword-listbox'
@@ -59,7 +60,7 @@ export default function ShortsFormKeywords({
           placeholder={
             isMaxReached
               ? `최대 ${maxKeywords}개까지 선택 가능합니다.`
-              : '키워드를 영문으로 입력하세요. 예) java'
+              : '키워드를 영문으로 입력하세요. 예) data'
           }
           disabled={isMaxReached}
         />
@@ -77,7 +78,11 @@ export default function ShortsFormKeywords({
         />
       </div>
       {/* 선택된 키워드 목록 */}
-      <KeywordList keywords={keywords} onRemove={handleRemoveKeyword} />
+      <KeywordList
+        keywords={keywords}
+        onRemove={handleRemoveKeyword}
+        getDisplayName={getDisplayName}
+      />
     </div>
   )
 }

@@ -12,14 +12,29 @@ export const categoryApi = {
     return api.get<ApiResponse<CategoryResponse[]>>('/api/v1/categories')
   },
 
+  /** 전체 숏츠 목록 조회 (페이지네이션) */
+  getAllShorts: async ({ page = 0, size = 8 }: PaginationParams = {}): Promise<
+    ApiResponse<PageShortsResponse>
+  > => {
+    const response = await api.get<ApiResponse<PageShortsResponse>>('/api/v1/shorts', {
+      cache: 'no-store',
+      params: { page, size, sort: 'createdAt,desc' },
+    })
+    return response
+  },
+
   /** 카테고리별 숏츠 목록 조회 */
   getShortsByCategoryId: async (
     categoryId: number,
     { page = 0, size = 8 }: PaginationParams = {},
   ): Promise<ApiResponse<PageShortsResponse>> => {
-    return api.get<ApiResponse<PageShortsResponse>>(`/api/v1/categories/${categoryId}/shorts`, {
-      cache: 'no-store',
-      params: { page, size },
-    })
+    const response = await api.get<ApiResponse<PageShortsResponse>>(
+      `/api/v1/categories/${categoryId}/shorts`,
+      {
+        cache: 'no-store',
+        params: { page, size, sort: 'createdAt,desc' },
+      },
+    )
+    return response
   },
 }

@@ -46,14 +46,18 @@ export default function useKeywordSearch({
       })
     }
 
+    // 중복 요청 방지 플래그 설정
     isFetchingRef.current = true
     try {
+      // 서버에서 전체 키워드 목록 조회
       const result = await getKeywordsAction()
+      // 성공 시 캐시에 저장하여 이후 요청에서 재사용
       if (result.success && result.data) {
         keywordCacheRef.current = result.data
       }
       return result.data
     } finally {
+      // 요청 완료 후 플래그 해제 (성공/실패 무관)
       isFetchingRef.current = false
     }
   }
@@ -73,10 +77,13 @@ export default function useKeywordSearch({
         const allKeywords = await loadKeywords()
         const query = keywordInput.trim().toLowerCase()
 
-        // 로컬 필터링: 입력값을 포함하는 키워드 검색
+        // 로컬 필터링: 입력값을 포함하는 키워드 검색 (displayName 또는 normalizedName)
         // UI에는 displayName, 서버 전송용으로 normalizedName 사용
         const filtered = allKeywords
-          .filter((item) => item.normalizedName.includes(query))
+          .filter(
+            (item) =>
+              item.normalizedName.includes(query) || item.displayName.toLowerCase().includes(query),
+          )
           .filter((item) => !keywords.includes(item.normalizedName)) // 이미 선택된 키워드 제외
           .map((item) => ({
             displayName: item.displayName,
@@ -97,9 +104,18 @@ export default function useKeywordSearch({
     return () => clearTimeout(debounceTimer)
   }, [keywordInput, keywords, isMaxReached])
 
+  // normalizedName → displayName 매핑 함수
+  const getDisplayName = (normalizedName: string): string => {
+    const cached = keywordCacheRef.current
+    if (!cached) return normalizedName
+
+    const found = cached.find((item) => item.normalizedName === normalizedName)
+    return found?.displayName ?? normalizedName
+  }
+
   return {
     suggestions,
     isLoading,
-    clearSuggestions: () => setSuggestions([]), // 추천 목록 초기화
+    getDisplayName,
   }
 }

@@ -10,7 +10,7 @@ export async function getShortsDetailList(startId: string): Promise<ShortsListPr
   try {
     // 1: API 호출 (shortsApi.shortsDetailList 유지)
     // response 타입을 any로 지정하여 기존의 복잡한 조건 검사 로직이 에러 없이 작동하게 합니다.
-    const response: any = await shortsApi.shortsDetailList({ page: 0, size: 20 })
+    const response: any = await shortsApi.shortsDetailList({ page: 0, size: 100 })
 
     // 2: 페이징 응답에서 실제 배열 추출 (기존 로직 유지)
     let allShorts: ShortsItemType[] = []
@@ -52,7 +52,7 @@ export async function getShortsDetailList(startId: string): Promise<ShortsListPr
       return null
     }
 
-    const RANGE = 5
+    const RANGE = 10
 
     // 6: 슬라이싱 로직
     const startSlice = Math.max(startIndex - RANGE, 0)

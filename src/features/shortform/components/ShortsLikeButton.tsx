@@ -16,7 +16,12 @@ function ShortsLikeButton({ initialLikeCount, initialIsLike, shortsId }: ShortsL
   const [isLike, setIsLike] = useState(initialIsLike)
   const [likeCount, setLikeCount] = useState(initialLikeCount)
 
+  const userData = localStorage.getItem('user')
   const sendLike = useDebounce(async (nextIsLike: boolean) => {
+    if (!userData) {
+      toast.info('로그인 이후 이용 해주세요.')
+      return
+    }
     try {
       if (nextIsLike) {
         await likeAction({ success: false, message: '', data: null, code: '' }, shortsId)
@@ -29,6 +34,10 @@ function ShortsLikeButton({ initialLikeCount, initialIsLike, shortsId }: ShortsL
   }, 300)
 
   const handleLike = () => {
+    if (!userData) {
+      toast.info('로그인 이후 이용 바랍니다.')
+      return
+    }
     const nextIsLike = !isLike
 
     // optimistic update

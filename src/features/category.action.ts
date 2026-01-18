@@ -1,7 +1,6 @@
 'use server'
 
 import { categoryApi, type CategoryResponse } from '@/services/category/category.service'
-import { getShortPopular } from '@/services/shorts/getShortPopular'
 import { ApiResponse, PageShortsResponse, PaginationParams } from '@/types/mypage-shorts'
 
 /** 전체 카테고리 목록 조회 */
@@ -14,7 +13,7 @@ export async function getCategoriesAction(): Promise<ApiResponse<CategoryRespons
 export async function getShortsAction(
   params: PaginationParams = {},
 ): Promise<PageShortsResponse | null> {
-  const response = await getShortPopular(params)
+  const response = await categoryApi.getAllShorts(params)
   return response?.data ?? null
 }
 

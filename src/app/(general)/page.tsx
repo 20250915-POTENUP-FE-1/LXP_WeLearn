@@ -6,16 +6,19 @@ import CategoryShortsSection from '@/features/home/categories/CategoryShortsSect
 import ShortsCarousel from '@/features/home/ShortsCarousel/ShortsCarousel'
 
 export default async function Page() {
-  const [popularShorts, categoriesResponse] = await Promise.all([
-    getShortPopular(),
-    categoryApi.getAll(),
+  const [popularShorts, categoryShortsResponse, categoriesResponse] = await Promise.all([
+    getShortPopular(), // 1. 인기 숏츠 (캐러셀용)
+    categoryApi.getAllShorts(), // 3. 카테고리 탐색 섹션 초기 데이터
+    categoryApi.getAll(), // 카테고리 목록
   ])
 
+  // 인기 숏츠 (캐러셀용)
   const shortsList = popularShorts?.data?.content ?? []
+  // 카테고리 목록
   const categories = categoriesResponse?.data ?? []
 
-  // 초기 페이지네이션 데이터
-  const initialShortsData = popularShorts?.data ?? {
+  // 카테고리 탐색 섹션 초기 데이터
+  const initialShortsData = categoryShortsResponse?.data ?? {
     content: [],
     totalPages: 0,
     totalElements: 0,

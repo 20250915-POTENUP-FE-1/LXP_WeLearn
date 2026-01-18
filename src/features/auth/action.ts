@@ -63,8 +63,10 @@ export const SigninAction = async (
   try {
     await authApi.signin(payload)
 
+    const user = await userApi.getMe()
     return {
       success: true,
+      user: user.data,
     }
   } catch (error) {
     return {

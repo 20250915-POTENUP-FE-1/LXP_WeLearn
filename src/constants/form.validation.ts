@@ -6,5 +6,5 @@ export const VALIDATION_LIMITS = {
   KEYWORDS_MAX: 5,
 } as const
 
-export const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/quicktime']
+export const ALLOWED_VIDEO_TYPES = ['video/mp4']
 export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']

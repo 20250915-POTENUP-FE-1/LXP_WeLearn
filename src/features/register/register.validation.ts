@@ -70,7 +70,7 @@ export function validateVideoFile(videoFile: File | null | undefined): Validatio
     return { field: 'videoFile', message: '영상을 업로드해주세요.' }
   }
   if (!ALLOWED_VIDEO_TYPES.includes(videoFile.type)) {
-    return { field: 'videoFile', message: '지원하지 않는 영상 형식입니다. (mp4, webm, mov만 허용)' }
+    return { field: 'videoFile', message: '지원하지 않는 영상 형식입니다. (mp4만 허용)' }
   }
   return null
 }

@@ -80,6 +80,5 @@ export default function useKeywordsNavigation({
     close,
     handleKeyDown,
     handleBlur,
-    resetIndex: () => setActiveIndex(-1),
   }
 }

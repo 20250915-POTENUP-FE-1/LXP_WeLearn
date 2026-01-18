@@ -15,8 +15,8 @@ export default function SigninForm() {
   })
 
   useEffect(() => {
-    if (state.success) {
-      toast.success('로그인 되었습니다.')
+    if (state.success && state.user) {
+      toast.success(`${state.user.nickName}님 환영합니다.🎉`)
       router.push('/')
     } else if (state.success === false && state.message) {
       toast.error(state?.message)

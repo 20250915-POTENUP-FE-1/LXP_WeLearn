@@ -17,7 +17,11 @@ export default function useKeywords({ keywords, keywordInput, onChange }: UseKey
   })
 
   // 키워드 검색/추천 로직
-  const { suggestions, isLoading } = useKeywordSearch({ keywordInput, keywords, isMaxReached })
+  const { suggestions, isLoading, getDisplayName } = useKeywordSearch({
+    keywordInput,
+    keywords,
+    isMaxReached,
+  })
 
   // 드롭다운 네비게이션 로직
   const {
@@ -80,5 +84,7 @@ export default function useKeywords({ keywords, keywordInput, onChange }: UseKey
     handleKeyDown: navigationKeyDown,
     handleBlur,
     handleFocus,
+    // 유틸리티
+    getDisplayName,
   }
 }

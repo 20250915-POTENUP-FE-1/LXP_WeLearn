@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import { KeywordSuggestion } from '@/hook/keyword/useKeywordSearch'
 
 interface KeywordSuggestionsProps {
@@ -23,6 +24,15 @@ export default function KeywordSuggestions({
   getOptionId,
   onSelect,
 }: KeywordSuggestionsProps) {
+  const activeItemRef = useRef<HTMLLIElement>(null)
+
+  // activeIndex 변경 시 scrollIntoView로 선택 항목으로 스크롤 (키보드 방향키 스크롤)
+  useEffect(() => {
+    if (activeIndex >= 0 && activeItemRef.current) {
+      activeItemRef.current.scrollIntoView({ block: 'nearest' })
+    }
+  }, [activeIndex])
+
   // 로딩 표시
   if (isLoading) {
     return (
@@ -45,7 +55,8 @@ export default function KeywordSuggestions({
       >
         {suggestions.map((suggestion, index) => (
           <li
-            key={suggestion.normalizedName}
+            key={suggestion.normalizedName} // 렌더링용
+            ref={index === activeIndex ? activeItemRef : null} // 활성 항목만 ref 연결
             id={getOptionId(index)}
             role="option"
             aria-selected={index === activeIndex}

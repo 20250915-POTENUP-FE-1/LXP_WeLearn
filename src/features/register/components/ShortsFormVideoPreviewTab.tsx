@@ -68,6 +68,8 @@ export default function ShortsFormVideoPreviewTab({
       description={
         <>
           동영상 파일을 드래그하거나 <br /> 클릭하여 업로드 하세요.
+          <br />
+          <span className="text-xs text-red-500">(MP4 파일만 가능)</span>
         </>
       }
       // 액션 렌더링
