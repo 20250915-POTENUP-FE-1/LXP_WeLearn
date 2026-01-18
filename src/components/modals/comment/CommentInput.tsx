@@ -37,7 +37,12 @@ export default function CommentInput({ shortsId, setIsUpdate }: CommentInputProp
   }, [])
 
   return (
-    <div className="border-t border-gray-200 bg-white p-4">
+    <div className="relative border-t border-gray-200 bg-white p-4">
+      {!user && (
+        <div className="absolute inset-0 z-10 flex w-full items-center justify-center bg-gray-500 text-xl text-white opacity-60">
+          로그인 후 이용 해 주세요.
+        </div>
+      )}
       <div className="flex items-center gap-3">
         {/* 프로필 아이콘 */}
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-200">
@@ -70,7 +75,13 @@ export default function CommentInput({ shortsId, setIsUpdate }: CommentInputProp
         <Button variant="outline" className="rounded-full">
           취소
         </Button>
-        <Button variant="accent" className="rounded-full" type="submit" form="comment-form">
+        <Button
+          variant={!user ? 'default' : 'accent'}
+          className="rounded-full"
+          type="submit"
+          form="comment-form"
+          disabled={!user}
+        >
           등록
         </Button>
       </div>
