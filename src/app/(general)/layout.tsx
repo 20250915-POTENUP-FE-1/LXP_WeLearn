@@ -2,7 +2,7 @@ import React from 'react'
 import { Header } from '@/components/layout/header/Header'
 import Footer from '@/components/layout/Footer'
 
-export default function GeneralLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function GeneralLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
       <Header />

@@ -1,13 +1,25 @@
 'use server'
 
 import { authApi } from '@/services/auth/auth.service'
-import { userApi, UserResponse } from '@/services/mypage/user.service'
+import { userApi, UserResponse, UserResponseType } from '@/services/mypage/user.service'
 
 type ActionState = {
   success: boolean
   message?: string
   errors?: Record<string, string>
   user?: UserResponse
+}
+
+export const GetUserInfoAction = async (prevState: UserResponseType): Promise<UserResponseType> => {
+  try {
+    const userData = await userApi.getMe()
+    return { success: true, data: userData.data }
+  } catch (error) {
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : '유저 정보 조회 실패',
+    }
+  }
 }
 
 export const SignupAction = async (
@@ -49,12 +61,10 @@ export const SigninAction = async (
   let response
 
   try {
-    response = await authApi.signin(payload)
+    await authApi.signin(payload)
 
-    const userData = await userApi.getMe()
     return {
       success: true,
-      user: userData.data,
     }
   } catch (error) {
     return {
