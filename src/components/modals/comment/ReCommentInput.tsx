@@ -77,7 +77,8 @@ export default function ReCommentInput({
                 <input
                   type="text"
                   name="replyComment"
-                  placeholder="답글을 입력하세요..."
+                  disabled={!user}
+                  placeholder={!user ? '로그인 후 이용 바랍니다.' : '답글을 입력하세요...'}
                   autoComplete="off"
                   className="flex-1 rounded-full border border-gray-300 px-3 py-2 text-sm no-underline focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
                 />
@@ -95,8 +96,9 @@ export default function ReCommentInput({
               </Button>
 
               <Button
-                variant="accent"
+                variant={!user ? 'default' : 'accent'}
                 className="rounded-full"
+                disabled={!user}
                 type="submit"
                 form="replycomment-form"
               >
