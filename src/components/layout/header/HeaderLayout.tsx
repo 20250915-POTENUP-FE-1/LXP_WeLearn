@@ -2,30 +2,12 @@
 import Link from 'next/link'
 import HeaderRightSection from './HeaderRightSection'
 import HeaderSearchContainer from './searchbar/SearchContainer'
-import { useEffect, useState } from 'react'
-import { UserInfo } from '@/types/auth'
 
 interface HeaderRightSectionProps {
   isLogined: boolean
 }
 
 export default function HeaderLayout({ isLogined }: HeaderRightSectionProps) {
-  const [user, setUser] = useState<UserInfo | null>()
-
-  useEffect(() => {
-    const updateUser = () => {
-      const user = JSON.parse(localStorage.getItem('user') || 'null') as UserInfo | null
-      setUser(user)
-    }
-
-    // 수정해야함 추후에
-    window.addEventListener('userChanged', updateUser)
-
-    updateUser()
-
-    return () => window.removeEventListener('userChanged', updateUser)
-  }, [])
-
   return (
     <div className="flex h-16 items-center gap-4">
       {/* Logo */}
@@ -36,7 +18,7 @@ export default function HeaderLayout({ isLogined }: HeaderRightSectionProps) {
       <div className="ml-auto md:mx-auto md:max-w-xl md:flex-1">
         <HeaderSearchContainer />
       </div>
-      <HeaderRightSection isLogined={isLogined} userData={user} />
+      <HeaderRightSection isLogined={isLogined} />
     </div>
   )
 }

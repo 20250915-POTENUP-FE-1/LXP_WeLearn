@@ -1,19 +1,52 @@
+'use client'
 import Link from 'next/link'
 import { UserInfo } from '@/types/auth'
 import HeaderDropdown from './HeaderDropdown'
+import { useEffect, useState } from 'react'
+import { GetUserInfoAction } from '@/features/auth/action'
 
 interface HeaderRightSectionProps {
   isLogined: boolean
-  userData?: UserInfo | null
 }
 
-export default function HeaderRightSection({ isLogined, userData }: HeaderRightSectionProps) {
+export default function HeaderRightSection({ isLogined }: HeaderRightSectionProps) {
+  const [userData, setUserData] = useState<UserInfo | null>(null)
+  console.log(isLogined)
+  console.log(userData)
+
+  useEffect(() => {
+    if (!isLogined) {
+      setUserData(null)
+      localStorage.removeItem('user')
+      return
+    }
+
+    const fetchUser = async () => {
+      // 1️⃣ 먼저 localStorage 확인
+      const cached = localStorage.getItem('user')
+      if (cached) {
+        setUserData(JSON.parse(cached))
+        return
+      }
+
+      // 2️⃣ 없으면 서버 Action 호출
+      const result = await GetUserInfoAction({ success: false })
+
+      if (result.success && result.data) {
+        setUserData(result.data)
+        localStorage.setItem('user', JSON.stringify(result.data))
+      }
+    }
+
+    fetchUser()
+  }, [isLogined])
+
   return (
-    <div className="flex items-center gap-1 md:gap-3">
-      {userData && isLogined ? (
+    <div className="flex w-30 items-center justify-end gap-1 md:gap-3">
+      {isLogined ? (
         <HeaderDropdown user={userData} />
       ) : (
-        <div className="flex w-30 justify-end gap-3">
+        <div className="flex gap-3">
           <Link
             href="/signin"
             className="shrink-0 rounded-lg p-0 text-sm font-medium text-gray-700 transition-colors hover:font-extrabold hover:text-gray-900 md:px-2 md:py-1"
