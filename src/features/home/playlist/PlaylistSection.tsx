@@ -8,7 +8,7 @@ export default async function PlaylistSection({ items }: { items: PlaylistItem[]
     <section className="mb-12">
       <h2 className="mb-4 text-xl font-extrabold text-gray-900 uppercase">Knowledge Blocks</h2>
       <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 md:grid-cols-4">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <PlaylistButton key={item.id}>
             <div className="transition-all duration-200 hover:-translate-y-1 hover:drop-shadow-lg">
               <div className="relative mb-2 aspect-9/16 pt-2">
@@ -32,6 +32,7 @@ export default async function PlaylistSection({ items }: { items: PlaylistItem[]
                       fill
                       className="object-cover"
                       sizes="224px"
+                      priority={index === 0}
                     />
                   ) : (
                     <div className="h-full w-full bg-linear-to-br from-gray-200 to-gray-300" />
