@@ -73,10 +73,14 @@ export default function useKeywordSearch({
         const allKeywords = await loadKeywords()
         const query = keywordInput.trim().toLowerCase()
 
-        // 로컬 필터링: 입력값을 포함하는 키워드 검색
+        // 로컬 필터링: 입력값을 포함하는 키워드 검색 (displayName 또는 normalizedName)
         // UI에는 displayName, 서버 전송용으로 normalizedName 사용
         const filtered = allKeywords
-          .filter((item) => item.normalizedName.includes(query))
+          .filter(
+            (item) =>
+              item.normalizedName.includes(query) ||
+              item.displayName.toLowerCase().includes(query),
+          )
           .filter((item) => !keywords.includes(item.normalizedName)) // 이미 선택된 키워드 제외
           .map((item) => ({
             displayName: item.displayName,
