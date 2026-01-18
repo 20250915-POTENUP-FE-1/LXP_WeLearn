@@ -54,13 +54,7 @@ export default function CommentInput({ shortsId, setIsUpdate }: CommentInputProp
           </div>
         </div>
         {/* 입력 필드 */}
-        <form
-          id="comment-form"
-          action={() => {
-            !user ? toast.info('로그인 후 이용 바랍니다.') : postCommentAction
-          }}
-          className="flex flex-1"
-        >
+        <form id="comment-form" action={commentPostAction} className="flex flex-1">
           <input name="shortsid" type="hidden" value={shortsId} />
           <input
             name="comment"
