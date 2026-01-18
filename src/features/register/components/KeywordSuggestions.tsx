@@ -26,7 +26,7 @@ export default function KeywordSuggestions({
 }: KeywordSuggestionsProps) {
   const activeItemRef = useRef<HTMLLIElement>(null)
 
-  // activeIndex 변경 시 해당 항목으로 스크롤 (키보드 방향키 스크롤)
+  // activeIndex 변경 시 scrollIntoView로 선택 항목으로 스크롤 (키보드 방향키 스크롤)
   useEffect(() => {
     if (activeIndex >= 0 && activeItemRef.current) {
       activeItemRef.current.scrollIntoView({ block: 'nearest' })
