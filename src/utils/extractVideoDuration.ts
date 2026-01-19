@@ -1,3 +1,4 @@
+'use client'
 /**
  * 비디오 파일에서 duration(초) 추출
  * - <video> + onloadedmetadata 기반

@@ -1,3 +1,4 @@
+'use client'
 import { Button } from '@/components/ui/Button'
 import { postCommentAction } from '@/features/comment/action'
 import { UserInfo } from '@/types/comment'

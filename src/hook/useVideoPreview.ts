@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useRef, useCallback } from 'react'
 
 const DEFAULT_PREVIEW_DURATION = 3500 // ms, 3.5초
