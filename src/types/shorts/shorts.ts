@@ -3,6 +3,28 @@ import { ShortsStatus } from '../mypage-shorts'
 import { UserInfo } from '../user/user'
 import { Status } from './status'
 
+// ----------------- Request ---------------
+// 숏츠 업로드 / 수정 Request
+export interface ShortsReuqst {
+  body: {
+    title: string
+    description: string
+    categoryId: number
+    keywords: string[]
+    fileName?: string
+    contentType?: string
+    durationSec?: number
+  }
+}
+
+// 숏츠 업로드 완료 Request
+export interface ShortsUploadCompleteRequest {
+  uploadId: string
+  videoUrl: string
+  thumbnailUrl: string
+}
+
+// ----------------- Response ----------------
 /** 🔹 Shorts 최소 공통 Base */
 export interface ShortsBase {
   shortsId: string | number
