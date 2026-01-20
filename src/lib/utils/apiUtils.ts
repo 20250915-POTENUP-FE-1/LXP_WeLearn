@@ -10,26 +10,29 @@ interface FetchOptions extends RequestInit {
   params?: Record<string, any>
   revalidate?: number
   retry?: boolean
+  auth?: boolean
 }
 
 /**
  * 서버 사이드에서 백엔드 JwtAuthenticationFilter 규격에 맞는 헤더 생성
  */
-async function getAuthHeaders(customHeaders: HeadersInit = {}) {
-  const cookieStore = await cookies()
-
-  // 백엔드 ACCESS_TOKEN_COOKIE 설정값인 'accessToken'으로 가져옴
-  const accessToken = cookieStore.get('accessToken')?.value
-
+async function getAuthHeaders(auth: boolean, customHeaders: HeadersInit = {}) {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
     ...customHeaders,
   } as Record<string, string>
 
-  // 백엔드 AUTHORIZATION_HEADER / BEARER_PREFIX 규격 적용
+  if (!auth) {
+    return headers
+  }
+
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get('accessToken')?.value
+
   if (accessToken) {
     headers['Authorization'] = `Bearer ${accessToken}`
   }
+
   return headers
 }
 
@@ -37,25 +40,24 @@ async function getAuthHeaders(customHeaders: HeadersInit = {}) {
  * 핵심 Fetch 함수
  */
 async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<Response> {
-  const { revalidate, retry, ...restOptions } = options
+  const { revalidate, retry, auth = true, ...restOptions } = options
 
-  const headers = await getAuthHeaders(restOptions.headers)
-
+  const headers = await getAuthHeaders(auth, restOptions.headers)
   const response = await fetch(url, {
     ...restOptions,
     headers,
     next: revalidate !== undefined ? { revalidate } : restOptions.next,
   })
 
-  // 1. 204 No Content 처리
+  // 204
   if (response.status === 204) return response
 
-  // 2. 401 Unauthorized 처리 (토큰 만료 시)
-  if (response.status === 401 && !retry) {
+  // ❗ auth 요청일 때만 refresh 시도
+  if (auth && response.status === 401 && !retry) {
     console.warn('⚠️ Access Token expired. Attempting refresh...')
 
     const cookieStore = await cookies()
-    const refreshToken = cookieStore.get('refreshToken')?.value // 리프레시 쿠키 이름 확인 필요
+    const refreshToken = cookieStore.get('refreshToken')?.value
 
     if (!refreshToken) {
       cookieStore.delete('accessToken')
@@ -63,7 +65,6 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
       throw new Error('UNAUTHORIZED')
     }
 
-    // 백엔드 리프레시 엔드포인트 호출
     const refreshRes = await fetch(`${baseUrl}/api/v1/auth/refresh`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -77,6 +78,7 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
         accessToken: refreshData.data.accessToken,
         refreshToken: refreshData.data.refreshToken,
       })
+
       return fetchWithAuth(url, { ...options, retry: true })
     }
 

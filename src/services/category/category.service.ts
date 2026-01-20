@@ -9,7 +9,7 @@ export interface CategoryResponse {
 export const categoryApi = {
   /** 전체 카테고리 목록 조회 */
   getAll: async (): Promise<ApiResponse<CategoryResponse[]>> => {
-    return api.get<ApiResponse<CategoryResponse[]>>('/api/v1/categories')
+    return api.get<ApiResponse<CategoryResponse[]>>('/api/v1/categories', { auth: false })
   },
 
   /** 전체 숏츠 목록 조회 (페이지네이션) */
@@ -19,6 +19,7 @@ export const categoryApi = {
     const response = await api.get<ApiResponse<PageShortsResponse>>('/api/v1/shorts', {
       cache: 'no-store',
       params: { page, size, sort: 'createdAt,desc' },
+      auth: false,
     })
     return response
   },
@@ -33,6 +34,7 @@ export const categoryApi = {
       {
         cache: 'no-store',
         params: { page, size, sort: 'createdAt,desc' },
+        auth: false,
       },
     )
     return response

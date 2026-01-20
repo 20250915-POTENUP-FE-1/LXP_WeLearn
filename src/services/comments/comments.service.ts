@@ -12,6 +12,7 @@ export const commentApi = {
   getComment: async (id: number): Promise<ApiResponse<CommnetData>> => {
     const response = await api.get<ApiResponse<CommnetData>>(`/api/v1/shorts/${id}/comments`, {
       cache: 'no-store',
+      auth: false,
     })
 
     return response
