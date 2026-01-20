@@ -1,3 +1,5 @@
+'use server'
+
 import { PageResponse } from '@/features/home/ShortsCarousel/ShortsCarousel'
 import { api } from '@/lib/utils/apiUtils'
 import type { ApiResponse } from '@/types/mypage-shorts'

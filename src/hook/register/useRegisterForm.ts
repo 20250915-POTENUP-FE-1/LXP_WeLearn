@@ -7,8 +7,6 @@ import {
   INITIAL_SHORTS_FORM_DATA,
   INITIAL_VIDEO_PREVIEW_DATA,
 } from '@/features/register/types/shortsRegister'
-import { validateShortsForm } from '@/features/register/register.validation'
-import { shortsUploadApi } from '@/services/shorts/upload.service'
 
 interface UseRegisterFormParams {
   initialFormData?: Partial<ShortsFormData>

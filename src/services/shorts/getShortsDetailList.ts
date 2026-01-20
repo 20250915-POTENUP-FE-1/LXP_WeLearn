@@ -1,3 +1,4 @@
+'use server'
 import { ShortsItemType } from '@/types/shorts'
 import { shortsApi } from './shorts.service'
 
