@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { MoreHorizontal } from 'lucide-react'
 import type { ShortsResponse } from '@/types/mypage-shorts'
 import ShortsCardThumbnail from './ShortsCardThumbnail'
@@ -24,6 +25,14 @@ export default function ShortsCard({
   onToggleVisibility,
   onDelete,
 }: ShortsCardProps) {
+  const [timeAgoText, setTimeAgoText] = useState<string>('')
+
+  useEffect(() => {
+    if (shorts.createdAt) {
+      setTimeAgoText(timeAgo(shorts.createdAt))
+    }
+  }, [shorts.createdAt])
+
   return (
     <div
       onClick={onSelect}
@@ -45,7 +54,7 @@ export default function ShortsCard({
             <h3 className="pt-1 text-lg font-bold text-gray-900">{shorts.title}</h3>
             <p className="mt-1.5 mb-4 text-sm text-gray-500">
               {shorts.userNickname ?? '숏터'}
-              {shorts.createdAt && ` · ${timeAgo(shorts.createdAt)}`}
+              {timeAgoText && ` · ${timeAgoText}`}
             </p>
             <p className="mb-1 line-clamp-2 text-sm text-gray-700">{shorts.description}</p>
           </div>

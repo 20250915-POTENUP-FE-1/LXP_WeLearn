@@ -13,6 +13,7 @@ export const RecommentApi = {
       `/api/v1/comments/${id}/replies`,
       {
         cache: 'no-store',
+        auth: false,
       },
     )
     return response

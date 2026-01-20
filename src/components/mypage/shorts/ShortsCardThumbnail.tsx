@@ -21,6 +21,7 @@ export default function ShortsCardThumbnail({
         fill
         sizes="(min-width: 640px) 144px, 112px"
         className="object-cover"
+        unoptimized
       />
       {/* 카테고리 */}
       {shorts.categoryName && (

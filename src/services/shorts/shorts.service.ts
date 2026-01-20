@@ -8,6 +8,7 @@ export const shortsApi = {
         page,
         size,
       },
+      auth: false,
     })
     return response
   },
@@ -15,6 +16,7 @@ export const shortsApi = {
   shortsDetail: async (shortsId: number) => {
     const response = await api.get(`/api/v1/shorts/${shortsId}`, {
       cache: 'no-store',
+      auth: false,
     })
     return response
   },

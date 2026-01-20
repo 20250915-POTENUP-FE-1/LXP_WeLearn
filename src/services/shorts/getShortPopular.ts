@@ -15,6 +15,7 @@ export async function getShortPopular({ page = 0, size = 8 } = {}) {
           page,
           size,
         },
+        auth: false,
       },
     )
     return popularShorts
