@@ -34,22 +34,6 @@ export interface CategoryDto {
 // 숏츠 응답 타입
 // ============================================
 export interface ShortsResponse {
-  // shortsId?: number
-  // title?: string
-  // description?: string
-  // videoUrl?: string
-  // thumbnailUrl?: string
-  // durationSec?: number
-  // keywords?: string[]
-  // status?: ShortsStatus
-  // viewCount?: number
-  // likeCount?: number
-  // commentCount?: number
-  // uploader?: UploaderDto
-  // category?: CategoryDto
-  // createdAt?: string
-  // updatedAt?: string
-
   shortsId?: number
   title?: string
   description?: string
