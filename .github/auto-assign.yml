@@ -2,8 +2,8 @@ addReviewers: true
 addAssignees: false
 
 reviewers:
-  - beedgreen
-  - Chang-KY
+  - needgreen
+  - christina-ahn
   - Decseung
 
 numberOfReviewers: 2
