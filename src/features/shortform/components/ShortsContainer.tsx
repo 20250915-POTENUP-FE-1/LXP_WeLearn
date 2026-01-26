@@ -50,7 +50,6 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
   //   setIsFetching(false)
   // }, [list, isFetching])
 
-  // // ⭐️ 핵심 로직
   // useEffect(() => {
   //   const remain = list.length - currentIndex - 1
 

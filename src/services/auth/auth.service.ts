@@ -48,12 +48,13 @@ export const authApi = {
     // apiUtils에서 Response 원본을 받기 위해 필요한 경우 처리
     // 여기서는 api.post가 내부에서 res.json()을 리턴하므로,
     // 만약 헤더 접근이 필요하다면 apiUtils의 post가 Response를 반환하도록 유지해야 합니다.
-    const res = await api.post<Response>('/api/v1/auth/login', data, { cache: 'no-store' })
-    // 1. 쿠키 적용
+    const res = await api.post<Response>('/api/v1/auth/login', data, {
+      cache: 'no-store',
+      auth: false,
+    })
     const { accessToken, refreshToken } = res.data
 
     setAuthCookies({ accessToken, refreshToken })
-    // 2. 바디 파싱 및 에러 체크
 
     return res
   },

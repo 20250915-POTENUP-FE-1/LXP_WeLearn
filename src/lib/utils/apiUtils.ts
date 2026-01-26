@@ -22,7 +22,7 @@ async function getAuthHeaders(auth: boolean, customHeaders: HeadersInit = {}) {
     ...customHeaders,
   } as Record<string, string>
 
-  if (!auth) {
+  if (auth === false) {
     return headers
   }
 
@@ -32,7 +32,6 @@ async function getAuthHeaders(auth: boolean, customHeaders: HeadersInit = {}) {
   if (accessToken) {
     headers['Authorization'] = `Bearer ${accessToken}`
   }
-
   return headers
 }
 
@@ -40,16 +39,20 @@ async function getAuthHeaders(auth: boolean, customHeaders: HeadersInit = {}) {
  * 핵심 Fetch 함수
  */
 async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<Response> {
-  const { revalidate, retry, auth = true, ...restOptions } = options
+  // options.auth가 undefined일 때만 true, 전달된 값은 그대로 사용
+  const auth = options.auth === undefined ? true : options.auth
+  const { revalidate, retry, ...restOptions } = options
 
+  // 인증 헤더 가져오기
   const headers = await getAuthHeaders(auth, restOptions.headers)
+
   const response = await fetch(url, {
     ...restOptions,
     headers,
     next: revalidate !== undefined ? { revalidate } : restOptions.next,
   })
 
-  // 204
+  // 204 No Content
   if (response.status === 204) return response
 
   // ❗ auth 요청일 때만 refresh 시도
@@ -72,7 +75,6 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
     })
 
     const refreshData = (await refreshRes.json()) as ApiResponse<SetAuthCookies>
-
     if (refreshRes.ok) {
       await setAuthCookies({
         accessToken: refreshData.data.accessToken,

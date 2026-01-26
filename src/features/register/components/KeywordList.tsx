@@ -8,11 +8,7 @@ interface KeywordListProps {
   getDisplayName: (normalizedName: string) => string
 }
 
-export default function KeywordList({
-  keywords,
-  onRemove,
-  getDisplayName,
-}: KeywordListProps) {
+export default function KeywordList({ keywords, onRemove, getDisplayName }: KeywordListProps) {
   if (keywords.length === 0) return null
 
   return (
