@@ -1,10 +1,10 @@
 'use client'
 import { Button } from '@/components/ui/Button'
-import { postCommentAction } from '@/features/comment/action'
 import { UserInfo } from '@/types/comment'
 import { User } from 'lucide-react'
 import { useActionState, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { postCommentAction } from './action'
 
 interface CommentInputProps {
   shortsId: string
@@ -66,12 +66,6 @@ export default function CommentInput({ shortsId, setIsUpdate }: CommentInputProp
             className="flex-1 rounded-full border border-gray-300 px-4 py-3 text-sm focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
           />
         </form>
-      </div>
-      {/* 버튼 영역 */}
-      <div className="mt-3 flex justify-end gap-2">
-        <Button variant="outline" className="rounded-full">
-          취소
-        </Button>
         <Button
           variant={!user ? 'default' : 'accent'}
           className="rounded-full"

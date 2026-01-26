@@ -9,6 +9,7 @@ import { useDragNavigation } from '@/hook/useDragNavigation'
 import { useScrollNavigation } from '@/hook/useScrollNavigation'
 import { ShortsItemType } from '@/types/shorts'
 import ShortsItem from './ShortsItem'
+import { usePathname, useRouter } from 'next/navigation'
 
 interface ShortsContainerProps {
   shortsList: ShortsItemType[]
@@ -22,6 +23,8 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
   const [currentIndex, setCurrentIndex] = useState(safeInitialIndex)
   const [slideDirection, setSlideDirection] = useState<SlideDirection>(null)
   const [isAnimating, setIsAnimating] = useState(false)
+  const pathname = usePathname()
+  const router = useRouter()
 
   const currentShorts = shortsList[currentIndex] ?? null
   const hasPrev = currentIndex > 0
@@ -30,7 +33,9 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
   // 현재 숏폼이 바뀔 때 URL 동기화 (/shorts/:shortsId)
   useEffect(() => {
     if (!currentShorts) return
-    const newUrl = `/shorts/${currentShorts.shortsId}`
+    const newUrl = pathname.includes('comments')
+      ? `/shorts/${currentShorts.shortsId}/comments`
+      : `/shorts/${currentShorts.shortsId}`
     window.history.replaceState(null, '', newUrl)
   }, [currentShorts?.shortsId])
 
@@ -152,6 +157,11 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
               onDragEnd={handleDragEnd}
               onAnimationComplete={() => {
                 setIsAnimating(false)
+                if (pathname.includes('comments')) {
+                  router.prefetch(`/shorts/${currentShorts.shortsId}/comments`)
+                } else {
+                  router.prefetch(`/shorts/${currentShorts.shortsId}`)
+                }
               }}
               className="h-full w-full cursor-grab overflow-y-hidden active:cursor-grabbing"
             >

@@ -1,13 +1,14 @@
 import { useActionState, useEffect, useState } from 'react'
-import { CommentType, ReplyCommentType } from '@/types/comment'
-import { getReplyAction, patchCommentAction } from '@/features/comment/action'
+import { ReplyCommentType } from '@/types/comment'
 import { toast } from 'react-toastify'
-import { DeleteTarget } from './CommentsModal'
 
 import CommentComponent from './CommentComponents'
+import { getReplyAction, patchCommentAction } from './action'
+import { CommentsResponse } from '@/types/comments/comments'
+import { DeleteTarget } from './CommentsModalContainer'
 
 interface CommentsProps {
-  comments: CommentType[]
+  comments: CommentsResponse[]
   shortsId: string
   deleteTarget: DeleteTarget
   isReplyUpdate: number

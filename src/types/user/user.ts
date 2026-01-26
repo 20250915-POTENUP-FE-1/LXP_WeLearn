@@ -29,6 +29,6 @@ export interface PasswordEditRequest {
 export interface UserInfo {
   userId: number
   eamil: string
-  nickName: string
-  profileUrl: string | null
+  nickname: string
+  profileImageUrl: string | null
 }

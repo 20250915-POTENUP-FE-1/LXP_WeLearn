@@ -1,10 +1,16 @@
 import { UserInfo } from '../user/user'
 
+export interface CommentResponseWrapper {
+  comments: CommentsResponse[]
+  totalCommentCount: number
+}
+
 export interface CommentsResponse {
   shortsId: number
-  content: number
+  content: string
   createdAt: string
-  writter: Omit<UserInfo, 'email'>
-  replyCount: string
+  writer: Omit<UserInfo, 'email'>
+  replyCount: number
   isMine: boolean
+  commentId: number
 }

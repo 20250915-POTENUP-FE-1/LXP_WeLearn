@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Button } from './Button'
 import { useActionState, useEffect } from 'react'
-import { deleteCommentAction, deleteReplyCommentAction } from '@/features/comment/action'
 import { toast } from 'react-toastify'
-import { DeleteTarget } from '../modals/comment/CommentsModal'
+import { deleteCommentAction, deleteReplyCommentAction } from '@/features/modals/comment/action'
+import { DeleteTarget } from '@/features/modals/comment/CommentsModalContainer'
 
 interface DeleteModalProps {
   deleteTarget: DeleteTarget

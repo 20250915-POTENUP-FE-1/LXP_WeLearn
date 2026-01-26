@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/Button'
-import { postReplyAction } from '@/features/comment/action'
 import { UserInfo } from '@/types/auth'
 import { AnimatePresence, motion } from 'framer-motion'
 import { User } from 'lucide-react'
 import { useActionState, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { postReplyAction } from './action'
 
 interface ReCommnetInputProps {
   commentId: number

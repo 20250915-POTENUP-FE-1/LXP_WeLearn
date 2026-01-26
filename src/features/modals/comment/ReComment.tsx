@@ -6,9 +6,9 @@ import { User } from 'lucide-react'
 import { useActionState, useEffect, useState } from 'react'
 import { EditTarget } from './Comment'
 import { Button } from '@/components/ui/Button'
-import { patchReplyCommentAction } from '@/features/comment/action'
 import { toast } from 'react-toastify'
 import { DeleteTarget } from './CommentsModal'
+import { patchReplyCommentAction } from './action'
 
 interface ReCommentProps {
   openReply: number | null

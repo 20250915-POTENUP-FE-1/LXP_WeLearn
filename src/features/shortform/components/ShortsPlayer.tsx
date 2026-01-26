@@ -7,7 +7,7 @@ interface ShortsPlayerProps {
   thumbnailUrl?: string
 }
 
-export default function ShortsPlayer({ videoUrl, thumbnailUrl }: ShortsPlayerProps) {
+export default function ShortsPlayer({ videoUrl }: ShortsPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
@@ -30,7 +30,6 @@ export default function ShortsPlayer({ videoUrl, thumbnailUrl }: ShortsPlayerPro
       muted
       loop
       playsInline
-      poster={thumbnailUrl}
       src={videoUrl}
     />
   )

@@ -32,7 +32,8 @@ export default function ShortsActionBar({
 
   const handleComment = () => {
     if (isCommentOpen) {
-      router.push(`/shorts/${id}`, { scroll: false })
+      // router.push(`/shorts/${id}`, { scroll: false })
+      window.history.replaceState(null, '', `/shorts/${id}`)
     } else {
       router.push(`/shorts/${id}/comments`, { scroll: false })
     }

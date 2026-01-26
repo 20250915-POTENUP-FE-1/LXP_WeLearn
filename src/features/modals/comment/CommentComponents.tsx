@@ -5,13 +5,14 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronDown, User } from 'lucide-react'
 import ReCommentInput from './ReCommentInput'
 import ReComment from './ReComment'
-import { CommentType, ReplyCommentType } from '@/types/comment'
+import { ReplyCommentType } from '@/types/comment'
 import { EditTarget } from './Comment'
-import { DeleteTarget } from './CommentsModal'
+import { CommentsResponse } from '@/types/comments/comments'
+import { DeleteTarget } from './CommentsModalContainer'
 
-interface CommentComponent {
+interface CommentComponentProps {
   shortsId: string
-  comment: CommentType
+  comment: CommentsResponse
   openReply: number | null
   replies: ReplyCommentType[] | null | undefined
   deleteTarget: DeleteTarget
@@ -44,16 +45,16 @@ export default function CommentComponent({
   setIsUpdate,
   setOpenReplyInput,
   setIsReplyUpdate,
-}: CommentComponent) {
+}: CommentComponentProps) {
   return (
     <div className="border-b border-gray-200 py-8" key={comment.commentId}>
       <div className="flex items-start justify-between">
         <div className="flex flex-1 items-start gap-3">
           {/* 프로필 이미지 */}
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-600">
-            {comment.writer.profileUrl ? (
+            {comment.writer.profileImageUrl !== null ? (
               <img
-                src={comment.writer.profileUrl}
+                src={comment.writer.profileImageUrl}
                 alt={comment.writer.nickname}
                 className="h-8 w-8 rounded-full object-cover"
               />

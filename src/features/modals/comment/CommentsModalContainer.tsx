@@ -1,20 +1,19 @@
 'use client'
 
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import CommentModalHeader from './CommentsModalHeader'
 import Comment from './Comment'
 import CommentInput from './CommentInput'
 import useIsMobile from '@/hook/useIsMobile'
 import { startTransition, useActionState, useEffect, useState } from 'react'
-import { CommentType } from '@/types/comment'
 import DeleteModal from '@/components/ui/DeleteModal'
-import { getCommentAction } from '@/features/comment/action'
+import { getCommentAction } from './action'
+import { CommentsResponse } from '@/types/comments/comments'
 
 export type DeleteTarget = { mode: 'comment'; id: number } | { mode: 'reply'; id: number } | null
 
-export default function CommentModal() {
-  const router = useRouter()
+export default function CommentModalContainer() {
   const pathname = usePathname()
   const isMobile = useIsMobile()
   const [mounted, setMounted] = useState(false)
@@ -22,9 +21,9 @@ export default function CommentModal() {
   const [isUpdate, setIsUpdate] = useState(0)
   const [deleteTarget, setDeleteTarget] = useState<DeleteTarget>(null)
   const [isReplyUpdate, setIsReplyUpdate] = useState(0)
-  const [comments, setComments] = useState<CommentType[] | []>()
+  const [comments, setComments] = useState<CommentsResponse[] | []>()
   const [totalCount, setTotalCount] = useState<number>(0)
-  const [CommentState, CommentAction] = useActionState(getCommentAction, {
+  const [CommentState, CommentAction, ispending] = useActionState(getCommentAction, {
     success: false,
     message: '',
     errors: { content: '' },
@@ -67,9 +66,9 @@ export default function CommentModal() {
   }, [CommentState.success, CommentState.data])
 
   // 모달 닫기 함수
-  // 모달을 닫으면 /shorts/{shortsId} 경로로 이동
+  // 히스토리상 comment 삭제
   const handleClose = () => {
-    router.push(`/shorts/${shortsId}`)
+    window.history.replaceState(null, '', `/shorts/${shortsId}`)
   }
 
   return (
@@ -94,16 +93,16 @@ export default function CommentModal() {
               {/* ==================== Modal Header ==================== */}
               <CommentModalHeader closeHandler={handleClose} totalCount={totalCount} />
               {/* ==================== Comment List (댓글 목록 영역) ==================== */}
-              <div className="flex-1 overflow-y-auto px-4">
+              <div className="flex-1 overflow-y-auto px-4 [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {/* ==================== Comment Block 1 ==================== */}
                 {comments?.length !== 0 ? (
                   <Comment
                     comments={comments ?? []}
                     shortsId={shortsId}
-                    setIsUpdate={setIsUpdate}
                     isReplyUpdate={isReplyUpdate}
-                    setIsReplyUpdate={setIsReplyUpdate}
                     deleteTarget={deleteTarget}
+                    setIsUpdate={setIsUpdate}
+                    setIsReplyUpdate={setIsReplyUpdate}
                     setDeleteTarget={setDeleteTarget}
                   />
                 ) : (

@@ -80,6 +80,60 @@ export default function ShortsFormLayout({
     message: '',
   })
 
+  /**
+   * 썸네일 이미지 소스
+   *
+   * 우선순위:
+   * 1. 사용자가 썸네일을 삭제한 경우 → null
+   * 2. 새로 업로드한 썸네일이 있는 경우 → formData.thumbnail
+   * 3. 기존 썸네일이 있는 경우 (수정 모드) → existingThumbnailUrl
+   * 4. 그 외 → null
+   */
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    // 수정 모드: onSubmit 핸들러 사용
+    if (isEditMode && onSubmit) {
+      onSubmit()
+      return
+    }
+
+    // 등록 모드: 유효성 검증
+    const validationResult = validateShortsForm(formData, videoData)
+    if (!validationResult.isValid) {
+      const firstError = validationResult.errors[0]
+      toast.error(firstError.message)
+      return
+    }
+
+    // 유효성 검증 통과 시 videoFile은 null이 아님
+    const videoFile = videoData.videoFile!
+
+    setIsUploading(true)
+
+    const durationSec = await extractVideoDuration(videoFile)
+
+    // 업로드할 파일 저장 (useEffect에서 사용)
+    setUploadData({
+      videoFile,
+      thumbnailFile: formData.thumbnailFile ?? null,
+    })
+
+    // 1️⃣ Presigned URL 발급 요청 (useActionState)
+    startTransition(() => {
+      presignedAction({
+        title: formData.title,
+        description: formData.description || '',
+        categoryId: formData.categoryId || 0,
+        keywords: formData.keywords,
+        durationSec,
+        fileName: videoFile.name,
+        fileSize: videoFile.size,
+        contentType: videoFile.type,
+      })
+    })
+  }
+
   // 2단계: Presigned URL 발급 성공 시 S3 업로드 + 3단계 확정
   useEffect(() => {
     if (presignedState.success && presignedState.data && uploadData) {
@@ -151,60 +205,6 @@ export default function ShortsFormLayout({
     }
   }, [videoSrc, isEditMode])
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    // 수정 모드: onSubmit 핸들러 사용
-    if (isEditMode && onSubmit) {
-      onSubmit()
-      return
-    }
-
-    // 등록 모드: 유효성 검증
-    const validationResult = validateShortsForm(formData, videoData)
-    if (!validationResult.isValid) {
-      const firstError = validationResult.errors[0]
-      toast.error(firstError.message)
-      return
-    }
-
-    // 유효성 검증 통과 시 videoFile은 null이 아님
-    const videoFile = videoData.videoFile!
-
-    setIsUploading(true)
-
-    const durationSec = await extractVideoDuration(videoFile)
-
-    // 업로드할 파일 저장 (useEffect에서 사용)
-    setUploadData({
-      videoFile,
-      thumbnailFile: formData.thumbnailFile ?? null,
-    })
-
-    // 1️⃣ Presigned URL 발급 요청 (useActionState)
-    startTransition(() => {
-      presignedAction({
-        title: formData.title,
-        description: formData.description || '',
-        categoryId: formData.categoryId || 0,
-        keywords: formData.keywords,
-        durationSec,
-        fileName: videoFile.name,
-        fileSize: videoFile.size,
-        contentType: videoFile.type,
-      })
-    })
-  }
-
-  /**
-   * 썸네일 이미지 소스
-   *
-   * 우선순위:
-   * 1. 사용자가 썸네일을 삭제한 경우 → null
-   * 2. 새로 업로드한 썸네일이 있는 경우 → formData.thumbnail
-   * 3. 기존 썸네일이 있는 경우 (수정 모드) → existingThumbnailUrl
-   * 4. 그 외 → null
-   */
   const getThumbnailSource = (): string | null => {
     if (isThumbnailDeleted) {
       return null

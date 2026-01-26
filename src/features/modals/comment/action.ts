@@ -3,6 +3,7 @@
 import { commentApi } from '@/services/comments/comments.service'
 import { RecommentApi } from '@/services/comments/recomments.service'
 import { CommentType, CommnetData, ReplyCommentType } from '@/types/comment'
+import { CommentResponseWrapper } from '@/types/comments/comments'
 import { revalidatePath } from 'next/cache'
 
 export type CommentActionState = {
@@ -29,7 +30,7 @@ export type GetCommentType = {
   errors?: {
     content?: string
   }
-  data?: CommnetData
+  data?: CommentResponseWrapper
 }
 
 export type GetReplyType = {
@@ -61,7 +62,7 @@ export const getCommentAction = async (
   } catch (error) {
     return {
       success: false,
-      message: error instanceof Error ? error.message : '답글 조회실패',
+      message: error instanceof Error ? error.message : '댓글 조회실패',
     }
   }
 }

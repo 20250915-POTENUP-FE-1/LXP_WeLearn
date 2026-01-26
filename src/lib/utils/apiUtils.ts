@@ -139,6 +139,7 @@ export const api = {
 async function handleError(res: Response) {
   try {
     const errorData = await res.json()
+    console.log(errorData)
     return new Error(errorData?.message || 'API 호출 오류')
   } catch {
     return new Error(`HTTP Error: ${res.status}`)
