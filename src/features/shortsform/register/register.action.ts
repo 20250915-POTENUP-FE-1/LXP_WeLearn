@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import type { ActionState } from '@/types/action'
+import { ActionState } from '@/types/action/action'
 import {
   shortsUploadApi,
   type PresignedUrlRequest,

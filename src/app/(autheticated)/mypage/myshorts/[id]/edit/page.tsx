@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation'
 import { myShortsApi } from '@/services/mypage/myshorts.service'
+import { getCategoriesAction } from '@/features/category.action'
 import type { ShortsResponse } from '@/types/mypage-shorts'
-import type { ShortsEditInitialData } from '@/features/register/types/shortsEdit'
-import ShortsFormContainerEdit from '@/features/register/components/ShortsFormContainerEdit'
+import type { ShortsEditInitialData, CategoryOption } from '@/features/shortsform/types/shortsForm'
+import ShortsFormContainerEdit from '@/features/shortsform/edit/components/ShortsFormContainerEdit'
 
 interface EditShortsPageProps {
   params: Promise<{ id: string }>
@@ -41,13 +42,25 @@ export default async function EditShortsPage({ params }: EditShortsPageProps) {
   }
 
   try {
-    const shortsData = await myShortsApi.getShorts(shortsId)
+    const [shortsData, categoriesResponse] = await Promise.all([
+      myShortsApi.getShorts(shortsId),
+      getCategoriesAction(),
+    ])
+
     const initialData = transformToEditInitialData(shortsData)
+    const categories: CategoryOption[] = categoriesResponse.data?.map((cat) => ({
+      id: cat.id,
+      name: cat.name,
+    })) ?? []
 
     return (
       <div className="h-full w-full max-w-7xl">
         <div className="px-4 py-6 sm:px-6 sm:py-8">
-          <ShortsFormContainerEdit shortsId={shortsId} initialData={initialData} />
+          <ShortsFormContainerEdit
+            shortsId={shortsId}
+            initialData={initialData}
+            categories={categories}
+          />
         </div>
       </div>
     )

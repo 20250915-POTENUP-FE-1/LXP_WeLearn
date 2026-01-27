@@ -2,25 +2,25 @@
 
 import { useEffect, useRef } from 'react'
 import { ImageIcon, Lock } from 'lucide-react'
-import ShortsFormPreviewFrame from './ShortsFormPreviewFrame'
+import ShortsFormPreviewFrame from './ShortsFormUploadPreview'
 import ShortsFormEmptyState from './ShortsFormEmptyState'
 import useThumbnailUpload from '@/hook/register/useThumbnailUpload'
-import { ShortsFormChangeHandler } from '@/features/register/types/shortsRegister'
+import type { ShortsFormChangeHandler } from '@/features/shortsform/types/shortsForm'
 import { Button } from '@/components/ui/Button'
 
-interface ShortsFormThumbPreviewTabProps {
+interface ShortsFormUploadThumbnailProps {
   thumbnail: string | null
   onChange: ShortsFormChangeHandler
   onDraggingChange?: (isDragging: boolean) => void
   isEditMode?: boolean
 }
 
-export default function ShortsFormThumbPreviewTab({
+export default function ShortsFormUploadThumbnail({
   thumbnail,
   onChange,
   onDraggingChange,
   isEditMode = false,
-}: ShortsFormThumbPreviewTabProps) {
+}: ShortsFormUploadThumbnailProps) {
   const thumbnailInputRef = useRef<HTMLInputElement>(null)
   const {
     isDragging,
@@ -52,7 +52,7 @@ export default function ShortsFormThumbPreviewTab({
         />
         {/* 수정 모드 안내 */}
         {isEditMode && (
-          <div className="absolute top-6 left-1/2 flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full bg-black/70 px-3 py-1.5 text-sm text-white">
+          <div className="absolute top-6 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-black/70 px-3 py-1.5 text-sm whitespace-nowrap text-white">
             <Lock size={12} />
             썸네일은 수정할 수 없습니다.
           </div>

@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react'
-import ShortsFormThumbPreviewTab from './ShortsFormThumbPreviewTab'
-import ShortsFormVideoPreviewTab from './ShortsFormVideoPreviewTab'
-import { ShortsFormChangeHandler } from '@/features/register/types/shortsRegister'
+import type { ShortsFormChangeHandler } from '@/features/shortsform/types/shortsForm'
+import ShortsFormUploadVideo from './ShortsFormUploadVideo'
+import ShortsFormUploadThumbnail from './ShortsFormUploadThumbnail'
 
 // 공통 프리뷰/업로드 탭 타입 정의
 type ShortsFormUploadTabProps =
@@ -28,7 +28,7 @@ export default function ShortsFormUploadTab(props: ShortsFormUploadTabProps) {
   if (props.type === 'video') {
     return (
       // 비디오 미리보기 탭 렌더링
-      <ShortsFormVideoPreviewTab
+      <ShortsFormUploadVideo
         videoFile={props.videoFile}
         videoSrc={props.videoSrc}
         videoInputRef={props.videoInputRef}
@@ -41,7 +41,7 @@ export default function ShortsFormUploadTab(props: ShortsFormUploadTabProps) {
 
   return (
     // 썸네일 미리보기 탭 렌더링
-    <ShortsFormThumbPreviewTab
+    <ShortsFormUploadThumbnail
       thumbnail={props.thumbnail}
       onChange={props.onChange}
       onDraggingChange={props.onDraggingChange}

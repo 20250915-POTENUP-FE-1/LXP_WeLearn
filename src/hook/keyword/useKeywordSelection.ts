@@ -1,5 +1,5 @@
-import { ShortsFormChangeHandler } from '@/features/register/types/shortsRegister'
-import { isKeywordsMaxReached } from '@/features/register/register.validation'
+import type { ShortsFormChangeHandler } from '@/features/shortsform/types/shortsForm'
+import { isKeywordsMaxReached } from '@/features/shortsform/register/register.validation'
 import { VALIDATION_LIMITS } from '@/constants/form.validation'
 
 interface UseKeywordSelectionParams {

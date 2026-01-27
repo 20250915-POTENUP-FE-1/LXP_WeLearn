@@ -1,26 +1,27 @@
 'use client'
 
-import ShortsFormLayout from '@/features/register/components/ShortsFormLayout'
 import useEditShortsForm from '@/hook/register/useEditShortsForm'
-import type { ShortsEditInitialData } from '@/features/register/types/shortsEdit'
+import ShortsFormContainer from '@/features/shortsform/register/components/ShortsFormContainer'
+import type { ShortsEditInitialData, CategoryOption } from '@/features/shortsform/types/shortsForm'
 
 interface ShortsFormContainerEditProps {
   shortsId: number
   initialData: ShortsEditInitialData
+  categories: CategoryOption[]
 }
 
 /**
- * 숏츠 수정 폼 컨테이너
+ * 숏츠 수정 폼 컨테이너 (클라이언트 컴포넌트)
  */
 export default function ShortsFormContainerEdit({
   shortsId,
   initialData,
+  categories,
 }: ShortsFormContainerEditProps) {
   const {
     formData,
     videoData,
     isSubmitting,
-    isThumbnailDeleted,
     handleFormChange,
     handleVideoChange,
     handleUpdate,
@@ -30,9 +31,10 @@ export default function ShortsFormContainerEdit({
   } = useEditShortsForm({ shortsId, initialData })
 
   return (
-    <ShortsFormLayout
+    <ShortsFormContainer
       formData={formData}
       videoData={videoData}
+      categories={categories}
       onFormChange={handleFormChange}
       onVideoChange={handleVideoChange}
       onSubmit={handleUpdate}
@@ -41,7 +43,6 @@ export default function ShortsFormContainerEdit({
       isEditMode={true}
       existingVideoUrl={existingVideoUrl}
       existingThumbnailUrl={existingThumbnailUrl ?? undefined}
-      isThumbnailDeleted={isThumbnailDeleted}
       submitText="수정하기"
     />
   )

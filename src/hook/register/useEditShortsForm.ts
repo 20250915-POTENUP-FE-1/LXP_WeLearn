@@ -4,16 +4,16 @@ import { toast } from 'react-toastify'
 import {
   ShortsFormData,
   VideoPreviewData,
+  ShortsEditInitialData,
   INITIAL_SHORTS_FORM_DATA,
   INITIAL_VIDEO_PREVIEW_DATA,
-} from '@/features/register/types/shortsRegister'
-import type { ShortsEditInitialData } from '@/features/register/types/shortsEdit'
+} from '@/features/shortsform/types/shortsForm'
 import {
   validateTitle,
   validateDescription,
   validateCategoryId,
   validateKeywords,
-} from '@/features/register/register.validation'
+} from '@/features/shortsform/register/register.validation'
 import { updateShortsAction } from '@/features/mypage/myshorts/myshorts.action'
 
 interface UseEditShortsFormParams {
@@ -49,20 +49,13 @@ export default function useEditShortsForm({ shortsId, initialData }: UseEditShor
   const [formData, setFormData] = useState<ShortsFormData>(initialFormData)
   const [videoData, setVideoData] = useState<VideoPreviewData>(initialVideoData)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isThumbnailDeleted, setIsThumbnailDeleted] = useState(false)
 
   // 폼 필드 변경 핸들러
   const handleFormChange = useCallback(
     <K extends keyof ShortsFormData>(field: K, value: ShortsFormData[K]) => {
-      // 썸네일 삭제 추적
-      if (field === 'thumbnail' && value === null && initialData.thumbnailUrl) {
-        setIsThumbnailDeleted(true)
-      } else if (field === 'thumbnail' && value !== null) {
-        setIsThumbnailDeleted(false)
-      }
       setFormData((prev) => ({ ...prev, [field]: value }))
     },
-    [initialData.thumbnailUrl],
+    [],
   )
 
   // 비디오 데이터 변경 핸들러 (수정 모드에서는 영상, 썸네일 파일 변경 불가)
@@ -130,12 +123,8 @@ export default function useEditShortsForm({ shortsId, initialData }: UseEditShor
         submitFormData.append('keywords', keyword)
       })
 
-      // 썸네일 처리
-      if (isThumbnailDeleted) {
-        // 썸네일 삭제 요청
-        submitFormData.append('thumbnailUrl', '')
-      } else if (formData.thumbnail) {
-        // 새 썸네일 업로드 (base64 데이터)
+      // 썸네일 처리 (수정 모드에서는 썸네일 변경 불가)
+      if (formData.thumbnail) {
         submitFormData.append('thumbnailUrl', formData.thumbnail)
       }
 
@@ -170,7 +159,6 @@ export default function useEditShortsForm({ shortsId, initialData }: UseEditShor
     formData,
     videoData,
     isSubmitting,
-    isThumbnailDeleted,
 
     // 핸들러
     handleFormChange,

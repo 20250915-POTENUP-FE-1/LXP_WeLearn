@@ -1,22 +1,22 @@
 'use client'
 
 import { Input } from '@/components/ui/Input'
-import { ShortsFormChangeHandler } from '@/features/register/types/shortsRegister'
+import type { ShortsFormChangeHandler } from '@/features/shortsform/types/shortsForm'
 import KeywordSuggestions from './KeywordSuggestions'
 import KeywordList from './KeywordList'
 import useKeywords from '@/hook/keyword/useKeywords'
 
-interface ShortsFormKeywordsProps {
+interface KeywordContainerProps {
   keywords: string[]
-  keywordInput: string
+  keywordInput: string // 자동완성
   onChange: ShortsFormChangeHandler
 }
 
-export default function ShortsFormKeywords({
+export default function KeywordContainer({
   keywords,
   keywordInput,
   onChange,
-}: ShortsFormKeywordsProps) {
+}: KeywordContainerProps) {
   const {
     isOpen,
     suggestions,

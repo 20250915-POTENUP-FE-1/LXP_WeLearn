@@ -3,10 +3,10 @@
 import { RefObject } from 'react'
 import { Button } from '@/components/ui/Button'
 import { CirclePlus, Lock } from 'lucide-react'
-import ShortsFormPreviewFrame from './ShortsFormPreviewFrame'
+import ShortsFormPreviewFrame from './ShortsFormUploadPreview'
 import ShortsFormEmptyState from './ShortsFormEmptyState'
 
-interface ShortsFormVideoPreviewTabProps {
+interface ShortsFormUploadVideoProps {
   videoFile?: File | null
   videoSrc: string | null
   videoInputRef: RefObject<HTMLInputElement | null>
@@ -15,14 +15,14 @@ interface ShortsFormVideoPreviewTabProps {
   isEditMode?: boolean
 }
 
-export default function ShortsFormVideoPreviewTab({
+export default function ShortsFormUploadVideo({
   videoFile,
   videoSrc,
   videoInputRef,
   onVideoUpload,
   onRemove,
   isEditMode = false,
-}: ShortsFormVideoPreviewTabProps) {
+}: ShortsFormUploadVideoProps) {
   // 비디오 소스가 있으면 미리보기 렌더링
   // 수정 모드: videoSrc만 있으면 표시 (existingVideoUrl 사용)
   // 등록 모드: videoFile과 videoSrc 둘 다 필요

@@ -81,31 +81,25 @@ export default function CategoryShortsSection({
 
       {/* 카테고리별 필터 */}
       <div className="scrollbar-hide mb-6 flex items-center gap-2 overflow-x-auto md:flex-wrap md:overflow-x-visible">
-        <button
-          onClick={() => handleCategoryChange(null)}
-          className={`shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-            selectedCategoryId === null
-              ? 'border-gray-900 bg-gray-900 text-white'
-              : 'border-gray-300 text-gray-600 hover:border-gray-400'
-          }`}
-        >
-          전체
-        </button>
+        {categories.map((category) => {
+          // "전체" 카테고리는 categoryId를 null로 처리
+          const categoryId = category.name === '전체' ? null : category.id
+          const isSelected = selectedCategoryId === categoryId
 
-        {/*  카테고리 선택 버튼 */}
-        {categories.map((category) => (
-          <button
-            key={category.id}
-            onClick={() => handleCategoryChange(category.id)}
-            className={`shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-              selectedCategoryId === category.id
-                ? 'border-gray-900 bg-gray-900 text-white'
-                : 'border-gray-300 text-gray-600 hover:border-gray-400'
-            }`}
-          >
-            {category.name}
-          </button>
-        ))}
+          return (
+            <button
+              key={category.id}
+              onClick={() => handleCategoryChange(categoryId)}
+              className={`shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                isSelected
+                  ? 'border-gray-900 bg-gray-900 text-white'
+                  : 'border-gray-300 text-gray-600 hover:border-gray-400'
+              }`}
+            >
+              {category.name}
+            </button>
+          )
+        })}
       </div>
 
       {/* 숏츠 목록 */}

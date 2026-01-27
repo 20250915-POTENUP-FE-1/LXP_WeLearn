@@ -5,7 +5,7 @@ import {
   VideoPreviewData,
   INITIAL_SHORTS_FORM_DATA,
   INITIAL_VIDEO_PREVIEW_DATA,
-} from '@/features/register/types/shortsRegister'
+} from '@/features/shortsform/types/shortsForm'
 
 interface UseRegisterFormParams {
   initialFormData?: Partial<ShortsFormData>

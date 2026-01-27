@@ -3,7 +3,7 @@ import {
   ALLOWED_VIDEO_TYPES,
   VALIDATION_LIMITS,
 } from '@/constants/form.validation'
-import type { ShortsFormData, VideoPreviewData } from './types/shortsRegister'
+import type { ShortsFormData, VideoPreviewData } from '../types/shortsForm'
 
 // ========== 타입 정의 ==========
 export type ValidationField = 'title' | 'description' | 'categoryId' | 'videoFile' | 'keywords'
