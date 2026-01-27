@@ -5,10 +5,10 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { User } from 'lucide-react'
 import { useActionState, useEffect } from 'react'
 import { EditTarget } from './CommentList'
-import { Button } from '@/components/ui/Button'
 import { toast } from 'react-toastify'
 import { patchReplyCommentAction } from './action'
 import { DeleteTarget } from './CommentsModalContainer'
+import EditCommentForm from './EditCommentForm'
 
 interface ReCommentProps {
   openReply: number | null
@@ -98,31 +98,14 @@ export default function ReComment({
                           </div>
 
                           {editTarget?.mode === 'reply' && editTarget.id === reply.replyId ? (
-                            <form className="my-2 flex flex-col gap-2" action={replyPatchAction}>
+                            <EditCommentForm
+                              action={replyPatchAction}
+                              defaultValue={reply.content}
+                              onCancel={() => setEditTarget(null)}
+                            >
                               <input type="hidden" name="replyId" value={reply.replyId} />
                               <input type="hidden" name="commentId" value={commentId} />
-                              <input
-                                type="text"
-                                name="comment"
-                                defaultValue={reply.content}
-                                autoComplete="off"
-                                placeholder="답글을 입력하세요..."
-                                className="w-full rounded-full border border-gray-300 px-3 py-2 text-sm focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
-                              />
-                              <div className="flex justify-end gap-1">
-                                <Button
-                                  type="button"
-                                  variant="outline"
-                                  className="rounded-full"
-                                  onClick={() => setEditTarget(null)}
-                                >
-                                  취소
-                                </Button>
-                                <Button type="submit" variant="accent" className="rounded-full">
-                                  등록
-                                </Button>
-                              </div>
-                            </form>
+                            </EditCommentForm>
                           ) : (
                             <p className="mb-2 text-sm leading-relaxed text-gray-700">
                               {reply.content}

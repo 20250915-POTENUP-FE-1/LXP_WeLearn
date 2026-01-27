@@ -6,11 +6,11 @@ import { CommentsResponse } from '@/types/comments/comments'
 import { DeleteTarget } from './CommentsModalContainer'
 import { ChevronDown, User } from 'lucide-react'
 import { timeAgo } from '@/utils/timeAgo'
-import { Button } from '@/components/ui/Button'
 import { AnimatePresence, motion } from 'framer-motion'
 import CommentDropDownMenu from '@/components/ui/CommentDropdownMenu'
-import ReCommentInput from './ReCommentInput'
-import ReComment from './ReComment'
+import ReplyListInput from './ReplyListInput'
+import ReplyList from './ReplyList'
+import EditCommentForm from './EditCommentForm'
 
 interface CommentsListProps {
   comments: CommentsResponse[]
@@ -44,6 +44,7 @@ export default function CommentList({
     message: '',
     errors: {},
   })
+
   // 댓글 수정 성공시 토스트 ui
   useEffect(() => {
     if (commentPatchState.success) {
@@ -121,31 +122,14 @@ export default function CommentList({
                   </div>
                   {editTarget?.mode === 'comment' ? (
                     editTarget.id === comment.commentId ? (
-                      <form className="my-2 flex flex-col gap-2" action={commentPatchAction}>
+                      <EditCommentForm
+                        action={commentPatchAction}
+                        defaultValue={comment.content}
+                        onCancel={() => setEditTarget(null)}
+                      >
                         <input type="hidden" name="commentId" value={comment.commentId} />
                         <input type="hidden" name="shortsId" value={shortsId} />
-                        <input
-                          type="text"
-                          name="comment"
-                          placeholder="답글을 입력하세요..."
-                          autoComplete="off"
-                          className="w-full flex-1 rounded-full border border-gray-300 px-3 py-2 text-sm no-underline focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
-                          defaultValue={comment.content}
-                        />
-                        <div className="flex justify-end gap-1">
-                          <Button
-                            type="button"
-                            variant="outline"
-                            className="rounded-full"
-                            onClick={() => setEditTarget(null)}
-                          >
-                            취소
-                          </Button>
-                          <Button variant="accent" className="rounded-full" type="submit">
-                            등록
-                          </Button>
-                        </div>
-                      </form>
+                      </EditCommentForm>
                     ) : (
                       ''
                     )
@@ -197,7 +181,7 @@ export default function CommentList({
                 />
               )}
             </div>
-            <ReCommentInput
+            <ReplyListInput
               commentId={comment.commentId}
               openReplyInput={openReplyInput}
               setOpenReplyInput={setOpenReplyInput}
@@ -205,7 +189,7 @@ export default function CommentList({
               setIsUpdate={setIsUpdate}
             />
             {comment.replyCount > 0 && (
-              <ReComment
+              <ReplyList
                 editTarget={editTarget}
                 openReply={openReply}
                 replies={replies}

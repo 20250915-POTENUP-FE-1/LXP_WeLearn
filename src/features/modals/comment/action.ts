@@ -2,8 +2,8 @@
 
 import { commentApi } from '@/services/comments/comments.service'
 import { RecommentApi } from '@/services/comments/recomments.service'
-import { CommentType, CommnetData, ReplyCommentType } from '@/types/comment'
-import { CommentResponseWrapper } from '@/types/comments/comments'
+import { ReplyCommentType } from '@/types/comment'
+import { CommentResponseWrapper, CommentsResponse } from '@/types/comments/comments'
 import { revalidatePath } from 'next/cache'
 
 export type CommentActionState = {
@@ -12,7 +12,7 @@ export type CommentActionState = {
   errors?: {
     content?: string
   }
-  data?: CommentType[]
+  data?: CommentsResponse[]
 }
 
 export type ReplyActionState = {
