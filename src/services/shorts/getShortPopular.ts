@@ -1,9 +1,8 @@
 'use server'
 
-import { PageResponse } from '@/features/home/ShortsCarousel/ShortsCarousel'
 import { api } from '@/lib/utils/apiUtils'
 import { ApiResponse } from '@/types/api/api'
-import { ShortsBase } from '@/types/shorts/shorts'
+import { PageResponse, ShortsBase } from '@/types/shorts/shorts'
 
 export async function getShortPopular({ page = 0, size = 8 } = {}) {
   try {
