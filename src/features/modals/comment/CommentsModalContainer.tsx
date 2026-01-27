@@ -11,7 +11,10 @@ import { getCommentAction } from './action'
 import { CommentsResponse } from '@/types/comments/comments'
 import CommentList from './CommentList'
 
-export type DeleteTarget = { mode: 'comment'; id: number } | { mode: 'reply'; id: number } | null
+export type DeleteTarget =
+  | { mode: 'comment'; id: number; parentId: number | null }
+  | { mode: 'reply'; id: number; parentId: number | null }
+  | null
 
 export default function CommentModalContainer() {
   const pathname = usePathname()

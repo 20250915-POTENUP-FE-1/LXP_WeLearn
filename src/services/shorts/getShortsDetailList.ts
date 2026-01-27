@@ -1,4 +1,5 @@
 'use server'
+import { revalidatePath } from 'next/cache'
 import { shortsApi } from './shorts.service'
 import { ShortsBase } from '@/types/shorts/shorts'
 

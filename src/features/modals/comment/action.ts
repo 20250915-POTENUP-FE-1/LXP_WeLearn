@@ -186,6 +186,7 @@ export const deleteReplyCommentAction = async (
   formData: FormData,
 ): Promise<ActionState> => {
   const replyId = Number(formData.get('replyId') || 0)
+  const parentId = Number(formData.get('parentId') || 0)
 
   if (!replyId) {
     return {
@@ -196,6 +197,7 @@ export const deleteReplyCommentAction = async (
 
   try {
     const res = await ReplyApi.deleteReplyComment(replyId)
+    revalidatePath(`/shorts/${parentId}`)
     return {
       success: true,
     }

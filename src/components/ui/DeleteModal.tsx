@@ -80,6 +80,9 @@ export default function DeleteModal({
                     deleteTarget.mode === 'comment' ? commentDeleteAction : replyCommentDeleteAction
                   }
                 >
+                  {deleteTarget.parentId !== null && (
+                    <input type="hidden" name="commentId" value={deleteTarget.parentId} />
+                  )}
                   <input
                     type="hidden"
                     name={deleteTarget.mode === 'comment' ? 'commentId' : 'replyId'}

@@ -121,6 +121,7 @@ export default function ReComment({
                           setEditTarget={setEditTarget}
                           setDeleteTarget={setDeleteTarget}
                           id={reply.replyId}
+                          parentId={commentId}
                           deleteTarget={deleteTarget}
                           mode="reply"
                         />

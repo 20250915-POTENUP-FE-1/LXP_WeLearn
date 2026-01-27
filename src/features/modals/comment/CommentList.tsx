@@ -174,6 +174,7 @@ export default function CommentList({
                 <CommentDropDownMenu
                   deleteTarget={deleteTarget}
                   id={comment.commentId}
+                  parentId={null}
                   setEditTarget={setEditTarget}
                   setIsUpdate={setIsUpdate}
                   mode="comment"

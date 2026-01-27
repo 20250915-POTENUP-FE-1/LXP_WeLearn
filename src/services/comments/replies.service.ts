@@ -37,6 +37,6 @@ export const ReplyApi = {
 
   deleteReplyComment: async (replyId: number) => {
     const res = await api.delete(`/api/v1/replies/${replyId}`)
-    return true
+    return res
   },
 }
