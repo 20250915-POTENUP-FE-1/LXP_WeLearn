@@ -3,5 +3,6 @@ export interface ApiResponse<T = unknown> {
   code: string
   message: string | null
   request: string | null
+  errors?: Record<string, string>
   data: T
 }

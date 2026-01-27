@@ -1,19 +1,6 @@
 import SigninForm from '@/features/auth/components/SigninForm'
 import Link from 'next/link'
 
-// ============================================
-// Page: 로그인 페이지
-// Route: /login
-// Access: 공개 (비로그인 사용자)
-// Description: 이메일과 비밀번호로 로그인하는 페이지
-// Tailwind: flex로 중앙 정렬, min-h-screen으로 전체 높이
-// ============================================
-
-// ============================================
-// LoginPage Component
-// Description: 로그인 페이지 메인 컴포넌트
-// ============================================
-
 export default function SigninPage() {
   return (
     <>

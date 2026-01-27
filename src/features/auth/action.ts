@@ -1,16 +1,17 @@
 'use server'
 
 import { authApi } from '@/services/auth/auth.service'
-import { userApi, UserResponse, UserResponseType } from '@/services/mypage/user.service'
+import { userApi, UserResponse } from '@/services/mypage/user.service'
+import { UserInfo } from '@/types/user/user'
 
 type ActionState = {
   success: boolean
   message?: string
   errors?: Record<string, string>
-  user?: UserResponse
+  user?: UserInfo
 }
 
-export const GetUserInfoAction = async (prevState: UserResponseType): Promise<UserResponseType> => {
+export const GetUserInfoAction = async (prevState: UserInfo): Promise<UserResponse> => {
   try {
     const userData = await userApi.getMe()
     return { success: true, data: userData.data }
