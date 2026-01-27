@@ -1,58 +1,17 @@
 'use server'
 
 import { commentApi } from '@/services/comments/comments.service'
-import { RecommentApi } from '@/services/comments/recomments.service'
-import { ReplyCommentType } from '@/types/comment'
-import { CommentResponseWrapper, CommentsResponse } from '@/types/comments/comments'
+import { ReplyApi } from '@/services/comments/replies.service'
+import { ActionState } from '@/types/action/action'
+import { CommentResponseWrapper } from '@/types/comments/comments'
+import { ReplyCommentsResponse } from '@/types/replies/replies'
 import { revalidatePath } from 'next/cache'
-
-export type CommentActionState = {
-  success: boolean
-  message?: string
-  errors?: {
-    content?: string
-  }
-  data?: CommentsResponse[]
-}
-
-export type ReplyActionState = {
-  success: boolean
-  message?: string
-  errors?: {
-    content?: string
-  }
-  data?: ReplyCommentType
-}
-
-export type GetCommentType = {
-  success: boolean
-  message?: string
-  errors?: {
-    content?: string
-  }
-  data?: CommentResponseWrapper
-}
-
-export type GetReplyType = {
-  success: boolean
-  message?: string
-  errors?: {
-    content?: string
-  }
-  data?: ReplyCommentType[]
-}
-
-export type GetReplyState = {
-  success: boolean
-  data: ReplyCommentType[]
-  message?: string
-}
 
 // 댓글 조회 액션
 export const getCommentAction = async (
-  prevState: GetCommentType,
+  prevState: ActionState,
   id: number,
-): Promise<GetCommentType> => {
+): Promise<ActionState<CommentResponseWrapper>> => {
   try {
     const commentData = await commentApi.getComment(id)
     return {
@@ -69,9 +28,9 @@ export const getCommentAction = async (
 
 // 댓글 등록 액션
 export const postCommentAction = async (
-  prevState: CommentActionState,
+  prevState: ActionState,
   formData: FormData,
-): Promise<CommentActionState> => {
+): Promise<ActionState> => {
   const content = formData.get('comment') as string
   const shortsId = Number(formData.get('shortsid') || 0)
 
@@ -81,7 +40,6 @@ export const postCommentAction = async (
     revalidatePath(`/shorts/${shortsId}`)
     return {
       success: true,
-      data: res.data,
     }
   } catch (error) {
     return {
@@ -93,9 +51,9 @@ export const postCommentAction = async (
 
 // 댓글 수정 액션
 export const patchCommentAction = async (
-  prevState: CommentActionState,
+  prevState: ActionState,
   formData: FormData,
-): Promise<CommentActionState> => {
+): Promise<ActionState> => {
   const content = formData.get('comment') as string
   const commentId = Number(formData.get('commentId') || 0)
 
@@ -123,9 +81,9 @@ export const patchCommentAction = async (
 
 // 댓글 삭제 액션
 export const deleteCommentAction = async (
-  prevState: CommentActionState,
+  prevState: ActionState,
   formData: FormData,
-): Promise<CommentActionState> => {
+): Promise<ActionState> => {
   const commentId = Number(formData.get('commentId') || 0)
 
   if (!commentId) {
@@ -154,11 +112,11 @@ export const deleteCommentAction = async (
 
 // 대댓글 조회 액션
 export const getReplyAction = async (
-  prevState: GetReplyState,
+  prevState: ActionState,
   id: number,
-): Promise<GetReplyState> => {
+): Promise<ActionState<ReplyCommentsResponse[]>> => {
   try {
-    const replyData = await RecommentApi.getReplyComment(id)
+    const replyData = await ReplyApi.getReplyComment(id)
     return {
       success: true,
       data: replyData.data,
@@ -174,9 +132,9 @@ export const getReplyAction = async (
 
 // 대댓글 등록 액션
 export const postReplyAction = async (
-  prevState: ReplyActionState,
+  prevState: ActionState,
   formData: FormData,
-): Promise<ReplyActionState> => {
+): Promise<ActionState> => {
   const content = formData.get('replyComment') as string
   const commentId = Number(formData.get('commentId') || 0)
 
@@ -187,20 +145,19 @@ export const postReplyAction = async (
     }
   }
 
-  const res = await RecommentApi.postReplyComment(commentId, { content })
+  const res = await ReplyApi.postReplyComment(commentId, { content })
   revalidatePath(`shorts/${commentId}/comments`)
 
   return {
     success: true,
-    data: res.data,
   }
 }
 
 // 대댓글 수정 액션
 export const patchReplyCommentAction = async (
-  prevState: GetReplyType,
+  prevState: ActionState,
   formData: FormData,
-): Promise<GetReplyType> => {
+): Promise<ActionState> => {
   const replyId = Number(formData.get('replyId') || 0)
   const content = formData.get('comment') as string
 
@@ -212,10 +169,9 @@ export const patchReplyCommentAction = async (
   }
 
   try {
-    const res = await RecommentApi.patchReplyComment(replyId, { content })
+    const res = await ReplyApi.patchReplyComment(replyId, { content })
     return {
       success: true,
-      data: res?.data,
     }
   } catch (error) {
     return {
@@ -226,9 +182,9 @@ export const patchReplyCommentAction = async (
 }
 
 export const deleteReplyCommentAction = async (
-  prevState: CommentActionState,
+  prevState: ActionState,
   formData: FormData,
-): Promise<CommentActionState> => {
+): Promise<ActionState> => {
   const replyId = Number(formData.get('replyId') || 0)
 
   if (!replyId) {
@@ -239,7 +195,7 @@ export const deleteReplyCommentAction = async (
   }
 
   try {
-    const res = await RecommentApi.deleteReplyComment(replyId)
+    const res = await ReplyApi.deleteReplyComment(replyId)
     return {
       success: true,
     }

@@ -1,5 +1,4 @@
 import { useActionState, useEffect, useState } from 'react'
-import { ReplyCommentType } from '@/types/comment'
 import { toast } from 'react-toastify'
 import { getReplyAction, patchCommentAction } from './action'
 import { CommentsResponse } from '@/types/comments/comments'
@@ -11,6 +10,7 @@ import CommentDropDownMenu from '@/components/ui/CommentDropdownMenu'
 import ReplyListInput from './ReplyListInput'
 import ReplyList from './ReplyList'
 import EditCommentForm from './EditCommentForm'
+import { ReplyCommentsResponse } from '@/types/replies/replies'
 
 interface CommentsListProps {
   comments: CommentsResponse[]
@@ -36,7 +36,7 @@ export default function CommentList({
   const [openReply, setOpenReply] = useState<number | null>(null)
   const [openReplyInput, setOpenReplyInput] = useState<number | null>(null)
   const [editTarget, setEditTarget] = useState<EditTarget>(null)
-  const [replies, setReplies] = useState<ReplyCommentType[] | null | undefined>(null)
+  const [replies, setReplies] = useState<ReplyCommentsResponse[] | null | undefined>(null)
 
   // 댓글 수정 Action
   const [commentPatchState, commentPatchAction] = useActionState(patchCommentAction, {
@@ -70,7 +70,7 @@ export default function CommentList({
   // 대댓글 불러오는 함수
   const fetchReplies = async (commentId: number) => {
     try {
-      setReplies(null) // 로딩 상태
+      setReplies([]) // 로딩 상태
       const data = await getReplyAction({ success: false, data: [] }, commentId)
       setReplies(data.data)
     } catch (error) {

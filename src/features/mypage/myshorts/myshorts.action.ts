@@ -2,16 +2,16 @@
 
 import { revalidatePath } from 'next/cache'
 import { myShortsApi } from '@/services/mypage/myshorts.service'
-import type { ShortsResponse, ShortsUpdateRequest } from '@/types/mypage-shorts'
-import { ActionState } from '@/types/action'
+import { ActionState } from '@/types/action/action'
+import { ShortsBase, ShortsRequest } from '@/types/shorts/shorts'
 
 /**
  * 숏츠 수정 액션
  */
 export async function updateShortsAction(
-  prevState: ActionState<ShortsResponse>,
+  prevState: ActionState<ShortsBase>,
   formData: FormData,
-): Promise<ActionState<ShortsResponse>> {
+): Promise<ActionState<ShortsBase>> {
   const shortsId = Number(formData.get('shortsId'))
 
   // 유효성 검사
@@ -25,16 +25,16 @@ export async function updateShortsAction(
   const title = formData.get('title') as string
   const description = formData.get('description') as string | null
   const categoryId = formData.get('categoryId')
-  const status = formData.get('status') as ShortsUpdateRequest['status'] | null
+  const status = formData.get('status') as ShortsRequest['status'] | null
   const keywords = formData.getAll('keywords') as string[]
   const thumbnailUrl = formData.get('thumbnailUrl') as string | null
 
-  const payload: ShortsUpdateRequest = {
-    title: title || undefined,
-    description: description || undefined,
-    categoryId: categoryId ? Number(categoryId) : undefined,
+  const payload: ShortsRequest = {
+    title: title,
+    description: description,
+    categoryId: Number(categoryId),
     status: status || undefined,
-    keywords: keywords.length > 0 ? keywords : undefined,
+    keywords: keywords,
   }
 
   // 썸네일 처리: FormData에 thumbnailUrl 키가 있는 경우에만 처리
@@ -94,8 +94,8 @@ export async function deleteShortsAction(shortsId: number): Promise<ActionState>
  */
 export async function toggleShortsStatusAction(
   shortsId: number,
-  currentStatus: ShortsUpdateRequest['status'],
-): Promise<ActionState<ShortsResponse>> {
+  currentStatus: ShortsRequest['status'],
+): Promise<ActionState<ShortsBase>> {
   if (!shortsId || isNaN(shortsId)) {
     return {
       success: false,

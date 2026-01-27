@@ -1,7 +1,5 @@
-import React from 'react'
-import { ToastContainer, ToastPosition, TypeOptions } from 'react-toastify'
+import { ToastContainer, TypeOptions } from 'react-toastify'
 import { AlertTriangle, CheckCircle2, XCircle, Info } from 'lucide-react'
-import { clsx } from 'clsx'
 
 export default function ToastProvider() {
   return (

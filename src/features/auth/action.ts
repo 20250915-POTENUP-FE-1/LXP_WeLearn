@@ -1,17 +1,11 @@
 'use server'
 
 import { authApi } from '@/services/auth/auth.service'
-import { userApi, UserResponse } from '@/services/mypage/user.service'
+import { userApi } from '@/services/mypage/user.service'
+import { ActionState } from '@/types/action/action'
 import { UserInfo } from '@/types/user/user'
 
-type ActionState = {
-  success: boolean
-  message?: string
-  errors?: Record<string, string>
-  user?: UserInfo
-}
-
-export const GetUserInfoAction = async (prevState: UserInfo): Promise<UserResponse> => {
+export const GetUserInfoAction = async (prevState: ActionState): Promise<ActionState<UserInfo>> => {
   try {
     const userData = await userApi.getMe()
     return { success: true, data: userData.data }
@@ -53,13 +47,11 @@ export const SignupAction = async (
 export const SigninAction = async (
   prevState: ActionState,
   formData: FormData,
-): Promise<ActionState> => {
+): Promise<ActionState<UserInfo>> => {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
   const payload = { email, password }
-
-  let response
 
   try {
     await authApi.signin(payload)
@@ -67,7 +59,7 @@ export const SigninAction = async (
     const user = await userApi.getMe()
     return {
       success: true,
-      user: user.data,
+      data: user.data,
     }
   } catch (error) {
     return {

@@ -2,10 +2,10 @@ import ShortsPlayer from './ShortsPlayer'
 import ShortsCreateInfo from './ShortsCreateInfo'
 import ShortsActionBar from './ShortsActionBar'
 import { DEFAULT_IMAGES } from '@/constants/shortsImages'
-import { ShortsListCard } from '@/types/shorts/shorts'
+import { ShortsBase } from '@/types/shorts/shorts'
 
 interface ShortsCardProps {
-  shorts: ShortsListCard
+  shorts: ShortsBase
   userProfileUrl?: string | null
 }
 

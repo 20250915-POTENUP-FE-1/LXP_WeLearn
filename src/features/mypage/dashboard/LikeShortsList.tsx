@@ -1,18 +1,10 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import LikeShortsCard from './LikeShortsCard'
-
-interface LikeShort {
-  id: string
-  category: string
-  thumbnailUrl: string
-  title: string
-  nickname: string
-  progress: number
-}
+import { LikedShorts } from '@/types/shorts/shorts'
 
 interface LikeShortsListProps {
-  shorts: LikeShort[]
+  shorts: LikedShorts[]
   onViewAll?: () => void
   onPrevious?: () => void
   onNext?: () => void
@@ -57,7 +49,7 @@ export default function LikeShortsList({
         {shorts.map((short) => (
           <LikeShortsCard
             key={short.id}
-            category={short.category}
+            categoryName={short.category}
             thumbnailUrl={short.thumbnailUrl}
             title={short.title}
             nickname={short.nickname}

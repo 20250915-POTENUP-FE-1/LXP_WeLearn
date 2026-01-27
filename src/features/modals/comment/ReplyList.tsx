@@ -1,5 +1,4 @@
 import CommentDropDownMenu from '@/components/ui/CommentDropdownMenu'
-import { ReplyCommentType } from '@/types/comment'
 import { timeAgo } from '@/utils/timeAgo'
 import { AnimatePresence, motion } from 'framer-motion'
 import { User } from 'lucide-react'
@@ -9,11 +8,12 @@ import { toast } from 'react-toastify'
 import { patchReplyCommentAction } from './action'
 import { DeleteTarget } from './CommentsModalContainer'
 import EditCommentForm from './EditCommentForm'
+import { ReplyCommentsResponse } from '@/types/replies/replies'
 
 interface ReCommentProps {
   openReply: number | null
   commentId: number
-  replies: ReplyCommentType[] | null | undefined
+  replies: ReplyCommentsResponse[] | null | undefined
   isReplyUpdate: number
   deleteTarget: DeleteTarget
   editTarget: EditTarget
@@ -75,9 +75,9 @@ export default function ReComment({
                       <div className="flex flex-1 gap-3">
                         {/* 프로필 */}
                         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-600">
-                          {reply.writer.profileUrl ? (
+                          {reply.writer.profileImageUrl ? (
                             <img
-                              src={reply.writer.profileUrl}
+                              src={reply.writer.profileImageUrl}
                               alt={reply.writer.nickname}
                               className="h-8 w-8 rounded-full object-cover"
                             />

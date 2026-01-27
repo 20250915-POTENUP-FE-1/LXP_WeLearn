@@ -3,14 +3,14 @@ import Link from 'next/link'
 import HeaderDropdown from './HeaderDropdown'
 import { useEffect, useState } from 'react'
 import { GetUserInfoAction } from '@/features/auth/action'
-import { UserResponse } from '@/services/mypage/user.service'
+import { UserInfo } from '@/types/user/user'
 
 interface HeaderRightSectionProps {
   isLogined: boolean
 }
 
 export default function HeaderRightSection({ isLogined }: HeaderRightSectionProps) {
-  const [userData, setUserData] = useState<UserResponse | null>(null)
+  const [userData, setUserData] = useState<UserInfo | null>(null)
 
   useEffect(() => {
     if (!isLogined) {

@@ -33,3 +33,9 @@ export interface UserInfo {
   profileUrl: string | null
   createdAt?: string
 }
+
+export interface CommetUserInfo {
+  userId: number
+  nickname: string
+  profileImageUrl: string | null
+}

@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers'
 import { buildQueryString } from '@/utils/buildQueryString'
 import { setAuthCookies } from './setAuthCookies'
-import { ApiResponse } from '@/types/mypage-shorts'
-import { SetAuthCookies } from '@/types/cookie'
+import { ApiResponse } from '@/types/api/api'
+import { AuthCookies } from '@/types/cookie/cookie'
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL
 
@@ -74,7 +74,7 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
       body: JSON.stringify({ refreshToken }),
     })
 
-    const refreshData = (await refreshRes.json()) as ApiResponse<SetAuthCookies>
+    const refreshData = (await refreshRes.json()) as ApiResponse<AuthCookies>
     if (refreshRes.ok) {
       await setAuthCookies({
         accessToken: refreshData.data.accessToken,

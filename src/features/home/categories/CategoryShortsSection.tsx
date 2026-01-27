@@ -1,18 +1,18 @@
 'use client'
 
 import React, { useState, useTransition } from 'react'
-import { PageShortsResponse } from '@/types/mypage-shorts'
 import CategoryShortsCard from '@/features/home/categories/CategoryShortsCard'
 import { getShortsAction, getShortsByCategoryAction } from '@/features/category.action'
-import { CategoryResponse } from '@/services/category/category.service'
 import { Youtube } from 'lucide-react'
+import { Category } from '@/types/category/category'
+import { PageResponse, ShortsBase } from '@/types/shorts/shorts'
 import SortButton from '@/components/ui/SortButton'
 
 const ITEMS_PER_PAGE = 8
 
 interface CategoryShortsSectionProps {
-  initialShorts: PageShortsResponse
-  categories: CategoryResponse[]
+  initialShorts: PageResponse<ShortsBase[]>
+  categories: Category[]
 }
 
 export default function CategoryShortsSection({
@@ -24,7 +24,7 @@ export default function CategoryShortsSection({
   // 현재 페이지 번호
   const [currentPage, setCurrentPage] = useState(0)
   // 숏츠 데이터
-  const [shortsData, setShortsData] = useState<PageShortsResponse>(initialShorts)
+  const [shortsData, setShortsData] = useState<PageResponse<ShortsBase[]>>(initialShorts)
   // 로딩 상태
   const [isPending, startTransition] = useTransition()
 
@@ -35,7 +35,7 @@ export default function CategoryShortsSection({
   const fetchShorts = (categoryId: number | null, page: number) => {
     startTransition(async () => {
       try {
-        let response: PageShortsResponse | null
+        let response: PageResponse<ShortsBase[]> | null
 
         if (categoryId === null) {
           // 전체 숏츠 조회

@@ -4,10 +4,10 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, useAnimation, PanInfo } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import ShortPreviewCard from './ShortPreviewCard'
-import { ShortsListCard } from '@/types/shorts/shorts'
+import { ShortsBase } from '@/types/shorts/shorts'
 
 type ShortsCarouselSwipeProps = {
-  items: ShortsListCard[]
+  items: ShortsBase[]
 }
 
 // 화면 너비에 따라 한 페이지에 표시할 아이템 수 반환

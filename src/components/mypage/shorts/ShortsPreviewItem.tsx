@@ -1,11 +1,11 @@
 'use client'
 
 import Image from 'next/image'
-import type { ShortsResponse } from '@/types/mypage-shorts'
 import { DEFAULT_IMAGES } from '@/constants/shortsImages'
+import { ShortsBase } from '@/types/shorts/shorts'
 
 interface ShortsPreviewCardProps {
-  shorts: ShortsResponse | null
+  shorts: ShortsBase | null
   userProfileUrl?: string | null
   videoRef?: React.RefObject<HTMLVideoElement | null>
   onLoadedData?: () => void

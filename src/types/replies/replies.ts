@@ -1,10 +1,14 @@
-import { UserInfo } from '../user/user'
+import { CommetUserInfo } from '../user/user'
 
-interface ReplyCommentsResponse {
+export interface ReplyCommentsResponse {
   replyId: number
   parentId: number
   content: string
   createdAt: string
-  writter: Omit<UserInfo, 'email'>
+  writer: Omit<CommetUserInfo, 'email'>
   isMine: boolean
+}
+
+export interface ReplyCommentRequest {
+  content: string
 }

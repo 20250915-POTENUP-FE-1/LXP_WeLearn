@@ -1,13 +1,12 @@
 'use client'
 
-import { ShortsResponse } from '@/types/mypage-shorts'
 import { Eye, Heart } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useVideoPreview } from '@/hook/useVideoPreview'
+import { ShortsBase } from '@/types/shorts/shorts'
 
 // 숏츠 카드 컴포넌트 (호버 시 동영상 미리보기)
-export default function CategoryShortsCard({ shorts }: { shorts: ShortsResponse }) {
+export default function CategoryShortsCard({ shorts }: { shorts: ShortsBase }) {
   // 동영상 미리보기 훅
   const { videoRef, handleMouseEnter, handleMouseLeave, handleLoadedData } = useVideoPreview({
     videoUrl: shorts.videoUrl,

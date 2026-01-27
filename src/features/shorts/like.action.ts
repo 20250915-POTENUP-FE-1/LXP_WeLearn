@@ -1,6 +1,6 @@
 'use server'
 import { likeApi } from '@/services/shorts/likes.service'
-import { ApiResponse } from '@/types/mypage-shorts'
+import { ApiResponse } from '@/types/api/api'
 
 // 좋아요 액션
 export const likeAction = async (prevState: ApiResponse<null>, shortsId: number) => {

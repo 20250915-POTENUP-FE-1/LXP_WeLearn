@@ -27,7 +27,6 @@ export default function CommentModalContainer() {
     success: false,
     message: '',
     errors: { content: '' },
-    data: { totalCommentCount: 0, comments: [] },
   })
 
   // pathname에서 shortsId 추출

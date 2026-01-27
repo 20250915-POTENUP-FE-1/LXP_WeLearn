@@ -1,42 +1,12 @@
 import { api } from '@/lib/utils/apiUtils'
-
-// Presigned URL 요청 파라미터
-export interface PresignedUrlRequest {
-  title: string
-  description: string
-  categoryId: number
-  keywords: string[]
-  fileName: string
-  fileSize: number
-  contentType: string
-  durationSec: number
-}
+import {
+  ConfirmUploadRequest,
+  ConfirmUploadResponse,
+  PresignedUrlRequest,
+  PresignedUrlResponse,
+} from '@/types/shorts/shorts'
 
 // Presigned URL 응답 타입
-export interface PresignedUrlResponse {
-  shortId: number
-  videoPresignedUrl: string
-  thumbnailPresignedUrl: string
-  uploadId: string
-  expiresIn: number
-  maxFileSize: number
-}
-
-// 업로드 완료 확정 요청
-export interface ConfirmUploadRequest {
-  shortId: number
-  uploadId: string
-  videoUrl: string
-  thumbnailUrl: string
-}
-
-// 업로드 완료 확정 응답
-export interface ConfirmUploadResponse {
-  shortId: number
-  uploadId: string
-  videoUrl: string
-  thumbnailUrl: string
-}
 
 export const shortsUploadApi = {
   /**
@@ -85,5 +55,4 @@ export const shortsUploadApi = {
 
     return response
   },
-
 }

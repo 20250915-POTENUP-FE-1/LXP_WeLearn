@@ -1,5 +1,3 @@
-'use client'
-
 import SignupForm from '@/features/auth/components/SignupForm'
 import Link from 'next/link'
 

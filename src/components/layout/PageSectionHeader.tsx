@@ -1,5 +1,3 @@
-import React from 'react'
-
 const PageSectionHeader = ({ title, subTitle }: { title: string; subTitle: string }) => {
   return (
     <div className="max-h-[132px] w-full max-w-7xl grow px-2 sm:px-6 lg:px-8">

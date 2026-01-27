@@ -1,7 +1,8 @@
 import { ShortsFormChangeHandler } from '@/features/register/types/shortsRegister'
-import useKeywordSearch, { KeywordSuggestion } from './useKeywordSearch'
+import useKeywordSearch from './useKeywordSearch'
 import useKeywordSelection from './useKeywordSelection'
 import useKeywordsNavigation from './useKeywordsNavigation'
+import { KeywordSuggestion } from '@/types/keyword/keyword'
 
 interface UseKeywordsParams {
   keywords: string[]

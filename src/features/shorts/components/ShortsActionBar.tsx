@@ -4,7 +4,6 @@ import { ListPlus, MessageSquareText, Send } from 'lucide-react'
 import { toast } from 'react-toastify'
 import ShortsLikeButton from './ShortsLikeButton'
 import { usePathname, useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
 interface ShortsActionBarProps {
   shortsId: number
   likeCount: number

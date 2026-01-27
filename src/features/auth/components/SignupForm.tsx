@@ -2,7 +2,7 @@
 import { Check, CircleUserRound } from 'lucide-react'
 import { Input } from '@/components/ui/Input'
 import { SignupAction } from '../action'
-import { useActionState, useEffect, useState } from 'react'
+import { useActionState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 

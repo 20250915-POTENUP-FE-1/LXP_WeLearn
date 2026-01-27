@@ -2,7 +2,6 @@
 import { CirclePlay, CircleUser, Heart, LogOut, Settings, User } from 'lucide-react'
 import { LogoutAction } from '@/features/auth/action'
 import { useRouter } from 'next/navigation'
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +13,7 @@ import Link from 'next/link'
 import { UserInfo } from '@/types/user/user'
 
 interface UserDropdownProps {
-  user: UserInfo
+  user: UserInfo | null
 }
 export default function HeaderDropdown({ user }: UserDropdownProps) {
   const router = useRouter()

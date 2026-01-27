@@ -12,10 +12,10 @@ import useVideoUpload from '@/hook/register/useVideoUpload'
 import usePreviewTab from '@/hook/register/usePreviewTab'
 import type { ShortsFormData, VideoPreviewData } from '@/features/register/types/shortsRegister'
 import { getPresignedUrlAction, confirmUploadAction } from '../register.action'
-import type { PresignedUrlResponse } from '@/services/shorts/upload.service'
 import { toast } from 'react-toastify'
 import { extractVideoDuration } from '@/utils/extractVideoDuration'
 import { validateShortsForm } from '../register.validation'
+import { PresignedUrlResponse } from '@/types/shorts/shorts'
 
 interface ShortsFormLayoutProps {
   // 폼 데이터

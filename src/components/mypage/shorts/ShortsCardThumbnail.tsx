@@ -1,9 +1,8 @@
-'use client'
-
+import { ShortsBase } from '@/types/shorts/shorts'
 import Image from 'next/image'
-import type { ShortsResponse } from '@/types/mypage-shorts'
+
 interface ShortsCardThumbnailProps {
-  shorts: ShortsResponse
+  shorts: ShortsBase
   thumbnailUrl: string
   title?: string
 }

@@ -1,15 +1,10 @@
 import { api } from '@/lib/utils/apiUtils'
-import { ApiResponse } from '@/types/mypage-shorts'
-
-export interface KeywordResponse {
-  id: number
-  displayName: string
-  normalizedName: string
-}
+import { ApiResponse } from '@/types/api/api'
+import { KeyWord } from '@/types/keyword/keyword'
 
 export const keywordApi = {
-  getAll: async (): Promise<ApiResponse<KeywordResponse[]>> => {
-    const response = await api.get<ApiResponse<KeywordResponse[]>>('/api/v1/keywords')
+  getAll: async (): Promise<ApiResponse<KeyWord[]>> => {
+    const response = await api.get<ApiResponse<KeyWord[]>>('/api/v1/keywords')
     return response
   },
 }

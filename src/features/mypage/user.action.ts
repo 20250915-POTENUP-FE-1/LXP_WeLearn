@@ -1,6 +1,6 @@
 'use server'
 
-import { userApi, type UserResponse } from '@/services/mypage/user.service'
+import { userApi } from '@/services/mypage/user.service'
 import { ActionState } from '@/types/action/action'
 
 import { UserInfo, UserUpdateRequest } from '@/types/user/user'
@@ -11,7 +11,7 @@ import { redirect } from 'next/navigation'
  * 내 정보 수정 액션
  */
 export async function updateMeAction(
-  prevState: ActionState<UserResponse>,
+  prevState: ActionState<UserInfo>,
   formData: FormData,
 ): Promise<ActionState<UserInfo>> {
   const nickname = formData.get('nickname') as string

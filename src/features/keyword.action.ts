@@ -1,9 +1,10 @@
 'use server'
 
-import { keywordApi, KeywordResponse } from '@/services/keyword/keyword.service'
-import { ApiResponse } from '@/types/mypage-shorts'
+import { keywordApi } from '@/services/keyword/keyword.service'
+import { ApiResponse } from '@/types/api/api'
+import { KeyWord } from '@/types/keyword/keyword'
 
-export async function getKeywordsAction(): Promise<ApiResponse<KeywordResponse[]>> {
+export async function getKeywordsAction(): Promise<ApiResponse<KeyWord[]>> {
   try {
     return await keywordApi.getAll()
   } catch {

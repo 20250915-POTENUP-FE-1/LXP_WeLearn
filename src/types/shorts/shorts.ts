@@ -1,7 +1,4 @@
-import { Category } from '../category/category'
-import { ShortsStatus } from '../mypage-shorts'
-import { UserInfo } from '../user/user'
-import { Status } from './status'
+import { ShortsState } from './status'
 
 //------------- 업로더 ------------
 // 숏츠 업로더
@@ -13,119 +10,55 @@ export interface ShortsUploader {
 
 // ----------------- Request ---------------
 // 숏츠 업로드 / 수정 Request
-export interface ShortsReuqst {
-  body: {
-    title: string
-    description: string
-    categoryId: number
-    keywords: string[]
-    fileName?: string
-    contentType?: string
-    durationSec?: number
-  }
-}
-
-// 숏츠 업로드 완료 Request
-export interface ShortsUploadCompleteRequest {
-  uploadId: string
-  videoUrl: string
-  thumbnailUrl: string
+export interface ShortsRequest {
+  title: string
+  description: string | null
+  categoryId: number
+  keywords: string[]
+  fileName?: string
+  contentType?: string
+  durationSec?: number
+  status?: ShortsState
+  thumbnailUrl?: string | null
 }
 
 // ----------------- Response ----------------
-/** 🔹 Shorts 최소 공통 Base */
+/**
+ * 모든 숏츠 데이터
+ */
 export interface ShortsBase {
   shortsId: number
   title: string
   description: string
   thumbnailUrl: string | null
-}
-
-/* =========================
- * Shorts List  -> /api/v1/shorts
- * 숏츠 목록 조회
- * ========================= */
-
-export interface ShortsListCard extends ShortsBase {
-  cateogryId: number
-  categoryName: string
-  commentCount: number
-  createdAt: string
-  durationSec: number
-  isLiked: boolean
-  keywords: string[]
-  likeCount: number
-  status: ShortsStatus
-  updatedAt: string
   userId: number
   userNickname: string
   userProfileUrl: string | null
-  videoUrl: string
-  viewCount: number
-}
-
-/* =========================
- * Category Shorts -> /api/v1/categories/{categoryId}/shorts
- * 같은 카테고리 숏츠 목록 조회
- * ========================= */
-
-export interface CategoryShortsCard extends ShortsBase {
-  videoUrl: string
-  durationSec: number
-  status: ShortsStatus
-}
-
-/* =========================
- * Popular Shorts -> /api/v1/shorts/popular
- * 인기 목록 숏츠 조회
- * ========================= */
-
-export interface PopularShortsCard extends ShortsBase {
-  videoUrl: string
-  durationSec: number
-  viewCount: number
-  likeCount: number
-  status: ShortsStatus
-}
-
-/* =========================
- * Shorts Detail -> /api/v1/shorts/{shortsId}
- * 숏츠 상세 조회
- * ========================= */
-
-export interface ShortsDetail {
-  shortId: string
-  title: string
-  description: string
-  thumbnailUrl: string
-  duration: number
-  s3Key: string
-  viewCount: number
-  likeCount: number
+  categoryName: string
+  categoryId: number
   commentCount: number
-  category: Category
-  keywords: string[]
-  uploader: Omit<UserInfo, 'email'>
+  createdAt: string
+  durationSec: number
   isLiked: boolean
-  createdAt: string
   updatedAt: string
+  status: ShortsState
+  likeCount: number
+  viewCount: number
+  videoUrl: string
+  keywords: string[]
 }
 
-/* =========================
- * My Shorts -> /api/v1/shorts/me
- * 내 숏츠 목록 조회
- * ========================= */
-
-export interface MyShortsCard extends ShortsBase {
-  videoUrl: string
-  duration: number | null
-  status: Status
-  viewCount: number
-  likeCount: number
-  commentCount: number
-  keywords: string[]
-  createdAt: string
-  updatedAt: string
+/**
+ * 좋아요한 숏츠
+ * 개발시 수정 필요 **
+ */
+export interface LikedShorts {
+  id: string
+  category: string
+  thumbnailUrl: string
+  title: string
+  nickname: string
+  progress: number
 }
 
 /* =========================
@@ -133,15 +66,45 @@ export interface MyShortsCard extends ShortsBase {
  * 숏츠 업로드 요청
  * ========================= */
 
-export interface ShortsUploadPrepare {
-  shortsId: string
+export interface PresignedUrlRequest {
+  title: string
+  description: string
+  categoryId: number
+  keywords: string[]
+  fileName: string
+  fileSize: number
+  contentType: string
+  durationSec: number
+}
+
+export interface PresignedUrlResponse {
+  shortId: number
   videoPresignedUrl: string
-  thumbnailPresignedUrl?: string
+  thumbnailPresignedUrl: string
   uploadId: string
   expiresIn: number
   maxFileSize: number
 }
 
+/* =========================
+ * Confirm(업로드) -> /api/v1/shorts/{shortsId}/upload-complete
+ * 업로드 확정
+ * ========================= */
+// 업로드 완료 확정 요청
+export interface ConfirmUploadRequest {
+  shortId: number
+  uploadId: string
+  videoUrl: string
+  thumbnailUrl: string
+}
+
+// 업로드 완료 확정 응답
+export interface ConfirmUploadResponse {
+  shortId: number
+  uploadId: string
+  videoUrl: string
+  thumbnailUrl: string
+}
 /* =========================
  * Upload Status -> /api/v1/shorts/{shortsId}/upload-status
  * 숏츠 업로드 상태 조회
@@ -149,7 +112,7 @@ export interface ShortsUploadPrepare {
 
 export interface ShortsUploadStatus {
   shortsId: string
-  status: ShortsStatus
+  status: ShortsState
   videoUrl?: string
   thumbnailUrl?: string
   durationSec?: number
@@ -191,6 +154,11 @@ export interface Sort {
   empty: boolean
 }
 
+export interface PageRequest {
+  page?: number
+  size?: number
+}
+
 export interface Pageable {
   pageNumber: number
   pageSize: number
@@ -201,7 +169,7 @@ export interface Pageable {
 }
 
 export interface PageResponse<T> {
-  content: T[]
+  content: T
   pageable: Pageable
   totalElements: number
   totalPages: number

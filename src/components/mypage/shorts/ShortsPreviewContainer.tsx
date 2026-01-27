@@ -1,11 +1,11 @@
 'use client'
 
-import type { ShortsResponse } from '@/types/mypage-shorts'
 import { useShortsAutoPlay } from '@/hook/mypage/useShortsAutoPlay'
 import { ShortsPreviewCard } from './ShortsPreviewItem'
+import { ShortsBase } from '@/types/shorts/shorts'
 
 interface ShortsPreviewContainerProps {
-  shorts?: ShortsResponse | null
+  shorts?: ShortsBase | null
   loop?: boolean
   autoplay?: boolean
 }

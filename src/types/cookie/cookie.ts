@@ -1,4 +1,4 @@
-export interface SetAuthCookies {
+export interface AuthCookies {
   accessToken: string
   refreshToken: string
 }

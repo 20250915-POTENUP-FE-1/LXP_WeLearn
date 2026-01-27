@@ -9,10 +9,10 @@ import { useDragNavigation } from '@/hook/useDragNavigation'
 import { useScrollNavigation } from '@/hook/useScrollNavigation'
 import { usePathname, useRouter } from 'next/navigation'
 import ShortsCard from './ShortsCard'
-import { ShortsListCard } from '@/types/shorts/shorts'
+import { ShortsBase } from '@/types/shorts/shorts'
 
 interface ShortsContainerProps {
-  shortsList: ShortsListCard[]
+  shortsList: ShortsBase[]
   initialIndex: number
 }
 

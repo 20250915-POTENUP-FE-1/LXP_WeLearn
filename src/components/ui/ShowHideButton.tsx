@@ -1,6 +1,4 @@
-'use client'
 import { Eye, EyeClosed } from 'lucide-react'
-import { useState } from 'react'
 
 interface ShowHideButtonProps {
   show: boolean

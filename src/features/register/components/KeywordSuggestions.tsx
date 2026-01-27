@@ -1,7 +1,7 @@
 'use client'
 
+import { KeywordSuggestion } from '@/types/keyword/keyword'
 import { useEffect, useRef } from 'react'
-import { KeywordSuggestion } from '@/hook/keyword/useKeywordSearch'
 
 interface KeywordSuggestionsProps {
   isOpen: boolean

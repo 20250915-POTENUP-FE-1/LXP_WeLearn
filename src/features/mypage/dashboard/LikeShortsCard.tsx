@@ -1,18 +1,18 @@
 import Image from 'next/image'
 
 interface LikeShortsCardProps {
-  thumbnailUrl: string
-  title: string
-  progress: number
-  category: string
-  nickname: string
+  thumbnailUrl: string | ''
+  title?: string
+  progress?: number
+  categoryName?: string
+  nickname?: string
 }
 
 export default function LikeShortsCard({
   thumbnailUrl,
   title,
   progress,
-  category,
+  categoryName,
   nickname,
 }: LikeShortsCardProps) {
   return (
@@ -30,7 +30,7 @@ export default function LikeShortsCard({
           {/* 상단 배지 */}
           <div className="pointer-events-none absolute inset-x-0 top-0 z-10 pt-1.5 pl-3">
             <span className="rounded-full bg-black/55 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur">
-              {category}
+              {categoryName}
             </span>
           </div>
 

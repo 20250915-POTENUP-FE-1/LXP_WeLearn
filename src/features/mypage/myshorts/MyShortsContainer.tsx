@@ -6,24 +6,22 @@ import { toast } from 'react-toastify'
 import MyShortsCreateButton from './MyShortsCreateButton'
 import ShortsListHeader from '@/components/mypage/shorts/ShortsListHeader'
 import ShortsCard from '@/components/mypage/shorts/ShortsCard'
-import { ShortsResponse } from '@/types/mypage-shorts'
 import ShortsPreviewContainer from '@/components/mypage/shorts/ShortsPreviewContainer'
 import { deleteShortsAction } from './myshorts.action'
+import { ShortsBase } from '@/types/shorts/shorts'
 
 interface MyShortsContainerProps {
-  initialShorts: ShortsResponse[]
+  initialShorts: ShortsBase[]
   totalCount: number
 }
 
 export default function MyShortsContainer({ initialShorts, totalCount }: MyShortsContainerProps) {
   const router = useRouter()
-  const [shortsList, setShortsList] = useState<ShortsResponse[]>(initialShorts)
-  const [selectedShorts, setSelectedShorts] = useState<ShortsResponse | null>(
-    initialShorts[0] ?? null,
-  )
+  const [shortsList, setShortsList] = useState<ShortsBase[]>(initialShorts)
+  const [selectedShorts, setSelectedShorts] = useState<ShortsBase | null>(initialShorts[0] ?? null)
   const [isDeleting, setIsDeleting] = useState(false)
 
-  const handleSelectShorts = (shorts: ShortsResponse) => {
+  const handleSelectShorts = (shorts: ShortsBase) => {
     setSelectedShorts(shorts)
   }
 

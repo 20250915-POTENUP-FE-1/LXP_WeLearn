@@ -11,20 +11,14 @@ import { EditTarget } from '@/features/modals/comment/CommentList'
 interface CommentDropdownMenuProps {
   id: number
   mode: 'comment' | 'reply'
-  deleteTarget: DeleteTarget
   setEditTarget: React.Dispatch<React.SetStateAction<EditTarget>>
-  setIsUpdate: React.Dispatch<React.SetStateAction<number>>
-  setIsReplyUpdate?: React.Dispatch<React.SetStateAction<number>>
   setDeleteTarget: React.Dispatch<React.SetStateAction<DeleteTarget>>
 }
 
 export default function CommentDropDownMenu({
   id,
   mode,
-  deleteTarget,
   setEditTarget,
-  setIsUpdate,
-  setIsReplyUpdate,
   setDeleteTarget,
 }: CommentDropdownMenuProps) {
   return (
