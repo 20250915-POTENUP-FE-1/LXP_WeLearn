@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { User } from 'lucide-react'
-import { ShortsUploader } from '../../../types/shorts'
 import ShortsToggleDescription from './ShortsToggleDescription'
+import { ShortsUploader } from '@/types/shorts/shorts'
 
 interface ShortsCreateInfoProps {
   uploader: ShortsUploader

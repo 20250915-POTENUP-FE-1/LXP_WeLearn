@@ -7,12 +7,12 @@ import { useKeyboardNavigation } from '@/hook/useKeyboardNavigation'
 import { getSafeIndex } from '@/lib/utils/getSafeIndex'
 import { useDragNavigation } from '@/hook/useDragNavigation'
 import { useScrollNavigation } from '@/hook/useScrollNavigation'
-import { ShortsItemType } from '@/types/shorts'
 import ShortsItem from './ShortsItem'
 import { usePathname, useRouter } from 'next/navigation'
+import { ShortsListItem } from '@/types/shorts/shorts'
 
 interface ShortsContainerProps {
-  shortsList: ShortsItemType[]
+  shortsList: ShortsListItem[]
   initialIndex: number
 }
 

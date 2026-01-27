@@ -1,11 +1,11 @@
 import ShortsPlayer from './ShortsPlayer'
 import ShortsCreateInfo from './ShortsCreateInfo'
 import ShortsActionBar from './ShortsActionBar'
-import { ShortsItemType } from '@/types/shorts'
 import { DEFAULT_IMAGES } from '@/constants/shortsImages'
+import { ShortsListItem } from '@/types/shorts/shorts'
 
 interface ShortsItemProps {
-  shorts: ShortsItemType
+  shorts: ShortsListItem
   userProfileUrl?: string | null
 }
 
@@ -37,7 +37,7 @@ export default function ShortsItem({ shorts, userProfileUrl }: ShortsItemProps) 
         {/* 액션 버튼 - 하단 우측 정렬 */}
         <div className="pointer-events-auto mr-2 self-end">
           <ShortsActionBar
-            id={shorts.shortsId}
+            shortsId={shorts.shortsId}
             likeCount={shorts.likeCount}
             commentCount={shorts.commentCount}
             isLiked={shorts.isLiked}

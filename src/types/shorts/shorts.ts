@@ -3,6 +3,14 @@ import { ShortsStatus } from '../mypage-shorts'
 import { UserInfo } from '../user/user'
 import { Status } from './status'
 
+//------------- 업로더 ------------
+// 숏츠 업로더
+export interface ShortsUploader {
+  userId: number
+  userNickname: string
+  userProfileUrl: string | null
+}
+
 // ----------------- Request ---------------
 // 숏츠 업로드 / 수정 Request
 export interface ShortsReuqst {
@@ -27,12 +35,10 @@ export interface ShortsUploadCompleteRequest {
 // ----------------- Response ----------------
 /** 🔹 Shorts 최소 공통 Base */
 export interface ShortsBase {
-  shortsId: string | number
+  shortsId: number
   title: string
   description: string
   thumbnailUrl: string | null
-  category: Category
-  uploader: Omit<UserInfo, 'email'>
 }
 
 /* =========================
@@ -41,12 +47,21 @@ export interface ShortsBase {
  * ========================= */
 
 export interface ShortsListItem extends ShortsBase {
-  videoUrl: string
-  duration: number
-  viewCount: number
-  likeCount: number
-  keywords?: string[]
+  cateogryId: number
+  categoryName: string
+  commentCount: number
   createdAt: string
+  durationSec: number
+  isLiked: boolean
+  keywords: string[]
+  likeCount: number
+  status: ShortsStatus
+  updatedAt: string
+  userId: number
+  userNickname: string
+  userProfileUrl: string | null
+  videoUrl: string
+  viewCount: number
 }
 
 /* =========================

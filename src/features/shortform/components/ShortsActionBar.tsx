@@ -6,14 +6,14 @@ import ShortsLikeButton from './ShortsLikeButton'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 interface ShortsActionBarProps {
-  id: number
+  shortsId: number
   likeCount: number
   commentCount: number
   isLiked: boolean
 }
 
 export default function ShortsActionBar({
-  id,
+  shortsId,
   likeCount,
   commentCount,
   isLiked,
@@ -22,7 +22,6 @@ export default function ShortsActionBar({
   const pathname = usePathname()
   const isCommentOpen = pathname.endsWith('/comments')
   const isPlaylistOpen = pathname.endsWith('/playlist')
-  const [totalCount, setTotalCount] = useState(commentCount)
 
   const handleComingSoon = (feature: string) => {
     toast.info(`${feature} 서비스 준비 중입니다.`, {
@@ -32,29 +31,24 @@ export default function ShortsActionBar({
 
   const handleComment = () => {
     if (isCommentOpen) {
-      // router.push(`/shorts/${id}`, { scroll: false })
-      window.history.replaceState(null, '', `/shorts/${id}`)
+      window.history.replaceState(null, '', `/shorts/${shortsId}`)
     } else {
-      router.push(`/shorts/${id}/comments`, { scroll: false })
+      router.replace(`/shorts/${shortsId}/comments`, { scroll: false })
     }
   }
 
   const handlePlaylist = () => {
     if (isPlaylistOpen) {
-      router.push(`/shorts/${id}`, { scroll: false })
+      window.history.replaceState(null, '', `/shorts/${shortsId}`)
     } else {
-      router.push(`/shorts/${id}/playlist`, { scroll: false })
+      router.replace(`/shorts/${shortsId}/playlist`, { scroll: false })
     }
   }
-
-  useEffect(() => {
-    setTotalCount(commentCount)
-  }, [commentCount])
 
   return (
     <aside className="absolute right-5 bottom-20 flex flex-col items-center gap-6">
       {/* 좋아요 */}
-      <ShortsLikeButton initialLikeCount={likeCount} shortsId={id} initialIsLike={isLiked} />
+      <ShortsLikeButton initialLikeCount={likeCount} shortsId={shortsId} initialIsLike={isLiked} />
 
       {/* 댓글 */}
 
@@ -65,7 +59,7 @@ export default function ShortsActionBar({
         onClick={handleComment}
       >
         <MessageSquareText strokeWidth={1.5} />
-        <span className="mt-1 text-xs">{totalCount}</span>
+        <span className="mt-1 text-xs">{commentCount}</span>
       </button>
 
       {/* 저장 */}

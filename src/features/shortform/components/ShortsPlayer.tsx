@@ -4,7 +4,7 @@ import { useRef, useEffect } from 'react'
 
 interface ShortsPlayerProps {
   videoUrl: string
-  thumbnailUrl?: string
+  thumbnailUrl: string | null
 }
 
 export default function ShortsPlayer({ videoUrl }: ShortsPlayerProps) {
