@@ -36,7 +36,7 @@ export interface CommentsResponse {
   data: CommentType[]
 }
 
-export interface CommnetData {
+export interface CommentData {
   totalCommentCount: number
   comments: CommentType[]
 }

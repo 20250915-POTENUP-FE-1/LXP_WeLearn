@@ -1,20 +1,8 @@
 import { api } from '@/lib/utils/apiUtils'
 import { parseSetCookie } from '@/lib/utils/parseSetCookie'
 import { setAuthCookies } from '@/lib/utils/setAuthCookies'
+import { SignInRequest, SignUpRequest } from '@/types/auth/auth'
 import { cookies } from 'next/headers'
-
-interface SignupRequest {
-  email: string
-  password: string
-  nickname: string
-  name: string
-  profileUrl?: string
-}
-
-interface SigninRequest {
-  email: string
-  password: string
-}
 
 /**
  * 쿠키 헤더를 파싱하여 현재 요청의 cookieStore에 적용하는 헬퍼 함수
@@ -35,7 +23,7 @@ export const authApi = {
   /**
    * 회원가입
    */
-  signup: async (data: SignupRequest) => {
+  signup: async (data: SignUpRequest) => {
     // 일반적인 POST 요청 (데이터만 반환)
     return api.post('/api/v1/users', data, { cache: 'no-store' })
   },
@@ -44,7 +32,7 @@ export const authApi = {
    * 로그인
    * 백엔드가 Set-Cookie로 토큰을 준다면 response 헤더를 직접 핸들링해야 함
    */
-  signin: async (data: SigninRequest) => {
+  signin: async (data: SignInRequest) => {
     // apiUtils에서 Response 원본을 받기 위해 필요한 경우 처리
     // 여기서는 api.post가 내부에서 res.json()을 리턴하므로,
     // 만약 헤더 접근이 필요하다면 apiUtils의 post가 Response를 반환하도록 유지해야 합니다.

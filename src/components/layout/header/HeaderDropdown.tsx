@@ -11,10 +11,10 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
-import { UserResponse } from '@/services/mypage/user.service'
+import { UserInfo } from '@/types/user/user'
 
 interface UserDropdownProps {
-  user: UserResponse | null
+  user: UserInfo
 }
 export default function HeaderDropdown({ user }: UserDropdownProps) {
   const router = useRouter()

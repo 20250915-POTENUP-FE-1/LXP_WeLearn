@@ -1,21 +1,11 @@
 'use server'
 
 import { userApi, type UserResponse } from '@/services/mypage/user.service'
+import { ActionState } from '@/types/action/action'
+
+import { UserInfo, UserUpdateRequest } from '@/types/user/user'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-
-interface UserUpdateRequest {
-  nickname: string
-  profileUrl?: string
-  name?: string
-}
-
-// 액션 응답 타입
-export type ActionState<T = unknown> = {
-  success: boolean
-  message?: string
-  data?: T
-}
 
 /**
  * 내 정보 수정 액션
@@ -23,7 +13,7 @@ export type ActionState<T = unknown> = {
 export async function updateMeAction(
   prevState: ActionState<UserResponse>,
   formData: FormData,
-): Promise<ActionState<UserResponse>> {
+): Promise<ActionState<UserInfo>> {
   const nickname = formData.get('nickname') as string
   const profileUrl = formData.get('profileUrl') as string | null
 
@@ -36,7 +26,7 @@ export async function updateMeAction(
   }
 
   const payload: UserUpdateRequest = {
-    nickname: nickname.trim(),
+    nickName: nickname.trim(),
     profileUrl: profileUrl || undefined,
   }
 

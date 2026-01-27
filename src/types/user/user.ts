@@ -4,7 +4,7 @@
  * 프로필 수정
  * /api/v1/users/me
  * ========================= */
-export interface ProfileEditRequest {
+export interface UserUpdateRequest {
   email?: string
   nickName?: string
   profileUrl?: string
@@ -14,7 +14,7 @@ export interface ProfileEditRequest {
  * 비밀번호 수정
  * /api/v1/users/me/password
  * ========================= */
-export interface PasswordEditRequest {
+export interface PasswordUpdateRequest {
   currentPassword: string
   newPassword: string
 }
@@ -28,7 +28,8 @@ export interface PasswordEditRequest {
 
 export interface UserInfo {
   userId: number
-  eamil: string
+  email: string
   nickName: string
   profileUrl: string | null
+  createdAt?: string
 }
