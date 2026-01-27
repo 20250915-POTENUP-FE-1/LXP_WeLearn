@@ -3,12 +3,12 @@ import { ReplyCommentType } from '@/types/comment'
 import { timeAgo } from '@/utils/timeAgo'
 import { AnimatePresence, motion } from 'framer-motion'
 import { User } from 'lucide-react'
-import { useActionState, useEffect, useState } from 'react'
-import { EditTarget } from './Comment'
+import { useActionState, useEffect } from 'react'
+import { EditTarget } from './CommentList'
 import { Button } from '@/components/ui/Button'
 import { toast } from 'react-toastify'
-import { DeleteTarget } from './CommentsModal'
 import { patchReplyCommentAction } from './action'
+import { DeleteTarget } from './CommentsModalContainer'
 
 interface ReCommentProps {
   openReply: number | null

@@ -3,13 +3,13 @@
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import CommentModalHeader from './CommentsModalHeader'
-import Comment from './Comment'
 import CommentInput from './CommentInput'
 import useIsMobile from '@/hook/useIsMobile'
 import { startTransition, useActionState, useEffect, useState } from 'react'
 import DeleteModal from '@/components/ui/DeleteModal'
 import { getCommentAction } from './action'
 import { CommentsResponse } from '@/types/comments/comments'
+import CommentList from './CommentList'
 
 export type DeleteTarget = { mode: 'comment'; id: number } | { mode: 'reply'; id: number } | null
 
@@ -96,7 +96,7 @@ export default function CommentModalContainer() {
               <div className="flex-1 overflow-y-auto px-4 [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {/* ==================== Comment Block 1 ==================== */}
                 {comments?.length !== 0 ? (
-                  <Comment
+                  <CommentList
                     comments={comments ?? []}
                     shortsId={shortsId}
                     isReplyUpdate={isReplyUpdate}
