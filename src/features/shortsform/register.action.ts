@@ -1,10 +1,6 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-<<<<<<< HEAD:src/features/shortsform/register.action.ts
-=======
-
->>>>>>> origin/develop:src/features/register/register.action.ts
 import { ActionState } from '@/types/action/action'
 import {
   ConfirmUploadRequest,
