@@ -1,3 +1,3 @@
-export type Status = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED'
+export type ShortsStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED'
 
-export type ShortsState = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
+export type ShortsVisibility = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'

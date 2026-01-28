@@ -9,11 +9,11 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Globe, Lock, Pencil, Trash2 } from 'lucide-react'
 import { toast } from 'react-toastify'
-import { ShortsState } from '@/types/shorts/status'
+import { ShortsVisibility } from '@/types/shorts/status'
 
 interface MyShortsDropdownMenuProps {
   shortsId: number // 수정 페이지 이동에 필요
-  shortsStatus: ShortsState
+  shortsStatus: ShortsVisibility
   onToggleVisibility?: () => void
   onDelete?: () => void
 }

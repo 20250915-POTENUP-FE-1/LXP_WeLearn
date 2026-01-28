@@ -1,4 +1,4 @@
-import { ShortsState } from './status'
+import { ShortsVisibility } from './status'
 
 //------------- 업로더 ------------
 // 숏츠 업로더
@@ -18,7 +18,7 @@ export interface ShortsRequest {
   fileName?: string
   contentType?: string
   durationSec?: number
-  status?: ShortsState
+  status?: ShortsVisibility
   thumbnailUrl?: string | null
 }
 
@@ -41,7 +41,7 @@ export interface ShortsBase {
   durationSec: number
   isLiked: boolean
   updatedAt: string
-  status: ShortsState
+  status: ShortsVisibility
   likeCount: number
   viewCount: number
   videoUrl: string
@@ -112,7 +112,7 @@ export interface ConfirmUploadResponse {
 
 export interface ShortsUploadStatus {
   shortsId: string
-  status: ShortsState
+  status: ShortsVisibility
   videoUrl?: string
   thumbnailUrl?: string
   durationSec?: number
