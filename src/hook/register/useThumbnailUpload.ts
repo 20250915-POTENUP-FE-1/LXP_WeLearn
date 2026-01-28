@@ -2,7 +2,7 @@ import type { RefObject } from 'react'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 import type { ShortsFormChangeHandler } from '@/features/shortsform/types/shortsForm'
-import { isValidImageFile } from '@/features/shortsform/register/register.validation'
+import { isValidImageFile } from '@/features/shortsform/shortsform.validation'
 import useDragAndDrop from './useDragAndDrop'
 
 interface UseThumbnailUploadParams {

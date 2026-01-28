@@ -3,10 +3,10 @@ import {
   ALLOWED_VIDEO_TYPES,
   VALIDATION_LIMITS,
 } from '@/constants/form.validation'
-import type { ShortsFormData, VideoPreviewData } from '../types/shortsForm'
+import type { ShortsFormData, VideoPreviewData } from './types/shortsForm'
 
 // ========== 타입 정의 ==========
-export type ValidationField = 'title' | 'description' | 'categoryId' | 'videoFile' | 'keywords'
+export type ValidationField = 'title' | 'description' | 'categoryId' | 'keywords' | 'videoFile'
 
 export interface ValidationError {
   field: ValidationField
@@ -16,6 +16,13 @@ export interface ValidationError {
 export interface ValidationResult {
   isValid: boolean
   errors: ValidationError[]
+}
+
+interface CommonFieldsData {
+  title?: string
+  description?: string
+  categoryId?: number | null
+  keywords?: string[]
 }
 
 // ========== 입력 필드 검증 함수 ==========
@@ -89,85 +96,44 @@ export function isKeywordsMaxReached(keywords: string[]): boolean {
   return keywords.length >= VALIDATION_LIMITS.KEYWORDS_MAX
 }
 
-export function isKeywordsValid(keywords: string[]): boolean {
-  return keywords.length >= VALIDATION_LIMITS.KEYWORDS_MIN
+// ========== 공통 검증 헬퍼 ==========
+
+function validateCommonFields(data: CommonFieldsData): ValidationError[] {
+  const validators = [
+    validateTitle(data.title),
+    validateDescription(data.description),
+    validateCategoryId(data.categoryId),
+    data.keywords ? validateKeywords(data.keywords) : null,
+  ]
+
+  return validators.filter((error): error is ValidationError => error !== null)
 }
+
+function toValidationResult(errors: ValidationError[]): ValidationResult {
+  return { isValid: errors.length === 0, errors }
+}
+
+// ========== 폼 검증 함수 ==========
 
 /**
  * 숏츠 폼 전체 유효성 검증 (클라이언트용)
  * - 제목, 설명, 카테고리, 키워드, 영상 파일을 순차적으로 검증
- * - 모든 에러를 수집하여 ValidationResult로 반환
  */
 export function validateShortsForm(
   formData: ShortsFormData,
   videoData: VideoPreviewData,
 ): ValidationResult {
-  const errors: ValidationError[] = []
-
-  // 제목
-  const titleError = validateTitle(formData.title)
-  if (titleError) errors.push(titleError)
-
-  // 설명
-  const descriptionError = validateDescription(formData.description)
-  if (descriptionError) errors.push(descriptionError)
-
-  // 카테고리 선택
-  const categoryError = validateCategoryId(formData.categoryId)
-  if (categoryError) errors.push(categoryError)
-
-  // 키워드
-  const keywordsError = validateKeywords(formData.keywords)
-  if (keywordsError) errors.push(keywordsError)
-
-  // 영상 파일
+  const errors = validateCommonFields(formData)
   const videoError = validateVideoFile(videoData.videoFile)
   if (videoError) errors.push(videoError)
 
-  return {
-    isValid: errors.length === 0,
-    errors,
-  }
+  return toValidationResult(errors)
 }
 
 /**
- * 서버 액션용 유효성 검증
+ * 숏츠 수정 폼 유효성 검증 (클라이언트용)
+ * - 영상 파일 검증 제외 (수정 모드에서는 영상 변경 불가)
  */
-export function validateRegisterFormData(data: {
-  categoryId?: number
-  title?: string
-  description?: string
-  keywords?: string[]
-  videoFile?: File | null
-}): ValidationResult {
-  const errors: ValidationError[] = []
-
-  const titleError = validateTitle(data.title)
-  if (titleError) errors.push(titleError)
-
-  const descriptionError = validateDescription(data.description)
-  if (descriptionError) errors.push(descriptionError)
-
-  const categoryError = validateCategoryId(data.categoryId)
-  if (categoryError) errors.push(categoryError)
-
-  if (data.keywords) {
-    const keywordsError = validateKeywords(data.keywords)
-    if (keywordsError) errors.push(keywordsError)
-  }
-
-  const videoError = validateVideoFile(data.videoFile)
-  if (videoError) errors.push(videoError)
-
-  return {
-    isValid: errors.length === 0,
-    errors,
-  }
-}
-
-/**
- * 첫 번째 에러 메시지 반환 (서버 액션 응답용)
- */
-export function getFirstErrorMessage(result: ValidationResult): string | null {
-  return result.errors[0]?.message ?? null
+export function validateEditShortsForm(formData: ShortsFormData): ValidationResult {
+  return toValidationResult(validateCommonFields(formData))
 }
