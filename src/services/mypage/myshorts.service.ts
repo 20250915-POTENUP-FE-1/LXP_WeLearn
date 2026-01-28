@@ -30,9 +30,7 @@ export const myShortsApi = {
     shortsId: number,
     data: Partial<ShortsRequest>,
   ): Promise<ApiResponse<ShortsBase>> => {
-    const response = await api.patch<ApiResponse<ShortsBase>>(`/api/v1/shorts/${shortsId}`, {
-      body: data,
-    })
+    const response = await api.patch<ApiResponse<ShortsBase>>(`/api/v1/shorts/${shortsId}`, data)
     if (response) {
       return response
     }
