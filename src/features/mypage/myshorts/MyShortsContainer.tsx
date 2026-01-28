@@ -4,11 +4,11 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 import MyShortsCreateButton from './MyShortsCreateButton'
-import ShortsListHeader from '@/components/mypage/shorts/ShortsListHeader'
 import ShortsCard from '@/components/mypage/shorts/ShortsCard'
 import ShortsPreviewContainer from '@/components/mypage/shorts/ShortsPreviewContainer'
 import { deleteShortsAction } from './myshorts.action'
 import { ShortsBase } from '@/types/shorts/shorts'
+import ShortsListHeader from '@/components/mypage/shorts/ShortsListHeader'
 
 interface MyShortsContainerProps {
   initialShorts: ShortsBase[]

@@ -27,7 +27,6 @@ export async function updateShortsAction(
   const categoryId = formData.get('categoryId')
   const status = formData.get('status') as ShortsRequest['status'] | null
   const keywords = formData.getAll('keywords') as string[]
-  const thumbnailUrl = formData.get('thumbnailUrl') as string | null
 
   const payload: ShortsRequest = {
     title: title,
@@ -35,14 +34,6 @@ export async function updateShortsAction(
     categoryId: Number(categoryId),
     status: status || undefined,
     keywords: keywords,
-  }
-
-  // 썸네일 처리: FormData에 thumbnailUrl 키가 있는 경우에만 처리
-  // - 빈 문자열(''): 삭제 요청 → null로 전송
-  // - 값이 있는 경우: 업데이트 요청
-  // - FormData에 키가 없는 경우: 기존 유지 (payload에 포함하지 않음)
-  if (formData.has('thumbnailUrl')) {
-    payload.thumbnailUrl = thumbnailUrl === '' ? null : thumbnailUrl
   }
 
   try {

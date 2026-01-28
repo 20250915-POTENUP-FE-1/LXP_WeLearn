@@ -6,23 +6,23 @@ import { toast } from 'react-toastify'
 import { validateShortsForm, validateEditShortsForm } from '../shortsform.validation'
 import { extractVideoDuration } from '@/utils/extractVideoDuration'
 import { updateShortsAction } from '@/features/mypage/myshorts/myshorts.action'
-import type { PresignedUrlResponse } from '@/services/shorts/upload.service'
 import {
   type ShortsFormData,
   type VideoPreviewData,
-  type CategoryOption,
   type ShortsEditInitialData,
   INITIAL_SHORTS_FORM_DATA,
   INITIAL_VIDEO_PREVIEW_DATA,
-} from '@/features/shortsform/types/shortsForm'
+} from '@/types/shorts/shortsForm'
 import ShortsFormBasicInfo from './ShortsFormBasicInfo'
 import ShortsFormMediaSection from './ShortsFormMediaSection'
 import ShortsFormSubmitButtons from './ShortsFormSubmitButtons'
 import KeywordContainer from './keyword/KeywordContainer'
 import { confirmUploadAction, getPresignedUrlAction } from '../register.action'
+import { Category } from '@/types/category/category'
+import { PresignedUrlResponse } from '@/types/shorts/shorts'
 
 interface ShortsFormContainerProps {
-  categories: CategoryOption[]
+  categories: Category[]
   mode: 'create' | 'edit'
   initialData?: ShortsEditInitialData
   shortsId?: number
@@ -189,8 +189,8 @@ export default function ShortsFormContainer({
       submitFormData.append('description', formData.description || '')
       submitFormData.append('status', formData.isPublic ? 'PUBLISHED' : 'DRAFT')
 
-      // 카테고리는 선택된 경우에만 전송 (빈 값 방지)
-      if (formData.categoryId) {
+      // 카테고리는 항상 전송 (API 필수 필드)
+      if (formData.categoryId !== null) {
         submitFormData.append('categoryId', formData.categoryId.toString())
       }
 

@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import type { ShortsFormChangeHandler } from '@/features/shortsform/types/shortsForm'
+import type { ShortsFormChangeHandler } from '@/types/shorts/shortsForm'
 import ShortsFormUploadVideo from './ShortsFormUploadVideo'
 import ShortsFormUploadThumbnail from './ShortsFormUploadThumbnail'
 

@@ -1,4 +1,4 @@
-import type { ShortsFormChangeHandler } from '@/features/shortsform/types/shortsForm'
+import type { ShortsFormChangeHandler } from '@/types/shorts/shortsForm'
 import { VALIDATION_LIMITS } from '@/constants/form.validation'
 import { isKeywordsMaxReached } from '@/features/shortsform/shortsform.validation'
 

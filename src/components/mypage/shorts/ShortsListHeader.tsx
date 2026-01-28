@@ -1,6 +1,6 @@
 interface ShortsListHeaderProps {
   totalCount: number
-  label: string
+  label?: string
 }
 
 export default function ShortsListHeader({ totalCount, label = '총' }: ShortsListHeaderProps) {

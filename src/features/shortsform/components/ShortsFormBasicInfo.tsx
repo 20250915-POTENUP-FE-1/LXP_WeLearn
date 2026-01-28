@@ -3,15 +3,12 @@
 import { ChevronDown } from 'lucide-react'
 import { Input } from '@/components/ui/Input'
 import { VALIDATION_LIMITS } from '@/constants/form.validation'
-import type {
-  ShortsFormData,
-  ShortsFormChangeHandler,
-  CategoryOption,
-} from '@/features/shortsform/types/shortsForm'
+import type { ShortsFormData, ShortsFormChangeHandler } from '@/types/shorts/shortsForm'
+import { Category } from '@/types/category/category'
 
 interface ShortsFormBasicInfoProps {
   formData: Pick<ShortsFormData, 'title' | 'description' | 'isPublic' | 'categoryId'>
-  categories: CategoryOption[]
+  categories: Category[]
   onChange: ShortsFormChangeHandler
 }
 

@@ -10,7 +10,7 @@ import type {
   VideoPreviewData,
   ShortsFormChangeHandler,
   VideoPreviewChangeHandler,
-} from '@/features/shortsform/types/shortsForm'
+} from '@/types/shorts/shortsForm'
 
 interface ShortsFormMediaSectionProps {
   formData: Pick<ShortsFormData, 'thumbnail'>

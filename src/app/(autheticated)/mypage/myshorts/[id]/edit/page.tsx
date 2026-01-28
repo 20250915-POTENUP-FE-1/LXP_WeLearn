@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { myShortsApi } from '@/services/mypage/myshorts.service'
 import { getCategoriesAction } from '@/features/category.action'
 import ShortsFormContainer from '@/features/shortsform/components/ShortsFormContainer'
-import type { ShortsEditInitialData } from '@/features/shortsform/types/shortsForm'
+import type { ShortsEditInitialData } from '@/types/shorts/shortsForm'
 import { ShortsBase } from '@/types/shorts/shorts'
 import { Category } from '@/types/category/category'
 
@@ -19,7 +19,7 @@ function transformToEditInitialData(shortsData: ShortsBase): ShortsEditInitialDa
       title: shortsData.title || '',
       description: shortsData.description || '',
       isPublic: shortsData.status === 'PUBLISHED',
-      categoryId: shortsData.categoryId || null,
+      categoryId: shortsData.categoryId ?? null,
       keywords: shortsData.keywords || [],
       keywordInput: '',
       thumbnail: null,

@@ -1,7 +1,7 @@
 import type { RefObject } from 'react'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
-import type { VideoPreviewChangeHandler } from '@/features/shortsform/types/shortsForm'
+import type { VideoPreviewChangeHandler } from '@/types/shorts/shortsForm'
 import { isValidVideoFile } from '@/features/shortsform/shortsform.validation'
 import { extractVideoDuration } from '@/utils/extractVideoDuration'
 import useDragAndDrop from './useDragAndDrop'

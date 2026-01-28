@@ -1,7 +1,7 @@
 'use client'
 
 import { Input } from '@/components/ui/Input'
-import type { ShortsFormChangeHandler } from '@/features/shortsform/types/shortsForm'
+import type { ShortsFormChangeHandler } from '@/types/shorts/shortsForm'
 import KeywordSuggestions from './KeywordSuggestions'
 import KeywordList from './KeywordList'
 import useKeywords from '@/hook/keyword/useKeywords'

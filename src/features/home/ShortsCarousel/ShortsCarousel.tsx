@@ -1,4 +1,3 @@
-import React from 'react'
 import ShortsCarouselSwipe from './ShortsCarouselSwipe'
 import { ShortsBase } from '@/types/shorts/shorts'
 

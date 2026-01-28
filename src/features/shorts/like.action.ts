@@ -7,7 +7,7 @@ export const likeAction = async (prevState: ApiResponse<null>, shortsId: number)
   try {
     await likeApi.like(shortsId)
     return {
-      succes: true,
+      success: true,
     }
   } catch (error) {
     return {

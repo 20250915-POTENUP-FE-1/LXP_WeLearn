@@ -1,6 +1,6 @@
 import { getCategoriesAction } from '@/features/category.action'
 import ShortsFormContainer from '@/features/shortsform/components/ShortsFormContainer'
-import type { CategoryOption } from '@/features/shortsform/types/shortsForm'
+import { Category } from '@/types/category/category'
 
 export const metadata = {
   title: '숏츠 등록',
@@ -9,7 +9,7 @@ export const metadata = {
 
 export default async function ShortsCreatePage() {
   const categoriesResponse = await getCategoriesAction()
-  const categories: CategoryOption[] =
+  const categories: Category[] =
     categoriesResponse.data?.map((cat) => ({
       id: cat.id,
       name: cat.name,

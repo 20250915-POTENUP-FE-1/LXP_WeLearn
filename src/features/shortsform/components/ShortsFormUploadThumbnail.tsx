@@ -5,7 +5,7 @@ import { ImageIcon, Lock } from 'lucide-react'
 import ShortsFormPreviewFrame from './ShortsFormUploadPreview'
 import ShortsFormEmptyState from './ShortsFormEmptyState'
 import useThumbnailUpload from '@/hook/register/useThumbnailUpload'
-import type { ShortsFormChangeHandler } from '@/features/shortsform/types/shortsForm'
+import type { ShortsFormChangeHandler } from '@/types/shorts/shortsForm'
 import { Button } from '@/components/ui/Button'
 
 interface ShortsFormUploadThumbnailProps {
