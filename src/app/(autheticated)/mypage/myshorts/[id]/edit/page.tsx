@@ -2,8 +2,9 @@ import { notFound } from 'next/navigation'
 import { myShortsApi } from '@/services/mypage/myshorts.service'
 import { getCategoriesAction } from '@/features/category.action'
 import ShortsFormContainer from '@/features/shortsform/components/ShortsFormContainer'
-import type { ShortsEditInitialData, CategoryOption } from '@/features/shortsform/types/shortsForm'
+import type { ShortsEditInitialData } from '@/features/shortsform/types/shortsForm'
 import { ShortsBase } from '@/types/shorts/shorts'
+import { Category } from '@/types/category/category'
 
 interface EditShortsPageProps {
   params: Promise<{ id: string }>
@@ -49,7 +50,7 @@ export default async function EditShortsPage({ params }: EditShortsPageProps) {
     ])
 
     const initialData = transformToEditInitialData(shortsData)
-    const categories: CategoryOption[] =
+    const categories: Category[] =
       categoriesResponse.data?.map((cat) => ({
         id: cat.id,
         name: cat.name,

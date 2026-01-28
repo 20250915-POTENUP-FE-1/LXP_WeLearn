@@ -55,9 +55,3 @@ export interface ShortsEditInitialData {
   videoUrl: string
   thumbnailUrl: string | null
 }
-
-// 카테고리 응답 타입 (서버에서 전달)
-export interface CategoryOption {
-  id: number
-  name: string
-}
