@@ -1,7 +1,7 @@
-import { api } from '@/lib/utils/apiUtils'
-import { ApiResponse } from '@/types/api/api'
-import { Category } from '@/types/category/category'
-import { PageRequest, PageResponse, ShortsBase } from '@/types/shorts/shorts'
+import { api } from '@/lib/utils/apiUtils';
+import { ApiResponse } from '@/types/api/api';
+import { Category } from '@/types/category/category';
+import { PageRequest, PageResponse, ShortsBase } from '@/types/shorts/shorts';
 
 export const categoryApi = {
   /** 전체 카테고리 목록 조회 */
@@ -13,12 +13,11 @@ export const categoryApi = {
   getAllShorts: async ({ page = 0, size = 8 }: PageRequest = {}): Promise<
     ApiResponse<PageResponse<ShortsBase[]>>
   > => {
-    const response = await api.get<ApiResponse<PageResponse<ShortsBase[]>>>('/api/v1/shorts', {
+    return await api.get<ApiResponse<PageResponse<ShortsBase[]>>>('/api/v1/shorts', {
       cache: 'no-store',
       params: { page, size, sort: 'createdAt,desc' },
       auth: false,
     })
-    return response
   },
 
   /** 카테고리별 숏츠 목록 조회 */
@@ -26,7 +25,7 @@ export const categoryApi = {
     categoryId: number,
     { page = 0, size = 8 }: PageRequest = {},
   ): Promise<ApiResponse<PageResponse<ShortsBase[]>>> => {
-    const response = await api.get<ApiResponse<PageResponse<ShortsBase[]>>>(
+    return await api.get<ApiResponse<PageResponse<ShortsBase[]>>>(
       `/api/v1/categories/${categoryId}/shorts`,
       {
         cache: 'no-store',
@@ -34,6 +33,5 @@ export const categoryApi = {
         auth: false,
       },
     )
-    return response
   },
 }

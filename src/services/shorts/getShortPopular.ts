@@ -1,12 +1,12 @@
-'use server'
+'use server';
 
-import { api } from '@/lib/utils/apiUtils'
-import { ApiResponse } from '@/types/api/api'
-import { PageResponse, ShortsBase } from '@/types/shorts/shorts'
+import { api } from '@/lib/utils/apiUtils';
+import { ApiResponse } from '@/types/api/api';
+import { PageResponse, ShortsBase } from '@/types/shorts/shorts';
 
 export async function getShortPopular({ page = 0, size = 8 } = {}) {
   try {
-    const popularShorts = await api.get<ApiResponse<PageResponse<ShortsBase>>>('/api/v1/shorts', {
+    return await api.get<ApiResponse<PageResponse<ShortsBase[]>>>('/api/v1/shorts', {
       cache: 'no-store', // 항상 최신 데이터
       params: {
         page,
@@ -14,7 +14,6 @@ export async function getShortPopular({ page = 0, size = 8 } = {}) {
       },
       auth: false,
     })
-    return popularShorts
   } catch (error) {
     console.error('shorts 목록 불러오기 실패:', error)
     return null

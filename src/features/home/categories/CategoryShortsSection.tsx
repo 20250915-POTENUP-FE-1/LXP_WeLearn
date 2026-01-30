@@ -3,10 +3,10 @@
 import React, { useState, useTransition } from 'react'
 import CategoryShortsCard from '@/features/home/categories/CategoryShortsCard'
 import { getShortsAction, getShortsByCategoryAction } from '@/features/category.action'
-import { Youtube } from 'lucide-react'
 import { Category } from '@/types/category/category'
 import { PageResponse, ShortsBase } from '@/types/shorts/shorts'
 import SortButton from '@/components/ui/SortButton'
+import { LucideTvMinimalPlay } from 'lucide-react';
 
 const ITEMS_PER_PAGE = 8
 
@@ -111,7 +111,8 @@ export default function CategoryShortsSection({
         )}
         {displayedShorts.length === 0 && !isPending ? (
           <div className="flex min-h-[400px] flex-col items-center justify-center py-16 text-center">
-            <Youtube strokeWidth={1.5} className="mb-4 h-12 w-12 text-gray-300" />
+            <LucideTvMinimalPlay strokeWidth={1.5} className="mb-4 h-12 w-12 text-gray-400" />
+
             <p className="text-gray-500">
               {selectedCategoryId !== null
                 ? `${categories.find((c) => c.id === selectedCategoryId)?.name ?? '해당 카테고리'}에 대한 숏츠가 없습니다.`
