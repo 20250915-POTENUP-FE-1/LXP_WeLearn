@@ -2,7 +2,7 @@ import ShortsCarouselSwipe from './ShortsCarouselSwipe'
 import { ShortsBase } from '@/types/shorts/shorts'
 
 export default function ShortsCarousel({ data }: { data?: ShortsBase[] }) {
-  const items = data ?? []
+  const items: ShortsBase[] = data ?? []
   return (
     <section className="my-12 md:mt-5 md:mb-12">
       <div className="mb-4 flex items-center justify-between">

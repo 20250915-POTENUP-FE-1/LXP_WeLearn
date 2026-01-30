@@ -10,13 +10,12 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
-import { UserInfo } from '@/types/user/user'
+import { useAuth } from '@/shared/store/auth/auth.store'
 
-interface UserDropdownProps {
-  user: UserInfo | null
-}
-export default function HeaderDropdown({ user }: UserDropdownProps) {
+export default function HeaderDropdown() {
   const router = useRouter()
+  const userData = useAuth((state) => state.auth)
+  const authLogout = useAuth((state) => state.logout)
 
   const handleLogout = async () => {
     // 1. 서버 액션 직접 실행
@@ -27,7 +26,7 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
 
     // 2. 결과가 true면 즉시 처리
     if (res.success === true) {
-      localStorage.removeItem('user')
+      authLogout()
       toast.success('로그아웃 되었습니다.')
       router.push('/')
     } else {
@@ -35,9 +34,10 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
     }
   }
 
+  console.log(userData)
   return (
     <>
-      {user && (
+      {userData && (
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <div
@@ -45,12 +45,12 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
               aria-label="프로필"
             >
               {/* 유저 프로필 영역 */}
-              {user?.profileUrl ? (
+              {userData?.profileUrl ? (
                 <div
                   className="cursor-pointer rounded-full border-gray-100 transition-colors hover:border-gray-600"
                   aria-label="프로필 이미지"
                 >
-                  <img src={user?.profileUrl} alt="user-profile-image" />
+                  <img src={userData?.profileUrl} alt="user-profile-image" />
                 </div>
               ) : (
                 <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gray-200">
@@ -61,12 +61,12 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end" className="flex flex-col gap-2 pt-5 pr-10 pb-3 pl-8">
-            {user?.profileUrl && (
+            {userData?.profileUrl && (
               <div
                 className="cursor-pointer rounded-full border-gray-100 transition-colors hover:border-gray-600"
                 aria-label="프로필 이미지"
               >
-                <img src={user?.profileUrl} alt="user-profile-image" />
+                <img src={userData?.profileUrl} alt="user-profile-image" />
               </div>
             )}
 
@@ -75,10 +75,10 @@ export default function HeaderDropdown({ user }: UserDropdownProps) {
                 <User strokeWidth={1.5} size={20} />
               </div>
               <div className="flex flex-col justify-center">
-                {user && (
+                {userData && (
                   <>
-                    <div className="pb-1 text-sm font-bold">{user.nickName}</div>
-                    <div className="text-xs text-gray-600">{user.email}</div>
+                    <div className="pb-1 text-sm font-bold">{userData.nickName}</div>
+                    <div className="text-xs text-gray-600">{userData.email}</div>
                   </>
                 )}
               </div>

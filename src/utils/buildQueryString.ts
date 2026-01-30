@@ -1,3 +1,5 @@
+import { FetchParamsValue } from '@/types/util/util'
+
 export function buildQueryString(params?: Record<string, FetchParamsValue>) {
   if (!params) return ''
 

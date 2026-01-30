@@ -5,9 +5,11 @@ import { useActionState, useEffect } from 'react'
 import { SigninAction } from '../action'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
+import { useAuth } from '@/shared/store/auth/auth.store'
 
 export default function SigninForm() {
   const router = useRouter()
+  const saveAuth = useAuth((state) => state.login)
   const [state, formAction, isPending] = useActionState(SigninAction, {
     success: false,
     message: '',
@@ -17,11 +19,12 @@ export default function SigninForm() {
   useEffect(() => {
     if (state.success && state.data) {
       toast.success(`${state.data.nickName}님 환영합니다.🎉`)
+      saveAuth(state.data)
       router.push('/')
     } else if (state.success === false && state.message) {
       toast.error(state?.message)
     }
-  }, [state])
+  })
 
   return (
     <form action={formAction} className="space-y-6">

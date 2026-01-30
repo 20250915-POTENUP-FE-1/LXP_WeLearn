@@ -6,7 +6,7 @@ import { PageResponse, ShortsBase } from '@/types/shorts/shorts'
 
 export async function getShortPopular({ page = 0, size = 8 } = {}) {
   try {
-    const popularShorts = await api.get<ApiResponse<PageResponse<ShortsBase>>>('/api/v1/shorts', {
+    const popularShorts = await api.get<ApiResponse<PageResponse<ShortsBase[]>>>('/api/v1/shorts', {
       cache: 'no-store', // 항상 최신 데이터
       params: {
         page,

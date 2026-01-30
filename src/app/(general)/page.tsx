@@ -4,6 +4,7 @@ import { getShortPopular } from '@/services/shorts/getShortPopular'
 import { categoryApi } from '@/services/category/category.service'
 import CategoryShortsSection from '@/features/home/categories/CategoryShortsSection'
 import ShortsCarousel from '@/features/home/ShortsCarousel/ShortsCarousel'
+import { ShortsBase } from '@/types/shorts/shorts'
 
 export default async function Page() {
   const [popularShorts, categoryShortsResponse, categoriesResponse] = await Promise.all([
@@ -13,7 +14,8 @@ export default async function Page() {
   ])
 
   // 인기 숏츠 (캐러셀용)
-  const shortsList = popularShorts?.data?.content ?? []
+  const shortsList: ShortsBase[] = popularShorts?.data?.content ?? []
+
   // 카테고리 목록
   const categories = categoriesResponse?.data ?? []
 
