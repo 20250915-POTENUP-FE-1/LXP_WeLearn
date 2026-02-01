@@ -9,15 +9,14 @@ import ShortsCarousel from '@/features/home/ShortsCarousel/ShortsCarousel'
 const ITEMS_PER_PAGE = 8
 
 type PageProps = {
-  searchParams?: {
+  searchParams: Promise<{
     category?: string
     page?: string
-  }
+  }>
 }
 
 export default async function Page({ searchParams }: PageProps) {
-  const rawCategoryId = searchParams?.category
-  const rawPage = searchParams?.page
+  const { category: rawCategoryId, page: rawPage } = await searchParams
   const parsedCategoryId =
     rawCategoryId && rawCategoryId !== 'all' && Number.isFinite(Number(rawCategoryId))
       ? Number(rawCategoryId)
