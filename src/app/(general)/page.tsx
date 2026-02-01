@@ -4,9 +4,7 @@ import { getShortPopular } from '@/services/shorts/getShortPopular'
 import { categoryApi } from '@/services/category/category.service'
 import CategoryShortsSection from '@/features/home/categories/CategoryShortsSection'
 import ShortsCarousel from '@/features/home/ShortsCarousel/ShortsCarousel'
-
-// 명세서에 pageSize가 20개 응답으로 기록되어 있으므로 확인 필요
-const ITEMS_PER_PAGE = 8
+import { ITEMS_PER_PAGE, parseCategoryId, parsePageNumber } from '@/utils/searchParams'
 
 type PageProps = {
   searchParams: Promise<{
@@ -16,19 +14,17 @@ type PageProps = {
 }
 
 export default async function Page({ searchParams }: PageProps) {
+  // URL의 쿼리 값 추출(?category=...&page=... )
   const { category: rawCategoryId, page: rawPage } = await searchParams
-  const parsedCategoryId =
-    rawCategoryId && rawCategoryId !== 'all' && Number.isFinite(Number(rawCategoryId))
-      ? Number(rawCategoryId)
-      : null
-  const parsedPage = Number(rawPage)
-  const page = Number.isFinite(parsedPage) && parsedPage >= 0 ? parsedPage : 0
+  const categoryId = parseCategoryId(rawCategoryId)
+  const page = parsePageNumber(rawPage)
 
+  // api 호출 (파싱한 카테고리 Id가 null이면 전체 조회)
   const [popularShorts, categoryShortsResponse, categoriesResponse] = await Promise.all([
     getShortPopular(), // 1. 인기 숏츠 (캐러셀용)
-    parsedCategoryId === null
+    categoryId === null
       ? categoryApi.getAllShorts({ page, size: ITEMS_PER_PAGE })
-      : categoryApi.getShortsByCategoryId(parsedCategoryId, { page, size: ITEMS_PER_PAGE }),
+      : categoryApi.getShortsByCategoryId(categoryId, { page, size: ITEMS_PER_PAGE }),
     categoryApi.getAll(), // 카테고리 목록
   ])
 
@@ -37,8 +33,8 @@ export default async function Page({ searchParams }: PageProps) {
   // 카테고리 목록
   const categories = categoriesResponse?.data ?? []
 
-  // 카테고리 탐색 섹션 초기 데이터
-  const initialShortsData = categoryShortsResponse?.data ?? {
+  // 카테고리 탐색 섹션 데이터
+  const shortsData = categoryShortsResponse?.data ?? {
     content: [],
     totalPages: 0,
     totalElements: 0,
@@ -50,7 +46,12 @@ export default async function Page({ searchParams }: PageProps) {
 
       <PlaylistSection items={playlistGroup} />
 
-      <CategoryShortsSection initialShorts={initialShortsData} categories={categories} />
+      <CategoryShortsSection
+        shortsData={shortsData}
+        categories={categories}
+        selectedCategoryId={categoryId}
+        currentPage={page}
+      />
     </div>
   )
 }

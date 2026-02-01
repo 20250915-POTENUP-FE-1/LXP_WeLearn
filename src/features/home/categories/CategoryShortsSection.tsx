@@ -1,97 +1,46 @@
 'use client'
 
-import React, { useCallback, useEffect, useMemo, useRef, useState, useTransition } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
 import CategoryShortsCard from '@/features/home/categories/CategoryShortsCard'
 import Pagination from '@/components/ui/Pagination'
-import { getShortsAction, getShortsByCategoryAction } from '@/features/category.action'
 import { Category } from '@/types/category/category'
 import { PageResponse, ShortsBase } from '@/types/shorts/shorts'
 import SortButton from '@/components/ui/SortButton'
-import { LucideTvMinimalPlay } from 'lucide-react';
-
-const ITEMS_PER_PAGE = 8
+import { LucideTvMinimalPlay } from 'lucide-react'
 
 interface CategoryShortsSectionProps {
-  initialShorts: PageResponse<ShortsBase[]>
+  shortsData: PageResponse<ShortsBase[]>
   categories: Category[]
+  selectedCategoryId: number | null
+  currentPage: number
 }
 
 export default function CategoryShortsSection({
-  initialShorts,
+  shortsData,
   categories,
+  selectedCategoryId,
+  currentPage,
 }: CategoryShortsSectionProps) {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  // 서버에서 URL 파라미터에 맞는 initialShorts를 전달(클라이언트 마운트 시 동일한 데이터 fetch 방지)
-  const didSkipInitialFetch = useRef(false)
-  // 숏츠 데이터
-  const [shortsData, setShortsData] = useState<PageResponse<ShortsBase[]>>(initialShorts)
-  // 로딩 상태
   const [isPending, startTransition] = useTransition()
 
   const displayedShorts = shortsData.content ?? []
   const totalPages = shortsData.totalPages ?? 0
 
-  const { selectedCategoryId, currentPage } = useMemo(() => {
-    const rawCategoryId = searchParams.get('category')
-    const rawPage = searchParams.get('page')
-    const parsedCategory =
-      rawCategoryId && rawCategoryId !== 'all' && Number.isFinite(Number(rawCategoryId))
-        ? Number(rawCategoryId)
-        : null
-    const parsedPage = Number(rawPage)
-
-    return {
-      selectedCategoryId: parsedCategory,
-      currentPage: Number.isFinite(parsedPage) && parsedPage >= 0 ? parsedPage : 0,
-    }
-  }, [searchParams])
-
+  // URL 업데이트 (서버 컴포넌트 재렌더링 트리거)
   const updateQuery = (categoryId: number | null, page: number) => {
-    const params = new URLSearchParams(searchParams.toString())
-    if (categoryId === null) {
-      params.delete('category')
-    } else {
+    const params = new URLSearchParams()
+    if (categoryId !== null) {
       params.set('category', String(categoryId))
     }
-    params.set('page', String(page))
-    router.replace(`?${params.toString()}`, { scroll: false })
-  }
-
-  // 데이터 fetch 함수 (Server Action 사용)
-  const fetchShorts = useCallback((categoryId: number | null, page: number) => {
-    startTransition(async () => {
-      try {
-        let response: PageResponse<ShortsBase[]> | null
-
-        if (categoryId === null) {
-          // 전체 숏츠 조회
-          response = await getShortsAction({ page, size: ITEMS_PER_PAGE })
-        } else {
-          // 카테고리별 숏츠 조회
-          response = await getShortsByCategoryAction(categoryId, {
-            page,
-            size: ITEMS_PER_PAGE,
-          })
-        }
-
-        if (response) {
-          setShortsData(response)
-        }
-      } catch (error) {
-        console.error('숏츠 목록 조회 실패:', error)
-      }
-    })
-  }, [])
-
-  useEffect(() => {
-    if (!didSkipInitialFetch.current) {
-      didSkipInitialFetch.current = true
-      return
+    if (page > 0) {
+      params.set('page', String(page))
     }
-    fetchShorts(selectedCategoryId, currentPage)
-  }, [selectedCategoryId, currentPage, fetchShorts])
+    startTransition(() => {
+      router.push(`?${params.toString()}`, { scroll: false })
+    })
+  }
 
   // 카테고리 변경 핸들러
   const handleCategoryChange = (categoryId: number | null) => {
