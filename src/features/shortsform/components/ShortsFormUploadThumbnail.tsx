@@ -2,11 +2,11 @@
 
 import { useEffect, useRef } from 'react'
 import { ImageIcon, Lock } from 'lucide-react'
-import ShortsFormPreviewFrame from './ShortsFormUploadPreview'
 import ShortsFormEmptyState from './ShortsFormEmptyState'
 import useThumbnailUpload from '@/hook/register/useThumbnailUpload'
 import type { ShortsFormChangeHandler } from '@/types/shorts/shortsForm'
 import { Button } from '@/components/ui/Button'
+import ShortsFormUploadPreview from './ShortsFormUploadPreview';
 
 interface ShortsFormUploadThumbnailProps {
   thumbnail: string | null
@@ -44,7 +44,7 @@ export default function ShortsFormUploadThumbnail({
   // 수정 모드에서는 삭제 버튼 숨김 (onRemove를 undefined로)
   if (thumbnail) {
     return (
-      <ShortsFormPreviewFrame onRemove={isEditMode ? undefined : handleRemoveThumbnail}>
+      <ShortsFormUploadPreview onRemove={isEditMode ? undefined : handleRemoveThumbnail}>
         <img
           src={thumbnail}
           alt="썸네일 미리보기"
@@ -57,7 +57,7 @@ export default function ShortsFormUploadThumbnail({
             썸네일은 수정할 수 없습니다.
           </div>
         )}
-      </ShortsFormPreviewFrame>
+      </ShortsFormUploadPreview>
     )
   }
 

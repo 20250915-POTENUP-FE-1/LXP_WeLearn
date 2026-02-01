@@ -1,7 +1,9 @@
 'use client'
 
-import React, { useState, useTransition } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState, useTransition } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import CategoryShortsCard from '@/features/home/categories/CategoryShortsCard'
+import Pagination from '@/components/ui/Pagination'
 import { getShortsAction, getShortsByCategoryAction } from '@/features/category.action'
 import { Category } from '@/types/category/category'
 import { PageResponse, ShortsBase } from '@/types/shorts/shorts'
@@ -19,10 +21,10 @@ export default function CategoryShortsSection({
   initialShorts,
   categories,
 }: CategoryShortsSectionProps) {
-  // 선택된 카테고리 ID (null = 전체)
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
-  // 현재 페이지 번호
-  const [currentPage, setCurrentPage] = useState(0)
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  // 서버에서 URL 파라미터에 맞는 initialShorts를 전달(클라이언트 마운트 시 동일한 데이터 fetch 방지)
+  const didSkipInitialFetch = useRef(false)
   // 숏츠 데이터
   const [shortsData, setShortsData] = useState<PageResponse<ShortsBase[]>>(initialShorts)
   // 로딩 상태
@@ -31,8 +33,34 @@ export default function CategoryShortsSection({
   const displayedShorts = shortsData.content ?? []
   const totalPages = shortsData.totalPages ?? 0
 
+  const { selectedCategoryId, currentPage } = useMemo(() => {
+    const rawCategoryId = searchParams.get('category')
+    const rawPage = searchParams.get('page')
+    const parsedCategory =
+      rawCategoryId && rawCategoryId !== 'all' && Number.isFinite(Number(rawCategoryId))
+        ? Number(rawCategoryId)
+        : null
+    const parsedPage = Number(rawPage)
+
+    return {
+      selectedCategoryId: parsedCategory,
+      currentPage: Number.isFinite(parsedPage) && parsedPage >= 0 ? parsedPage : 0,
+    }
+  }, [searchParams])
+
+  const updateQuery = (categoryId: number | null, page: number) => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (categoryId === null) {
+      params.delete('category')
+    } else {
+      params.set('category', String(categoryId))
+    }
+    params.set('page', String(page))
+    router.replace(`?${params.toString()}`, { scroll: false })
+  }
+
   // 데이터 fetch 함수 (Server Action 사용)
-  const fetchShorts = (categoryId: number | null, page: number) => {
+  const fetchShorts = useCallback((categoryId: number | null, page: number) => {
     startTransition(async () => {
       try {
         let response: PageResponse<ShortsBase[]> | null
@@ -55,19 +83,24 @@ export default function CategoryShortsSection({
         console.error('숏츠 목록 조회 실패:', error)
       }
     })
-  }
+  }, [])
+
+  useEffect(() => {
+    if (!didSkipInitialFetch.current) {
+      didSkipInitialFetch.current = true
+      return
+    }
+    fetchShorts(selectedCategoryId, currentPage)
+  }, [selectedCategoryId, currentPage, fetchShorts])
 
   // 카테고리 변경 핸들러
   const handleCategoryChange = (categoryId: number | null) => {
-    setSelectedCategoryId(categoryId)
-    setCurrentPage(0)
-    fetchShorts(categoryId, 0)
+    updateQuery(categoryId, 0)
   }
 
   // 페이지 변경 핸들러
   const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-    fetchShorts(selectedCategoryId, page)
+    updateQuery(selectedCategoryId, page)
   }
 
   return (
@@ -90,6 +123,7 @@ export default function CategoryShortsSection({
             <button
               key={category.id}
               onClick={() => handleCategoryChange(categoryId)}
+              disabled={isPending}
               className={`shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
                 isSelected
                   ? 'border-gray-900 bg-gray-900 text-white'
@@ -128,26 +162,14 @@ export default function CategoryShortsSection({
         )}
       </div>
 
-      {/* 페이지네이션 */}
-      {totalPages >= 1 && (
-        <div className="mt-8 flex items-center justify-center gap-1">
-          {Array.from({ length: totalPages }).map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => handlePageChange(idx)}
-              disabled={isPending}
-              className={`flex h-8 w-8 items-center justify-center rounded-md text-sm font-medium transition-colors ${
-                currentPage === idx
-                  ? 'bg-gray-900 text-white'
-                  : 'text-gray-600 hover:bg-gray-100 disabled:opacity-50'
-              }`}
-              aria-label={`${idx + 1}번째 페이지`}
-            >
-              {idx + 1}
-            </button>
-          ))}
-        </div>
-      )}
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        isPending={isPending}
+        onPageChange={handlePageChange}
+        pageRange={5}
+        showPrevNext
+      />
     </section>
   )
 }

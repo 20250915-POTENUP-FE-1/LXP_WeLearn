@@ -5,10 +5,30 @@ import { categoryApi } from '@/services/category/category.service'
 import CategoryShortsSection from '@/features/home/categories/CategoryShortsSection'
 import ShortsCarousel from '@/features/home/ShortsCarousel/ShortsCarousel'
 
-export default async function Page() {
+const ITEMS_PER_PAGE = 8
+
+type PageProps = {
+  searchParams?: {
+    category?: string
+    page?: string
+  }
+}
+
+export default async function Page({ searchParams }: PageProps) {
+  const rawCategoryId = searchParams?.category
+  const rawPage = searchParams?.page
+  const parsedCategoryId =
+    rawCategoryId && rawCategoryId !== 'all' && Number.isFinite(Number(rawCategoryId))
+      ? Number(rawCategoryId)
+      : null
+  const parsedPage = Number(rawPage)
+  const page = Number.isFinite(parsedPage) && parsedPage >= 0 ? parsedPage : 0
+
   const [popularShorts, categoryShortsResponse, categoriesResponse] = await Promise.all([
     getShortPopular(), // 1. 인기 숏츠 (캐러셀용)
-    categoryApi.getAllShorts(), // 3. 카테고리 탐색 섹션 초기 데이터
+    parsedCategoryId === null
+      ? categoryApi.getAllShorts({ page, size: ITEMS_PER_PAGE })
+      : categoryApi.getShortsByCategoryId(parsedCategoryId, { page, size: ITEMS_PER_PAGE }),
     categoryApi.getAll(), // 카테고리 목록
   ])
 
