@@ -1,6 +1,6 @@
 import { buildQueryString } from '@/utils/buildQueryString'
 
-const baseUrl = 'http://localhost:3000'
+const baseUrl = process.env.NEXT_SERVER_API_URL
 
 interface FetchOptions extends RequestInit {
   params?: Record<string, any>
