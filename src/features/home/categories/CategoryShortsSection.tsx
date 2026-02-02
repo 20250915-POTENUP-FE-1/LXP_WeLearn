@@ -110,7 +110,6 @@ export default function CategoryShortsSection({
         currentPage={currentPage}
         isPending={isPending}
         onPageChange={handlePageChange}
-        pageRange={5}
         showPrevNext
       />
     </section>

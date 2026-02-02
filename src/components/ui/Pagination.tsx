@@ -1,13 +1,12 @@
 'use client'
 
-import React from 'react'
+const PAGE_RANGE = 5
 
 interface PaginationProps {
   totalPages: number
   currentPage: number
   isPending?: boolean
   onPageChange: (page: number) => void
-  pageRange?: number
   showPrevNext?: boolean
 }
 
@@ -16,32 +15,30 @@ export default function Pagination({
   currentPage,
   isPending = false,
   onPageChange,
-  pageRange = 5,
   showPrevNext = true,
 }: PaginationProps) {
   if (totalPages < 1) return null
 
-  // 페이지 표시 범위 계산
-  const safeRange = Math.max(1, pageRange)
-  const half = Math.floor(safeRange / 2)
-  let start = Math.max(0, currentPage - half)
-  let end = Math.min(totalPages - 1, start + safeRange - 1)
+  // 페이지네이션: 1-5, 6-10, 11-15...
+  const currentGroup = Math.floor(currentPage / PAGE_RANGE)
+  const totalGroups = Math.ceil(totalPages / PAGE_RANGE)
 
-  // pageRange 설정 개수만큼 보여주기 위한 보정
-   if (end - start + 1 < safeRange) {
-     start = Math.max(0, end - safeRange + 1)
-   }
+  const start = currentGroup * PAGE_RANGE
+  const end = Math.min(start + PAGE_RANGE - 1, totalPages - 1)
 
   // start~end 범위를 페이지 번호 배열로 생성
   const pages = Array.from({ length: end - start + 1 }, (_, idx) => start + idx)
 
+  // 이전/다음 그룹(5페이지 기준)으로 이동
+  const goToPrevGroup = () => onPageChange((currentGroup - 1) * PAGE_RANGE + PAGE_RANGE - 1)
+  const goToNextGroup = () => onPageChange((currentGroup + 1) * PAGE_RANGE)
 
   return (
     <div className="mt-8 flex items-center justify-center gap-1">
       {showPrevNext && (
         <button
-          onClick={() => onPageChange(Math.max(0, currentPage - 1))}
-          disabled={isPending || currentPage <= 0}
+          onClick={goToPrevGroup}
+          disabled={isPending || currentGroup <= 0}
           className="flex h-8 min-w-12 items-center justify-center rounded-md px-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 disabled:opacity-50"
           aria-label="이전 페이지"
         >
@@ -65,8 +62,8 @@ export default function Pagination({
       ))}
       {showPrevNext && (
         <button
-          onClick={() => onPageChange(Math.min(totalPages - 1, currentPage + 1))}
-          disabled={isPending || currentPage >= totalPages - 1}
+          onClick={goToNextGroup}
+          disabled={isPending || currentGroup >= totalGroups - 1}
           className="flex h-8 min-w-12 items-center justify-center rounded-md px-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 disabled:opacity-50"
           aria-label="다음 페이지"
         >
