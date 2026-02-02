@@ -5,6 +5,7 @@ import { categoryApi } from '@/services/category/category.service'
 import CategoryShortsSection from '@/features/home/categories/CategoryShortsSection'
 import ShortsCarousel from '@/features/home/ShortsCarousel/ShortsCarousel'
 import { ShortsBase } from '@/types/shorts/shorts'
+import { parseCategoryId, parsePageNumber, ITEMS_PER_PAGE } from '@/utils/searchParams'
 
 type PageProps = {
   searchParams: Promise<{

@@ -9,15 +9,17 @@ export function parseCategoryId(raw: string | null | undefined): number | null {
 }
 
 /**
- * 페이지 번호 파싱: 유효한 0 이상의 숫자일 때만 사용, 그 외는 0 (첫 페이지)
+ * 페이지 번호 파싱: URL은 1-indexed, 내부는 0-indexed
+ * URL의 page=1 → 내부 0, page=2 → 내부 1
  */
 export function parsePageNumber(raw: string | null | undefined): number {
   const parsed = Number(raw)
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0
+  return Number.isFinite(parsed) && parsed >= 1 ? parsed - 1 : 0
 }
 
 /**
  * 카테고리/페이지 쿼리 스트링 생성
+ * 내부 0-indexed → URL 1-indexed 변환
  */
 export function buildCategoryQuery(categoryId: number | null, page: number): string {
   const params = new URLSearchParams()
@@ -25,7 +27,7 @@ export function buildCategoryQuery(categoryId: number | null, page: number): str
     params.set('category', String(categoryId))
   }
   if (page > 0) {
-    params.set('page', String(page))
+    params.set('page', String(page + 1))
   }
   return params.toString()
 }
