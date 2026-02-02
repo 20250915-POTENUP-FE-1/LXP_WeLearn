@@ -4,7 +4,6 @@ import { getShortPopular } from '@/services/shorts/getShortPopular'
 import { categoryApi } from '@/services/category/category.service'
 import CategoryShortsSection from '@/features/home/categories/CategoryShortsSection'
 import ShortsCarousel from '@/features/home/ShortsCarousel/ShortsCarousel'
-import { ITEMS_PER_PAGE, parseCategoryId, parsePageNumber } from '@/utils/searchParams'
 import { ShortsBase } from '@/types/shorts/shorts'
 
 type PageProps = {
@@ -31,6 +30,7 @@ export default async function Page({ searchParams }: PageProps) {
 
   // 인기 숏츠 (캐러셀용)
   const shortsList: ShortsBase[] = popularShorts?.data?.content ?? []
+
   // 카테고리 목록
   const categories = categoriesResponse?.data ?? []
 

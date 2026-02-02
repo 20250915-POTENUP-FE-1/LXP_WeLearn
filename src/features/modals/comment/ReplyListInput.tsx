@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/Button'
 import { AnimatePresence, motion } from 'framer-motion'
 import { User } from 'lucide-react'
-import { useActionState, useEffect, useState } from 'react'
+import { useActionState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { postReplyAction } from './action'
-import { UserInfo } from '@/types/user/user'
+import { useAuth } from '@/shared/store/auth/auth.store'
 
 interface ReCommnetInputProps {
   commentId: number
@@ -21,8 +21,7 @@ export default function ReCommentInput({
   setIsReplyUpdate,
   setIsUpdate,
 }: ReCommnetInputProps) {
-  const [user, setUser] = useState<UserInfo | null>(null)
-
+  const user = useAuth((state) => state.auth)
   // 대댓글 Action
   const [replyPostState, replyPostAction] = useActionState(postReplyAction, {
     success: false,
@@ -41,12 +40,6 @@ export default function ReCommentInput({
       toast.error(replyPostState.message)
     }
   }, [replyPostState])
-
-  useEffect(() => {
-    const localUser = localStorage.getItem('user') as string
-    const parsedUser = JSON.parse(localUser)
-    setUser(parsedUser)
-  }, [])
 
   return (
     <AnimatePresence initial={false}>

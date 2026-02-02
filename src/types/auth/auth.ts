@@ -1,5 +1,7 @@
 // ------------- Request ------------
 
+import { UserInfo } from '../user/user'
+
 /* =========================
  * 회원가입
  * /api/v1/users

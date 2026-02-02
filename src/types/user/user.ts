@@ -34,7 +34,7 @@ export interface UserInfo {
   createdAt?: string
 }
 
-export interface CommetUserInfo {
+export interface CommentUserInfo {
   userId: number
   nickname: string
   profileImageUrl: string | null

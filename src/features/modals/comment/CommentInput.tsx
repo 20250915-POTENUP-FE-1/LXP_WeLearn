@@ -1,10 +1,10 @@
 'use client'
 import { Button } from '@/components/ui/Button'
 import { User } from 'lucide-react'
-import { useActionState, useEffect, useState } from 'react'
+import { useActionState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { postCommentAction } from './action'
-import { CommetUserInfo } from '@/types/user/user'
+import { useAuth } from '@/shared/store/auth/auth.store'
 
 interface CommentInputProps {
   shortsId: string
@@ -12,8 +12,7 @@ interface CommentInputProps {
 }
 
 export default function CommentInput({ shortsId, setIsUpdate }: CommentInputProps) {
-  const [user, setUser] = useState<CommetUserInfo>()
-
+  const user = useAuth((state) => state.auth)
   // 댓글 등록 Action
   const [commentPostState, commentPostAction] = useActionState(postCommentAction, {
     success: false,
@@ -31,22 +30,16 @@ export default function CommentInput({ shortsId, setIsUpdate }: CommentInputProp
     }
   }, [commentPostState])
 
-  useEffect(() => {
-    const localUser = localStorage.getItem('user') as string
-    const parsedUser = JSON.parse(localUser)
-    setUser(parsedUser)
-  }, [])
-
   return (
     <div className="relative border-t border-gray-200 bg-white p-4">
       <div className="flex items-center gap-3">
         {/* 프로필 아이콘 */}
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-200">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-600">
-            {user?.profileImageUrl ? (
+            {user?.profileUrl ? (
               <img
-                src={user.profileImageUrl}
-                alt={user.nickname}
+                src={user.profileUrl}
+                alt={user.nickName}
                 className="h-8 w-8 rounded-full object-cover"
               />
             ) : (
