@@ -10,7 +10,7 @@ export const categoryApi = {
   },
 
   /** 전체 숏츠 목록 조회 (페이지네이션) */
-  getAllShorts: async ({ page = 0, size = 8, sort = 'createdAt,desc' }: PageRequest = {}): Promise<
+  getAllShorts: async ({ page = 0, size = 8, sort }: PageRequest = {}): Promise<
     ApiResponse<PageResponse<ShortsBase[]>>
   > => {
     return await api.get<ApiResponse<PageResponse<ShortsBase[]>>>('/api/v1/shorts', {
@@ -23,7 +23,7 @@ export const categoryApi = {
   /** 카테고리별 숏츠 목록 조회 */
   getShortsByCategoryId: async (
     categoryId: number,
-    { page = 0, size = 8, sort = 'createdAt,desc' }: PageRequest = {},
+    { page = 0, size = 8, sort }: PageRequest = {},
   ): Promise<ApiResponse<PageResponse<ShortsBase[]>>> => {
     return await api.get<ApiResponse<PageResponse<ShortsBase[]>>>(
       `/api/v1/categories/${categoryId}/shorts`,
