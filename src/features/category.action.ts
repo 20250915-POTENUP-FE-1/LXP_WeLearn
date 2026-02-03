@@ -7,7 +7,7 @@ import { PageRequest, PageResponse, ShortsBase } from '@/types/shorts/shorts'
 
 /** 전체 카테고리 목록 조회 */
 export async function getCategoriesAction(): Promise<ApiResponse<Category[]>> {
-  const response = await categoryApi.getAll()
+  const response = await categoryApi.getAllCategoryId()
   return response
 }
 

@@ -2,10 +2,7 @@ import { getCategoriesAction } from '@/features/category.action'
 import ShortsFormContainer from '@/features/shortsform/components/ShortsFormContainer'
 import { Category } from '@/types/category/category'
 
-export const metadata = {
-  title: '숏츠 등록',
-  description: '새로운 숏츠를 등록합니다.',
-}
+
 
 export default async function ShortsCreatePage() {
   const categoriesResponse = await getCategoriesAction()
