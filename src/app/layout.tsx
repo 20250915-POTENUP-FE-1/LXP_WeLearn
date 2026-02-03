@@ -18,6 +18,7 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies()
   const refreshToken = cookieStore.get('refreshToken')
+  const accessToken = cookieStore.get('accessToken')
   const initialLoggedIn = !!refreshToken
 
   return (

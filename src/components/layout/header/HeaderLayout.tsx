@@ -3,11 +3,7 @@ import Link from 'next/link'
 import HeaderRightSection from './HeaderRightSection'
 import HeaderSearchContainer from './searchbar/SearchContainer'
 
-interface HeaderRightSectionProps {
-  isLogined: boolean
-}
-
-export default function HeaderLayout({ isLogined }: HeaderRightSectionProps) {
+export default function HeaderLayout() {
   return (
     <div className="flex h-16 items-center gap-4">
       {/* Logo */}
@@ -18,7 +14,7 @@ export default function HeaderLayout({ isLogined }: HeaderRightSectionProps) {
       <div className="ml-auto md:mx-auto md:max-w-xl md:flex-1">
         <HeaderSearchContainer />
       </div>
-      <HeaderRightSection isLogined={isLogined} />
+      <HeaderRightSection />
     </div>
   )
 }

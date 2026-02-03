@@ -14,7 +14,9 @@ import { useAuth } from '@/shared/store/auth/auth.store'
 
 export default function HeaderDropdown() {
   const router = useRouter()
-  const { auth, isLogin, hasHydrated } = useAuth()
+  const auth = useAuth((state) => state.auth)
+  const isLogin = useAuth((state) => state.isLogin)
+  const hasHydrated = useAuth((state) => state.hasHydrated)
   const authLogout = useAuth((state) => state.logout)
 
   if (!hasHydrated) return null

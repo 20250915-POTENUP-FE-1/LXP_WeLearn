@@ -1,7 +1,8 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // 이미지 도메인 설정 (remotePatterns 사용)
+  reactStrictMode: false, // ✅ StrictMode 비활성화
+
   images: {
     remotePatterns: [
       {

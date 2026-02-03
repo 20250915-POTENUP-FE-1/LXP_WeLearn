@@ -42,7 +42,6 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
   // options.auth가 undefined일 때만 true, 전달된 값은 그대로 사용
   const auth = options.auth === undefined ? true : options.auth
   const { revalidate, retry, ...restOptions } = options
-
   // 인증 헤더 가져오기
   const headers = await getAuthHeaders(auth, restOptions.headers)
 
@@ -56,10 +55,9 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
   if (response.status === 204) return response
 
   // ❗ auth 요청일 때만 refresh 시도
-  if (response.status === 401 && !retry) {
+  if (auth && response.status === 401 && !retry) {
     console.warn('⚠️ Access Token expired. Attempting refresh...')
 
-    console.log('------------진입')
     const cookieStore = await cookies()
     const refreshToken = cookieStore.get('refreshToken')?.value
 
@@ -68,21 +66,26 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
       cookieStore.delete('refreshToken')
       throw new Error('UNAUTHORIZED')
     }
+    const body = JSON.stringify({ refreshToken })
 
     const refreshRes = await fetch(`${baseUrl}/api/v1/auth/refresh`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refreshToken }),
+      body: body,
     })
-
     const refreshData = (await refreshRes.json()) as ApiResponse<AuthCookies>
     if (refreshRes.ok) {
+      const newAccessToken = refreshData.data.accessToken
       await setAuthCookies({
         accessToken: refreshData.data.accessToken,
         refreshToken: refreshData.data.refreshToken,
       })
-
-      return fetchWithAuth(url, { ...options, retry: true })
+      return fetchWithAuth(url, {
+        ...options,
+        retry: true,
+        auth: false,
+        headers: { ...restOptions.headers, Authorization: `Bearer ${newAccessToken}` },
+      })
     }
 
     throw new Error('UNAUTHORIZED')
@@ -101,7 +104,6 @@ export const api = {
       ...options,
       method: 'GET',
     })
-    console.log(res)
     if (!res.ok) throw await handleError(res)
     return res.json()
   },
@@ -141,7 +143,7 @@ export const api = {
 async function handleError(res: Response) {
   try {
     const errorData = await res.json()
-    // console.log(errorData)
+    console.log(errorData)
     return new Error(errorData?.message || 'API 호출 오류')
   } catch {
     return new Error(`HTTP Error: ${res.status}`)

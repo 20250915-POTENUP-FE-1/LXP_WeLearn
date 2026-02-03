@@ -1,15 +1,11 @@
 'use client'
 import Link from 'next/link'
 import HeaderDropdown from './HeaderDropdown'
-import { useEffect } from 'react'
 import { useAuth } from '@/shared/store/auth/auth.store'
 
-interface HeaderRightSectionProps {
-  isLogined: boolean
-}
-
-export default function HeaderRightSection({ isLogined }: HeaderRightSectionProps) {
+export default function HeaderRightSection() {
   const userData = useAuth((state) => state.auth)
+  const isLogined = useAuth((state) => state.isLogin)
 
   return (
     <div className="flex items-center gap-1 md:gap-3">
