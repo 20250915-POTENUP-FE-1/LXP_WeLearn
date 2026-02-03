@@ -1,56 +1,75 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
+import { useState, useTransition } from 'react'
 import CategoryShortsCard from '@/features/home/categories/CategoryShortsCard'
 import Pagination from '@/components/ui/Pagination'
 import { Category } from '@/types/category/category'
 import { PageResponse, ShortsBase } from '@/types/shorts/shorts'
 import SortButton from '@/components/ui/SortButton'
 import { LucideTvMinimalPlay } from 'lucide-react'
-import { buildCategoryQuery } from '@/utils/searchParams'
+import { getShortsAction, getShortsByCategoryAction } from '@/features/category.action'
+
+/** 페이지당 아이템 수 */
+const DEFAULT_PAGE_SIZE = 8
 
 interface CategoryShortsSectionProps {
-  shortsData: PageResponse<ShortsBase[]>
+  initialShortsData: PageResponse<ShortsBase[]>
   categories: Category[]
-  selectedCategoryId: number | null
-  currentPage: number
 }
 
 export default function CategoryShortsSection({
-  shortsData,
+  initialShortsData,
   categories,
-  selectedCategoryId,
-  currentPage,
 }: CategoryShortsSectionProps) {
-  const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const [shortsData, setShortsData] = useState(initialShortsData)
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
+  const [currentPage, setCurrentPage] = useState(0)
 
-  const displayedShorts = shortsData.content ?? []
-  const totalPages = shortsData.totalPages ?? 0
-
-  // URL 업데이트 (서버 컴포넌트 재렌더링 트리거)
-  const updateQuery = (categoryId: number | null, page: number) => {
-    startTransition(() => {
-      router.push(`?${buildCategoryQuery(categoryId, page)}`, { scroll: false })
-    })
-  }
+  const displayedShorts = shortsData?.content ?? []
+  const totalPages = shortsData?.totalPages ?? 0
 
   // 카테고리 변경 핸들러
   const handleCategoryChange = (categoryId: number | null) => {
-    updateQuery(categoryId, 0)
+    startTransition(async () => {
+      const data =
+        categoryId === null
+          ? await getShortsAction({ page: 0, size: DEFAULT_PAGE_SIZE })
+          : await getShortsByCategoryAction(categoryId, { page: 0, size: DEFAULT_PAGE_SIZE })
+
+      if (data) {
+        setShortsData(data)
+        setSelectedCategoryId(categoryId)
+        setCurrentPage(0)
+      }
+    })
   }
 
   // 페이지 변경 핸들러
   const handlePageChange = (page: number) => {
-    updateQuery(selectedCategoryId, page)
+    startTransition(async () => {
+      const data =
+        selectedCategoryId === null
+          ? await getShortsAction({ page, size: DEFAULT_PAGE_SIZE })
+          : await getShortsByCategoryAction(selectedCategoryId, { page, size: DEFAULT_PAGE_SIZE })
+
+      if (data) {
+        setShortsData(data)
+        setCurrentPage(page)
+      }
+    })
   }
 
   return (
     <section className="my-12 pt-10">
       <div className="mb-6 flex items-center justify-between">
         {/* 카테고리 타이틀 */}
-        <h2 className="text-xl font-extrabold text-gray-900 uppercase">Categories</h2>
+        <div className="flex flex-row gap-2">
+          <h2 className="text-xl font-extrabold text-gray-900 uppercase">All Shorts</h2>
+          <span className="flex flex-row items-center justify-center rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-500">
+            총 {shortsData.totalElements ?? 0}개
+          </span>
+        </div>
         {/* 정렬 */}
         <SortButton />
       </div>

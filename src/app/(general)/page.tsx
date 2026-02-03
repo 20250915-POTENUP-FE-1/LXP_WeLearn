@@ -5,28 +5,13 @@ import { categoryApi } from '@/services/category/category.service'
 import CategoryShortsSection from '@/features/home/categories/CategoryShortsSection'
 import ShortsCarousel from '@/features/home/ShortsCarousel/ShortsCarousel'
 import { ShortsBase } from '@/types/shorts/shorts'
-import { parseCategoryId, parsePageNumber, ITEMS_PER_PAGE } from '@/utils/searchParams'
 
-type PageProps = {
-  searchParams: Promise<{
-    category?: string
-    page?: string
-  }>
-}
-
-export default async function Page({ searchParams }: PageProps) {
-  // URL의 쿼리 값 추출(?category=...&page=... )
-  const { category: rawCategoryId, page: rawPage } = await searchParams
-  const categoryId = parseCategoryId(rawCategoryId)
-  const page = parsePageNumber(rawPage)
-
-  // api 호출 (파싱한 카테고리 Id가 null이면 전체 조회)
+export default async function Page() {
+  // api 호출 (초기 로드: 전체 숏츠)
   const [popularShorts, categoryShortsResponse, categoriesResponse] = await Promise.all([
-    getShortPopular(), // 1. 인기 숏츠 (캐러셀용)
-    categoryId === null
-      ? categoryApi.getAllShorts({ page, size: ITEMS_PER_PAGE })
-      : categoryApi.getShortsByCategoryId(categoryId, { page, size: ITEMS_PER_PAGE }),
-    categoryApi.getAll(), // 카테고리 목록
+    getShortPopular(),
+    categoryApi.getAllShorts(), // 기본값 size=8 사용
+    categoryApi.getAll(),
   ])
 
   // 인기 숏츠 (캐러셀용)
@@ -35,8 +20,8 @@ export default async function Page({ searchParams }: PageProps) {
   // 카테고리 목록
   const categories = categoriesResponse?.data ?? []
 
-  // 카테고리 탐색 섹션 데이터
-  const shortsData = categoryShortsResponse?.data ?? {
+  // 카테고리 탐색 섹션 초기 데이터
+  const initialShortsData = categoryShortsResponse?.data ?? {
     content: [],
     totalPages: 0,
     totalElements: 0,
@@ -49,10 +34,8 @@ export default async function Page({ searchParams }: PageProps) {
       <PlaylistSection items={playlistGroup} />
 
       <CategoryShortsSection
-        shortsData={shortsData}
+        initialShortsData={initialShortsData}
         categories={categories}
-        selectedCategoryId={categoryId}
-        currentPage={page}
       />
     </div>
   )
