@@ -22,6 +22,7 @@ async function fetchClient(url: string, options: FetchOptions = {}): Promise<Res
     },
     credentials: 'include',
   })
+  console.log(response)
 
   // 204 No Content
   if (response.status === 204) return response

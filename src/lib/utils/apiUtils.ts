@@ -56,9 +56,10 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
   if (response.status === 204) return response
 
   // ❗ auth 요청일 때만 refresh 시도
-  if (auth && response.status === 401 && !retry) {
+  if (response.status === 401 && !retry) {
     console.warn('⚠️ Access Token expired. Attempting refresh...')
 
+    console.log('------------진입')
     const cookieStore = await cookies()
     const refreshToken = cookieStore.get('refreshToken')?.value
 
@@ -100,6 +101,7 @@ export const api = {
       ...options,
       method: 'GET',
     })
+    console.log(res)
     if (!res.ok) throw await handleError(res)
     return res.json()
   },
@@ -139,7 +141,7 @@ export const api = {
 async function handleError(res: Response) {
   try {
     const errorData = await res.json()
-    console.log(errorData)
+    // console.log(errorData)
     return new Error(errorData?.message || 'API 호출 오류')
   } catch {
     return new Error(`HTTP Error: ${res.status}`)

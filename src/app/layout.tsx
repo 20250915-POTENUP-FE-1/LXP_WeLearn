@@ -17,8 +17,8 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const cookieStore = await cookies()
-  const accessToken = cookieStore.get('accessToken')
-  const initialLoggedIn = !!accessToken
+  const refreshToken = cookieStore.get('refreshToken')
+  const initialLoggedIn = !!refreshToken
 
   return (
     <html lang="ko" className={suit.className}>
