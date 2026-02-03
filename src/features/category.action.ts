@@ -16,6 +16,7 @@ export async function getShortsAction(
   params: PageRequest = {},
 ): Promise<PageResponse<ShortsBase[]> | null> {
   const response = await categoryApi.getAllShorts(params)
+  // console.log('데이터:', params)
   return response?.data ?? null
 }
 

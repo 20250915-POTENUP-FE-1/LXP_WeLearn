@@ -15,7 +15,7 @@ const DEFAULT_PAGE_SIZE = 8
 /** 정렬 옵션 - API sort 파라미터 변환 */
 const SORT_PARAMS: Record<SortOption, string> = {
   latest: 'createdAt,desc',
-  popular: 'viewCount,desc', // 백엔드에서 정렬 기준을 받아야 함
+  popular: 'likeCount,desc',
 }
 
 interface CategoryShortsSectionProps {
@@ -39,9 +39,12 @@ export default function CategoryShortsSection({
   // 데이터 fetch 공통 함수
   const fetchShorts = async (categoryId: number | null, page: number, sort: SortOption) => {
     const params = { page, size: DEFAULT_PAGE_SIZE, sort: SORT_PARAMS[sort] }
-    return categoryId === null
-      ? await getShortsAction(params)
-      : await getShortsByCategoryAction(categoryId, params)
+    const response =
+      categoryId === null
+        ? await getShortsAction(params)
+        : await getShortsByCategoryAction(categoryId, params)
+    // console.log('API response:', response)
+    return response
   }
 
   // 카테고리 변경 핸들러
