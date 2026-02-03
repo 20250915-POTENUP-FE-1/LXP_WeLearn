@@ -43,7 +43,7 @@ export default function CategoryShortsSection({
       categoryId === null
         ? await getShortsAction(params)
         : await getShortsByCategoryAction(categoryId, params)
-    // console.log('API response:', response)
+
     return response
   }
 
