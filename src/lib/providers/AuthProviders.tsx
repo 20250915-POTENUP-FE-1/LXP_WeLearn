@@ -33,7 +33,7 @@ export default function AuthProvider({ initialLoggedIn, children }: AuthProvider
     }
 
     getUserData()
-  }, [hasHydrated, initialLoggedIn, logout, setLoggedIn, setUser])
+  }, [hasHydrated])
 
   return children
 }

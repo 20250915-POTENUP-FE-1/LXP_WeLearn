@@ -100,7 +100,7 @@ export const api = {
       ...options,
       method: 'GET',
     })
-    console.log(res)
+
     if (!res.ok) throw await handleError(res)
     return res.json()
   },

@@ -8,13 +8,26 @@ import Playlist from './Playlist'
 import CreatePlaylistBtn from './CreatePlaylistBtn'
 import CreatePlaylistForm from './CreatePlaylistForm'
 import useIsMobile from '@/hook/useIsMobile'
+import { PlaylistBase, PlaylistItem } from '@/types/playlist/playlist'
 
-export default function PlaylistModal() {
+interface PlaylistModalProps {
+  initialPlaylistData: PlaylistBase<PlaylistItem[]>
+}
+
+export default function PlaylistModal({ initialPlaylistData }: PlaylistModalProps) {
   const [activeTab, setActiveTab] = useState('save') // 'save' or 'create'
   const pathname = usePathname()
   const params = useParams()
   const isMobile = useIsMobile()
   const [mounted, setMounted] = useState(false)
+  const [shortsId, setShortsId] = useState<number>()
+
+  useEffect(() => {
+    const match = pathname.match(/\/shorts\/([^\/]+)/)
+    if (match?.[1]) {
+      setShortsId(Number(match[1]))
+    }
+  }, [pathname])
 
   useEffect(() => {
     setMounted(true)
@@ -22,12 +35,6 @@ export default function PlaylistModal() {
   const id = params.id as string
 
   const isOpen = pathname.endsWith('/playlist')
-
-  // 샘플 플레이리스트 데이터
-  const existingPlaylists = [
-    { id: 1, title: 'welcome JavaScript', count: 5 },
-    { id: 2, title: 'python으로 주식 투자 자동화 모음', count: 5 },
-  ]
 
   const handleActiveTab = () => {
     if (activeTab === 'save') {
@@ -60,7 +67,7 @@ export default function PlaylistModal() {
               <>
                 <PlaylistModalHeader id={id} />
                 {/* 플레이리스트 목록 */}
-                <Playlist list={existingPlaylists} />
+                <Playlist list={initialPlaylistData} shortsId={shortsId} />
 
                 {/* 새 플레이리스트 만들기 버튼 */}
                 <CreatePlaylistBtn handleActiveTab={handleActiveTab} />
