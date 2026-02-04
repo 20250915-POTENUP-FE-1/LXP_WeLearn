@@ -1,4 +1,4 @@
-import { Header } from '@/components/layout/header/Header'
+import { HeaderContainer } from '@/components/layout/header/HeaderContainer'
 
 export default function FullscreenLayout({
   children,
@@ -11,7 +11,7 @@ export default function FullscreenLayout({
 }) {
   return (
     <>
-      <Header />
+      <HeaderContainer />
       <main className="mx-auto box-border flex h-screen w-screen max-w-7xl flex-1 items-center justify-center overflow-hidden px-0 py-0 sm:px-6 lg:px-8">
         {children}
         {comments}
