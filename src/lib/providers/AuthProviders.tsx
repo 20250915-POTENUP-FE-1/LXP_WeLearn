@@ -20,7 +20,7 @@ export default function AuthProvider({ initialLoggedIn, children }: AuthProvider
     const getUserData = async () => {
       try {
         setLoggedIn(initialLoggedIn)
-        if (!initialLoggedIn) return
+        if (!initialLoggedIn || hasHydrated) return
 
         const res = await clientApi.get<ApiResponse<UserInfo>>('/api/v1/users/me')
 
@@ -33,7 +33,7 @@ export default function AuthProvider({ initialLoggedIn, children }: AuthProvider
     }
 
     getUserData()
-  }, [hasHydrated, initialLoggedIn, logout, setLoggedIn, setUser])
+  }, [hasHydrated])
 
   return children
 }

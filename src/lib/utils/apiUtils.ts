@@ -42,7 +42,6 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
   // options.auth가 undefined일 때만 true, 전달된 값은 그대로 사용
   const auth = options.auth === undefined ? true : options.auth
   const { revalidate, retry, ...restOptions } = options
-
   // 인증 헤더 가져오기
   const headers = await getAuthHeaders(auth, restOptions.headers)
 
@@ -75,13 +74,19 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
     })
 
     const refreshData = (await refreshRes.json()) as ApiResponse<AuthCookies>
+
     if (refreshRes.ok) {
+      const newAccessToken = refreshData.data.accessToken
       await setAuthCookies({
         accessToken: refreshData.data.accessToken,
         refreshToken: refreshData.data.refreshToken,
       })
-
-      return fetchWithAuth(url, { ...options, retry: true })
+      return fetchWithAuth(url, {
+        ...options,
+        retry: true,
+        auth: false,
+        headers: { ...restOptions.headers, Authorization: `Bearer ${newAccessToken}` },
+      })
     }
 
     throw new Error('UNAUTHORIZED')

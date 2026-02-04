@@ -10,7 +10,7 @@ export async function setAuthCookies({ accessToken, refreshToken }: AuthCookies)
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
-    maxAge: 60 * 30, // 30분 (예시)
+    maxAge: 60 * 30,
   })
 
   // Refresh Token
