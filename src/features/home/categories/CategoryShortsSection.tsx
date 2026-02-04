@@ -41,8 +41,8 @@ export default function CategoryShortsSection({
   const fetchShorts = async (categoryId: number | null, page: number, sort: SortOption) => {
     const params: Record<string, string | number> = {
       page,
-      size: DEFAULT_PAGE_SIZE,
-      sort: SORT_PARAMS[sort],
+      size: DEFAULT_PAGE_SIZE, // 아이템 수
+      sort: SORT_PARAMS[sort], // 정렬 파라미터
     }
     if (categoryId !== null) {
       params.categoryId = categoryId
