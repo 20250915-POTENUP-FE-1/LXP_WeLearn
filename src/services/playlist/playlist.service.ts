@@ -36,7 +36,7 @@ export const PlaylistApi = {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify(FormData),
+      body: JSON.stringify(content),
     })
 
     if (!response.ok) {
