@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-interface LikeShortsCardProps {
+interface LikedShortsCardProps {
   thumbnailUrl: string | ''
   title?: string
   progress?: number
@@ -8,13 +8,13 @@ interface LikeShortsCardProps {
   nickname?: string
 }
 
-export default function LikeShortsCard({
+export default function LikedShortsCard({
   thumbnailUrl,
   title,
   progress,
   categoryName,
   nickname,
-}: LikeShortsCardProps) {
+}: LikedShortsCardProps) {
   return (
     <div className="group block w-56 shrink-0 cursor-pointer">
       <article className="flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white/90 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg">

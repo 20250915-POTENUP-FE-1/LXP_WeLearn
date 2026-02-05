@@ -1,5 +1,4 @@
 import PlaylistSection from '@/features/home/playlist/PlaylistSection'
-import { playlistGroup } from '@/dummy/data'
 import { getShortPopular } from '@/services/shorts/getShortPopular'
 import { categoryApi } from '@/services/category/category.service'
 import CategoryShortsSection from '@/features/home/categories/CategoryShortsSection'
@@ -8,11 +7,13 @@ import { ShortsBase } from '@/types/shorts/shorts'
 
 export default async function Page() {
   // api 호출 (초기 로드: 전체 숏츠)
-  const [popularShorts, categoryShortsResponse, categoriesResponse] = await Promise.all([
-    getShortPopular(),
-    categoryApi.getAllShorts({ sort: 'createdAt,desc' }), // 전체 숏츠 목록(최신순 기본값)
-    categoryApi.getAllCategoryId(), // 카테고리 항목 목록
-  ])
+  const [popularShorts, categoryShortsResponse, categoriesResponse, playlistResponse] =
+    await Promise.all([
+      getShortPopular(),
+      categoryApi.getAllShorts({ sort: 'createdAt,desc' }), // 전체 숏츠 목록(최신순 기본값)
+      categoryApi.getAllCategoryId(), // 카테고리 항목 목록
+      fetch('http://localhost:4000/playlists').then((res) => res.json()), // Mock server >> api 연동 필요
+    ])
 
   // 인기 숏츠 (캐러셀용)
   const shortsList: ShortsBase[] = popularShorts?.data?.content ?? []
@@ -31,7 +32,7 @@ export default async function Page() {
     <div className="min-h-screen bg-white">
       <ShortsCarousel data={shortsList} />
 
-      <PlaylistSection items={playlistGroup} />
+      <PlaylistSection items={playlistResponse} />
 
       <CategoryShortsSection initialShortsData={initialShortsData} categories={categories} />
     </div>
