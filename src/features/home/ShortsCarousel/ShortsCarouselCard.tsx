@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useVideoPreview } from '@/hook/useVideoPreview'
 import { ShortsBase } from '@/types/shorts/shorts'
 
-export default function ShortPreviewCard({ item }: { item: ShortsBase }) {
+export default function ShortsCarouselCard({ item }: { item: ShortsBase }) {
   const { videoRef, handleMouseEnter, handleMouseLeave, handleLoadedData } = useVideoPreview({
     videoUrl: item.videoUrl,
   })

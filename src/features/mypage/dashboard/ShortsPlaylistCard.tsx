@@ -47,12 +47,13 @@ export default function ShortsPlaylistCard({
             {/* <p className="text-xs text-gray-200">
               {category} · {shortsCount}개
             </p> */}
-            <div className="mt-2 h-1 w-full rounded-full bg-gray-500/50">
+            {/* 프로그레스바 */}
+            {/* <div className="mt-2 h-1 w-full rounded-full bg-gray-500/50">
               <div
                 className="h-full rounded-full bg-green-500"
                 style={{ width: `${progress}%` }}
               ></div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

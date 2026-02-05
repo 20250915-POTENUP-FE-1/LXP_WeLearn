@@ -57,14 +57,14 @@ export default function LikedShortsList({ shorts }: LikedShortsListProps) {
       </div>
 
       <div ref={scrollRef} className="scrollbar-hide flex gap-4 overflow-x-auto pb-4">
-        {shorts.map((short) => (
+        {shorts.map((Shorts) => (
           <LikedShortsCard
-            key={short.id}
-            categoryName={short.category}
-            thumbnailUrl={short.thumbnailUrl}
-            title={short.title}
-            nickname={short.nickname}
-            progress={short.progress}
+            key={Shorts.id}
+            shortsId={Shorts.id}
+            categoryName={Shorts.category}
+            thumbnailUrl={Shorts.thumbnailUrl}
+            title={Shorts.title}
+            nickname={Shorts.nickname}
           />
         ))}
       </div>

@@ -474,6 +474,25 @@
       "title": "알고리즘 정복하기",
       "category": "프로그래밍",
       "progress": 66
+    },
+    {
+      "id": "9",
+      "visibility": "public",
+      "shortsCount": 7,
+      "thumbnailUrl": "https://images.pexels.com/photos/270488/pexels-photo-270488.jpeg",
+      "title": "Vue vs React 비교 분석",
+      "category": "프로그래밍",
+      "progress": 75
+    },
+    {
+      "id": "10",
+      "shortsCount": 12,
+      "thumbnailUrl": "https://images.pexels.com/photos/303383/pexels-photo-303383.jpeg",
+      "title": "Spring Boot 완전 정복",
+      "category": "프로그래밍",
+      "progress": 66,
+      "viewCount": 120,
+      "likeCount": 48
     }
   ],
   "playlists": [
