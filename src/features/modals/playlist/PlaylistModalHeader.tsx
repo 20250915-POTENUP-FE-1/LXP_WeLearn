@@ -1,14 +1,14 @@
-import { Bookmark, Copy, X } from 'lucide-react'
-import { useParams, useRouter } from 'next/navigation'
+import { X } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 interface PlaylistModalHeaderProps {
-  id: string
+  shortsId: number
 }
 
-export default function PlaylistModalHeader({ id }: PlaylistModalHeaderProps) {
+export default function PlaylistModalHeader({ shortsId }: PlaylistModalHeaderProps) {
   const router = useRouter()
 
   const handleClose = () => {
-    router.replace(`/shorts/${id}`, { scroll: false })
+    router.replace(`/shorts/${shortsId}`, { scroll: false })
   }
   return (
     <div className="flex items-center justify-between border-b border-gray-200 px-6 py-5">
