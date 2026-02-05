@@ -1,23 +1,23 @@
 import { Play } from 'lucide-react'
 import Image from 'next/image'
 
-interface SavedShortsCardProps {
+interface ShortsPlaylistCardProps {
   thumbnailUrl: string
   title: string
   progress: number
   category: string
-  visibility: 'public' | 'private'
+  visibility: 'public' | 'draft'
   shortsCount: number
 }
 
-export default function SavedShortsCard({
+export default function ShortsPlaylistCard({
   thumbnailUrl,
   title,
   progress,
   category,
   visibility,
   shortsCount,
-}: SavedShortsCardProps) {
+}: ShortsPlaylistCardProps) {
   const badgeLabel = visibility === 'public' ? '공개' : '비공개'
 
   return (
@@ -44,9 +44,9 @@ export default function SavedShortsCard({
           <Image src={thumbnailUrl} alt={title} fill className="object-cover" sizes="224px" />
 
           <div className="absolute right-2 bottom-3 left-2 z-10">
-            <p className="text-xs text-gray-200">
+            {/* <p className="text-xs text-gray-200">
               {category} · {shortsCount}개
-            </p>
+            </p> */}
             <div className="mt-2 h-1 w-full rounded-full bg-gray-500/50">
               <div
                 className="h-full rounded-full bg-green-500"

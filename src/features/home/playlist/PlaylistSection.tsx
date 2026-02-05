@@ -3,11 +3,11 @@ import { Play } from 'lucide-react'
 import PlaylistButton from '@/features/home/playlist/PlaylistButton'
 import { PlayListCard } from '@/types/playlist/playlist'
 
-interface PlayListContainerPorps {
+interface PlayListContainerProps {
   items: PlayListCard[]
 }
 
-export default async function PlaylistSection({ items }: PlayListContainerPorps) {
+export default async function PlaylistSection({ items }: PlayListContainerProps) {
   return (
     <section className="mb-12">
       <h2 className="mb-4 text-xl font-extrabold text-gray-900 uppercase">Knowledge Blocks</h2>
