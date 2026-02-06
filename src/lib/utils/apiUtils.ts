@@ -55,7 +55,7 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
   if (response.status === 204) return response
 
   // ❗ auth 요청일 때만 refresh 시도
-  if (auth && response.status === 401 && !retry) {
+  if (response.status === 401 && !retry) {
     console.warn('⚠️ Access Token expired. Attempting refresh...')
 
     const cookieStore = await cookies()
@@ -105,7 +105,6 @@ export const api = {
       ...options,
       method: 'GET',
     })
-
     if (!res.ok) throw await handleError(res)
     return res.json()
   },

@@ -11,6 +11,8 @@ import {
 import { toast } from 'react-toastify'
 import Link from 'next/link'
 import { useAuth } from '@/shared/store/auth/auth.store'
+import Image from 'next/image'
+import { DEFAULT_IMAGES } from '@/constants/shortsImages'
 
 export default function HeaderDropdown() {
   const router = useRouter()
@@ -56,8 +58,8 @@ export default function HeaderDropdown() {
                   <img src={auth?.profileUrl} alt="user-profile-image" />
                 </div>
               ) : (
-                <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gray-200">
-                  <User strokeWidth={1.5} size={24} />
+                <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-gray-200">
+                  <Image src={DEFAULT_IMAGES.AVATAR} alt={'user-avatar'} width={32} height={32} />
                 </div>
               )}
             </div>
@@ -75,7 +77,7 @@ export default function HeaderDropdown() {
 
             <div className="mb-3 flex items-center gap-4">
               <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-gray-200">
-                <User strokeWidth={1.5} size={20} />
+                <Image src={DEFAULT_IMAGES.AVATAR} alt={'user-avatar'} width={32} height={32} />
               </div>
               <div className="flex flex-col justify-center">
                 {auth && (
