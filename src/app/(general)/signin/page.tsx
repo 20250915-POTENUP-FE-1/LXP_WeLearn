@@ -1,4 +1,4 @@
-import SigninForm from '@/features/auth/components/SigninForm'
+import LoginForm from '@/features/auth/components/LoginForm'
 import Link from 'next/link'
 
 export default function SigninPage() {
@@ -12,7 +12,7 @@ export default function SigninPage() {
           </div>
 
           <div className="shadow-s rounded-xl border border-gray-200 bg-white p-8">
-            <SigninForm />
+            <LoginForm />
           </div>
 
           <div className="mt-6 text-center">

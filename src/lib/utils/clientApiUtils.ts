@@ -40,7 +40,6 @@ async function fetchClient(url: string, options: FetchOptions = {}): Promise<Res
 export const clientApi = {
   async get<T>(endpoint: string, options?: FetchOptions): Promise<T> {
     const queryString = buildQueryString(options?.params)
-
     const res = await fetchClient(`${baseUrl}${endpoint}${queryString}`, {
       ...options,
       method: 'GET',

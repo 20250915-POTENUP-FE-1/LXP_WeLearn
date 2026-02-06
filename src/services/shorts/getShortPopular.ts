@@ -1,5 +1,3 @@
-'use server'
-
 import { api } from '@/lib/utils/apiUtils'
 import { ApiResponse } from '@/types/api/api'
 import { PageResponse, ShortsBase } from '@/types/shorts/shorts'

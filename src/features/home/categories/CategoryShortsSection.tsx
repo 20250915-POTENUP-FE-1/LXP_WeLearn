@@ -1,12 +1,15 @@
 'use client'
 
-import React, { useState, useTransition } from 'react'
+import React, { useEffect, useState, useTransition } from 'react';
 import CategoryShortsCard from '@/features/home/categories/CategoryShortsCard'
 import { getShortsAction, getShortsByCategoryAction } from '@/features/category.action'
 import { Youtube } from 'lucide-react'
 import { Category } from '@/types/category/category'
 import { PageResponse, ShortsBase } from '@/types/shorts/shorts'
 import SortButton from '@/components/ui/SortButton'
+import { clientApi } from '@/lib/utils/clientApiUtils';
+import { ApiResponse } from '@/types/api/api';
+import { UserInfo } from '@/types/user/user';
 
 const ITEMS_PER_PAGE = 8
 

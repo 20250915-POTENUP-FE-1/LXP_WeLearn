@@ -1,6 +1,6 @@
 'use client'
 import { CirclePlay, CircleUser, Heart, LogOut, Settings, User } from 'lucide-react'
-import { LogoutAction } from '@/features/auth/action'
+import { LogoutAction } from '@/features/auth/actions/logout.aciton';
 import { useRouter } from 'next/navigation'
 import {
   DropdownMenu,
@@ -27,7 +27,7 @@ export default function HeaderDropdown() {
     })
 
     // 2. 결과가 true면 즉시 처리
-    if (res.success === true) {
+    if (res.success) {
       authLogout()
       toast.success('로그아웃 되었습니다.')
       router.push('/')

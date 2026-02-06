@@ -2,30 +2,38 @@
 
 import { User } from 'lucide-react'
 import { toast } from 'react-toastify'
-import { useProfile } from '@/hook/mypage/useProfile'
+import { useEffect, useState } from 'react';
+import { clientApi } from '@/lib/utils/clientApiUtils';
+import { UserInfo } from '@/types/user/user';
+import { ApiResponse } from '@/types/api/api';
 
 export default function ProfileForm() {
-  const {
-    isEditingNickname,
-    nickname,
-    tempNickname,
-    setTempNickname,
-    handleNicknameEdit,
-    handleNicknameCancel,
-    handleNicknameSave,
-    isEditingPassword,
-    currentPassword,
-    newPassword,
-    confirmPassword,
-    setCurrentPassword,
-    setNewPassword,
-    setConfirmPassword,
-    handlePasswordEdit,
-    handlePasswordCancel,
-    handlePasswordSave,
-  } = useProfile('숏터')
+  const [user, setUser] = useState<UserInfo|null>(null)
+  const [isEditingPassword, setIsEditingPassword] = useState(false)
 
-  return (
+  const handlePasswordEdit = () =>{
+    setIsEditingPassword(true)
+  }
+
+  const handlePasswordSave = ()=>{}
+
+  const handlePasswordCancel = () => {
+    setIsEditingPassword(false)
+  }
+  useEffect(() => {
+    const getUserData = async () => {
+      try{
+       const res:ApiResponse<UserInfo> = await clientApi.get('/api/v1/users/me')
+       setUser(res.data)
+       console.log(res.data)
+      }catch (error) {
+
+      }
+    }
+    getUserData()
+  }, []);
+
+    return (
     <div className="w-full">
       <div className="px-6 py-12">
         {/* 프로필 이미지 영역 */}
@@ -41,47 +49,16 @@ export default function ProfileForm() {
           {/* 닉네임 */}
           <div className="flex min-h-[52px] items-center border-b border-gray-200 py-4">
             <label className="w-40 text-sm font-medium text-gray-700">닉네임</label>
-            {!isEditingNickname ? (
-              <>
-                <div className="flex h-9 flex-1 items-center text-sm text-gray-900">{nickname}</div>
-                <button
-                  onClick={handleNicknameEdit}
-                  className="h-9 rounded-lg bg-black px-4 text-sm font-medium text-white transition-colors hover:bg-gray-800"
-                >
-                  변경
-                </button>
-              </>
-            ) : (
-              <>
                 <input
                   type="text"
-                  value={tempNickname}
-                  onChange={(e) => setTempNickname(e.target.value)}
-                  placeholder="닉네임을 입력하세요."
                   className="h-9 flex-1 rounded-lg border border-gray-300 px-4 text-sm transition-all focus:ring-2 focus:ring-black focus:outline-none"
                 />
-                <div className="ml-3 flex gap-2">
-                  <button
-                    onClick={handleNicknameSave}
-                    className="h-9 rounded-lg bg-black px-4 text-sm font-medium text-white transition-colors hover:bg-gray-800"
-                  >
-                    변경
-                  </button>
-                  <button
-                    onClick={handleNicknameCancel}
-                    className="h-9 rounded-lg bg-gray-200 px-4 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-300"
-                  >
-                    취소
-                  </button>
-                </div>
-              </>
-            )}
           </div>
 
           {/* 이메일 */}
           <div className="flex items-center border-b border-gray-200 py-4">
             <label className="w-40 text-sm font-medium text-gray-700">Email</label>
-            <div className="flex-1 text-sm text-gray-500">user@shortudy.com</div>
+            <div className="flex-1 text-sm text-gray-500"></div>
           </div>
 
           {/* 비밀번호 */}
@@ -89,7 +66,7 @@ export default function ProfileForm() {
             {!isEditingPassword ? (
               <div className="flex items-center">
                 <label className="w-40 text-sm font-medium text-gray-700">비밀번호</label>
-                <div className="flex-1 text-sm text-gray-900">***********</div>
+                <div className="flex-1 text-sm text-gray-900"></div>
                 <button
                   onClick={handlePasswordEdit}
                   className="rounded-lg bg-black px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800"
@@ -107,8 +84,6 @@ export default function ProfileForm() {
                       <label className="mb-2 block text-xs text-gray-600">현재 비밀번호</label>
                       <input
                         type="password"
-                        value={currentPassword}
-                        onChange={(e) => setCurrentPassword(e.target.value)}
                         placeholder="현재 비밀번호를 입력하세요."
                         className="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:ring-2 focus:ring-black focus:outline-none"
                       />
@@ -118,8 +93,6 @@ export default function ProfileForm() {
                       <label className="mb-2 block text-xs text-gray-600">새 비밀번호</label>
                       <input
                         type="password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
                         placeholder="새 비밀번호를 입력하세요."
                         className="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:ring-2 focus:ring-black focus:outline-none"
                       />
@@ -129,8 +102,6 @@ export default function ProfileForm() {
                       <label className="mb-2 block text-xs text-gray-600">새 비밀번호 확인</label>
                       <input
                         type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="새 비밀번호를 한 번 더 입력하세요."
                         className="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:ring-2 focus:ring-black focus:outline-none"
                       />
@@ -159,7 +130,7 @@ export default function ProfileForm() {
           {/* 계정 생성일 */}
           <div className="flex items-center border-b border-gray-200 py-4">
             <label className="w-40 text-sm font-medium text-gray-700">가입일</label>
-            <div className="flex-1 text-sm text-gray-900">2025.12.22</div>
+            <div className="flex-1 text-sm text-gray-900"></div>
           </div>
 
           {/* 회원탈퇴 */}
