@@ -1,4 +1,4 @@
-import SortButton from '@/components/ui/SortButton'
+import SortButton, { SortOption } from '@/components/ui/SortButton'
 import LikeShortsCard from '@/features/mypage/likes/LikeShortsCard'
 import LikeShortsLeftSection from '@/features/mypage/likes/LikeShortsLeftSection'
 
