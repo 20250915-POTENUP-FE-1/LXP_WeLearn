@@ -4,7 +4,7 @@ import Link from 'next/link'
 export default function SigninPage() {
   return (
     <>
-      <div className="flex min-w-sm items-center justify-center px-4 py-8 md:min-w-lg">
+      <div className="flex w-full min-w-sm items-center justify-center px-4 py-8 md:min-w-lg">
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <h1 className="mb-2 text-2xl font-bold text-gray-900">로그인</h1>
