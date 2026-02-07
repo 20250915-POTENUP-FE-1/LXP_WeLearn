@@ -15,12 +15,16 @@ interface ShortsLikeButtonProps {
   shortsId: number
 }
 
-function ShortsLikeButton({ initialLikeCount, initialIsLike, shortsId }: ShortsLikeButtonProps) {
+export function ShortsLikeButton({
+  initialLikeCount,
+  initialIsLike,
+  shortsId,
+}: ShortsLikeButtonProps) {
   const [isLike, setIsLike] = useState(initialIsLike)
   const [likeCount, setLikeCount] = useState(initialLikeCount)
   const isLoggedIn = useAuth((state) => state.isLogin)
 
-  const sendLike = useThrottle(async (nextIsLike: boolean) => {
+  const sendLike = useThrottle(async () => {
     try {
       const response = await clientApi.post<ApiResponse<ResponseLike>>(
         `/api/v1/shorts/${shortsId}/likes`,
@@ -42,10 +46,8 @@ function ShortsLikeButton({ initialLikeCount, initialIsLike, shortsId }: ShortsL
       toast.info('로그인 이후 이용 바랍니다.')
       return
     }
-    const nextIsLike = !isLike
 
-    // 서버에는 "최종 상태" 전달
-    sendLike(nextIsLike)
+    sendLike()
   }
 
   return (
@@ -64,5 +66,3 @@ function ShortsLikeButton({ initialLikeCount, initialIsLike, shortsId }: ShortsL
     </button>
   )
 }
-
-export default ShortsLikeButton
