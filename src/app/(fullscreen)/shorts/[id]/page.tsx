@@ -10,7 +10,6 @@ export default async function ShortformDetailPage({ params }: ShortDetailPagePro
   const { id } = await params
   const data = await getShortsDetailList(id)
 
-  console.log(data)
   if (!data) {
     notFound()
   }

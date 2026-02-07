@@ -2,6 +2,8 @@ import Image from 'next/image'
 import { Play } from 'lucide-react'
 import PlaylistButton from '@/features/home/playlist/PlaylistButton'
 import { PlayListCard } from '@/types/playlist/playlist'
+import Link from 'next/link'
+import { Button } from '@/components/ui/Button'
 
 interface PlayListContainerProps {
   items: PlayListCard[]
@@ -10,10 +12,20 @@ interface PlayListContainerProps {
 export default async function PlaylistSection({ items }: PlayListContainerProps) {
   return (
     <section className="mb-12">
-      <h2 className="mb-4 text-xl font-extrabold text-gray-900 uppercase">Knowledge Blocks</h2>
+      <div className="mb-4 flex justify-between">
+        <h2 className="text-xl font-extrabold text-gray-900 uppercase">Knowledge Blocks</h2>
+        <Link href="/playlists">
+          <Button
+            variant="outline"
+            className="rounded-md border border-gray-300 px-3 py-1.5 text-sm transition-colors hover:bg-gray-50"
+          >
+            전체보기
+          </Button>
+        </Link>
+      </div>
       <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 md:grid-cols-4">
         {items.map((item, index) => (
-          <PlaylistButton key={item.id}>
+          <PlaylistButton itemId={item.id} key={item.id}>
             <div className="transition-all duration-200 hover:-translate-y-1 hover:drop-shadow-lg">
               <div className="relative mb-2 aspect-9/14 pt-2">
                 {/* 스택 효과 - 카드 상단에 쌓인 레이어 */}

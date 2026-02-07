@@ -148,6 +148,19 @@ export interface ShortsRecommendationPage {
   }
 }
 
+/**
+ * 플레이리스트 조회시
+ * SHORTS 데이터
+ */
+
+export interface PlaylistShorts {
+  shortsId: number
+  title: string
+  thumbnailUrl: string
+  durationSec: number
+  shortsOwner: { id: number; nickname: string }
+}
+
 /* =========================
  * Pagination (Common) -> 직접 쓸 일 없음
  * ========================= */

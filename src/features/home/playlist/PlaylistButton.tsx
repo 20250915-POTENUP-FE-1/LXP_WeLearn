@@ -1,9 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
 
-export default function PlaylistButton({ children }: { children: React.ReactNode }) {
+interface PlaylistButtonProps {
+  children: React.ReactNode
+  itemId: number
+}
+export default function PlaylistButton({ children, itemId }: PlaylistButtonProps) {
   return (
-    <Link href="/playlists" className="group cursor-pointer">
+    <Link href={`/playlists/${itemId}`} className="group cursor-pointer">
       {children}
     </Link>
   )

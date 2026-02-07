@@ -2,13 +2,17 @@ import { Play } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import PlaylistPreviewHeader from './PlaylistPreviewHeaer'
+import { Playlist } from '@/types/playlist/playlist'
 
-export default function PlaylistPreview() {
+interface PlaylistPreviewProps {
+  playlistItem: Playlist
+}
+export default function PlaylistPreview({ playlistItem }: PlaylistPreviewProps) {
   return (
-    <div className="order-1 w-full lg:order-1 lg:w-100 lg:shrink-0">
-      <div className="flex flex-col items-center justify-center gap-6 py-8 md:py-0 lg:sticky lg:top-24">
+    <div className="order-1 w-full lg:order-1 lg:shrink-0 lg:px-5">
+      <div className="flex flex-col gap-6 py-8 md:py-0 lg:sticky lg:top-24">
         {/* Page Title */}
-        <PlaylistPreviewHeader />
+        <PlaylistPreviewHeader playlistItem={playlistItem} />
 
         {/* Preview Card */}
         <div className="relative mx-auto aspect-9/16 w-full overflow-hidden rounded-2xl bg-gray-200 shadow-lg md:w-[360px] lg:mx-0">

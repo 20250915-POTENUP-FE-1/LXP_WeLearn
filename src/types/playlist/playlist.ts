@@ -1,7 +1,6 @@
 import { Category } from '../category/category'
 import { Pageable } from '../shorts/shorts'
 import { ShortsVisibility } from '../shorts/status'
-import { UserInfo } from '../user/user'
 
 export type Visibility = 'PUBLIC' | 'PRIVATE'
 
@@ -17,7 +16,7 @@ export interface PlaylistRequest {
 
 // 임시 플레이 리스트 카드에 대한 정보
 export interface PlayListCard {
-  id: string
+  id: number
   thumbnailUrl: string
   title: string
   shortsCount: number
@@ -26,22 +25,30 @@ export interface PlayListCard {
   viewCount: number
   likeCount: number
   description: string
+  visibility: Visibility
+}
+
+export interface PlaylistOwner {
+  id: number
+  nickname: string
+  profileUrl: string
 }
 
 /**
  * 내 플레이 리스트 요청시
  * /api/v1/playlists/me
  */
-export interface PlaylistItem {
-  playlistId: number
+export interface Playlist {
+  id: number
   title: string
   description: string
   thumbnailUrl: string
   visibility: Visibility
   itemCount: number
-  owner: Omit<UserInfo, 'email'>
+  owner: PlaylistOwner
   createdAt: string
   updatedAt: string
+  item?: PlaylistItems
 }
 
 // 플레이리스트 기본 틀
@@ -50,6 +57,15 @@ export interface PlaylistBase<T = unknown> {
   pageable: Pageable
   totalPages: number
   totalElements: number
+}
+
+// 플레이리스트 조회 시
+// 안에 아이템
+export interface PlaylistItems {
+  itemId: number
+  position: number
+  shorts: PlaylistShorts[]
+  addedAt: string
 }
 
 // 숏츠 추가시

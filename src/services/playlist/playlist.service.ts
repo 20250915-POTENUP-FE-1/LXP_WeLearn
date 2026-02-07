@@ -11,7 +11,10 @@ import { cookies } from 'next/headers'
 const baseUrl = 'https://995dcec8-b9b9-4ce1-b734-d1a7806c16ea.mock.pstmn.io'
 export const PlaylistApi = {
   // 유저 개인 플레이 리스트 조회
-  getUserPlaylist: async ({ page, size }: PageRequest): Promise<PlaylistBase<PlaylistItem[]>> => {
+  getUserPlaylist: async ({
+    page,
+    size,
+  }: PageRequest): Promise<ApiResponse<PlaylistBase<PlaylistItem[]>>> => {
     const params = new URLSearchParams({
       page: String(page),
       size: String(size),
@@ -24,6 +27,18 @@ export const PlaylistApi = {
     if (!response.ok) {
       throw new Error('request failed')
     }
+    return data.data
+  },
+
+  // 플레이리스트 상세 조회
+  getPlaylistItem: async (playlistId: number): Promise<ApiResponse<PlaylistItem>> => {
+    const response = await fetch(`${baseUrl}/api/playlist/${playlistId}`)
+
+    if (!response.ok) {
+      throw new Error('플레이리스트 불러오기 실패')
+    }
+
+    const data = await response.json()
     return data.data
   },
 
