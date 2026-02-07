@@ -1,7 +1,7 @@
 'use client'
 
 import Pagination from '@/components/ui/Pagination'
-import MyPlaylistCard from './MyPlaylistCard'
+import PlaylistItem from './PlaylistItem'
 
 interface ShortsPlaylist {
   id: number
@@ -13,7 +13,7 @@ interface ShortsPlaylist {
   visibility: 'PUBLIC' | 'PRIVATE'
 }
 
-interface MyPlaylistProps {
+interface PlaylistContainerProps {
   playlists: ShortsPlaylist[]
   totalPages?: number
   currentPage?: number
@@ -21,13 +21,13 @@ interface MyPlaylistProps {
   onPageChange?: (page: number) => void
 }
 
-export default function MyPlaylist({
+export default function PlaylistContainer({
   playlists,
   totalPages = 1,
   currentPage = 0,
   isPending = false,
   onPageChange = () => {},
-}: MyPlaylistProps) {
+}: PlaylistContainerProps) {
   return (
     <section>
       <div className="mb-4 flex items-center justify-between">
@@ -36,7 +36,7 @@ export default function MyPlaylist({
 
       <div className="mb-10 grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 md:grid-cols-4">
         {playlists.map((playlist) => (
-          <MyPlaylistCard
+          <PlaylistItem
             key={playlist.id}
             id={playlist.id}
             visibility={playlist.visibility}

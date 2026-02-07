@@ -18,7 +18,7 @@ export default function PlaylistsPage({ totalCount }: PlaylistsPageProps) {
         <div className="order-2 flex-1 lg:order-2">
           <div className="mb-4 flex items-center justify-between">
             <PlaylistRightHeader totalCount={totalCount} />
-            <SortButton />
+            {/* <SortButton /> */}
           </div>
           {/* ==================== Shorts List ==================== */}
           <PlaylistCard />

@@ -1,4 +1,4 @@
-import MyPlaylist from '@/features/mypage/myplaylists/list/MyPlaylist'
+import PlaylistContainer from '@/features/playlists/PlaylistContainer'
 
 export default async function MyPlaylistsPage() {
   const [shortsPlaylists] = await Promise.all([
@@ -7,7 +7,7 @@ export default async function MyPlaylistsPage() {
 
   return (
     <div>
-      <MyPlaylist playlists={shortsPlaylists} />
+      <PlaylistContainer playlists={shortsPlaylists} />
     </div>
   )
 }
