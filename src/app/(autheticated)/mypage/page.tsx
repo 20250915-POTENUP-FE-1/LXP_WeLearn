@@ -1,11 +1,12 @@
-import LikedShortsList from '@/features/mypage/dashboard/LikedShortsList'
-import ShortsPlaylist from '@/features/mypage/dashboard/ShortsPlaylist'
 import DashboardHeader from '@/features/mypage/dashboard/dashboard-header/DashboardHeader'
+import DashboardPlaylists from '@/features/mypage/dashboard/DashboardPlaylists'
+import DashboardLikedList from '@/features/mypage/dashboard/DashboardLikedList'
 import { myShortsApi } from '@/services/mypage/myshorts.service'
+import DashboardCreatedList from '@/features/mypage/dashboard/DashboardCreatedList'
 
 export default async function MyPageDashboard() {
   const [myShortsData, likedShorts, shortsPlaylists] = await Promise.all([
-    myShortsApi.getMyShorts({ page: 0, size: 1 }),
+    myShortsApi.getMyShorts({ page: 0, size: 10 }),
     fetch('http://localhost:4000/likedShorts').then((res) => res.json()), // Mock server
     fetch('http://localhost:4000/shortsPlaylists').then((res) => res.json()), // Mock server
   ])
@@ -19,8 +20,9 @@ export default async function MyPageDashboard() {
           playlistCount={shortsPlaylists.length}
           myShortsCount={myShortsCount}
         />
-        <LikedShortsList shorts={likedShorts} />
-        <ShortsPlaylist playlists={shortsPlaylists} />
+        <DashboardLikedList shorts={likedShorts} />
+        <DashboardPlaylists playlists={shortsPlaylists} />
+        <DashboardCreatedList shorts={myShortsData?.content ?? []} />
       </main>
     </div>
   )

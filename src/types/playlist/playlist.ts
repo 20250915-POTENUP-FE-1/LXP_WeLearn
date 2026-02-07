@@ -21,10 +21,11 @@ export interface PlayListCard {
   thumbnailUrl: string
   title: string
   shortsCount: number
-  category: string
+  categoryName: string
   progress?: number
   viewCount: number
   likeCount: number
+  description: string
 }
 
 /**

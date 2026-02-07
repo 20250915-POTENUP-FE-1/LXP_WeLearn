@@ -1,10 +1,10 @@
-import SigninForm from '@/features/auth/components/SigninForm'
+import LoginForm from '@/features/auth/components/LoginForm'
 import Link from 'next/link'
 
 export default function SigninPage() {
   return (
     <>
-      <div className="flex min-w-sm items-center justify-center px-4 py-8 md:min-w-lg">
+      <div className="flex w-full min-w-sm items-center justify-center px-4 py-8 md:min-w-lg">
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <h1 className="mb-2 text-2xl font-bold text-gray-900">로그인</h1>
@@ -12,7 +12,7 @@ export default function SigninPage() {
           </div>
 
           <div className="shadow-s rounded-xl border border-gray-200 bg-white p-8">
-            <SigninForm />
+            <LoginForm />
           </div>
 
           <div className="mt-6 text-center">

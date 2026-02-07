@@ -9,7 +9,7 @@ import {
 import { Share2, Trash2 } from 'lucide-react'
 import { toast } from 'react-toastify'
 
-export default function SavedShortsDropdownMenu() {
+export default function MyPlaylistDropdownMenu() {
   const handleShare = () => {
     toast.info('현재 서비스 준비중입니다')
   }

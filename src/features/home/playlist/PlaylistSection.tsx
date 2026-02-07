@@ -15,7 +15,7 @@ export default async function PlaylistSection({ items }: PlayListContainerProps)
         {items.map((item, index) => (
           <PlaylistButton key={item.id}>
             <div className="transition-all duration-200 hover:-translate-y-1 hover:drop-shadow-lg">
-              <div className="relative mb-2 aspect-9/16 pt-2">
+              <div className="relative mb-2 aspect-9/14 pt-2">
                 {/* 스택 효과 - 카드 상단에 쌓인 레이어 */}
                 <div className="absolute top-0 left-1/2 h-1 w-[85%] -translate-x-1/2 rounded-t-sm border bg-gray-400/80" />
                 <div className="absolute top-1 left-1/2 h-1 w-[92%] -translate-x-1/2 rounded-t-sm border bg-gray-400" />
@@ -45,10 +45,10 @@ export default async function PlaylistSection({ items }: PlayListContainerProps)
               </div>
 
               <p className="truncate p-2 text-sm font-medium text-gray-900 group-hover:text-black">
-                {item.title}
+                {item.description}
               </p>
               <p className="pb-2 text-xs text-gray-500">
-                {item.category} {'·'} {item.shortsCount}개
+                {item.categoryName} {'·'} {item.shortsCount}개
               </p>
             </div>
           </PlaylistButton>

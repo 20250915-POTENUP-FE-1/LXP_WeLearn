@@ -3,15 +3,15 @@
 import { useRef } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
-import { LikedShorts } from '@/types/shorts/shorts'
-import LikedShortsCard from './LikedShortsCard'
+import { ShortsBase } from '@/types/shorts/shorts'
 import { Button } from '@/components/ui/Button'
+import DashboardLikedCard from './DashboardLikedCard'
 
-interface LikedShortsListProps {
-  shorts: LikedShorts[]
+interface DashboardLikedListProps {
+  shorts: ShortsBase[]
 }
 
-export default function LikedShortsList({ shorts }: LikedShortsListProps) {
+export default function DashboardLikedList({ shorts }: DashboardLikedListProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const handleScroll = (direction: 'prev' | 'next') => {
@@ -56,15 +56,18 @@ export default function LikedShortsList({ shorts }: LikedShortsListProps) {
         </div>
       </div>
 
-      <div ref={scrollRef} className="scrollbar-hide flex gap-4 overflow-x-auto pb-4">
-        {shorts.map((short) => (
-          <LikedShortsCard
-            key={short.id}
-            categoryName={short.category}
-            thumbnailUrl={short.thumbnailUrl}
-            title={short.title}
-            nickname={short.nickname}
-            progress={short.progress}
+      <div ref={scrollRef} className="scrollbar-hide flex gap-4 overflow-x-auto pt-1 pb-4">
+        {shorts.map((shorts) => (
+          <DashboardLikedCard
+            key={shorts.shortsId}
+            shortsId={shorts.shortsId}
+            videoUrl={shorts.videoUrl}
+            categoryName={shorts.categoryName}
+            thumbnailUrl={shorts.thumbnailUrl}
+            title={shorts.title}
+            description={shorts.description}
+            userNickname={shorts.userNickname}
+            keywords={shorts.keywords}
           />
         ))}
       </div>

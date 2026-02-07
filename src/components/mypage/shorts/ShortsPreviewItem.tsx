@@ -96,7 +96,7 @@ export function ShortsPreviewCard({
           </p>
         )}
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-end">
           {shorts.keywords?.[0] && (
             <span className="rounded-full border border-white/25 px-3 py-1 text-[10px] text-gray-100">
               #{shorts.keywords[0]}

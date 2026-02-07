@@ -57,7 +57,7 @@ export function useVideoPreview({
 
     if (video.currentTime === 0) {
       try {
-        video.currentTime = 0.01
+        video.currentTime = 0.3
         video.pause()
       } catch {
         // 일부 브라우저에서 시킹 실패할 수 있어서 무시

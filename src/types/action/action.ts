@@ -6,4 +6,6 @@ export type ActionState<T = unknown> = {
   message?: string
   errors?: Record<string, string>
   data?: T
+  inputs?: Record<string, string>
+  code?: string
 }

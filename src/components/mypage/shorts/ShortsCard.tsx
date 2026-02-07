@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { MoreHorizontal } from 'lucide-react'
+import { Eye, MoreHorizontal, View } from 'lucide-react'
 import ShortsCardThumbnail from './ShortsCardThumbnail'
 import { DEFAULT_IMAGES } from '@/constants/shortsImages'
 import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
@@ -51,12 +51,15 @@ export default function ShortsCard({
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 flex-1">
             {shorts.status && <ShortsStatusBadge shortsStatus={shorts.status} />}
+
             <h3 className="pt-1 text-lg font-bold text-gray-900">{shorts.title}</h3>
-            <p className="mt-1.5 mb-4 text-sm text-gray-500">
-              {shorts.userNickname ?? '숏터'}
+            <p className="my-1 line-clamp-1 text-sm text-gray-700">{shorts.description}</p>
+
+            {/* 닉네임 · 조회수 · 등록일 */}
+            <p className="mt-2 mb-4 text-sm text-gray-500">
+              {shorts.userNickname ?? '숏터'} · 조회수 {shorts.viewCount}회
               {timeAgoText && ` · ${timeAgoText}`}
             </p>
-            <p className="mb-1 line-clamp-2 text-sm text-gray-700">{shorts.description}</p>
           </div>
 
           {/* 더보기 드롭다운 메뉴 */}

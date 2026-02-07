@@ -2,7 +2,7 @@
 
 import { toast } from 'react-toastify'
 
-export default function SavedShortsTitleEditBtn() {
+export default function MyPlaylistTitleBtn() {
   const handleClick = () => {
     toast.info('서비스 준비중입니다.')
   }

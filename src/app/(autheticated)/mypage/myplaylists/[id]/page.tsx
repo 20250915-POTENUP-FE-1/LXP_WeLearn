@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/Button'
-import SavedShortsCard from '@/features/mypage/saved-edit/SavedShortsCard'
-import SavedShortsTitleEditBtn from '@/features/mypage/saved-edit/SavedShortsTitleEditBtn'
+import MyPlaylistCard from '@/features/mypage/myplaylists/edit/MyPlaylistCard'
+import MyPlaylistTitleBtn from '@/features/mypage/myplaylists/edit/MyPlaylistTitleBtn'
 
-export default function SavedShortsPage() {
+export default async function MyPlaylistsPage() {
   return (
     <div className="h-full w-full">
       <div className="flex flex-col gap-8 lg:flex-row">
@@ -15,7 +15,7 @@ export default function SavedShortsPage() {
                 Spring Boot 시작하기
               </h1>
               {/* 플레이리스트 타이틀 수정 버튼 */}
-              <SavedShortsTitleEditBtn />
+              <MyPlaylistTitleBtn />
             </div>
 
             {/* Preview Card */}
@@ -83,11 +83,11 @@ export default function SavedShortsPage() {
         <div className="order-2 flex-1 lg:order-2">
           {/* ==================== List Header (총 갯수) ==================== */}
           <div className="mb-4 flex items-center justify-between">
-            <span className="text-sm text-gray-500">총 28개</span>
+            <span className="text-sm text-gray-500">총 5개</span>
           </div>
 
           {/* ==================== Playlist Shorts List (드래그 가능) ==================== */}
-          <SavedShortsCard />
+          <MyPlaylistCard />
         </div>
       </div>
     </div>
