@@ -1,9 +1,12 @@
 'use client'
 
-import { useDebounce } from '@/hook/useDebounce'
+import { useThrottle } from '@/hook/useThrottle'
+import { clientApi } from '@/lib/utils/clientApiUtils'
+import { useAuth } from '@/shared/store/auth/auth.store'
+import { ApiResponse } from '@/types/api/api'
+import { ResponseLike } from '@/types/shorts/like'
 import { Heart } from 'lucide-react'
 import { useState } from 'react'
-import { likeAction, unlikeAction } from '../like.action'
 import { toast } from 'react-toastify'
 
 interface ShortsLikeButtonProps {
@@ -12,40 +15,39 @@ interface ShortsLikeButtonProps {
   shortsId: number
 }
 
-function ShortsLikeButton({ initialLikeCount, initialIsLike, shortsId }: ShortsLikeButtonProps) {
+export function ShortsLikeButton({
+  initialLikeCount,
+  initialIsLike,
+  shortsId,
+}: ShortsLikeButtonProps) {
   const [isLike, setIsLike] = useState(initialIsLike)
   const [likeCount, setLikeCount] = useState(initialLikeCount)
+  const isLoggedIn = useAuth((state) => state.isLogin)
 
-  // const userData = localStorage.getItem('user')
-  const sendLike = useDebounce(async (nextIsLike: boolean) => {
-    // if (!userData) {
-    //   toast.info('로그인 이후 이용 해주세요.')
-    //   return
-    // }
+  const sendLike = useThrottle(async () => {
     try {
-      if (nextIsLike) {
-        await likeAction({ success: false, message: '', data: null, code: '' }, shortsId)
-      } else {
-        await unlikeAction({ success: false, message: '', data: null, code: '' }, shortsId)
-      }
+      const response = await clientApi.post<ApiResponse<ResponseLike>>(
+        `/api/v1/shorts/${shortsId}/likes`,
+        {
+          shortsId: shortsId,
+        },
+      )
+
+      toast.success(`좋아요 ${response.data.isLiked === false ? '취소' : ''} 성공`)
+      setIsLike(response.data.isLiked)
+      setLikeCount(response.data.likeCount)
     } catch (error) {
       toast.error('좋아요 기능 사용 중 오류가 발생했습니다.')
     }
   }, 300)
 
   const handleLike = () => {
-    // if (!userData) {
-    //   toast.info('로그인 이후 이용 바랍니다.')
-    //   return
-    // }
-    const nextIsLike = !isLike
+    if (!isLoggedIn) {
+      toast.info('로그인 이후 이용 바랍니다.')
+      return
+    }
 
-    // optimistic update
-    setIsLike(nextIsLike)
-    setLikeCount((prev) => (nextIsLike ? prev + 1 : prev - 1))
-
-    // 서버에는 "최종 상태" 전달
-    sendLike(nextIsLike)
+    sendLike()
   }
 
   return (
@@ -64,5 +66,3 @@ function ShortsLikeButton({ initialLikeCount, initialIsLike, shortsId }: ShortsL
     </button>
   )
 }
-
-export default ShortsLikeButton
