@@ -749,17 +749,19 @@ server.get(['/api/v1/playlists/me', '/api/v1/playlists/public'], (req, res) => {
 server.get('/api/v1/playlists/:id', (req, res) => {
   const db = router.db
   const playlistId = Number(req.params.id)
+
   const playlist = db.get('playlists').find({ id: playlistId }).value()
 
-  if (!playlist) return res.status(404).json({ success: false, message: 'Not Found' })
+  if (!playlist) {
+    return res.status(404).json({ success: false, message: 'Not Found' })
+  }
 
-  // items 상세 정보 구성
-  const items = (playlist.shortsIds || []).map((sid, index) => {
-    const shorts = db.get('shorts').find({ shortsId: sid }).value()
+  // playlist.items가 쇼츠 객체 배열이라고 가정
+  const items = (playlist.items || []).map((shorts, index) => {
     return {
       itemId: 100 + index,
       position: index,
-      shorts: shorts || { shortsId: sid, title: 'Unknown' },
+      shorts: shorts,
       addedAt: playlist.createdAt,
     }
   })
@@ -768,7 +770,10 @@ server.get('/api/v1/playlists/:id', (req, res) => {
     success: true,
     code: 'Success',
     message: null,
-    data: { ...playlist, items },
+    data: {
+      ...playlist,
+      items,
+    },
   })
 })
 

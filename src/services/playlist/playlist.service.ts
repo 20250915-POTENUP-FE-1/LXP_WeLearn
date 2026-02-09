@@ -1,15 +1,21 @@
+import { api } from '@/lib/utils/apiUtils'
 import { ApiResponse } from '@/types/api/api'
 import {
   PlaylistBase,
   PlaylistRequest,
   PlaylistShorts,
   PlaylistInfo,
+  PlayListCard,
 } from '@/types/playlist/playlist'
 import { PageRequest } from '@/types/shorts/shorts'
-import { cookies } from 'next/headers'
 
-const baseUrl = 'http://localhost:4000'
 export const PlaylistApi = {
+  /**
+   * ================
+   * Get 요청
+   * ================
+   */
+
   // 유저 개인 플레이 리스트 조회
   getUserPlaylist: async ({
     page,
@@ -19,73 +25,70 @@ export const PlaylistApi = {
       page: String(page),
       size: String(size),
     })
-    const response = await fetch(`${baseUrl}/api/v1/playlists/me?${params}`, {
-      cache: 'no-store',
-    })
 
-    const data = await response.json()
-    if (!response.ok) {
-      throw new Error('request failed')
-    }
-    return data
+    const response = await api.get<ApiResponse<PlaylistBase<PlaylistInfo[]>>>(
+      `/api/v1/playlists/me?${params}`,
+      {
+        cache: 'no-store',
+      },
+    )
+
+    return response
   },
 
   // 플레이리스트 상세 조회
   getPlaylistItem: async (playlistId: number): Promise<ApiResponse<PlaylistInfo>> => {
-    const response = await fetch(`${baseUrl}/api/v1/playlists/${playlistId}`)
-    console.log(playlistId)
-    if (!response.ok) {
-      throw new Error('플레이리스트 불러오기 실패')
-    }
+    const response = await api.get<ApiResponse<PlaylistInfo>>(`/api/v1/playlists/${playlistId}`)
 
-    const data = await response.json()
-    return data.data
+    return response
   },
 
-  createPlaylist: async (content: PlaylistRequest) => {
-    const cookieStore = await cookies()
-    const accessToken = cookieStore.get('accessToken')?.value
-
-    const response = await fetch(`${baseUrl}/api/v1/playlists`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(content),
+  // 공개 플레이리스트 조회
+  getPublicPlaylist: async ({
+    page = 0,
+    size = 10,
+    sort = 'createdAt,desc',
+  }: PageRequest): Promise<ApiResponse<PlaylistBase<PlayListCard[]>>> => {
+    const params = new URLSearchParams({
+      page: String(page),
+      size: String(size),
+      sort: String(sort),
     })
 
-    if (!response.ok) {
-      throw new Error('플레이리스트 생성 실패')
-    }
+    const response = await api.get<ApiResponse<PlaylistBase<PlayListCard[]>>>(
+      `/api/v1/playlists/public?${params}`,
+    )
+    return response
+  },
 
-    const data = await response.json()
+  /**
+   * =================
+   * POST 요청
+   * =================
+   */
 
-    return data
+  createPlaylist: async (content: PlaylistRequest) => {
+    const response = await api.post('/api/v1/playlists', content)
+
+    return response
   },
 
   addShortsPlaylist: async (
-    shortsId: number,
-    playlistId: number,
+    shortsId: string,
+    playlistId: string,
   ): Promise<ApiResponse<PlaylistShorts>> => {
-    const cookieStore = await cookies()
-    const accessToken = cookieStore.get('accessToken')?.value
+    const response = await api.post(`/api/v1/playlists/${playlistId}/items`, { shortsId: shortsId })
 
-    const response = await fetch(`${baseUrl}/api/v1/playlists/${playlistId}/items`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({ shortsId }),
-    })
+    return response
+  },
 
-    if (!response.ok) {
-      throw new Error('숏츠 저장 실패')
-    }
+  /**
+   * ================
+   * Delete
+   * ================
+   */
 
-    const data = await response.json()
-
-    return data.data
+  deleteShortsInPlaylist: async (shortsId: number, playlistId: number) => {
+    const response = await api.delete(`/api/v1/playlists/${playlistId}/items/${shortsId}`)
   },
 }

@@ -1,7 +1,5 @@
 import PlaylistContainer from '@/features/playlists/PlaylistContainer'
-import { clientApi } from '@/lib/utils/clientApiUtils'
-import { ApiResponse } from '@/types/api/api'
-import { PlaylistInfo } from '@/types/playlist/playlist'
+import { PlaylistApi } from '@/services/playlist/playlist.service'
 
 interface PlaylistsItemPageProps {
   params: Promise<{ id: string }>
@@ -9,8 +7,7 @@ interface PlaylistsItemPageProps {
 export default async function PlaylistsItemPage({ params }: PlaylistsItemPageProps) {
   const { id } = await params
   // api 완성시 즉각 service 함수 호출
-  const playlistItem = await clientApi.get<ApiResponse<PlaylistInfo>>(`/api/playlists/${id}`)
-
+  const playlistItem = await PlaylistApi.getPlaylistItem(Number(id))
   console.log(playlistItem)
   return (
     <div className="h-full w-full">

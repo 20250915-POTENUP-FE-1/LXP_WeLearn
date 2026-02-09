@@ -2,38 +2,36 @@
 
 import { User } from 'lucide-react'
 import { toast } from 'react-toastify'
-import { useEffect, useState } from 'react';
-import { clientApi } from '@/lib/utils/clientApiUtils';
-import { UserInfo } from '@/types/user/user';
-import { ApiResponse } from '@/types/api/api';
+import { useEffect, useState } from 'react'
+import { clientApi } from '@/lib/utils/clientApiUtils'
+import { UserInfo } from '@/types/user/user'
+import { ApiResponse } from '@/types/api/api'
 
 export default function ProfileForm() {
-  const [user, setUser] = useState<UserInfo|null>(null)
+  const [user, setUser] = useState<UserInfo | null>(null)
   const [isEditingPassword, setIsEditingPassword] = useState(false)
 
-  const handlePasswordEdit = () =>{
+  const handlePasswordEdit = () => {
     setIsEditingPassword(true)
   }
 
-  const handlePasswordSave = ()=>{}
+  const handlePasswordSave = () => {}
 
   const handlePasswordCancel = () => {
     setIsEditingPassword(false)
   }
   useEffect(() => {
     const getUserData = async () => {
-      try{
-       const res:ApiResponse<UserInfo> = await clientApi.get('/api/v1/users/me')
-       setUser(res.data)
-       console.log(res.data)
-      }catch (error) {
-
-      }
+      try {
+        const res: ApiResponse<UserInfo> = await clientApi.get('/api/v1/users/me')
+        setUser(res.data)
+        console.log(res.data)
+      } catch (error) {}
     }
     getUserData()
-  }, []);
+  }, [])
 
-    return (
+  return (
     <div className="w-full">
       <div className="px-6 py-12">
         {/* 프로필 이미지 영역 */}
@@ -49,10 +47,10 @@ export default function ProfileForm() {
           {/* 닉네임 */}
           <div className="flex min-h-[52px] items-center border-b border-gray-200 py-4">
             <label className="w-40 text-sm font-medium text-gray-700">닉네임</label>
-                <input
-                  type="text"
-                  className="h-9 flex-1 rounded-lg border border-gray-300 px-4 text-sm transition-all focus:ring-2 focus:ring-black focus:outline-none"
-                />
+            <input
+              type="text"
+              className="h-9 flex-1 rounded-lg border border-gray-300 px-4 text-sm transition-all focus:ring-2 focus:ring-black focus:outline-none"
+            />
           </div>
 
           {/* 이메일 */}

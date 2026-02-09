@@ -1,5 +1,6 @@
 'use client'
 
+import { Button } from '@/components/ui/Button'
 import {
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -18,6 +19,8 @@ export default function PlaylistDropdownMenu() {
     toast.info('현재 서비스 준비중입니다')
   }
 
+  const handleDeleteShortsFromPlaylist = (shortsId: number, playlistId: number) => {}
+
   return (
     <DropdownMenuContent className="min-w-40" align="end">
       <DropdownMenuGroup>
@@ -31,14 +34,16 @@ export default function PlaylistDropdownMenu() {
       <DropdownMenuSeparator />
 
       {/* 재생목록에서 삭제 */}
-      <DropdownMenuItem
-        className="cursor-pointer"
-        variant="destructive"
-        onSelect={handleRemoveFromPlaylist}
-      >
-        <Trash2 size={16} />
-        재생목록에서 삭제
-      </DropdownMenuItem>
+      <Button>
+        <DropdownMenuItem
+          className="cursor-pointer"
+          variant="destructive"
+          onSelect={handleRemoveFromPlaylist}
+        >
+          <Trash2 size={16} />
+          재생목록에서 삭제
+        </DropdownMenuItem>
+      </Button>
     </DropdownMenuContent>
   )
 }

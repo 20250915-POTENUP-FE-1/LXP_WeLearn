@@ -1,18 +1,19 @@
 import { Play } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import PlaylistPreviewHeader from './PlaylistPreviewHeaer'
-import { Playlist, PlaylistShorts } from '@/types/playlist/playlist'
+import { PlaylistInfo, PlaylistItems } from '@/types/playlist/playlist'
 import { useShortsAutoPlay } from '@/hook/mypage/useShortsAutoPlay'
+import PlaylistPreviewHeader from './PlaylistPreviewHeader'
 
 interface PlaylistPreviewProps {
-  playlistItem: Playlist
-  selectedShorts: PlaylistShorts | null
+  playlistItem: PlaylistInfo
+  selectedShorts: PlaylistItems | null
 }
 export default function PlaylistPreview({ playlistItem, selectedShorts }: PlaylistPreviewProps) {
   const { videoRef, handleLoadedData } = useShortsAutoPlay({
-    enabled: Boolean(selectedShorts?.videoUrl),
+    enabled: Boolean(selectedShorts?.shorts.videoUrl),
   })
+
   return (
     <div className="order-1 w-full lg:order-1 lg:shrink-0 lg:px-5">
       <div className="flex flex-col gap-6 py-8 md:py-0 lg:sticky lg:top-24">
@@ -23,9 +24,9 @@ export default function PlaylistPreview({ playlistItem, selectedShorts }: Playli
         <div className="relative mx-auto aspect-9/16 w-full overflow-hidden rounded-2xl bg-gray-200 shadow-lg md:w-[360px] lg:mx-0">
           {/* 상단 카테고리 뱃지 */}
           <div className="absolute top-3 right-3 left-3 z-10 flex items-center justify-between">
-            {selectedShorts?.category ? (
+            {selectedShorts?.shorts.category ? (
               <span className="inline-flex items-center rounded-full bg-black/55 px-3 py-1 text-[10px] font-medium text-white">
-                {selectedShorts.category.name}
+                {selectedShorts.shorts.category.name}
               </span>
             ) : (
               <span />
@@ -34,22 +35,22 @@ export default function PlaylistPreview({ playlistItem, selectedShorts }: Playli
 
           {/* 비디오/썸네일 영역 */}
           <div className="absolute inset-0">
-            {selectedShorts?.videoUrl ? (
+            {selectedShorts?.shorts.videoUrl ? (
               <video
                 ref={videoRef}
-                src={selectedShorts.videoUrl}
+                src={selectedShorts.shorts.videoUrl}
                 className="h-full w-full object-cover"
                 playsInline
                 muted
                 preload="metadata"
-                poster={selectedShorts.thumbnailUrl ?? undefined}
+                poster={selectedShorts.shorts.thumbnailUrl ?? undefined}
                 onLoadedData={handleLoadedData}
                 loop={true}
               />
-            ) : selectedShorts?.thumbnailUrl ? (
+            ) : selectedShorts?.shorts.thumbnailUrl ? (
               <Image
-                src={selectedShorts.thumbnailUrl}
-                alt={selectedShorts.title ?? '썸네일'}
+                src={selectedShorts.shorts.thumbnailUrl}
+                alt={selectedShorts.shorts.title ?? '썸네일'}
                 fill
                 sizes="380px"
                 className="object-cover"
@@ -66,32 +67,32 @@ export default function PlaylistPreview({ playlistItem, selectedShorts }: Playli
           <div className="absolute right-0 bottom-0 left-0 p-5">
             <div className="mb-3 flex items-center gap-3">
               <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full">
-                {selectedShorts?.uploader && (
+                {selectedShorts?.shorts && (
                   <img
-                    src={selectedShorts.uploader.profileImageUrl}
+                    src={selectedShorts.shorts.userPorfileUrl}
                     alt={'프로필'}
                     className="h-full w-full object-cover"
                   />
                 )}
               </div>
               <span className="text-md font-medium text-gray-200">
-                {selectedShorts?.uploader.nickname ?? '숏터'}
+                {selectedShorts?.shorts.userNickname ?? '숏터'}
               </span>
             </div>
             <h3 className="mb-2 line-clamp-2 text-[18px] leading-snug font-semibold text-white">
-              {selectedShorts?.title}
+              {selectedShorts?.shorts.title}
             </h3>
 
-            {selectedShorts?.description && (
+            {selectedShorts?.shorts.description && (
               <p className="mb-4 line-clamp-2 h-[3.25em] text-sm leading-relaxed text-gray-200/90">
-                {selectedShorts.description}
+                {selectedShorts.shorts.description}
               </p>
             )}
 
             <div className="flex items-center justify-end">
-              {selectedShorts?.keywords?.[0] && (
+              {selectedShorts?.shorts.keywords && (
                 <span className="rounded-full border border-white/25 px-3 py-1 text-[10px] text-gray-100">
-                  #{selectedShorts?.keywords[0]}
+                  #{selectedShorts.shorts.keywords[0]}
                 </span>
               )}
             </div>

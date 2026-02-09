@@ -744,17 +744,19 @@
       "visibility": "PUBLIC",
       "thumbnailUrl": "https://example.com/default-thumb.jpg",
       "thumbnailCustom": true,
-      "itemsCount": 1,
+      "itemsCount": 3,
       "owner": {
         "id": 1,
         "nickname": "승일",
         "profileUrl": ""
       },
       "shortsIds": [
+        1,
+        1,
         1
       ],
       "createdAt": "2026-02-08T12:55:00.348Z",
-      "updatedAt": "2026-02-08T12:55:01.977Z"
+      "updatedAt": "2026-02-09T00:15:59.511Z"
     },
     {
       "id": 1770556140956,
@@ -763,15 +765,19 @@
       "visibility": "PUBLIC",
       "thumbnailUrl": "https://example.com/default-thumb.jpg",
       "thumbnailCustom": true,
-      "itemsCount": 0,
+      "itemsCount": 3,
       "owner": {
         "id": 1,
         "nickname": "승일",
         "profileUrl": ""
       },
-      "shortsIds": [],
+      "shortsIds": [
+        1,
+        4,
+        4
+      ],
       "createdAt": "2026-02-08T13:09:00.957Z",
-      "updatedAt": "2026-02-08T13:09:00.957Z"
+      "updatedAt": "2026-02-09T01:06:21.384Z"
     },
     {
       "id": 1770556143723,
@@ -780,15 +786,20 @@
       "visibility": "PUBLIC",
       "thumbnailUrl": "https://example.com/default-thumb.jpg",
       "thumbnailCustom": true,
-      "itemsCount": 0,
+      "itemsCount": 4,
       "owner": {
         "id": 1,
         "nickname": "승일",
         "profileUrl": ""
       },
-      "shortsIds": [],
+      "shortsIds": [
+        1,
+        3,
+        1,
+        5
+      ],
       "createdAt": "2026-02-08T13:09:03.723Z",
-      "updatedAt": "2026-02-08T13:09:03.723Z"
+      "updatedAt": "2026-02-09T01:06:23.766Z"
     },
     {
       "id": 1770556146918,
@@ -797,15 +808,20 @@
       "visibility": "PUBLIC",
       "thumbnailUrl": "https://example.com/default-thumb.jpg",
       "thumbnailCustom": true,
-      "itemsCount": 0,
+      "itemsCount": 4,
       "owner": {
         "id": 1,
         "nickname": "승일",
         "profileUrl": ""
       },
-      "shortsIds": [],
+      "shortsIds": [
+        3,
+        2,
+        1,
+        3
+      ],
       "createdAt": "2026-02-08T13:09:06.918Z",
-      "updatedAt": "2026-02-08T13:09:06.918Z"
+      "updatedAt": "2026-02-09T01:06:17.023Z"
     },
     {
       "id": 1770556150257,
@@ -814,15 +830,20 @@
       "visibility": "PUBLIC",
       "thumbnailUrl": "https://example.com/default-thumb.jpg",
       "thumbnailCustom": true,
-      "itemsCount": 0,
+      "itemsCount": 4,
       "owner": {
         "id": 1,
         "nickname": "승일",
         "profileUrl": ""
       },
-      "shortsIds": [],
+      "shortsIds": [
+        2,
+        4,
+        4,
+        4
+      ],
       "createdAt": "2026-02-08T13:09:10.258Z",
-      "updatedAt": "2026-02-08T13:09:10.258Z"
+      "updatedAt": "2026-02-09T01:05:34.565Z"
     },
     {
       "id": 1770556153584,
@@ -831,15 +852,21 @@
       "visibility": "PUBLIC",
       "thumbnailUrl": "https://example.com/default-thumb.jpg",
       "thumbnailCustom": true,
-      "itemsCount": 0,
+      "itemsCount": 5,
       "owner": {
         "id": 1,
         "nickname": "승일",
         "profileUrl": ""
       },
-      "shortsIds": [],
+      "shortsIds": [
+        3,
+        3,
+        5,
+        5,
+        1
+      ],
       "createdAt": "2026-02-08T13:09:13.584Z",
-      "updatedAt": "2026-02-08T13:09:13.584Z"
+      "updatedAt": "2026-02-09T01:06:08.130Z"
     },
     {
       "id": 1770556156889,
@@ -848,15 +875,21 @@
       "visibility": "PUBLIC",
       "thumbnailUrl": "https://example.com/default-thumb.jpg",
       "thumbnailCustom": true,
-      "itemsCount": 0,
+      "itemsCount": 5,
       "owner": {
         "id": 1,
         "nickname": "승일",
         "profileUrl": ""
       },
-      "shortsIds": [],
+      "shortsIds": [
+        2,
+        4,
+        2,
+        1,
+        2
+      ],
       "createdAt": "2026-02-08T13:09:16.889Z",
-      "updatedAt": "2026-02-08T13:09:16.889Z"
+      "updatedAt": "2026-02-09T01:06:14.571Z"
     }
   ],
   "currentUser": {

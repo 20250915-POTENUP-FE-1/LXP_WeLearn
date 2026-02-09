@@ -15,7 +15,7 @@ export default function Playlist({ list, shortsId, handleActiveTab }: PlaylistPr
   const router = useRouter()
   async function addShortsToPlaylist(item: PlaylistInfo) {
     try {
-      const response = await clientApi.post(`/api/v1/playlists/${item.id}/items`, {
+      await clientApi.post(`/api/v1/playlists/${item.id}/items`, {
         shortsId: shortsId,
         playlistId: item.id,
       })
@@ -39,7 +39,7 @@ export default function Playlist({ list, shortsId, handleActiveTab }: PlaylistPr
             <span className="text-sm font-medium text-gray-900">{item.title}</span>
             <div className="flex items-center gap-2">
               <Folders size={16} className="text-gray-500" />
-              <span className="text-xs text-gray-500">{item.itemsCount}개</span>
+              <span className="text-xs text-gray-500">{item.shortsCount}개</span>
               <div className="rounded p-1 transition-colors hover:bg-gray-200">
                 <Plus className="h-4 w-4 text-gray-600" />
               </div>

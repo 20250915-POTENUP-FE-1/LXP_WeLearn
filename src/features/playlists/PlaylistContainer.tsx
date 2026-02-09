@@ -1,5 +1,5 @@
 'use client'
-import { PlaylistInfo, PlaylistShorts } from '@/types/playlist/playlist'
+import { PlaylistInfo, PlaylistItems } from '@/types/playlist/playlist'
 import PlaylistCard from './PlaylistCard'
 import PlaylistPreview from './PlaylistPreview'
 import PlaylistRightHeader from './PlaylistRightHeader'
@@ -9,15 +9,13 @@ interface PlaylistContainerProps {
   playlistItem: PlaylistInfo
 }
 export default function PlaylistContainer({ playlistItem }: PlaylistContainerProps) {
-  const [shortsList, setShortsList] = useState<PlaylistShorts[] | null>(
-    playlistItem.item?.shorts ?? null,
-  )
-  console.log(shortsList)
-  const [selectedShorts, setSelectedShorts] = useState<PlaylistShorts | null>(
-    playlistItem.item?.shorts[0] || null,
-  )
+  const shortsList = playlistItem.items ?? null
 
-  const handlePreview = (shorts: PlaylistShorts) => {
+  const [selectedShorts, setSelectedShorts] = useState<PlaylistItems | null>(
+    playlistItem.items?.[0] ?? null,
+  )
+  console.log(selectedShorts)
+  const handlePreview = (shorts: PlaylistItems) => {
     setSelectedShorts(shorts)
   }
   return (
@@ -34,11 +32,15 @@ export default function PlaylistContainer({ playlistItem }: PlaylistContainerPro
       <div className="order-2 flex-1 lg:order-2">
         {/* ==================== List Header (총 갯수) ==================== */}
         <div className="mb-4 flex items-center justify-between">
-          <PlaylistRightHeader totalCount={playlistItem.itemsCount} />
+          <PlaylistRightHeader totalCount={playlistItem.shortsCount} />
         </div>
 
         {/* ==================== Playlist Shorts List (드래그 가능) ==================== */}
-        <PlaylistCard shortsList={shortsList} handlePreview={handlePreview} />
+        <PlaylistCard
+          shortsList={shortsList}
+          handlePreview={handlePreview}
+          playlistOwner={playlistItem.owner}
+        />
       </div>
     </>
   )

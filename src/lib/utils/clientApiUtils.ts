@@ -55,7 +55,6 @@ export const clientApi = {
       method: 'POST',
       body: data ? JSON.stringify(data) : undefined,
     })
-    console.log(data)
     if (!res.ok) throw await handleError(res)
     return res.status === 204 ? ({} as T) : res.json()
   },

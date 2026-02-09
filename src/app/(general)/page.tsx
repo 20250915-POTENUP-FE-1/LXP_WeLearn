@@ -14,7 +14,6 @@ export default async function Page() {
       categoryApi.getAllCategoryId(), // 카테고리 항목 목록
       fetch('http://localhost:4000/api/v1/playlists/public').then((res) => res.json()), // Mock server >> api 연동 필요
     ])
-  console.log(playlistResponse)
 
   // 인기 숏츠 (캐러셀용)
   const shortsList: ShortsBase[] = popularShorts?.data?.content ?? []

@@ -1,12 +1,12 @@
 import Image from 'next/image'
 import { Play } from 'lucide-react'
 import PlaylistButton from '@/features/home/playlist/PlaylistButton'
-import { PlaylistInfo } from '@/types/playlist/playlist'
+import { PlayListCard } from '@/types/playlist/playlist'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 
 interface PlayListContainerProps {
-  items: PlaylistInfo[]
+  items: PlayListCard[]
 }
 
 export default async function PlaylistSection({ items }: PlayListContainerProps) {
@@ -38,7 +38,7 @@ export default async function PlaylistSection({ items }: PlayListContainerProps)
                       <p className="text-md max-w-[80%] truncate pb-2 font-medium">{item.title}</p>
                       <div className="flex items-center justify-center gap-2 rounded-xl border-2 border-white/50 bg-black/50 px-4 py-3">
                         <Play size={24} fill="currentColor" />
-                        <span className="m-0 p-0 text-lg font-bold">{item.itemsCount}개</span>
+                        <span className="m-0 p-0 text-lg font-bold">{item.shortsCount}개</span>
                       </div>
                     </div>
 
@@ -60,7 +60,7 @@ export default async function PlaylistSection({ items }: PlayListContainerProps)
                 <p className="truncate p-2 text-sm font-medium text-gray-900 group-hover:text-black">
                   {item.description}
                 </p>
-                <p className="px-2 pb-2 text-xs text-gray-500">{item.itemsCount}개</p>
+                <p className="px-2 pb-2 text-xs text-gray-500">{item.shortsCount}개</p>
               </div>
             </PlaylistButton>
           ))}

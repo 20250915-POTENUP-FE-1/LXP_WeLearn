@@ -110,11 +110,13 @@ export const api = {
   },
 
   async post<T>(endpoint: string, data?: unknown, options?: FetchOptions) {
+    console.log(data)
     const res = await fetchWithAuth(`${baseUrl}${endpoint}`, {
       ...options,
       method: 'POST',
       body: JSON.stringify(data),
     })
+    console.log(res)
     if (!res.ok) throw await handleError(res)
     return res.status === 204 ? ({} as T) : res.json()
   },
@@ -142,11 +144,11 @@ export const api = {
 }
 
 async function handleError(res: Response) {
-  const errorData = await res.json().catch(() => ({}));
+  const errorData = await res.json().catch(() => ({}))
   throw {
     success: false,
     code: errorData.code || res.status,
     message: errorData.message || '알 수 없는 오류',
     data: errorData.data,
-  };
+  }
 }
