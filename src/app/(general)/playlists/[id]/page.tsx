@@ -1,4 +1,4 @@
-import PlaylistContainer from '@/features/playlists/PlaylistContainer'
+import PlaylistDetailContainer from '@/features/playlists/PlaylistdetailContainer'
 import { PlaylistApi } from '@/services/playlist/playlist.service'
 
 interface PlaylistsItemPageProps {
@@ -12,7 +12,7 @@ export default async function PlaylistsItemPage({ params }: PlaylistsItemPagePro
   return (
     <div className="h-full w-full">
       <div className="flex flex-col gap-8 lg:flex-row">
-        <PlaylistContainer playlistItem={playlistItem.data} />
+        <PlaylistDetailContainer playlistItem={playlistItem.data} />
       </div>
     </div>
   )
