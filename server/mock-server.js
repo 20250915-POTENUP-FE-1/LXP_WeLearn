@@ -680,7 +680,9 @@ const getThumbnailById = (db, shortsId) => {
     .get('shorts')
     .find({ shortsId: Number(shortsId) })
     .value()
-  return shorts ? shorts.thumbnailUrl : 'https://example.com/default-thumb.jpg'
+  return shorts
+    ? shorts.thumbnailUrl
+    : 'https://images.pexels.com/photos/5483075/pexels-photo-5483075.jpeg'
 }
 
 // 1. 플레이리스트 생성 (POST /api/v1/playlists)

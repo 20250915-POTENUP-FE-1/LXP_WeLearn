@@ -9,7 +9,7 @@ import {
 } from '@/types/playlist/playlist'
 import { PageRequest } from '@/types/shorts/shorts'
 
-export const PlaylistApi = {
+export const playlistApi = {
   /**
    * ================
    * Get 요청
@@ -58,6 +58,7 @@ export const PlaylistApi = {
     const response = await api.get<ApiResponse<PlaylistBase<PlayListCard[]>>>(
       `/api/v1/playlists/public?${params}`,
     )
+
     return response
   },
 

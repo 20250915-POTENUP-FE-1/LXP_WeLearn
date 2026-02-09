@@ -4,6 +4,7 @@ import { categoryApi } from '@/services/category/category.service'
 import CategoryShortsSection from '@/features/home/categories/CategoryShortsSection'
 import ShortsCarousel from '@/features/home/ShortsCarousel/ShortsCarousel'
 import { ShortsBase } from '@/types/shorts/shorts'
+import { playlistApi } from '@/services/playlist/playlist.service'
 
 export default async function Page() {
   // api 호출 (초기 로드: 전체 숏츠)
@@ -12,7 +13,7 @@ export default async function Page() {
       getShortPopular(),
       categoryApi.getAllShorts({ sort: 'createdAt,desc' }), // 전체 숏츠 목록(최신순 기본값)
       categoryApi.getAllCategoryId(), // 카테고리 항목 목록
-      fetch('http://localhost:4000/api/v1/playlists/public').then((res) => res.json()), // Mock server >> api 연동 필요
+      playlistApi.getPublicPlaylist({}),
     ])
 
   // 인기 숏츠 (캐러셀용)
@@ -32,7 +33,7 @@ export default async function Page() {
     <div className="min-h-screen bg-white">
       <ShortsCarousel data={shortsList} />
 
-      <PlaylistSection items={playlistResponse.data.content} />
+      <PlaylistSection items={playlistResponse?.data?.content ?? []} />
 
       <CategoryShortsSection initialShortsData={initialShortsData} categories={categories} />
     </div>

@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { useRef } from 'react'
 import DashboardCreatedCard from './DashboardCreatedCard'
+import EmptyState from './EmptyState'
 
 interface DashboardCreatedListProps {
   shorts: ShortsBase[]
@@ -57,21 +58,25 @@ export default function DashboardCreatedList({ shorts }: DashboardCreatedListPro
       </div>
 
       {/* 숏츠 목록 */}
-      <div ref={scrollRef} className="scrollbar-hide flex gap-4 overflow-x-auto pt-1 pb-4">
-        {shorts.map((shorts) => (
-          <DashboardCreatedCard
-            key={shorts.shortsId}
-            shortsId={shorts.shortsId}
-            videoUrl={shorts.videoUrl}
-            categoryName={shorts.categoryName}
-            thumbnailUrl={shorts.thumbnailUrl}
-            title={shorts.title}
-            description={shorts.description}
-            userNickname={shorts.userNickname}
-            keywords={shorts.keywords}
-          />
-        ))}
-      </div>
+      {shorts.length === 0 ? (
+        <EmptyState type="myshorts" />
+      ) : (
+        <div ref={scrollRef} className="scrollbar-hide flex gap-4 overflow-x-auto pt-1 pb-4">
+          {shorts.map((shorts) => (
+            <DashboardCreatedCard
+              key={shorts.shortsId}
+              shortsId={shorts.shortsId}
+              videoUrl={shorts.videoUrl}
+              categoryName={shorts.categoryName}
+              thumbnailUrl={shorts.thumbnailUrl}
+              title={shorts.title}
+              description={shorts.description}
+              userNickname={shorts.userNickname}
+              keywords={shorts.keywords}
+            />
+          ))}
+        </div>
+      )}
     </section>
   )
 }

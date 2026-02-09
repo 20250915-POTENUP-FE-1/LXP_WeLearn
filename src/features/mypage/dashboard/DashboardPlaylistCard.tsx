@@ -7,7 +7,6 @@ interface DashboardPlaylistCardProps {
   thumbnailUrl: string
   title: string
   description: string
-  categoryName: string
   shortsCount: number
 }
 

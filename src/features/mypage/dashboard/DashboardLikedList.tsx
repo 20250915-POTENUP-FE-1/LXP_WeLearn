@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { ShortsBase } from '@/types/shorts/shorts'
 import { Button } from '@/components/ui/Button'
 import DashboardLikedCard from './DashboardLikedCard'
+import EmptyState from './EmptyState'
 
 interface DashboardLikedListProps {
   shorts: ShortsBase[]
@@ -56,21 +57,25 @@ export default function DashboardLikedList({ shorts }: DashboardLikedListProps) 
         </div>
       </div>
 
-      <div ref={scrollRef} className="scrollbar-hide flex gap-4 overflow-x-auto pt-1 pb-4">
-        {shorts.map((shorts) => (
-          <DashboardLikedCard
-            key={shorts.shortsId}
-            shortsId={shorts.shortsId}
-            videoUrl={shorts.videoUrl}
-            categoryName={shorts.categoryName}
-            thumbnailUrl={shorts.thumbnailUrl}
-            title={shorts.title}
-            description={shorts.description}
-            userNickname={shorts.userNickname}
-            keywords={shorts.keywords}
-          />
-        ))}
-      </div>
+      {shorts.length === 0 ? (
+        <EmptyState type="like" />
+      ) : (
+        <div ref={scrollRef} className="scrollbar-hide flex gap-4 overflow-x-auto pt-1 pb-4">
+          {shorts.map((shorts) => (
+            <DashboardLikedCard
+              key={shorts.shortsId}
+              shortsId={shorts.shortsId}
+              videoUrl={shorts.videoUrl}
+              categoryName={shorts.categoryName}
+              thumbnailUrl={shorts.thumbnailUrl}
+              title={shorts.title}
+              description={shorts.description}
+              userNickname={shorts.userNickname}
+              keywords={shorts.keywords}
+            />
+          ))}
+        </div>
+      )}
     </section>
   )
 }
