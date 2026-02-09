@@ -8,7 +8,6 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 import { Globe, Lock, Pencil, Trash2 } from 'lucide-react'
-import { toast } from 'react-toastify'
 import { ShortsVisibility } from '@/types/shorts/status'
 
 interface MyShortsDropdownMenuProps {
@@ -40,13 +39,7 @@ export default function MyShortsDropdownMenu({
         {/* 공개/비공개 전환 */}
         <DropdownMenuItem
           className="cursor-pointer"
-          onSelect={() => {
-            if (isPublished) {
-              toast.info('현재 서비스 준비중입니다')
-            } else {
-              onToggleVisibility?.()
-            }
-          }}
+          onSelect={() => onToggleVisibility?.()}
         >
           {isPublished ? (
             <>
