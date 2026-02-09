@@ -41,7 +41,7 @@ export default function PlaylistPageWrapper({
             <PlaylistItem
               id={playlist.id}
               visibility={playlist.visibility}
-              shortsCount={playlist.itemsCount}
+              shortsCount={playlist.shortsCount}
               thumbnailUrl={playlist.thumbnailUrl}
               title={playlist.title}
               description={playlist.description}
