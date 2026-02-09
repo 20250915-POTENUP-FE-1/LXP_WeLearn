@@ -57,13 +57,13 @@ export default async function PlaylistSection({ items }: PlayListContainerProps)
                   </div>
                 </div>
 
-                <p className="truncate p-2 text-sm font-medium text-gray-900 group-hover:text-black">
-                  {item.description}
-                </p>
-                <p className="px-2 pb-2 text-xs text-gray-500">{item.shortsCount}개</p>
-              </div>
-            </PlaylistButton>
-          ))}
+              <p className="truncate p-2 text-sm font-medium text-gray-900 group-hover:text-black">
+                {item.description}
+              </p>
+              {/* <p className="p-2 pt-0 text-xs text-gray-500">{item.shortsCount}개</p> */}
+            </div>
+          </PlaylistButton>
+        ))}
       </div>
     </section>
   )

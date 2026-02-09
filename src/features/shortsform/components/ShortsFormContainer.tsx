@@ -104,7 +104,7 @@ export default function ShortsFormContainer({
             body: file,
             headers: { 'Content-Type': file.type },
           })
-          if (!res.ok) throw new Error('S3 업로드 실패')
+          if (!res.ok) throw new Error('영상 업로드에 실패했씁니다. 다시 시도해주세요.')
         }
 
         // 영상 업로드
@@ -182,22 +182,45 @@ export default function ShortsFormContainer({
     setIsSubmitting(true)
 
     try {
-      // 수정 요청에 사용할 FormData 생성
+      // 초기값과 비교하여 변경된 필드만 전송
+      const initial = buildInitialFormData
       const submitFormData = new FormData()
       submitFormData.append('shortsId', shortsId.toString())
-      submitFormData.append('title', formData.title)
-      submitFormData.append('description', formData.description || '')
-      submitFormData.append('status', formData.isPublic ? 'PUBLISHED' : 'DRAFT')
 
-      // 카테고리는 항상 전송 (API 필수 필드)
-      if (formData.categoryId !== null) {
-        submitFormData.append('categoryId', formData.categoryId.toString())
+      let hasChanges = false
+
+      if (formData.title !== initial.title) {
+        submitFormData.append('title', formData.title)
+        hasChanges = true
       }
 
-      // 키워드 목록 (배열 형태로 서버에 전달)
-      formData.keywords.forEach((keyword) => {
-        submitFormData.append('keywords', keyword)
-      })
+      if (formData.description !== initial.description) {
+        submitFormData.append('description', formData.description || '')
+        hasChanges = true
+      }
+
+      if (formData.isPublic !== initial.isPublic) {
+        submitFormData.append('status', formData.isPublic ? 'PUBLISHED' : 'DRAFT')
+        hasChanges = true
+      }
+
+      if (formData.categoryId !== initial.categoryId && formData.categoryId !== null) {
+        submitFormData.append('categoryId', formData.categoryId.toString())
+        hasChanges = true
+      }
+
+      if (JSON.stringify(formData.keywords) !== JSON.stringify(initial.keywords)) {
+        formData.keywords.forEach((keyword) => {
+          submitFormData.append('keywords', keyword)
+        })
+        hasChanges = true
+      }
+
+      if (!hasChanges) {
+        toast.info('변경된 내용이 없습니다.')
+        setIsSubmitting(false)
+        return
+      }
 
       // 숏츠 수정 요청
       const result = await updateShortsAction({ success: false, message: '' }, submitFormData)
@@ -213,7 +236,7 @@ export default function ShortsFormContainer({
     } finally {
       setIsSubmitting(false)
     }
-  }, [isSubmitting, shortsId, formData, router])
+  }, [isSubmitting, shortsId, formData, buildInitialFormData, router])
 
   // 폼 제출 (등록/수정 공통)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

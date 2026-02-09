@@ -41,19 +41,4 @@ export const myShortsApi = {
   deleteShorts: (shortsId: number): Promise<boolean> => {
     return api.delete(`/api/v1/shorts/${shortsId}`)
   },
-
-  // /** 숏츠 공개/비공개 전환 */
-  // toggleShortsStatus: async (
-  //   shortsId: number,
-  //   currentStatus: ShortsUpdateRequest['status'],
-  // ): Promise<ShortsResponse> => {
-  //   const newStatus = currentStatus === 'PUBLISHED' ? 'DRAFT' : 'PUBLISHED'
-  //   const response = await api.patch<ApiResponse<ShortsResponse>>(`/api/v1/shorts/${shortsId}`, {
-  //     status: newStatus,
-  //   })
-  //   if (response.data) {
-  //     return response.data
-  //   }
-  //   throw new Error('숏츠 상태 변경에 실패했습니다')
-  // },
 }
