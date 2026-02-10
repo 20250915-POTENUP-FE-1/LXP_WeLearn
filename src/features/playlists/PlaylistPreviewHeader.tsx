@@ -46,12 +46,12 @@ export default function PlaylistPreviewHeader({ playlistItem }: PlaylistPreviewH
                   onClick={() => setTitle('')}
                   className="absolute right-0 text-gray-400 hover:text-gray-700"
                 >
-                  <X className="size-4" />
+                  <X size={14} />
                 </button>
               )}
             </div>
           ) : (
-            <h1 className="text-center text-xl font-semibold tracking-tight text-gray-900 lg:text-left">
+            <h1 className="border-b border-transparent text-center text-xl font-semibold tracking-tight text-gray-900 lg:text-left">
               {title}
             </h1>
           )}
@@ -63,7 +63,7 @@ export default function PlaylistPreviewHeader({ playlistItem }: PlaylistPreviewH
               className="shrink-0 text-gray-400 hover:text-gray-700"
               onClick={() => setEditMode(true)}
             >
-              <SquarePen className="size-3.5" />
+              <SquarePen size={16} />
             </Button>
           )}
         </div>
@@ -76,7 +76,7 @@ export default function PlaylistPreviewHeader({ playlistItem }: PlaylistPreviewH
               onChange={(e) => setDescription(e.target.value)}
               className="w-full resize-none border-b border-gray-200 bg-transparent py-0 pr-6 text-sm leading-relaxed text-gray-900 transition-colors outline-none focus:border-gray-900"
               placeholder="설명을 입력하세요"
-              rows={1}
+              rows={2}
             />
             {description && (
               <button
@@ -84,22 +84,30 @@ export default function PlaylistPreviewHeader({ playlistItem }: PlaylistPreviewH
                 onClick={() => setDescription('')}
                 className="absolute top-0 right-0 text-gray-400 hover:text-gray-700"
               >
-                <X className="size-4" />
+                <X size={14} />
               </button>
             )}
           </div>
         ) : (
           playlistItem.description && (
-            <p className="line-clamp-2 text-sm leading-relaxed text-gray-500">{description}</p>
+            <p className="line-clamp-2 border-b border-transparent py-0 text-sm leading-relaxed text-gray-500">
+              {description}
+            </p>
           )
         )}
 
         {editMode && (
           <div className="flex gap-1.5 self-end">
-            <Button type="button" variant="outline" size="sm" onClick={handleCancel}>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="text-xs"
+              onClick={handleCancel}
+            >
               닫기
             </Button>
-            <Button type="submit" variant="accent" size="sm">
+            <Button type="submit" variant="accent" size="sm" className="text-xs">
               수정
             </Button>
           </div>

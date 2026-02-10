@@ -47,7 +47,7 @@ export default function EmptyState({ type }: EmptyStateProps) {
   const config = EMPTY_CONFIG[type]
 
   return (
-    <div className="flex h-[398px] flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-white p-6 text-center">
+    <div className="flex h-99.5 flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-white p-6 text-center">
       {config.icon}
       <h3 className="mt-4 text-base font-medium text-gray-900">{config.title}</h3>
       {/* <p className="mt-1 text-sm text-gray-500">{config.description}</p> */}
