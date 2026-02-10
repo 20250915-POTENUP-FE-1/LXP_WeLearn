@@ -20,7 +20,6 @@ export default function PlaylistDetailContainer({ playlistItem }: PlaylistDetail
   const handlePreview = (shorts: PlaylistItems) => {
     setSelectedShorts(shorts)
   }
-  console.log(playlistItem.owner)
   return (
     <>
       {/* ==================== Left Section - Fixed Preview (모바일에서 먼저 노출) ==================== */}

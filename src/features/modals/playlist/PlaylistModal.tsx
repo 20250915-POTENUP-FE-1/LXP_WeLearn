@@ -42,7 +42,6 @@ export default function PlaylistModal({ initialPlaylistData }: PlaylistModalProp
     }
   }
 
-  console.log(initialPlaylistData)
   return (
     <AnimatePresence mode="wait">
       {isOpen && mounted && (

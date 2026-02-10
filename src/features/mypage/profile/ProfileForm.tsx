@@ -25,7 +25,6 @@ export default function ProfileForm() {
       try {
         const res: ApiResponse<UserInfo> = await clientApi.get('/api/v1/users/me')
         setUser(res.data)
-        console.log(res.data)
       } catch (error) {}
     }
     getUserData()
