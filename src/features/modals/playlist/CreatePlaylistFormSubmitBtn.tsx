@@ -17,7 +17,7 @@ export default function CreatePlaylistFormSubmitBtn({
       <Button
         variant="accent"
         onClick={handleActiveTab}
-        className="flex-1 rounded-lg bg-gray-200 px-6 py-5 font-medium text-gray-700 transition-colors hover:bg-gray-300"
+        className="flex-1 rounded-full bg-gray-200 px-6 py-5 font-medium text-gray-700 transition-colors hover:bg-gray-300"
       >
         취소
       </Button>
@@ -26,7 +26,7 @@ export default function CreatePlaylistFormSubmitBtn({
         form="playlist-form"
         variant="accent"
         disabled={!playlistTitle.trim() || isPending}
-        className="flex-1 rounded-lg px-6 py-5 font-medium text-white transition-colors disabled:cursor-not-allowed disabled:bg-gray-700"
+        className="flex-1 rounded-full px-6 py-5 font-medium text-white transition-colors disabled:cursor-not-allowed"
       >
         생성
       </Button>

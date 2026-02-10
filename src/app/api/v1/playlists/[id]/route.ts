@@ -1,4 +1,4 @@
-import { PlaylistApi } from '@/services/playlist/playlist.service'
+import { playlistApi } from '@/services/playlist/playlist.service'
 import { NextResponse } from 'next/server'
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -14,7 +14,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
   }
 
   try {
-    const response = await PlaylistApi.getPlaylistItem(playlistId)
+    const response = await playlistApi.getPlaylistItem(playlistId)
 
     return NextResponse.json({
       success: true,

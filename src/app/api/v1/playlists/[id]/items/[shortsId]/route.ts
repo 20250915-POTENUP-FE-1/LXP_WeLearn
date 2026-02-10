@@ -1,4 +1,4 @@
-import { PlaylistApi } from '@/services/playlist/playlist.service'
+import { playlistApi } from '@/services/playlist/playlist.service'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function DELETE(
@@ -7,7 +7,7 @@ export async function DELETE(
 ) {
   const { playlistId, shortsId } = params
   try {
-    await PlaylistApi.deleteShortsInPlaylist(Number(shortsId), Number(playlistId))
+    await playlistApi.deleteShortsInPlaylist(Number(shortsId), Number(playlistId))
 
     return NextResponse.json({
       success: true,

@@ -30,7 +30,7 @@ export default async function Page() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen w-full bg-white">
       <ShortsCarousel data={shortsList} />
 
       <PlaylistSection items={playlistResponse?.data?.content ?? []} />

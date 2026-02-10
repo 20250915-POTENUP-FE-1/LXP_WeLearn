@@ -3,11 +3,11 @@
 import Pagination from '@/components/ui/Pagination'
 import PlaylistItem from './PlaylistItem'
 import { usePathname } from 'next/navigation'
-import { PlaylistInfo } from '@/types/playlist/playlist'
+import { PlayListCard } from '@/types/playlist/playlist'
 import Link from 'next/link'
 
 interface PlaylistPageCollectionProps {
-  initialPlaylists: PlaylistInfo[]
+  initialPlaylists: PlayListCard[]
   totalPages?: number
   currentPage?: number
   isPending?: boolean

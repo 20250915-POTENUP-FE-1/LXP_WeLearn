@@ -1,5 +1,6 @@
 'use server'
-import { PlaylistApi } from '@/services/playlist/playlist.service'
+
+import { playlistApi } from '@/services/playlist/playlist.service'
 import { ActionState } from '@/types/action/action'
 import { PlaylistInfo, Visibility } from '@/types/playlist/playlist'
 import { revalidatePath } from 'next/cache'
@@ -15,7 +16,7 @@ export const createPlaylistAction = async (
   const shortsId = Number(formData.get('shortsId') || 0)
 
   try {
-    const response = await PlaylistApi.createPlaylist({
+    const response = await playlistApi.createPlaylist({
       title,
       description,
       thumbnailUrl,

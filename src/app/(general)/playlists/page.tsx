@@ -1,12 +1,11 @@
 import PlaylistPageCollection from '@/features/playlists/PlaylistPageCollection'
+import { playlistApi } from '@/services/playlist/playlist.service'
 
 export default async function PlaylistsPage() {
-  const [initialPlaylists] = await Promise.all([
-    fetch('http://localhost:4000/api/v1/playlists/public').then((res) => res.json()), // Mock server
-  ])
+  const response = await playlistApi.getPublicPlaylist({ page: 0, size: 10 })
   return (
     <div className="w-full">
-      <PlaylistPageCollection initialPlaylists={initialPlaylists.data.content} />
+      <PlaylistPageCollection initialPlaylists={response.data.content} />
     </div>
   )
 }

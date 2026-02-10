@@ -29,7 +29,8 @@ export default function CreatePlaylistForm({ handleActiveTab, shortsId }: CrateP
     if (createPlaylistState.success && createPlaylistState.data) {
       setPlaylist(createPlaylistState.data)
       handleActiveTab()
-      toast.success(`${createPlaylistState.data?.title} 플레이 리스트가 생성되었습니다.🎶`)
+      // toast.success(`${createPlaylistState.data?.title} 플레이 리스트가 생성되었습니다.🎶`)
+      toast.success('플레이 리스트가 생성되었습니다.🎶')
     } else if (createPlaylistState.success === false && createPlaylistState.message) {
       toast.error('플레이 리스트 등록에 실패하였습니다.')
     }
