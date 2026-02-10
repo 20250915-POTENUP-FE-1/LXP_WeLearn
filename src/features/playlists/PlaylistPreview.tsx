@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { PlaylistInfo, PlaylistItems } from '@/types/playlist/playlist'
 import { useShortsAutoPlay } from '@/hook/mypage/useShortsAutoPlay'
 import PlaylistPreviewHeader from './PlaylistPreviewHeader'
+import { DEFAULT_IMAGES } from '@/constants/shortsImages'
 
 interface PlaylistPreviewProps {
   playlistItem: PlaylistInfo
@@ -69,14 +70,14 @@ export default function PlaylistPreview({ playlistItem, selectedShorts }: Playli
               <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full">
                 {selectedShorts?.shorts && (
                   <img
-                    src={selectedShorts.shorts.userPorfileUrl}
+                    src={selectedShorts.shorts.uploader.profileUrl ?? DEFAULT_IMAGES.AVATAR}
                     alt={'프로필'}
                     className="h-full w-full object-cover"
                   />
                 )}
               </div>
               <span className="text-md font-medium text-gray-200">
-                {selectedShorts?.shorts.userNickname ?? '숏터'}
+                {selectedShorts?.shorts.uploader.nickname ?? '숏터'}
               </span>
             </div>
             <h3 className="mb-2 line-clamp-2 text-[18px] leading-snug font-semibold text-white">
