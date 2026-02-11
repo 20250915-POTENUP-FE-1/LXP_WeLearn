@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/shared/store/auth/auth.store';
 
-export default function DeleteAccountButton() {
+export default function DeleteAccountSection() {
   const setAuthUser = useAuth((state)=> state.logout)
   const router = useRouter()
 

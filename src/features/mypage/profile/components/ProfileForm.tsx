@@ -7,7 +7,7 @@ import { ApiResponse } from '@/types/api/api'
 import ProfileImageSection from './ProfileImageSection'
 import ProfileInfoSection from '@/features/mypage/profile/components/ProfileInfoSection';
 import PasswordSection from './PasswordSection'
-import DeleteAccountButton from '@/features/mypage/profile/components/DeleteAccountButton';
+import DeleteAccountSection from '@/features/mypage/profile/components/DeleteAccountSection';
 
 export default function ProfileForm() {
   const [user, setUser] = useState<UserInfo | null>(null)
@@ -30,7 +30,7 @@ export default function ProfileForm() {
         <ProfileImageSection initialProfileUrl={user?.profileUrl} />
         <ProfileInfoSection key={`${user?.nickName}-${user?.email}`} user={user}/>
         <PasswordSection />
-        <DeleteAccountButton/>
+        <DeleteAccountSection/>
       </div>
     </div>
   )
