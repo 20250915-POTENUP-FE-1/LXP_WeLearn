@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { ShortsBase } from '@/types/shorts/shorts'
 import { Button } from '@/components/ui/Button'
 import DashboardLikedCard from './DashboardLikedCard'
-import EmptyState from './EmptyState'
+import EmptyState from '../EmptyState'
 
 interface DashboardLikedListProps {
   shorts: ShortsBase[]

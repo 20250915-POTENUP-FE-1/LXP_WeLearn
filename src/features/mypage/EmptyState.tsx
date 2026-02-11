@@ -1,10 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { Heart, Bookmark, Video } from 'lucide-react'
+import { Heart, Bookmark, Video, ListVideo } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
-type EmptyType = 'like' | 'saved' | 'myshorts'
+type EmptyType = 'like' | 'saved' | 'myshorts' | 'myplaylists'
 
 interface EmptyStateProps {
   type: EmptyType
@@ -40,6 +40,13 @@ const EMPTY_CONFIG: Record<
     description: '나만의 숏츠를 만들어 공유해보세요.',
     buttonText: '숏츠 만들기',
     buttonHref: '/mypage/myshorts/new',
+  },
+  myplaylists: {
+    icon: <ListVideo className="h-12 w-12 text-gray-300" strokeWidth={1} />,
+    title: '생성한 플레이리스트가 없습니다.',
+    description: '나만의 플레이리스트를 만들어보세요.',
+    buttonText: '숏츠 보러가기',
+    buttonHref: '/',
   },
 }
 
