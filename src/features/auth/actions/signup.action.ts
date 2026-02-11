@@ -30,26 +30,22 @@ export const SignupAction = async (
     await authApi.signup(payload)
   } catch (error:any) {
     console.log('throw error',error )
-    const errorCode = error.message || error.msg || '알수없는 오류 발생';
-    const errorMessage = error.code || null;
 
-    switch (errorCode) {
+    switch (error.code) {
       case 'COMMON_400':
         return{
           success:false,
-          code: errorMessage || "이메일을 기입해주세요."
+          code: error.message || "이메일을 기입해주세요."
         }
-
       case 'USER_409':
         return {
           success:false,
-          code: errorMessage || "이미 사용중인 이메일입니다."
+          code: error.message || "이미 사용중인 이메일입니다."
         }
-
       default:
         return{
           success:false,
-          code:"알 수 없는 오류가 발생했습니다."
+          code: "알 수 없는 오류가 발생했습니다."
         }
     }
   }

@@ -28,7 +28,6 @@ export async function PATCH(req: NextRequest){
   }
 }
 
-// 코드 수정 필요
 export async function DELETE(){
   try{
     const res = await userApi.deleteMe()

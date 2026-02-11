@@ -1,7 +1,7 @@
 import { api } from '@/lib/utils/apiUtils'
 import { ApiResponse } from '@/types/api/api'
 import { PasswordUpdateRequest, UserInfo, UserUpdateRequest } from '@/types/user/user';
-import { data } from 'framer-motion/m';
+import { cookies } from 'next/headers';
 
 export const userApi = {
   /** 내 정보 조회 */
@@ -14,5 +14,19 @@ export const userApi = {
   updatePassword: (data: PasswordUpdateRequest)=> api.patch<ApiResponse>('/api/v1/users/me/password', data),
 
   /** 회원 탈퇴 */
-  deleteMe: () => api.delete('/api/v1/users/me'),
+  deleteMe: async () => {
+    try{
+      const res = api.delete('/api/v1/users/me')
+
+      const cookieStore = await cookies()
+      cookieStore.delete('accessToken')
+      cookieStore.delete('refreshToken')
+
+      return { success: true }
+    }catch(err){
+      console.error(err)
+      throw err
+    }
+
+  }
 }

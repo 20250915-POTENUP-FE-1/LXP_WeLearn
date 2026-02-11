@@ -5,9 +5,9 @@ import { clientApi } from '@/lib/utils/clientApiUtils'
 import { UserInfo } from '@/types/user/user'
 import { ApiResponse } from '@/types/api/api'
 import ProfileImageSection from './ProfileImageSection'
-import ProfileInfoSection from '@/features/mypage/profile/ProfileInfoSection';
+import ProfileInfoSection from '@/features/mypage/profile/components/ProfileInfoSection';
 import PasswordSection from './PasswordSection'
-import DeleteAccountButton from '@/features/mypage/profile/DeleteAccountButton';
+import DeleteAccountButton from '@/features/mypage/profile/components/DeleteAccountButton';
 
 export default function ProfileForm() {
   const [user, setUser] = useState<UserInfo | null>(null)
@@ -17,7 +17,9 @@ export default function ProfileForm() {
       try {
         const res: ApiResponse<UserInfo> = await clientApi.get('/api/v1/users/me')
         setUser(res.data)
-      } catch (error) { }
+      } catch (error) {
+        console.log(error)
+      }
     }
     getUserData()
   }, [])

@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/Button'
 import { useAuth } from '@/shared/store/auth/auth.store'
 import { ApiResponse } from '@/types/api/api'
 import { PresignedUrlData } from '@/types/auth/auth'
+import { DEFAULT_IMAGES } from '@/constants/shortsImages';
 
 interface ProfileImageSectionProps {
   initialProfileUrl?: string | null
@@ -75,12 +76,8 @@ export default function ProfileImageSection({ initialProfileUrl }: ProfileImageS
 
   return (
     <div className="mb-12 flex flex-col items-center">
-      <div className="relative mb-4 h-32 w-32 overflow-hidden items-center justify-center rounded-full bg-gray-200">
-        {preview || auth?.profileUrl || initialProfileUrl ? (
-          <Image src={preview || auth?.profileUrl || initialProfileUrl || ""} alt="preview" width="200" height="200" className="rounded-full" unoptimized />
-        ) : (
-          <User className="h-16 w-16 text-gray-500" />
-        )}
+      <div className="relative mb-4 h-32 w-32 overflow-hidden flex items-center justify-center rounded-full bg-gray-200">
+          <Image src={preview || auth?.profileUrl || initialProfileUrl || DEFAULT_IMAGES.AVATAR} alt="preview" width="200" height="200" className="rounded-full" unoptimized object-cover="true" />
       </div>
       <Button variant="accent" onClick={handleFileClick}>프로필 사진 변경</Button>
       <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/png, image/jpeg" className="hidden" />

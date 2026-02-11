@@ -40,14 +40,12 @@ export default function ProfileInfoSection({ user }: ProfileInfoSectionProps) {
         updateData
       )
       if(res.success && res.code === "Success" && auth){
+        toast.success('변경되었습니다.')
         setAuthUser({
           ...auth,
           nickName: nickName,
           email: email
         })
-      }
-      if(res.success && res.code === "Success" && auth){
-        return toast.success('변경되었습니다.')
       }
     }catch (e) {
     }
