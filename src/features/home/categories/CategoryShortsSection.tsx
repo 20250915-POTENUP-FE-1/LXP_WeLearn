@@ -137,14 +137,14 @@ export default function CategoryShortsSection({
       </div>
 
       {/* 숏츠 목록 */}
-      <div className="relative min-h-[400px]">
+      <div className="relative min-h-100">
         {isPending && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/50">
             <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-gray-900" />
           </div>
         )}
         {displayedShorts.length === 0 && !isPending ? (
-          <div className="flex min-h-[400px] flex-col items-center justify-center py-16 text-center">
+          <div className="flex min-h-100 flex-col items-center justify-center py-16 text-center">
             <LucideTvMinimalPlay strokeWidth={1.5} className="mb-4 h-12 w-12 text-gray-400" />
 
             <p className="text-gray-500">

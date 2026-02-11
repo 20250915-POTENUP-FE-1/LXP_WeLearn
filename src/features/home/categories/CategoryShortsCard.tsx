@@ -64,12 +64,12 @@ export default function CategoryShortsCard({ shorts }: { shorts: ShortsBase }) {
               <div className="flex items-center gap-3">
                 {/* 좋아요 */}
                 <div className="flex items-center gap-1">
-                  <Heart className="h-3 w-3" />
+                  <Heart size={12} />
                   <span>{shorts.likeCount ?? 0}</span>
                 </div>
                 {/* 조회수 */}
                 <div className="flex items-center gap-1">
-                  <Eye className="h-3 w-3" />
+                  <Eye size={12} />
                   <span>{shorts.viewCount ?? 0}</span>
                 </div>
               </div>
