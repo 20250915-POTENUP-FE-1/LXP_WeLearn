@@ -1,6 +1,5 @@
 'use client'
 
-import { User } from 'lucide-react'
 import { ChangeEvent, useRef, useState } from 'react'
 import Image from 'next/image'
 import { toast } from 'react-toastify'

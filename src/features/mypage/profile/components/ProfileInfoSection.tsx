@@ -72,7 +72,7 @@ export default function ProfileInfoSection({ user }: ProfileInfoSectionProps) {
         <label className="w-40 text-sm font-medium text-gray-700">Email</label>
         <input
           value={email}
-          type="text"
+          type="email"
           className="h-9 flex-1 rounded-lg border border-gray-300 px-4 text-sm transition-all focus:ring-2 focus:ring-black focus:outline-none"
           onChange={handleEmailChange}
         />

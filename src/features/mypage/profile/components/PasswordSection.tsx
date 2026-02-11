@@ -81,7 +81,6 @@ export default function PasswordSection() {
       ) : (
         <div className="space-y-4">
           <div className="rounded-lg bg-gray-50 p-6">
-            <label className="mb-3 block text-sm font-medium text-gray-700">비밀번호</label>
             <div className="mb-4 space-y-4">
               <div>
                 <label className="mb-2 block text-xs text-gray-600">현재 비밀번호</label>
