@@ -17,6 +17,7 @@ export interface UserUpdateRequest {
 export interface PasswordUpdateRequest {
   currentPassword: string
   newPassword: string
+  newPasswordConfirm?: string
 }
 
 // ------------- Response -------------

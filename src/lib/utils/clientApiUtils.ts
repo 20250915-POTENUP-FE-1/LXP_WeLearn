@@ -82,10 +82,11 @@ export const clientApi = {
 }
 
 async function handleError(res: Response) {
-  try {
-    const errorData = await res.json()
-    return new Error(errorData?.message || 'API 호출 오류')
-  } catch {
-    return new Error(`HTTP Error: ${res.status}`)
-  }
+  const errorData = await res.json().catch(() => ({}));
+  throw {
+    success: false,
+    code: errorData.code || res.status,
+    message: errorData.message || '알 수 없는 오류',
+    data: errorData.data,
+  };
 }
