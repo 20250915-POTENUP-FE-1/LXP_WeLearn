@@ -61,7 +61,7 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
     const cookieStore = await cookies()
     const refreshToken = cookieStore.get('refreshToken')?.value
 
-    if (!refreshToken) {
+    if (!refreshToken || retry) {
       cookieStore.delete('accessToken')
       cookieStore.delete('refreshToken')
       throw new Error('UNAUTHORIZED')
@@ -81,6 +81,7 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
         accessToken: refreshData.data.accessToken,
         refreshToken: refreshData.data.refreshToken,
       })
+
       return fetchWithAuth(url, {
         ...options,
         retry: true,
@@ -141,6 +142,7 @@ export const api = {
 
 async function handleError(res: Response) {
   const errorData = await res.json().catch(() => ({}))
+  console.log(errorData)
   throw {
     success: false,
     code: errorData.code || res.status,

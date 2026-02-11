@@ -15,10 +15,8 @@ interface ReCommentProps {
   commentId: number
   replies: ReplyCommentsResponse[] | null | undefined
   isReplyUpdate: number
-  deleteTarget: DeleteTarget
   editTarget: EditTarget
   setEditTarget: React.Dispatch<React.SetStateAction<EditTarget>>
-  setIsUpdate: React.Dispatch<React.SetStateAction<number>>
   setIsReplyUpdate: React.Dispatch<React.SetStateAction<number>>
   setDeleteTarget: React.Dispatch<React.SetStateAction<DeleteTarget>>
 }
@@ -28,10 +26,8 @@ export default function ReComment({
   commentId,
   isReplyUpdate,
   replies,
-  deleteTarget,
   editTarget,
   setDeleteTarget,
-  setIsUpdate,
   setEditTarget,
   setIsReplyUpdate,
 }: ReCommentProps) {
@@ -54,6 +50,7 @@ export default function ReComment({
       toast.error(replyPatchState.message)
     }
   }, [replyPatchState])
+
   return (
     <>
       <AnimatePresence initial={false}>
@@ -114,18 +111,14 @@ export default function ReComment({
                         </div>
                       </div>
 
-                      {reply.isMine && (
-                        <CommentDropDownMenu
-                          setIsUpdate={setIsUpdate}
-                          setIsReplyUpdate={setIsReplyUpdate}
-                          setEditTarget={setEditTarget}
-                          setDeleteTarget={setDeleteTarget}
-                          id={reply.replyId}
-                          parentId={commentId}
-                          deleteTarget={deleteTarget}
-                          mode="reply"
-                        />
-                      )}
+                      <CommentDropDownMenu
+                        reply={reply}
+                        setEditTarget={setEditTarget}
+                        setDeleteTarget={setDeleteTarget}
+                        id={reply.replyId}
+                        parentId={commentId}
+                        mode="reply"
+                      />
                     </div>
                   </div>
                 </div>

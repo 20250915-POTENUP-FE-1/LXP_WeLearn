@@ -1,8 +1,5 @@
 import PlaylistDetailContainer from '@/features/playlists/PlaylistDetailContainer'
-import { clientApi } from '@/lib/utils/clientApiUtils'
 import { playlistApi } from '@/services/playlist/playlist.service'
-import { ApiResponse } from '@/types/api/api'
-import { PlaylistInfo } from '@/types/playlist/playlist'
 
 interface MyPlaylistsPageProps {
   params: Promise<{ id: string }>
@@ -10,7 +7,6 @@ interface MyPlaylistsPageProps {
 
 export default async function MyPlaylistsPage({ params }: MyPlaylistsPageProps) {
   const { id } = await params
-  // const playlistItem = await clientApi.get<ApiResponse<PlaylistInfo>>(`/api/playlists/${id}`)
   const playlistItem = await playlistApi.getPlaylistItem(Number(id))
 
   return (

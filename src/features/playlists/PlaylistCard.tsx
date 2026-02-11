@@ -2,7 +2,7 @@
 
 import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { PlaylistItems, PlaylistOwner } from '@/types/playlist/playlist'
-import { ChevronsUpDown, MoreHorizontal } from 'lucide-react'
+import { MoreHorizontal, Tally3 } from 'lucide-react'
 import Image from 'next/image'
 import PlaylistDropdownMenu from './PlaylistDropdownMenu'
 import { timeAgo } from '@/utils/timeAgo'
@@ -17,24 +17,28 @@ import {
 import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers'
 import { CSS } from '@dnd-kit/utilities'
 import { useState } from 'react'
+import { clientApi } from '@/lib/utils/clientApiUtils'
 
 interface PlaylistCardProps {
+  playlistId: number
   editMode: boolean
   shortsList: PlaylistItems[] | null
   handlePreview: (shorts: PlaylistItems) => void
   playlistOwner: PlaylistOwner
   selectedShorts: PlaylistItems | null
+  setSelectedShorts: (value: PlaylistItems | null) => void
 }
 
 export default function PlaylistCard({
+  playlistId,
   editMode,
   shortsList,
   handlePreview,
   playlistOwner,
   selectedShorts,
+  setSelectedShorts,
 }: PlaylistCardProps) {
   const [items, setItems] = useState(shortsList ?? [])
-
   if (!items || items.length === 0) {
     return (
       <div className="flex h-full w-full items-center justify-center text-xl text-gray-500">
@@ -43,17 +47,22 @@ export default function PlaylistCard({
     )
   }
 
-  function handleDragEnd(event: DragEndEvent) {
+  async function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
     if (!over) return
+    if (active.id === over.id) return
 
-    if (active.id !== over.id) {
-      setItems((prev) => {
-        const oldIndex = prev.findIndex((i) => i.itemId === active.id)
-        const newIndex = prev.findIndex((i) => i.itemId === over.id)
-        return arrayMove(prev, oldIndex, newIndex)
-      })
-    }
+    const oldIndex = items.findIndex((i) => i.itemId === active.id)
+    const newIndex = items.findIndex((i) => i.itemId === over.id)
+
+    const newItems = arrayMove(items, oldIndex, newIndex)
+
+    setItems(newItems)
+
+    await clientApi.patch(`/api/v1/playlists/${playlistId}/items/reorder`, {
+      data: { shortsId: active.id, newIndex },
+      playlistId: playlistId,
+    })
   }
 
   return (
@@ -68,9 +77,14 @@ export default function PlaylistCard({
             <SortablePlaylistItem
               key={short.itemId}
               short={short}
+              items={items}
               editMode={editMode}
               handlePreview={handlePreview}
               selectedShorts={selectedShorts}
+              playlistOwner={playlistOwner}
+              playlistId={playlistId}
+              setItems={setItems}
+              setSelectedShorts={setSelectedShorts}
             />
           ))}
         </div>
@@ -82,13 +96,23 @@ export default function PlaylistCard({
 function SortablePlaylistItem({
   short,
   editMode,
-  handlePreview,
   selectedShorts,
+  playlistOwner,
+  playlistId,
+  items,
+  handlePreview,
+  setItems,
+  setSelectedShorts,
 }: {
   short: PlaylistItems
   editMode: boolean
-  handlePreview: (shorts: PlaylistItems) => void
   selectedShorts: PlaylistItems | null
+  playlistOwner: PlaylistOwner
+  playlistId: number
+  items: PlaylistItems[] | null
+  handlePreview: (shorts: PlaylistItems) => void
+  setItems: (value: PlaylistItems[] | ((prev: PlaylistItems[]) => PlaylistItems[])) => void
+  setSelectedShorts: (value: PlaylistItems | null) => void
 }) {
   const { setNodeRef, transform, transition, attributes, listeners, isDragging } = useSortable({
     id: short.itemId,
@@ -111,7 +135,7 @@ function SortablePlaylistItem({
       {/* 드래그 아이콘 UI */}
       {editMode && (
         <div className="flex items-center justify-center pr-1 text-gray-400">
-          <ChevronsUpDown />
+          <Tally3 />
         </div>
       )}
 
@@ -139,12 +163,12 @@ function SortablePlaylistItem({
               {short.shorts.title}
             </h3>
 
+            <p className="mb-1 line-clamp-2 text-sm text-gray-700">{short.shorts.description}</p>
+
             <p className="mt-1.5 mb-4 text-sm text-gray-500">
               {short.shorts.uploader.nickname} · 조회수 {short.shorts.viewCount}회 ·{' '}
               {timeAgo(short.shorts.createdAt)}
             </p>
-
-            <p className="mb-1 line-clamp-2 text-sm text-gray-700">{short.shorts.description}</p>
           </div>
 
           {/* 더보기 */}
@@ -157,7 +181,15 @@ function SortablePlaylistItem({
                 <MoreHorizontal size={18} />
               </button>
             </DropdownMenuTrigger>
-            <PlaylistDropdownMenu />
+            <PlaylistDropdownMenu
+              items={items}
+              playlistOwner={playlistOwner}
+              playlistId={playlistId}
+              short={short}
+              selectedShorts={selectedShorts}
+              setItems={setItems}
+              setSelectedShorts={setSelectedShorts}
+            />
           </DropdownMenu>
         </div>
 

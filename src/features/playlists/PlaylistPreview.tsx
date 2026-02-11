@@ -1,4 +1,4 @@
-import { Play } from 'lucide-react'
+import { Eye, Heart, Play } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PlaylistInfo, PlaylistItems } from '@/types/playlist/playlist'
@@ -90,7 +90,21 @@ export default function PlaylistPreview({ playlistItem, selectedShorts }: Playli
               </p>
             )}
 
-            <div className="flex items-center justify-end">
+            <div className="flex items-center justify-between">
+              <div className="flex justify-center gap-3">
+                {selectedShorts?.shorts.likeCount !== undefined && (
+                  <span className="flex items-center gap-1 py-1 text-[10px] text-gray-100">
+                    <Heart size={12} /> {selectedShorts?.shorts.likeCount}
+                  </span>
+                )}
+
+                {selectedShorts?.shorts.viewCount !== undefined && (
+                  <span className="flex items-center gap-1 py-1 text-[10px] text-gray-100">
+                    <Eye size={12} /> {selectedShorts?.shorts.viewCount}
+                  </span>
+                )}
+              </div>
+
               {selectedShorts?.shorts.keywords && (
                 <span className="rounded-full border border-white/25 px-3 py-1 text-[10px] text-gray-100">
                   #{selectedShorts.shorts.keywords[0]}
@@ -101,7 +115,7 @@ export default function PlaylistPreview({ playlistItem, selectedShorts }: Playli
         </div>
 
         {/* 재생 버튼 */}
-        <Link href="/mypage/likes" className="group w-full md:w-[360px]">
+        <Link href="/mypage/likes" className="group w-full md:w-90">
           <button className="flex w-full items-center justify-center gap-2 rounded-full bg-black py-5 text-lg font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg">
             <Play
               strokeWidth={1.5}

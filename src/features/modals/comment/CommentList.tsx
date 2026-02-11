@@ -170,17 +170,14 @@ export default function CommentList({
                 </div>
               </div>
               {/* 더보기 버튼 */}
-              {comment.isMine && (
-                <CommentDropDownMenu
-                  deleteTarget={deleteTarget}
-                  id={comment.commentId}
-                  parentId={null}
-                  setEditTarget={setEditTarget}
-                  setIsUpdate={setIsUpdate}
-                  mode="comment"
-                  setDeleteTarget={setDeleteTarget}
-                />
-              )}
+              <CommentDropDownMenu
+                comment={comment}
+                id={comment.commentId}
+                parentId={null}
+                setEditTarget={setEditTarget}
+                mode="comment"
+                setDeleteTarget={setDeleteTarget}
+              />
             </div>
             <ReplyListInput
               commentId={comment.commentId}
@@ -196,10 +193,8 @@ export default function CommentList({
                 replies={replies}
                 commentId={comment.commentId}
                 isReplyUpdate={isReplyUpdate}
-                deleteTarget={deleteTarget}
                 setDeleteTarget={setDeleteTarget}
                 setEditTarget={setEditTarget}
-                setIsUpdate={setIsUpdate}
                 setIsReplyUpdate={setIsReplyUpdate}
               />
             )}

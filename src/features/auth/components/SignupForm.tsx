@@ -1,19 +1,18 @@
 'use client'
 
 import { Input } from '@/components/ui/Input'
-import { useActionState, useEffect } from 'react';
+import { useActionState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
-import { SignupAction } from '@/features/auth/actions/signup.action';
-import { ActionState } from '@/types/action/action';
-
+import { SignupAction } from '@/features/auth/actions/signup.action'
+import { ActionState } from '@/types/action/action'
 
 export default function SignupForm() {
-  const initialState:ActionState = {
+  const initialState: ActionState = {
     success: false,
-    message: "",
+    message: '',
     errors: {},
-    inputs: {}
+    inputs: {},
   }
   const router = useRouter()
   const [state, formAction] = useActionState(SignupAction, initialState)
@@ -27,7 +26,6 @@ export default function SignupForm() {
     }
   }, [state])
 
-
   return (
     <form className="flex flex-col space-y-5" action={formAction} noValidate>
       <Input
@@ -35,7 +33,7 @@ export default function SignupForm() {
         type="nickname"
         name="nickname"
         id="nickname"
-        defaultValue={state.inputs?.nickname || ""}
+        defaultValue={state.inputs?.nickname || ''}
         placeholder="한글자 이상 입력하세요."
         required
       />
@@ -45,7 +43,7 @@ export default function SignupForm() {
         type="email"
         name="email"
         id="email"
-        defaultValue={state.inputs?.email || ""}
+        defaultValue={state.inputs?.email || ''}
         placeholder="example@lxp.com"
         required
       />
@@ -55,7 +53,7 @@ export default function SignupForm() {
         type="password"
         name="password"
         id="password"
-        defaultValue={state.inputs?.password || ""}
+        defaultValue={state.inputs?.password || ''}
         placeholder="비밀번호 6자 이상 입력하세요."
         minLength={6}
         required
@@ -70,7 +68,9 @@ export default function SignupForm() {
         minLength={6}
         required
       />
-      {state.errors?.confirmPassword && <p className="text-red-500">{state.errors.confirmPassword}</p>}
+      {state.errors?.confirmPassword && (
+        <p className="text-red-500">{state.errors.confirmPassword}</p>
+      )}
       <button
         type="submit"
         className="w-full rounded-lg bg-gray-900 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-gray-800 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none"

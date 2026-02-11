@@ -3,11 +3,12 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { playlistId: string; shortsId: string } },
+  { params }: { params: Promise<{ id: string; shortsId: string }> },
 ) {
-  const { playlistId, shortsId } = params
+  const { id, shortsId } = await params
+
   try {
-    await playlistApi.deleteShortsInPlaylist(Number(shortsId), Number(playlistId))
+    await playlistApi.deleteShortsInPlaylist(Number(shortsId), Number(id))
 
     return NextResponse.json({
       success: true,
