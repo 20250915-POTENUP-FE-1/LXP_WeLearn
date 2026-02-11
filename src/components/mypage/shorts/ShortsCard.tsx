@@ -74,7 +74,7 @@ export default function ShortsCard({
             </DropdownMenuTrigger>
             <MyShortsDropdownMenu
               shortsId={shorts.shortsId!}
-              shortsStatus={shorts.status}
+              visibility={shorts.visibility}
               onToggleVisibility={onToggleVisibility}
               onDelete={onDelete}
             />

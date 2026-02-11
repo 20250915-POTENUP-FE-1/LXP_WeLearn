@@ -13,11 +13,12 @@ export const categoryApi = {
   getAllShorts: async ({ page = 0, size = 8, sort }: PageRequest = {}): Promise<
     ApiResponse<PageResponse<ShortsBase[]>>
   > => {
-    return await api.get<ApiResponse<PageResponse<ShortsBase[]>>>('/api/v1/shorts', {
+    const response = await api.get<ApiResponse<PageResponse<ShortsBase[]>>>('/api/v1/shorts', {
       cache: 'no-store',
       params: { page, size, sort },
       auth: false,
     })
+    return response
   },
 
   /** 카테고리별 숏츠 목록 조회 */

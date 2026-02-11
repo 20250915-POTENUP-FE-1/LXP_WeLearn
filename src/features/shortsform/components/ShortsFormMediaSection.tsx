@@ -107,7 +107,7 @@ export default function ShortsFormMediaSection({
           }`}
         >
           <VideoIcon className="h-4 w-4" />
-          동영상
+          동영상<span className="text-red-600">*</span>
         </button>
         <button
           type="button"

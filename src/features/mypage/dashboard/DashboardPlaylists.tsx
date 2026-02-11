@@ -4,9 +4,9 @@ import { useRef } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
-import EmptyState from './EmptyState'
 import { PlaylistInfo } from '@/types/playlist/playlist'
 import PlaylistItem from '@/features/playlists/PlaylistItem'
+import EmptyState from './DashboardEmptyState'
 
 interface DashboardPlaylistsProps {
   playlists: PlaylistInfo[]
@@ -58,7 +58,7 @@ export default function DashboardPlaylists({ playlists }: DashboardPlaylistsProp
       </div>
 
       {playlists.length === 0 ? (
-        <EmptyState type="saved" />
+        <EmptyState type="myplaylists" />
       ) : (
         <div ref={scrollRef} className="scrollbar-hide flex gap-5 overflow-x-auto pt-1 pb-4">
           {playlists.map((playlist) => (

@@ -1,4 +1,4 @@
-import { Archive, Globe, Lock } from 'lucide-react'
+import { Globe, Loader, Lock, ShieldAlert } from 'lucide-react'
 
 export const SHORTS_STATUS_CONFIG = {
   PUBLISHED: {
@@ -6,14 +6,29 @@ export const SHORTS_STATUS_CONFIG = {
     label: '공개',
     bgColor: 'bg-green-500',
   },
-  DRAFT: {
+  PENDING: {
     icon: Lock,
     label: '비공개',
     bgColor: 'bg-gray-700',
   },
-  ARCHIVED: {
-    icon: Archive,
-    label: '보관됨',
-    bgColor: 'bg-gray-400',
+  AI_CHECK: {
+    icon: Loader,
+    label: '검토중',
+    bgColor: 'bg-yellow-700',
+  },
+  REJECT: {
+    icon: ShieldAlert,
+    label: '거부됨',
+    bgColor: 'bg-red-600',
+  },
+  PUBLIC: {
+    icon: Globe,
+    label: '공개',
+    bgColor: 'bg-green-500',
+  },
+  PRIVATE: {
+    icon: Lock,
+    label: '비공개',
+    bgColor: 'bg-gray-700',
   },
 } as const

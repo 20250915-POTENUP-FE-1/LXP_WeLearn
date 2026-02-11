@@ -5,7 +5,7 @@ import PlaylistItem from './PlaylistItem'
 import { usePathname } from 'next/navigation'
 import { PlayListCard, PlaylistInfo } from '@/types/playlist/playlist'
 import Link from 'next/link'
-import EmptyState from '../mypage/dashboard/EmptyState'
+import EmptyState from '@/features/mypage/EmptyState'
 
 interface PlaylistPageCollectionProps {
   initialPlaylists: (PlayListCard | PlaylistInfo)[]
@@ -32,54 +32,38 @@ export default function PlaylistPageCollection({
           {isMyPage ? 'My Created Playlists' : 'Playlists'}
         </h2>
       </div>
-      {initialPlaylists.length === 0 ? (
-        <EmptyState type="saved" />
-      ) : (
-        <div className="mb-10 grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 md:grid-cols-4">
-          {initialPlaylists.map((playlist) => (
-            <Link
-              href={isMyPage ? `/mypage/myplaylists/${playlist.id}` : `/playlists/${playlist.id}`}
-              key={playlist.id}
-            >
-              <PlaylistItem
-                id={playlist.id}
-                visibility={playlist.visibility}
-                shortsCount={playlist.shortsCount}
-                thumbnailUrl={playlist.thumbnailUrl}
-                title={playlist.title}
-                description={playlist.description}
-                showBadge={isMyPage}
-              />
-            </Link>
-          ))}
-        </div>
-      )}
 
-      <div className="mb-10 grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 md:grid-cols-4">
-        {initialPlaylists.map((playlist) => (
-          <Link
-            href={isMyPage ? `/mypage/myplaylists/${playlist.id}` : `/playlists/${playlist.id}`}
-            key={playlist.id}
-          >
-            <PlaylistItem
-              id={playlist.id}
-              visibility={playlist.visibility}
-              shortsCount={playlist.shortsCount}
-              thumbnailUrl={playlist.thumbnailUrl}
-              title={playlist.title}
-              description={playlist.description}
-              showBadge={isMyPage}
-            />
-          </Link>
-        ))}
-      </div>
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        isPending={isPending}
-        onPageChange={onPageChange}
-        showPrevNext
-      />
+      {initialPlaylists.length === 0 && isMyPage ? (
+        <EmptyState type="myplaylists" />
+      ) : (
+        <>
+          <div className="mb-10 grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 md:grid-cols-4">
+            {initialPlaylists.map((playlist) => (
+              <Link
+                href={isMyPage ? `/mypage/myplaylists/${playlist.id}` : `/playlists/${playlist.id}`}
+                key={playlist.id}
+              >
+                <PlaylistItem
+                  id={playlist.id}
+                  visibility={playlist.visibility}
+                  shortsCount={playlist.shortsCount}
+                  thumbnailUrl={playlist.thumbnailUrl}
+                  title={playlist.title}
+                  description={playlist.description}
+                  showBadge={isMyPage}
+                />
+              </Link>
+            ))}
+          </div>
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            isPending={isPending}
+            onPageChange={onPageChange}
+            showPrevNext
+          />
+        </>
+      )}
     </section>
   )
 }

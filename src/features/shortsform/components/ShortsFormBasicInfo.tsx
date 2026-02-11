@@ -21,7 +21,7 @@ export default function ShortsFormBasicInfo({
   categories,
   onChange,
 }: ShortsFormBasicInfoProps) {
-  const { title, description, isPublic, categoryId } = formData
+  const { title, description, categoryId } = formData
   const selectValue = categoryId?.toString() ?? ''
 
   return (
@@ -68,49 +68,8 @@ export default function ShortsFormBasicInfo({
         />
       </div>
 
-      {/* 공개 여부 */}
-      <fieldset>
-        <legend className="mb-2 block text-sm font-medium text-gray-700">공개 여부</legend>
-        <div className="flex items-center gap-3">
-          <label
-            className={`flex flex-1 cursor-pointer items-center justify-center rounded-lg py-2 text-sm font-medium transition-all ${
-              isPublic
-                ? 'border-2 border-black bg-black text-white'
-                : 'border-2 border-gray-200 bg-white text-gray-600'
-            }`}
-          >
-            <input
-              type="radio"
-              name="isPublic"
-              value="true"
-              checked={isPublic}
-              onChange={() => onChange('isPublic', true)}
-              className="sr-only"
-            />
-            공개
-          </label>
-          <label
-            className={`flex flex-1 cursor-pointer items-center justify-center rounded-lg py-2 text-sm font-medium transition-all ${
-              !isPublic
-                ? 'border-2 border-black bg-black text-white'
-                : 'border-2 border-gray-200 bg-white text-gray-600'
-            }`}
-          >
-            <input
-              type="radio"
-              name="isPublic"
-              value="false"
-              checked={!isPublic}
-              onChange={() => onChange('isPublic', false)}
-              className="sr-only"
-            />
-            비공개
-          </label>
-        </div>
-      </fieldset>
-
       {/* 카테고리 */}
-      <div>
+      <div className="mb-2">
         <label htmlFor="category" className="mb-2 block text-sm font-medium text-gray-700">
           카테고리 <span className="text-red-600">*</span>
         </label>

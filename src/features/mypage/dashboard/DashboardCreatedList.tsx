@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { useRef } from 'react'
 import DashboardCreatedCard from './DashboardCreatedCard'
-import EmptyState from './EmptyState'
+import EmptyState from './DashboardEmptyState'
 
 interface DashboardCreatedListProps {
   shorts: ShortsBase[]

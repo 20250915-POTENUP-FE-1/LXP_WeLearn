@@ -34,8 +34,8 @@ export async function updateShortsAction(
   const categoryId = formData.get('categoryId')
   if (categoryId !== null) payload.categoryId = Number(categoryId)
 
-  const status = formData.get('status') as ShortsRequest['status'] | null
-  if (status !== null) payload.status = status
+  const visibility = formData.get('visibility') as ShortsRequest['visibility'] | null
+  if (visibility !== null) payload.visibility = visibility
 
   const keywords = formData.getAll('keywords') as string[]
   if (keywords.length > 0) payload.keywords = keywords
@@ -87,9 +87,9 @@ export async function deleteShortsAction(shortsId: number): Promise<ActionState>
 /**
  * 숏츠 공개/비공개 전환 액션
  */
-export async function toggleShortsStatusAction(
+export async function toggleShortsVisibilityAction(
   shortsId: number,
-  currentStatus: ShortsRequest['status'],
+  currentStatus: ShortsRequest['visibility'],
 ): Promise<ActionState<ShortsBase>> {
   if (!shortsId || isNaN(shortsId)) {
     return {
@@ -99,11 +99,11 @@ export async function toggleShortsStatusAction(
   }
 
   try {
-    const newStatus = currentStatus === 'PUBLISHED' ? 'DRAFT' : 'PUBLISHED'
-    const response = await myShortsApi.updateShorts(shortsId, { status: newStatus })
+    const newStatus = currentStatus === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC'
+    const response = await myShortsApi.updateShorts(shortsId, { visibility: newStatus })
     revalidatePath('/mypage/myshorts')
 
-    const statusText = response.data.status === 'PUBLISHED' ? '공개' : '비공개'
+    const statusText = response.data.visibility === 'PUBLIC' ? '공개' : '비공개'
 
     return {
       success: true,
