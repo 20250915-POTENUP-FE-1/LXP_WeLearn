@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Button } from './Button'
 import { useActionState, useEffect } from 'react'
-import { deleteCommentAction, deleteReplyCommentAction } from '@/features/comment/action'
 import { toast } from 'react-toastify'
-import { DeleteTarget } from '../modals/comment/CommentsModal'
+import { deleteCommentAction, deleteReplyCommentAction } from '@/features/modals/comment/action'
+import { DeleteTarget } from '@/features/modals/comment/CommentsModalContainer'
 
 interface DeleteModalProps {
   deleteTarget: DeleteTarget
@@ -67,7 +67,7 @@ export default function DeleteModal({
           transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
         >
           <div className="absolute inset-0 z-60 flex items-center justify-center rounded-xl bg-black/50">
-            <div className="w-[280px] rounded-lg bg-white p-6 shadow-xl">
+            <div className="w-70 rounded-lg bg-white p-6 shadow-xl">
               <p className="mb-6 text-center text-gray-800">
                 {deleteTarget.mode === 'comment' ? '댓글' : '답글'}을 완전히 삭제할까요?
               </p>
@@ -80,6 +80,9 @@ export default function DeleteModal({
                     deleteTarget.mode === 'comment' ? commentDeleteAction : replyCommentDeleteAction
                   }
                 >
+                  {deleteTarget.parentId !== null && (
+                    <input type="hidden" name="parentId" value={deleteTarget.parentId} />
+                  )}
                   <input
                     type="hidden"
                     name={deleteTarget.mode === 'comment' ? 'commentId' : 'replyId'}

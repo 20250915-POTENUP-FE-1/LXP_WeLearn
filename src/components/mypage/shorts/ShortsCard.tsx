@@ -1,17 +1,17 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { MoreHorizontal } from 'lucide-react'
-import type { ShortsResponse } from '@/types/mypage-shorts'
+import { Eye, MoreHorizontal, View } from 'lucide-react'
 import ShortsCardThumbnail from './ShortsCardThumbnail'
 import { DEFAULT_IMAGES } from '@/constants/shortsImages'
 import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import MyShortsDropdownMenu from '@/features/mypage/myshorts/MyShortsDropdownMenu'
 import ShortsStatusBadge from './ShortsStatusBadge'
 import { timeAgo } from '@/utils/timeAgo'
+import { ShortsBase } from '@/types/shorts/shorts'
 
 interface ShortsCardProps {
-  shorts: ShortsResponse
+  shorts: ShortsBase
   isSelected?: boolean
   onSelect?: () => void
   onToggleVisibility?: () => void
@@ -50,13 +50,16 @@ export default function ShortsCard({
       <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 flex-1">
-            {shorts.status && <ShortsStatusBadge shortsStatus={shorts.status} />}
+            {shorts.status && <ShortsStatusBadge shortsStatus={shorts.status} visibility={shorts.visibility} />}
+
             <h3 className="pt-1 text-lg font-bold text-gray-900">{shorts.title}</h3>
-            <p className="mt-1.5 mb-4 text-sm text-gray-500">
-              {shorts.userNickname ?? '숏터'}
+            <p className="my-1 line-clamp-1 text-sm text-gray-700">{shorts.description}</p>
+
+            {/* 닉네임 · 조회수 · 등록일 */}
+            <p className="mt-2 mb-4 text-sm text-gray-500">
+              {shorts.userNickname ?? '숏터'} · 조회수 {shorts.viewCount}회
               {timeAgoText && ` · ${timeAgoText}`}
             </p>
-            <p className="mb-1 line-clamp-2 text-sm text-gray-700">{shorts.description}</p>
           </div>
 
           {/* 더보기 드롭다운 메뉴 */}
@@ -71,7 +74,7 @@ export default function ShortsCard({
             </DropdownMenuTrigger>
             <MyShortsDropdownMenu
               shortsId={shorts.shortsId!}
-              shortsStatus={shorts.status}
+              visibility={shorts.visibility}
               onToggleVisibility={onToggleVisibility}
               onDelete={onDelete}
             />

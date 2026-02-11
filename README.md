@@ -1,36 +1,134 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📌 팀 개발 규칙 가이드
 
-## Getting Started
+본 문서는 팀 프로젝트의 일관성 있는 코드 작성, 원활한 협업, 리뷰 효율 향상을 위해 정의된 규칙을 정리한 가이드입니다. 모든 팀원은 아래 규칙을 숙지하고 준수합니다.
+<br>
 
-First, run the development server:
+### 1️⃣ 네이밍 컨벤션 규칙 (Naming Convention)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+코드의 가독성과 유지보수를 위해 아래 네이밍 규칙을 통일합니다.
+
+**📁 파일 및 코드 네이밍**
+
+| 구분              | 컨벤션                        | 비고                               |
+| ----------------- | ----------------------------- | ---------------------------------- |
+| 최상위 컴포넌트   | `xxxContainer.tsx`            | `section`, `layout` 명칭 사용 금지 |
+| 컴포넌트 파일     | `PascalCase.tsx`              | React 컴포넌트                     |
+| 커스텀 훅         | `useCamelCase.ts`             | `use` 접두사 필수                  |
+| 유틸 / 서비스     | `camelCase.ts`                | 공통 로직, API, 헬퍼               |
+| 변수 / 함수       | `camelCase`                   |                                    |
+| boolean 변수      | `is / has / can + camelCase`  | 상태·조건을 명확히 표현            |
+| 상수              | `UPPER_SNAKE_CASE`            |                                    |
+| 타입 / 인터페이스 | `PascalCase`                  |                                    |
+| 폴더명            | `kebab-case` 또는 `camelCase` | 프로젝트 내 통일 권장              |
+
+<br>
+
+### 2️⃣ 커밋 컨벤션 규칙 (Commit Convention)
+
+커밋 메시지는 작업 내용을 명확히 전달할 수 있도록 아래 타입을 사용합니다.
+
+**🏷 커밋 타입**
+
+- feat : 새로운 기능 추가
+- fix : 버그 수정
+- hotfix : 긴급 버그 수정
+- refactor : 코드 리팩토링 (로직 수정, 구조 개선 등)
+- test : 테스트 코드 관련 작업
+- chore : 코드 스타일 변경 (포매팅, 세미콜론 등)
+  빌드, 패키지, 환경설정
+  문서 수정 및 기타 작업
+
+<br>
+
+**커밋 메시지 예시**
+
+```
+feat: 로그인 페이지 UI 구현
+refactor: 댓글 컴포넌트 구조 개선
+fix: 모바일 환경에서 스크롤 오류 수정
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<br>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3️⃣ 브랜치 생성 규칙 (Branch Rule)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Git Flow 기반 브랜치 전략을 사용합니다.
+브랜치는 목적과 작업 단위를 명확히 구분하여 생성합니다.
 
-## Learn More
+**브랜치 구조**
 
-To learn more about Next.js, take a look at the following resources:
+```
+main        → production 브랜치
+ └─ develop → 개발 브랜치
+     ├─ feature/#이슈번호
+     ├─ fix/#이슈번호
+     └─ hotfix/#이슈번호
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**브랜치 네이밍 규칙**
 
-## Deploy on Vercel
+| 타입                | 용도             |
+| ------------------- | ---------------- |
+| `feature/#이슈번호` | 새로운 기능 개발 |
+| `fix/#이슈번호`     | 일반 버그 수정   |
+| `hotfix/#이슈번호`  | 긴급 버그 수정   |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+모든 작업 브랜치는 develop 브랜치에서 분기합니다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<br>
+브랜치 생성 예시
+
+```
+refactor/#01
+fix/#12
+```
+
+<br>
+
+**⚠️ 주의사항**
+
+- main 브랜치는 배포 전용으로 직접 작업하지 않습니다.
+- 모든 기능 개발 및 수정 작업은 반드시 브랜치를 분리하여 진행합니다.
+- 브랜치 단위는 하나의 이슈 = 하나의 브랜치를 원칙으로 합니다.
+
+<br>
+
+### 4️⃣ PR 규칙 (Pull Request Rule)
+
+PR은 단순한 병합 요청이 아닌 지식 공유와 코드 품질 개선의 공간입니다.
+
+**✅ PR 작성 규칙**
+
+- PR 제목 형식
+
+```
+feat: 이슈 제목
+```
+
+- PR 본문은 매우 상세하게 작성
+  - 변경 내용 요약
+  - 리뷰가 필요한 부분
+  - 고민했던 점
+  - 배운 점이 있다면 TIL 공유
+
+- reviewer는 팀원 전원 등록
+
+**👀 리뷰 & 협업 규칙**
+
+- PR 등록 후 Slack에 공유 필수
+- PR이 등록되면 개인 업무와 관계없이 리뷰 우선
+- 리뷰 중임을 표시하기 위해 이모지 체크 필수
+- 리뷰는 성의 있게 작성하며
+  - 👉 개선점, 코드 제안, 긍정적인 피드백 위주
+- 리뷰 완료 전 수정이 필요한 경우
+  - 👉 해당 코멘트에 👀 이모지로 확인 중 표시
+
+**🔀 Merge 규칙**
+
+- 최소 1명 이상 Approve 필수
+- Merge는 PR 작성자가 직접 진행
+- Merge 후 develop 브랜치 pull 필수
+- Merge 후
+  - 👉 기존 기능에 영향 없는지 테스트 필수
+  - 👉 덮어쓰기 가능성 반드시 확인

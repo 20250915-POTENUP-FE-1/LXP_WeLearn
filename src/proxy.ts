@@ -1,19 +1,51 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const accessToken = request.cookies.get('accessToken')?.value
+  const refreshToken = request.cookies.get('refreshToken')?.value
   const { pathname } = request.nextUrl
 
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL
   const protectedRoutes = ['/mypage']
   const isProtected = protectedRoutes.some((route) => pathname.startsWith(route))
 
-  // 보호 라우트인데 로그인 안됨 → 로그인 페이지
   if (isProtected && !accessToken) {
+    if (refreshToken) {
+      try {
+        const refreshRes = await fetch(`${baseUrl}/api/v1/auth/refresh`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ refreshToken }),
+        })
+        if (refreshRes.ok) {
+          const refreshData = await refreshRes.json()
+
+          const newAccessToken = refreshData.data.accessToken
+          const newRefreshToken = refreshData.data.refreshToken
+
+          const response = NextResponse.next()
+
+          response.cookies.set('accessToken', newAccessToken, {
+            httpOnly: true,
+            path: '/',
+          })
+
+          response.cookies.set('refreshToken', newRefreshToken, {
+            httpOnly: true,
+            path: '/',
+          })
+
+          return response
+        }
+      } catch (err) {
+        console.error('Middleware refresh failed:', err)
+      }
+    }
+
     return NextResponse.redirect(new URL('/signin', request.url))
   }
 
-  // 로그인 상태인데 로그인/회원가입 페이지 접근 → 홈으로
   if ((pathname === '/signin' || pathname === '/signup') && accessToken) {
     return NextResponse.redirect(new URL('/', request.url))
   }

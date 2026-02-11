@@ -1,42 +1,12 @@
 import { api } from '@/lib/utils/apiUtils'
-
-// Presigned URL 요청 파라미터
-export interface PresignedUrlRequest {
-  title: string
-  description: string
-  categoryId: number
-  keywords: string[]
-  fileName: string
-  fileSize: number
-  contentType: string
-  durationSec: number
-}
+import {
+  ConfirmUploadRequest,
+  ConfirmUploadResponse,
+  PresignedUrlRequest,
+  PresignedUrlResponse,
+} from '@/types/shorts/shorts'
 
 // Presigned URL 응답 타입
-export interface PresignedUrlResponse {
-  shortId: number
-  videoPresignedUrl: string
-  thumbnailPresignedUrl: string
-  uploadId: string
-  expiresIn: number
-  maxFileSize: number
-}
-
-// 업로드 완료 확정 요청
-export interface ConfirmUploadRequest {
-  shortId: number
-  uploadId: string
-  videoUrl: string
-  thumbnailUrl: string
-}
-
-// 업로드 완료 확정 응답
-export interface ConfirmUploadResponse {
-  shortId: number
-  uploadId: string
-  videoUrl: string
-  thumbnailUrl: string
-}
 
 export const shortsUploadApi = {
   /**
@@ -52,20 +22,8 @@ export const shortsUploadApi = {
 
   /**
    * 2단계: S3 업로드 (Presigned URL)
-   * ❗ S3는 api util 사용 ❌ (Authorization 붙으면 안 됨)
+   * 클라이언트에서 직접 S3로 업로드 처리
    */
-  async uploadToS3(presignedUrl: string, file: File | Blob): Promise<void> {
-    const res = await fetch(presignedUrl, {
-      method: 'PUT',
-      body: file,
-      headers: {
-        'Content-Type': file.type,
-      },
-    })
-    if (!res.ok) {
-      throw new Error('S3 업로드 실패')
-    }
-  },
 
   /**
    * 3단계: 업로드 완료 확정
@@ -85,5 +43,4 @@ export const shortsUploadApi = {
 
     return response
   },
-
 }

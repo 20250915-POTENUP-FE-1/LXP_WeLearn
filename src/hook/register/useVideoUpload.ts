@@ -1,8 +1,8 @@
 import type { RefObject } from 'react'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
-import { VideoPreviewChangeHandler } from '@/features/register/types/shortsRegister'
-import { isValidVideoFile } from '@/features/register/register.validation'
+import type { VideoPreviewChangeHandler } from '@/types/shorts/shortsForm'
+import { isValidVideoFile } from '@/features/shortsform/shortsform.validation'
 import { extractVideoDuration } from '@/utils/extractVideoDuration'
 import useDragAndDrop from './useDragAndDrop'
 
@@ -42,7 +42,7 @@ export default function useVideoUpload({ onChange, inputRef }: UseVideoUploadPar
   const handleFileDrop = useCallback(
     (file: File) => {
       if (!isValidVideoFile(file)) {
-        toast.error('지원하지 않는 영상 형식입니다. (mp4, webm, mov만 허용)')
+        toast.error('지원하지 않는 영상 형식입니다. (mp4만 허용)')
         return
       }
       applyVideoFile(file)
@@ -70,7 +70,7 @@ export default function useVideoUpload({ onChange, inputRef }: UseVideoUploadPar
       if (!file) return
 
       if (!isValidVideoFile(file)) {
-        toast.error('지원하지 않는 영상 형식입니다. (mp4, webm, mov만 허용)')
+        toast.error('지원하지 않는 영상 형식입니다. (mp4만 허용)')
         resetInput()
         return
       }

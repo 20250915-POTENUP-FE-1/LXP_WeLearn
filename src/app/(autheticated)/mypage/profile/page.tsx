@@ -1,4 +1,4 @@
-import ProfileForm from '@/features/mypage/profile/ProfileForm'
+import ProfileForm from '@/features/mypage/profile/components/ProfileForm'
 
 export default function MyPageProfile() {
   return (

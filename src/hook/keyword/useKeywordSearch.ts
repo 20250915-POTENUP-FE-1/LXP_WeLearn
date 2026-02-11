@@ -1,11 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { getKeywordsAction } from '@/features/keyword.action'
-import { KeywordResponse } from '@/services/keyword/keyword.service'
-
-export interface KeywordSuggestion {
-  displayName: string
-  normalizedName: string
-}
+import { KeyWord, KeywordSuggestion } from '@/types/keyword/keyword'
 
 interface UseKeywordSearchParams {
   keywordInput: string // 사용자 입력값
@@ -25,11 +20,11 @@ export default function useKeywordSearch({
   const [isLoading, setIsLoading] = useState(false)
 
   // 전체 키워드 캐시 (최초 1회 로드 후 재사용)
-  const keywordCacheRef = useRef<KeywordResponse[] | null>(null)
+  const keywordCacheRef = useRef<KeyWord[] | null>(null)
   const isFetchingRef = useRef(false)
 
   // 전체 키워드 로드 (캐시가 없을 때만 서버 호출)
-  const loadKeywords = async (): Promise<KeywordResponse[]> => {
+  const loadKeywords = async (): Promise<KeyWord[]> => {
     if (keywordCacheRef.current) {
       return keywordCacheRef.current
     }
@@ -84,7 +79,11 @@ export default function useKeywordSearch({
             (item) =>
               item.normalizedName.includes(query) || item.displayName.toLowerCase().includes(query),
           )
-          .filter((item) => !keywords.includes(item.normalizedName)) // 이미 선택된 키워드 제외
+          // 이미 선택된 키워드 제외 (대소문자 무시)
+          .filter(
+            (item) =>
+              !keywords.some((k) => k.toLowerCase() === item.normalizedName.toLowerCase()),
+          )
           .map((item) => ({
             displayName: item.displayName,
             normalizedName: item.normalizedName,

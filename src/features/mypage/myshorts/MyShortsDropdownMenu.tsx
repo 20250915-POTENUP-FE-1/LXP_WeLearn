@@ -7,27 +7,26 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
-import { ShortsStatus } from '@/types/mypage-shorts'
 import { Globe, Lock, Pencil, Trash2 } from 'lucide-react'
-import { toast } from 'react-toastify'
+import { ShortsVisibility } from '@/types/shorts/status'
 
 interface MyShortsDropdownMenuProps {
   shortsId: number // 수정 페이지 이동에 필요
-  shortsStatus: ShortsStatus
+  visibility: ShortsVisibility
   onToggleVisibility?: () => void
   onDelete?: () => void
 }
 
 export default function MyShortsDropdownMenu({
   shortsId,
-  shortsStatus,
+  visibility,
   onToggleVisibility,
   onDelete,
 }: MyShortsDropdownMenuProps) {
   const router = useRouter()
 
   // 공개 상태 여부 확인
-  const isPublished = shortsStatus === 'PUBLISHED'
+  const isPublished = visibility === 'PUBLIC'
 
   // 수정 페이지로 이동
   const handleEdit = () => {
@@ -35,19 +34,10 @@ export default function MyShortsDropdownMenu({
   }
 
   return (
-    <DropdownMenuContent className="min-w-[140px]" align="end">
+    <DropdownMenuContent className="min-w-35" align="end">
       <DropdownMenuGroup>
         {/* 공개/비공개 전환 */}
-        <DropdownMenuItem
-          className="cursor-pointer"
-          onSelect={() => {
-            if (isPublished) {
-              toast.info('현재 서비스 준비중입니다')
-            } else {
-              onToggleVisibility?.()
-            }
-          }}
-        >
+        <DropdownMenuItem className="cursor-pointer" onSelect={() => onToggleVisibility?.()}>
           {isPublished ? (
             <>
               <Lock size={10} />

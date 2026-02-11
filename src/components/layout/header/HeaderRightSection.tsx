@@ -1,48 +1,16 @@
 'use client'
 import Link from 'next/link'
 import HeaderDropdown from './HeaderDropdown'
-import { useEffect, useState } from 'react'
-import { GetUserInfoAction } from '@/features/auth/action'
-import { UserResponse } from '@/services/mypage/user.service'
+import { useAuth } from '@/shared/store/auth/auth.store'
 
-interface HeaderRightSectionProps {
-  isLogined: boolean
-}
-
-export default function HeaderRightSection({ isLogined }: HeaderRightSectionProps) {
-  const [userData, setUserData] = useState<UserResponse | null>(null)
-
-  useEffect(() => {
-    if (!isLogined) {
-      setUserData(null)
-      localStorage.removeItem('user')
-      return
-    }
-
-    const fetchUser = async () => {
-      // 1️⃣ 먼저 localStorage 확인
-      const cached = localStorage.getItem('user')
-      if (cached) {
-        setUserData(JSON.parse(cached))
-        return
-      }
-
-      // 2️⃣ 없으면 서버 Action 호출
-      const result = await GetUserInfoAction({ success: false })
-
-      if (result.success && result.data) {
-        setUserData(result.data)
-        localStorage.setItem('user', JSON.stringify(result.data))
-      }
-    }
-
-    fetchUser()
-  }, [isLogined])
+export default function HeaderRightSection() {
+  const userData = useAuth((state) => state.auth)
+  const isLogined = useAuth((state) => state.isLogin)
 
   return (
     <div className="flex items-center gap-1 md:gap-3">
-      {isLogined ? (
-        <HeaderDropdown user={userData} />
+      {isLogined && userData ? (
+        <HeaderDropdown />
       ) : (
         <div className="flex gap-3">
           <Link

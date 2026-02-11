@@ -1,13 +1,12 @@
 'use client'
 
-import { ShortsResponse } from '@/types/mypage-shorts'
 import { Eye, Heart } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useVideoPreview } from '@/hook/useVideoPreview'
+import { ShortsBase } from '@/types/shorts/shorts'
 
 // 숏츠 카드 컴포넌트 (호버 시 동영상 미리보기)
-export default function CategoryShortsCard({ shorts }: { shorts: ShortsResponse }) {
+export default function CategoryShortsCard({ shorts }: { shorts: ShortsBase }) {
   // 동영상 미리보기 훅
   const { videoRef, handleMouseEnter, handleMouseLeave, handleLoadedData } = useVideoPreview({
     videoUrl: shorts.videoUrl,
@@ -56,7 +55,7 @@ export default function CategoryShortsCard({ shorts }: { shorts: ShortsResponse 
           {/* 숏츠 정보 (제목, 설명, 작성자, 좋아요/조회수) */}
           <div className="absolute inset-x-0 bottom-0 z-10 flex h-[60%] flex-col justify-end bg-linear-to-t from-black/95 via-black/70 to-transparent p-4">
             <p className="mb-1 line-clamp-1 text-sm font-semibold text-white">{shorts.title}</p>
-            <p className="my-1 line-clamp-2 text-[11px] leading-relaxed text-gray-300">
+            <p className="my-1 line-clamp-2 h-8 text-[11px] leading-relaxed text-gray-300">
               {shorts.description}
             </p>
             <div className="flex items-center justify-between pt-2 text-[11px] text-gray-300">
@@ -65,12 +64,12 @@ export default function CategoryShortsCard({ shorts }: { shorts: ShortsResponse 
               <div className="flex items-center gap-3">
                 {/* 좋아요 */}
                 <div className="flex items-center gap-1">
-                  <Heart className="h-3 w-3" />
+                  <Heart size={12} />
                   <span>{shorts.likeCount ?? 0}</span>
                 </div>
                 {/* 조회수 */}
                 <div className="flex items-center gap-1">
-                  <Eye className="h-3 w-3" />
+                  <Eye size={12} />
                   <span>{shorts.viewCount ?? 0}</span>
                 </div>
               </div>

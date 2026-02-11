@@ -6,10 +6,12 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
-import { FolderPlus, Share2, Trash2 } from 'lucide-react'
+import { useAuth } from '@/shared/store/auth/auth.store'
+import { FolderPlus, Siren, Trash2 } from 'lucide-react'
 import { toast } from 'react-toastify'
 
 export default function LikeShortsDropdownMenu() {
+  const userData = useAuth((state) => state.auth)
   const handleSaveToPlaylist = () => {
     toast.info('현재 서비스 준비중입니다')
   }
@@ -26,6 +28,7 @@ export default function LikeShortsDropdownMenu() {
     <DropdownMenuContent className="min-w-40" align="end">
       <DropdownMenuGroup>
         {/* 재생목록에 저장 */}
+
         <DropdownMenuItem className="cursor-pointer" onSelect={handleSaveToPlaylist}>
           <FolderPlus size={16} />
           재생목록에 저장
@@ -33,8 +36,8 @@ export default function LikeShortsDropdownMenu() {
 
         {/* 공유 */}
         <DropdownMenuItem className="cursor-pointer" onSelect={handleShare}>
-          <Share2 size={16} />
-          공유
+          <Siren size={16} />
+          숏츠 신고 하기
         </DropdownMenuItem>
       </DropdownMenuGroup>
 

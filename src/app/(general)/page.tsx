@@ -1,19 +1,24 @@
 import PlaylistSection from '@/features/home/playlist/PlaylistSection'
-import { playlistGroup } from '@/dummy/data'
 import { getShortPopular } from '@/services/shorts/getShortPopular'
 import { categoryApi } from '@/services/category/category.service'
 import CategoryShortsSection from '@/features/home/categories/CategoryShortsSection'
 import ShortsCarousel from '@/features/home/ShortsCarousel/ShortsCarousel'
+import { ShortsBase } from '@/types/shorts/shorts'
+import { playlistApi } from '@/services/playlist/playlist.service'
 
 export default async function Page() {
-  const [popularShorts, categoryShortsResponse, categoriesResponse] = await Promise.all([
-    getShortPopular(), // 1. 인기 숏츠 (캐러셀용)
-    categoryApi.getAllShorts(), // 3. 카테고리 탐색 섹션 초기 데이터
-    categoryApi.getAll(), // 카테고리 목록
-  ])
+  // api 호출 (초기 로드: 전체 숏츠)
+  const [popularShorts, categoryShortsResponse, categoriesResponse, playlistResponse] =
+    await Promise.all([
+      getShortPopular(),
+      categoryApi.getAllShorts({ sort: 'createdAt,desc' }), // 전체 숏츠 목록(최신순 기본값)
+      categoryApi.getAllCategoryId(), // 카테고리 항목 목록
+      playlistApi.getPublicPlaylist({}),
+    ])
 
   // 인기 숏츠 (캐러셀용)
-  const shortsList = popularShorts?.data?.content ?? []
+  const shortsList: ShortsBase[] = popularShorts?.data?.content ?? []
+
   // 카테고리 목록
   const categories = categoriesResponse?.data ?? []
 
@@ -25,12 +30,12 @@ export default async function Page() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen w-full bg-white">
       <ShortsCarousel data={shortsList} />
 
-      <PlaylistSection items={playlistGroup} />
+      <PlaylistSection items={playlistResponse?.data?.content ?? []} />
 
-      <CategoryShortsSection initialShorts={initialShortsData} categories={categories} />
+      <CategoryShortsSection initialShortsData={initialShortsData} categories={categories} />
     </div>
   )
 }

@@ -1,24 +1,24 @@
 'use client'
 
 import Image from 'next/image'
-import type { ShortsResponse } from '@/types/mypage-shorts'
 import { DEFAULT_IMAGES } from '@/constants/shortsImages'
+import { ShortsBase } from '@/types/shorts/shorts'
 
-interface ShortsPreviewItemProps {
-  shorts: ShortsResponse | null
+interface ShortsPreviewCardProps {
+  shorts: ShortsBase | null
   userProfileUrl?: string | null
   videoRef?: React.RefObject<HTMLVideoElement | null>
   onLoadedData?: () => void
   loop?: boolean
 }
 
-export function ShortsPreviewItem({
+export function ShortsPreviewCard({
   shorts,
   userProfileUrl,
   videoRef,
   onLoadedData,
   loop = true,
-}: ShortsPreviewItemProps) {
+}: ShortsPreviewCardProps) {
   // 빈 상태
   if (!shorts) {
     return (
@@ -96,7 +96,7 @@ export function ShortsPreviewItem({
           </p>
         )}
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-end">
           {shorts.keywords?.[0] && (
             <span className="rounded-full border border-white/25 px-3 py-1 text-[10px] text-gray-100">
               #{shorts.keywords[0]}

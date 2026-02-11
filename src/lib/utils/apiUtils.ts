@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers'
 import { buildQueryString } from '@/utils/buildQueryString'
 import { setAuthCookies } from './setAuthCookies'
-import { ApiResponse } from '@/types/mypage-shorts'
-import { SetAuthCookies } from '@/types/cookie'
+import { ApiResponse } from '@/types/api/api'
+import { AuthCookies } from '@/types/cookie/cookie'
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL
 
@@ -22,7 +22,7 @@ async function getAuthHeaders(auth: boolean, customHeaders: HeadersInit = {}) {
     ...customHeaders,
   } as Record<string, string>
 
-  if (!auth) {
+  if (auth === false) {
     return headers
   }
 
@@ -32,7 +32,6 @@ async function getAuthHeaders(auth: boolean, customHeaders: HeadersInit = {}) {
   if (accessToken) {
     headers['Authorization'] = `Bearer ${accessToken}`
   }
-
   return headers
 }
 
@@ -40,26 +39,29 @@ async function getAuthHeaders(auth: boolean, customHeaders: HeadersInit = {}) {
  * 핵심 Fetch 함수
  */
 async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<Response> {
-  const { revalidate, retry, auth = true, ...restOptions } = options
-
+  // options.auth가 undefined일 때만 true, 전달된 값은 그대로 사용
+  const auth = options.auth === undefined ? true : options.auth
+  const { revalidate, retry, ...restOptions } = options
+  // 인증 헤더 가져오기
   const headers = await getAuthHeaders(auth, restOptions.headers)
+
   const response = await fetch(url, {
     ...restOptions,
     headers,
     next: revalidate !== undefined ? { revalidate } : restOptions.next,
   })
 
-  // 204
+  // 204 No Content
   if (response.status === 204) return response
 
   // ❗ auth 요청일 때만 refresh 시도
-  if (auth && response.status === 401 && !retry) {
+  if (response.status === 401 && !retry) {
     console.warn('⚠️ Access Token expired. Attempting refresh...')
 
     const cookieStore = await cookies()
     const refreshToken = cookieStore.get('refreshToken')?.value
 
-    if (!refreshToken) {
+    if (!refreshToken || retry) {
       cookieStore.delete('accessToken')
       cookieStore.delete('refreshToken')
       throw new Error('UNAUTHORIZED')
@@ -71,15 +73,21 @@ async function fetchWithAuth(url: string, options: FetchOptions = {}): Promise<R
       body: JSON.stringify({ refreshToken }),
     })
 
-    const refreshData = (await refreshRes.json()) as ApiResponse<SetAuthCookies>
+    const refreshData = (await refreshRes.json()) as ApiResponse<AuthCookies>
 
     if (refreshRes.ok) {
+      const newAccessToken = refreshData.data.accessToken
       await setAuthCookies({
         accessToken: refreshData.data.accessToken,
         refreshToken: refreshData.data.refreshToken,
       })
 
-      return fetchWithAuth(url, { ...options, retry: true })
+      return fetchWithAuth(url, {
+        ...options,
+        retry: true,
+        auth: false,
+        headers: { ...restOptions.headers, Authorization: `Bearer ${newAccessToken}` },
+      })
     }
 
     throw new Error('UNAUTHORIZED')
@@ -118,9 +126,7 @@ export const api = {
       method: 'PATCH',
       body: JSON.stringify(data),
     })
-
     if (!res.ok) throw await handleError(res)
-
     return res.status === 204 ? ({} as T) : res.json()
   },
 
@@ -135,10 +141,12 @@ export const api = {
 }
 
 async function handleError(res: Response) {
-  try {
-    const errorData = await res.json()
-    return new Error(errorData?.message || 'API 호출 오류')
-  } catch {
-    return new Error(`HTTP Error: ${res.status}`)
+  const errorData = await res.json().catch(() => ({}))
+  console.log(errorData)
+  throw {
+    success: false,
+    code: errorData.code || res.status,
+    message: errorData.message || '알 수 없는 오류',
+    data: errorData.data,
   }
 }

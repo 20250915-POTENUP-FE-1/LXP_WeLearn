@@ -1,19 +1,17 @@
 import { api } from '@/lib/utils/apiUtils'
-import { CommnetData } from '@/types/comment'
-import { ApiResponse } from '@/types/mypage-shorts'
+import { ApiResponse } from '@/types/api/api'
+import { CommentRequest, CommentResponseWrapper } from '@/types/comments/comments'
 import { revalidatePath } from 'next/cache'
-
-interface CommentRequest {
-  content: string
-}
 
 export const commentApi = {
   // 해당 숏폼 댓글 조회
-  getComment: async (id: number): Promise<ApiResponse<CommnetData>> => {
-    const response = await api.get<ApiResponse<CommnetData>>(`/api/v1/shorts/${id}/comments`, {
-      cache: 'no-store',
-      auth: false,
-    })
+  getComment: async (id: number): Promise<ApiResponse<CommentResponseWrapper>> => {
+    const response = await api.get<ApiResponse<CommentResponseWrapper>>(
+      `/api/v1/shorts/${id}/comments`,
+      {
+        cache: 'no-store',
+      },
+    )
 
     return response
   },

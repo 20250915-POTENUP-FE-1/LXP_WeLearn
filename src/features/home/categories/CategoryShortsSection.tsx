@@ -1,123 +1,152 @@
 'use client'
 
-import React, { useState, useTransition } from 'react'
-import { PageShortsResponse } from '@/types/mypage-shorts'
+import { useState, useTransition } from 'react'
 import CategoryShortsCard from '@/features/home/categories/CategoryShortsCard'
-import { getShortsAction, getShortsByCategoryAction } from '@/features/category.action'
-import { CategoryResponse } from '@/services/category/category.service'
-import SortSection from '@/features/sort/SortSection'
-import { Youtube } from 'lucide-react'
+import Pagination from '@/components/ui/Pagination'
+import { Category } from '@/types/category/category'
+import { PageResponse, ShortsBase } from '@/types/shorts/shorts'
+import SortButton, { SortOption } from '@/components/ui/SortButton'
+import { LucideTvMinimalPlay } from 'lucide-react'
+import { clientApi } from '@/lib/utils/clientApiUtils'
+import { ApiResponse } from '@/types/api/api'
 
-const ITEMS_PER_PAGE = 8
+/** 페이지당 아이템 수 */
+const DEFAULT_PAGE_SIZE = 8
+
+/** 정렬 옵션 - API sort 파라미터 변환 */
+const SORT_PARAMS: Record<SortOption, string> = {
+  latest: 'createdAt,desc',
+  popular: 'likeCount,desc',
+}
 
 interface CategoryShortsSectionProps {
-  initialShorts: PageShortsResponse
-  categories: CategoryResponse[]
+  initialShortsData: PageResponse<ShortsBase[]>
+  categories: Category[]
 }
 
 export default function CategoryShortsSection({
-  initialShorts,
+  initialShortsData,
   categories,
 }: CategoryShortsSectionProps) {
-  // 선택된 카테고리 ID (null = 전체)
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
-  // 현재 페이지 번호
-  const [currentPage, setCurrentPage] = useState(0)
-  // 숏츠 데이터
-  const [shortsData, setShortsData] = useState<PageShortsResponse>(initialShorts)
-  // 로딩 상태
   const [isPending, startTransition] = useTransition()
+  const [shortsData, setShortsData] = useState(initialShortsData)
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
+  const [currentPage, setCurrentPage] = useState(0)
+  const [currentSort, setCurrentSort] = useState<SortOption>('latest')
 
-  const displayedShorts = shortsData.content ?? []
-  const totalPages = shortsData.totalPages ?? 0
+  const displayedShorts = shortsData?.content ?? []
+  const totalPages = shortsData?.totalPages ?? 0
 
-  // 데이터 fetch 함수 (Server Action 사용)
-  const fetchShorts = (categoryId: number | null, page: number) => {
-    startTransition(async () => {
-      try {
-        let response: PageShortsResponse | null
+  // 데이터 fetch 공통 함수
+  const fetchShorts = async (categoryId: number | null, page: number, sort: SortOption) => {
+    const params: Record<string, string | number> = {
+      page,
+      size: DEFAULT_PAGE_SIZE, // 아이템 수
+      sort: SORT_PARAMS[sort], // 정렬 파라미터
+    }
+    if (categoryId !== null) {
+      params.categoryId = categoryId
+    }
 
-        if (categoryId === null) {
-          // 전체 숏츠 조회
-          response = await getShortsAction({ page, size: ITEMS_PER_PAGE })
-        } else {
-          // 카테고리별 숏츠 조회
-          response = await getShortsByCategoryAction(categoryId, {
-            page,
-            size: ITEMS_PER_PAGE,
-          })
-        }
+    const response = await clientApi.get<ApiResponse<PageResponse<ShortsBase[]>>>(
+      '/api/v1/shorts',
+      {
+        params,
+      },
+    )
 
-        if (response) {
-          setShortsData(response)
-        }
-      } catch (error) {
-        console.error('숏츠 목록 조회 실패:', error)
-      }
-    })
+    return response.data ?? null
   }
 
   // 카테고리 변경 핸들러
   const handleCategoryChange = (categoryId: number | null) => {
-    setSelectedCategoryId(categoryId)
-    setCurrentPage(0)
-    fetchShorts(categoryId, 0)
+    startTransition(async () => {
+      const data = await fetchShorts(categoryId, 0, currentSort)
+      if (data) {
+        setShortsData(data)
+        setSelectedCategoryId(categoryId)
+        setCurrentPage(0)
+      }
+    })
   }
 
   // 페이지 변경 핸들러
   const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-    fetchShorts(selectedCategoryId, page)
+    startTransition(async () => {
+      const data = await fetchShorts(selectedCategoryId, page, currentSort)
+      if (data) {
+        setShortsData(data)
+        setCurrentPage(page)
+      }
+    })
+  }
+
+  // 정렬 변경 핸들러
+  const handleSortChange = (sort: SortOption) => {
+    startTransition(async () => {
+      const data = await fetchShorts(selectedCategoryId, 0, sort)
+      // 상태 업데이트
+      if (data) {
+        setShortsData(data)
+        setCurrentSort(sort)
+        setCurrentPage(0)
+      }
+    })
   }
 
   return (
     <section className="my-12 pt-10">
       <div className="mb-6 flex items-center justify-between">
         {/* 카테고리 타이틀 */}
-        <h2 className="text-xl font-extrabold text-gray-900 uppercase">Categories</h2>
+        <div className="flex flex-row gap-2">
+          <h2 className="text-xl font-extrabold text-gray-900 uppercase">All Shorts</h2>
+          <span className="flex flex-row items-center justify-center rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-500">
+            총 {shortsData.totalElements ?? 0}개
+          </span>
+        </div>
         {/* 정렬 */}
-        <SortSection />
+        <SortButton
+          currentSort={currentSort}
+          onSortChange={handleSortChange}
+          disabled={isPending}
+        />
       </div>
 
       {/* 카테고리별 필터 */}
       <div className="scrollbar-hide mb-6 flex items-center gap-2 overflow-x-auto md:flex-wrap md:overflow-x-visible">
-        <button
-          onClick={() => handleCategoryChange(null)}
-          className={`shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-            selectedCategoryId === null
-              ? 'border-gray-900 bg-gray-900 text-white'
-              : 'border-gray-300 text-gray-600 hover:border-gray-400'
-          }`}
-        >
-          전체
-        </button>
+        {categories.map((category) => {
+          // "전체" 카테고리는 categoryId를 null로 처리
+          const categoryId = category.name === '전체' ? null : category.id
+          const isSelected = selectedCategoryId === categoryId
 
-        {/*  카테고리 선택 버튼 */}
-        {categories.map((category) => (
-          <button
-            key={category.id}
-            onClick={() => handleCategoryChange(category.id)}
-            className={`shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-              selectedCategoryId === category.id
-                ? 'border-gray-900 bg-gray-900 text-white'
-                : 'border-gray-300 text-gray-600 hover:border-gray-400'
-            }`}
-          >
-            {category.name}
-          </button>
-        ))}
+          return (
+            <button
+              key={category.id}
+              onClick={() => handleCategoryChange(categoryId)}
+              disabled={isPending}
+              className={`shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                isSelected
+                  ? 'border-gray-900 bg-gray-900 text-white'
+                  : 'border-gray-300 text-gray-600 hover:border-gray-400'
+              }`}
+            >
+              {category.name}
+            </button>
+          )
+        })}
       </div>
 
       {/* 숏츠 목록 */}
-      <div className="relative min-h-[400px]">
+      <div className="relative min-h-100">
         {isPending && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/50">
             <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-gray-900" />
           </div>
         )}
         {displayedShorts.length === 0 && !isPending ? (
-          <div className="flex min-h-[400px] flex-col items-center justify-center py-16 text-center">
-            <Youtube strokeWidth={1.5} className="mb-4 h-12 w-12 text-gray-300" />
+          <div className="flex min-h-100 flex-col items-center justify-center py-16 text-center">
+            <LucideTvMinimalPlay strokeWidth={1.5} className="mb-4 h-12 w-12 text-gray-400" />
+
             <p className="text-gray-500">
               {selectedCategoryId !== null
                 ? `${categories.find((c) => c.id === selectedCategoryId)?.name ?? '해당 카테고리'}에 대한 숏츠가 없습니다.`
@@ -133,26 +162,13 @@ export default function CategoryShortsSection({
         )}
       </div>
 
-      {/* 페이지네이션 */}
-      {totalPages >= 1 && (
-        <div className="mt-8 flex items-center justify-center gap-1">
-          {Array.from({ length: totalPages }).map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => handlePageChange(idx)}
-              disabled={isPending}
-              className={`flex h-8 w-8 items-center justify-center rounded-md text-sm font-medium transition-colors ${
-                currentPage === idx
-                  ? 'bg-gray-900 text-white'
-                  : 'text-gray-600 hover:bg-gray-100 disabled:opacity-50'
-              }`}
-              aria-label={`${idx + 1}번째 페이지`}
-            >
-              {idx + 1}
-            </button>
-          ))}
-        </div>
-      )}
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        isPending={isPending}
+        onPageChange={handlePageChange}
+        showPrevNext
+      />
     </section>
   )
 }

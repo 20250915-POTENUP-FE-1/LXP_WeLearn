@@ -8,7 +8,6 @@ export const shortsApi = {
         page,
         size,
       },
-      auth: false,
     })
     return response
   },

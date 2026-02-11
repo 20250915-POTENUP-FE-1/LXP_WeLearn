@@ -1,6 +1,7 @@
-'use client'
-
-import { ShortsListHeaderProps } from '@/types/mypage-shorts'
+interface ShortsListHeaderProps {
+  totalCount: number
+  label?: string
+}
 
 export default function ShortsListHeader({ totalCount, label = '총' }: ShortsListHeaderProps) {
   return (

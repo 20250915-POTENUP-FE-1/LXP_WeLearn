@@ -1,7 +1,7 @@
-import { SetAuthCookies } from '@/types/cookie'
+import { AuthCookies } from '@/types/cookie/cookie'
 import { cookies } from 'next/headers'
 
-export async function setAuthCookies({ accessToken, refreshToken }: SetAuthCookies) {
+export async function setAuthCookies({ accessToken, refreshToken }: AuthCookies) {
   const cookieStore = await cookies()
 
   // Access Token
@@ -10,7 +10,7 @@ export async function setAuthCookies({ accessToken, refreshToken }: SetAuthCooki
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
-    maxAge: 60 * 30, // 30분 (예시)
+    maxAge: 60 * 30,
   })
 
   // Refresh Token

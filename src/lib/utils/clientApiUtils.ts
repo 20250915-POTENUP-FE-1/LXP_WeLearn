@@ -1,6 +1,6 @@
 import { buildQueryString } from '@/utils/buildQueryString'
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL
+const baseUrl = process.env.NEXT_PUBLIC_SERVER_API_URL
 
 interface FetchOptions extends RequestInit {
   params?: Record<string, any>
@@ -40,7 +40,6 @@ async function fetchClient(url: string, options: FetchOptions = {}): Promise<Res
 export const clientApi = {
   async get<T>(endpoint: string, options?: FetchOptions): Promise<T> {
     const queryString = buildQueryString(options?.params)
-
     const res = await fetchClient(`${baseUrl}${endpoint}${queryString}`, {
       ...options,
       method: 'GET',
@@ -56,7 +55,6 @@ export const clientApi = {
       method: 'POST',
       body: data ? JSON.stringify(data) : undefined,
     })
-
     if (!res.ok) throw await handleError(res)
     return res.status === 204 ? ({} as T) : res.json()
   },
@@ -84,10 +82,11 @@ export const clientApi = {
 }
 
 async function handleError(res: Response) {
-  try {
-    const errorData = await res.json()
-    return new Error(errorData?.message || 'API 호출 오류')
-  } catch {
-    return new Error(`HTTP Error: ${res.status}`)
-  }
+  const errorData = await res.json().catch(() => ({}));
+  throw {
+    success: false,
+    code: errorData.code || res.status,
+    message: errorData.message || '알 수 없는 오류',
+    data: errorData.data,
+  };
 }

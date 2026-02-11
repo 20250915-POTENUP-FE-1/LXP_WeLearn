@@ -4,23 +4,24 @@
       "shortsId": 1,
       "title": "Spring Boot 시작하기",
       "description": "Spring Boot 입문자를 위한 빠른 시작 가이드입니다.",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "keywords": [
+        "Java",
+        "Spring",
+        "백엔드"
+      ],
       "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
       "thumbnailUrl": "https://images.pexels.com/photos/303383/pexels-photo-303383.jpeg",
-      "duration": 58,
+      "durationSec": 58,
+      "userId": 1,
+      "userNickname": "개발자홍길동",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecie-profilowe-9.webp",
       "status": "PUBLISHED",
-      "viewCount": 1542,
+      "isLiked": false,
       "likeCount": 127,
+      "viewCount": 1542,
       "commentCount": 34,
-      "category": {
-        "id": 1,
-        "name": "프로그래밍"
-      },
-      "keywords": ["Java", "Spring", "백엔드"],
-      "uploader": {
-        "userId": 1,
-        "nickname": "개발자홍길동",
-        "profileImageUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecie-profilowe-9.webp"
-      },
       "createdAt": "2025-01-02T09:00:00Z",
       "updatedAt": "2025-01-02T09:05:00Z"
     },
@@ -28,23 +29,24 @@
       "shortsId": 2,
       "title": "Figma 오토 레이아웃 기초",
       "description": "레이아웃 자동화 기능을 1분 만에 이해해보자.",
+      "categoryId": 2,
+      "categoryName": "UI/UX",
+      "keywords": [
+        "Figma",
+        "디자인",
+        "레이아웃"
+      ],
       "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
       "thumbnailUrl": "https://images.pexels.com/photos/35008891/pexels-photo-35008891.jpeg",
-      "duration": 62,
+      "durationSec": 62,
+      "userId": 6,
+      "userNickname": "디자인펭귄",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecia-profilowe-26.webp",
       "status": "PUBLISHED",
-      "viewCount": 2341,
+      "isLiked": true,
       "likeCount": 198,
+      "viewCount": 2341,
       "commentCount": 45,
-      "category": {
-        "id": 2,
-        "name": "UI/UX"
-      },
-      "keywords": ["Figma", "디자인", "레이아웃"],
-      "uploader": {
-        "userId": 6,
-        "nickname": "디자인펭귄",
-        "profileImageUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecia-profilowe-26.webp"
-      },
       "createdAt": "2025-01-03T10:30:00Z",
       "updatedAt": "2025-01-03T10:35:00Z"
     },
@@ -52,23 +54,24 @@
       "shortsId": 3,
       "title": "React 상태 관리 30초 요약",
       "description": "전역 상태 관리 도구를 빠르게 비교해보자.",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "keywords": [
+        "React",
+        "상태관리",
+        "프론트엔드"
+      ],
       "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
       "thumbnailUrl": "https://images.pexels.com/photos/35383162/pexels-photo-35383162.jpeg",
-      "duration": 45,
+      "durationSec": 45,
+      "userId": 9,
+      "userNickname": "프론트선배",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-13-1.webp",
       "status": "PUBLISHED",
-      "viewCount": 3892,
+      "isLiked": false,
       "likeCount": 312,
+      "viewCount": 3892,
       "commentCount": 67,
-      "category": {
-        "id": 1,
-        "name": "프로그래밍"
-      },
-      "keywords": ["React", "상태관리", "프론트엔드"],
-      "uploader": {
-        "userId": 9,
-        "nickname": "프론트선배",
-        "profileImageUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-13-1.webp"
-      },
       "createdAt": "2025-01-04T14:20:00Z",
       "updatedAt": "2025-01-04T14:25:00Z"
     },
@@ -76,23 +79,24 @@
       "shortsId": 4,
       "title": "CSS Grid 1분 이해",
       "description": "grid-template을 예제로 쉽게 따라하기.",
+      "categoryId": 2,
+      "categoryName": "UI/UX",
+      "keywords": [
+        "CSS",
+        "Grid",
+        "웹개발"
+      ],
       "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
       "thumbnailUrl": "https://images.pexels.com/photos/2182863/pexels-photo-2182863.jpeg",
-      "duration": 55,
+      "durationSec": 55,
+      "userId": 11,
+      "userNickname": "CSS요정",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecie-profilowe-14.webp",
       "status": "PUBLISHED",
-      "viewCount": 1876,
+      "isLiked": true,
       "likeCount": 145,
+      "viewCount": 1876,
       "commentCount": 28,
-      "category": {
-        "id": 2,
-        "name": "UI/UX"
-      },
-      "keywords": ["CSS", "Grid", "웹개발"],
-      "uploader": {
-        "userId": 11,
-        "nickname": "CSS요정",
-        "profileImageUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecie-profilowe-14.webp"
-      },
       "createdAt": "2025-01-05T11:00:00Z",
       "updatedAt": "2025-01-05T11:05:00Z"
     },
@@ -100,23 +104,24 @@
       "shortsId": 5,
       "title": "DB 인덱스는 왜 필요할까?",
       "description": "쿼리 속도를 결정짓는 인덱스의 원리를 쉽게 설명!",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "keywords": [
+        "Database",
+        "인덱스",
+        "SQL"
+      ],
       "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
       "thumbnailUrl": "https://images.pexels.com/photos/5483075/pexels-photo-5483075.jpeg",
-      "duration": 72,
+      "durationSec": 72,
+      "userId": 16,
+      "userNickname": "백엔드러버",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-8.webp",
       "status": "PUBLISHED",
-      "viewCount": 2156,
+      "isLiked": false,
       "likeCount": 178,
+      "viewCount": 2156,
       "commentCount": 41,
-      "category": {
-        "id": 1,
-        "name": "프로그래밍"
-      },
-      "keywords": ["Database", "인덱스", "SQL"],
-      "uploader": {
-        "userId": 16,
-        "nickname": "백엔드러버",
-        "profileImageUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-8.webp"
-      },
       "createdAt": "2025-01-06T08:45:00Z",
       "updatedAt": "2025-01-06T08:50:00Z"
     },
@@ -124,23 +129,24 @@
       "shortsId": 6,
       "title": "Vue vs React 핵심 차이",
       "description": "두 프레임워크의 렌더링 방식 차이를 정리한 영상.",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "keywords": [
+        "Vue",
+        "React",
+        "프레임워크"
+      ],
       "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
       "thumbnailUrl": "https://images.pexels.com/photos/270488/pexels-photo-270488.jpeg",
-      "duration": 48,
+      "durationSec": 48,
+      "userId": 21,
+      "userNickname": "프레임워크러버",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecia-profilowe-25.webp",
       "status": "DRAFT",
-      "viewCount": 0,
+      "isLiked": false,
       "likeCount": 0,
+      "viewCount": 0,
       "commentCount": 0,
-      "category": {
-        "id": 1,
-        "name": "프로그래밍"
-      },
-      "keywords": ["Vue", "React", "프레임워크"],
-      "uploader": {
-        "userId": 21,
-        "nickname": "프레임워크러버",
-        "profileImageUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecia-profilowe-25.webp"
-      },
       "createdAt": "2025-01-07T16:30:00Z",
       "updatedAt": "2025-01-07T16:30:00Z"
     },
@@ -148,23 +154,24 @@
       "shortsId": 7,
       "title": "REST API 이해하기",
       "description": "GET, POST 개념을 시각적으로 정리해주는 영상.",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "keywords": [
+        "REST",
+        "API",
+        "HTTP"
+      ],
       "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
       "thumbnailUrl": "https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg",
-      "duration": 65,
+      "durationSec": 65,
+      "userId": 15,
+      "userNickname": "API장인",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-24.webp",
       "status": "PUBLISHED",
-      "viewCount": 4521,
+      "isLiked": true,
       "likeCount": 387,
+      "viewCount": 4521,
       "commentCount": 92,
-      "category": {
-        "id": 1,
-        "name": "프로그래밍"
-      },
-      "keywords": ["REST", "API", "HTTP"],
-      "uploader": {
-        "userId": 15,
-        "nickname": "API장인",
-        "profileImageUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-24.webp"
-      },
       "createdAt": "2025-01-08T13:15:00Z",
       "updatedAt": "2025-01-08T13:20:00Z"
     },
@@ -172,23 +179,24 @@
       "shortsId": 8,
       "title": "알고리즘 시간복잡도 설명",
       "description": "빅오 표기법을 직관적으로 이해할 수 있는 영상.",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "keywords": [
+        "알고리즘",
+        "빅오",
+        "자료구조"
+      ],
       "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
       "thumbnailUrl": "https://images.pexels.com/photos/35308304/pexels-photo-35308304.jpeg",
-      "duration": 78,
+      "durationSec": 78,
+      "userId": 20,
+      "userNickname": "알고리즘달인",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-5.webp",
       "status": "PUBLISHED",
-      "viewCount": 2987,
+      "isLiked": false,
       "likeCount": 256,
+      "viewCount": 2987,
       "commentCount": 58,
-      "category": {
-        "id": 1,
-        "name": "프로그래밍"
-      },
-      "keywords": ["알고리즘", "빅오", "자료구조"],
-      "uploader": {
-        "userId": 20,
-        "nickname": "알고리즘달인",
-        "profileImageUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-5.webp"
-      },
       "createdAt": "2025-01-09T10:00:00Z",
       "updatedAt": "2025-01-09T10:05:00Z"
     }
@@ -196,8 +204,10 @@
   "users": [
     {
       "userId": 16,
-      "nickname": "먕먕먕",
-      "profileImageUrl": null
+      "email": "test@test.com",
+      "nickName": "먕먕먕",
+      "profileUrl": null,
+      "createdAt": "2025-01-01T00:00:00Z"
     }
   ],
   "comments": [
@@ -284,70 +294,609 @@
     {
       "replyId": 1768301839200,
       "parentId": 1768297705645,
+      "content": "답글",
+      "createdAt": "2026-01-13T19:57:19.200Z",
+      "isMine": true,
       "writer": {
         "userId": 16,
         "nickname": "먕먕먕",
         "profileImageUrl": null
-      },
-      "content": "답글",
-      "isMine": true,
-      "createdAt": "2026-01-13T19:57:19.200Z"
+      }
     },
     {
       "replyId": 1768301845318,
       "parentId": 1768297705645,
+      "content": "답글답글답글",
+      "createdAt": "2026-01-13T19:57:25.318Z",
+      "isMine": true,
       "writer": {
         "userId": 16,
         "nickname": "먕먕먕",
         "profileImageUrl": null
-      },
-      "content": "답글답글답글",
-      "isMine": true,
-      "createdAt": "2026-01-13T19:57:25.318Z"
+      }
     }
   ],
-  "keywords": [
-    { "id": 1, "name": "프론트엔드" },
-    { "id": 2, "name": "프론트엔드 개발" },
-    { "id": 3, "name": "프론트엔드 면접" },
-    { "id": 4, "name": "프론트엔드 포트폴리오" },
-    { "id": 5, "name": "백엔드" },
-    { "id": 6, "name": "백엔드 개발" },
-    { "id": 7, "name": "백엔드 면접" },
-    { "id": 8, "name": "개발" },
-    { "id": 9, "name": "면접" },
-    { "id": 10, "name": "웹 개발" },
-    { "id": 11, "name": "모바일 개발" },
-    { "id": 12, "name": "풀스택 개발" },
-    { "id": 13, "name": "웹사이트 제작" },
-    { "id": 14, "name": "웹 애플리케이션" },
-    { "id": 15, "name": "앱 개발" },
-    { "id": 16, "name": "NextJS" },
-    { "id": 17, "name": "NextJS 14" },
-    { "id": 18, "name": "NextJS App Router" },
-    { "id": 19, "name": "React" },
-    { "id": 20, "name": "React Native" },
-    { "id": 21, "name": "TypeScript" },
-    { "id": 22, "name": "JavaScript" },
-    { "id": 23, "name": "TailwindCSS" },
-    { "id": 24, "name": "CSS" },
-    { "id": 25, "name": "HTML" },
-    { "id": 26, "name": "Node.js" },
-    { "id": 27, "name": "Python" },
-    { "id": 28, "name": "Java" },
-    { "id": 29, "name": "알고리즘" },
-    { "id": 30, "name": "자료구조" },
-    { "id": 31, "name": "코딩테스트" },
-    { "id": 32, "name": "개발자 취업" },
-    { "id": 33, "name": "개발자 이직" },
-    { "id": 34, "name": "프로젝트" },
-    { "id": 35, "name": "Git" },
-    { "id": 36, "name": "GitHub" },
-    { "id": 37, "name": "데브옵스" },
-    { "id": 38, "name": "클라우드 컴퓨팅" },
-    { "id": 39, "name": "데이터" },
-    { "id": 40, "name": "데이터 분석" },
-    { "id": 41, "name": "머신러닝" },
-    { "id": 42, "name": "인공지능" }
-  ]
+  "shortsItems": [
+    {
+      "id": "1",
+      "thumbnail": "",
+      "title": "9:16 :: 10이라는 계산법하는 열리",
+      "viewCount": "250k",
+      "duration": "1분"
+    },
+    {
+      "id": "2",
+      "thumbnail": "",
+      "title": "9:16 :: 펜타르는 줄인이오 소입",
+      "viewCount": "250k",
+      "duration": "1분"
+    },
+    {
+      "id": "3",
+      "thumbnail": "",
+      "title": "그인의 알벡트 모다딘 알하는 갈의",
+      "viewCount": "250k",
+      "duration": "1분"
+    },
+    {
+      "id": "4",
+      "thumbnail": "",
+      "title": "9:16 ≒ 리고 밀켜드 적으로 쁘로 위가 하...",
+      "viewCount": "250k",
+      "duration": "1분"
+    }
+  ],
+  "likedShorts": [
+    {
+      "shortsId": 1,
+      "title": "Spring Boot 시작하기",
+      "description": "Spring Boot 입문자를 위한 빠른 시작 가이드입니다.",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      "thumbnailUrl": "https://images.pexels.com/photos/303383/pexels-photo-303383.jpeg",
+      "durationSec": 58,
+      "status": "PUBLISHED",
+      "userId": 1,
+      "userNickname": "개발자홍길동",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecie-profilowe-9.webp",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "keywords": [
+        "Java",
+        "Spring",
+        "백엔드"
+      ],
+      "viewCount": 1542,
+      "likeCount": 127,
+      "commentCount": 34,
+      "createdAt": "2025-01-02T09:00:00",
+      "updatedAt": "2025-01-02T09:05:00",
+      "isLiked": true
+    },
+    {
+      "shortsId": 2,
+      "title": "Figma 오토 레이아웃 기초",
+      "description": "레이아웃 자동화 기능을 1분 만에 이해해보자.",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+      "thumbnailUrl": "https://images.pexels.com/photos/35008891/pexels-photo-35008891.jpeg",
+      "durationSec": 62,
+      "status": "PUBLISHED",
+      "userId": 6,
+      "userNickname": "디자인펭귄",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecia-profilowe-26.webp",
+      "categoryId": 2,
+      "categoryName": "UI/UX",
+      "keywords": [
+        "Figma",
+        "디자인",
+        "레이아웃"
+      ],
+      "viewCount": 2341,
+      "likeCount": 198,
+      "commentCount": 45,
+      "createdAt": "2025-01-03T10:30:00",
+      "updatedAt": "2025-01-03T10:35:00",
+      "isLiked": true
+    },
+    {
+      "shortsId": 4,
+      "title": "CSS Grid 1분 이해",
+      "description": "grid-template을 예제로 쉽게 따라하기.",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+      "thumbnailUrl": "https://images.pexels.com/photos/2182863/pexels-photo-2182863.jpeg",
+      "durationSec": 55,
+      "status": "PUBLISHED",
+      "userId": 11,
+      "userNickname": "CSS요정",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecie-profilowe-14.webp",
+      "categoryId": 2,
+      "categoryName": "UI/UX",
+      "keywords": [
+        "CSS",
+        "Grid",
+        "웹개발"
+      ],
+      "viewCount": 1876,
+      "likeCount": 145,
+      "commentCount": 28,
+      "createdAt": "2025-01-05T11:00:00",
+      "updatedAt": "2025-01-05T11:05:00",
+      "isLiked": true
+    },
+    {
+      "shortsId": 7,
+      "title": "REST API 이해하기",
+      "description": "GET, POST 개념을 시각적으로 정리해주는 영상.",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+      "thumbnailUrl": "https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg",
+      "durationSec": 65,
+      "status": "PUBLISHED",
+      "userId": 15,
+      "userNickname": "API장인",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-24.webp",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "keywords": [
+        "REST",
+        "API",
+        "HTTP"
+      ],
+      "viewCount": 4521,
+      "likeCount": 387,
+      "commentCount": 92,
+      "createdAt": "2025-01-08T13:15:00",
+      "updatedAt": "2025-01-08T13:20:00",
+      "isLiked": true
+    },
+    {
+      "shortsId": 3,
+      "title": "React 상태 관리 30초 요약",
+      "description": "전역 상태 관리 도구를 빠르게 비교해보자.",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+      "thumbnailUrl": "https://images.pexels.com/photos/35383162/pexels-photo-35383162.jpeg",
+      "durationSec": 45,
+      "status": "PUBLISHED",
+      "userId": 9,
+      "userNickname": "프론트선배",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-13-1.webp",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "keywords": [
+        "React",
+        "상태관리",
+        "프론트엔드"
+      ],
+      "viewCount": 3892,
+      "likeCount": 312,
+      "commentCount": 67,
+      "createdAt": "2025-01-04T14:20:00",
+      "updatedAt": "2025-01-04T14:25:00",
+      "isLiked": true
+    },
+    {
+      "shortsId": 5,
+      "title": "DB 인덱스는 왜 필요할까?",
+      "description": "쿼리 속도를 결정짓는 인덱스의 원리를 쉽게 설명!",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
+      "thumbnailUrl": "https://images.pexels.com/photos/5483075/pexels-photo-5483075.jpeg",
+      "durationSec": 72,
+      "status": "PUBLISHED",
+      "userId": 16,
+      "userNickname": "백엔드러버",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-8.webp",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "keywords": [
+        "Database",
+        "인덱스",
+        "SQL"
+      ],
+      "viewCount": 2156,
+      "likeCount": 178,
+      "commentCount": 41,
+      "createdAt": "2025-01-06T08:45:00",
+      "updatedAt": "2025-01-06T08:50:00",
+      "isLiked": true
+    },
+    {
+      "shortsId": 8,
+      "title": "알고리즘 시간복잡도 설명",
+      "description": "빅오 표기법을 직관적으로 이해할 수 있는 영상.",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
+      "thumbnailUrl": "https://images.pexels.com/photos/35308304/pexels-photo-35308304.jpeg",
+      "durationSec": 78,
+      "status": "PUBLISHED",
+      "userId": 20,
+      "userNickname": "알고리즘달인",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-5.webp",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "keywords": [
+        "알고리즘",
+        "빅오",
+        "자료구조"
+      ],
+      "viewCount": 2987,
+      "likeCount": 256,
+      "commentCount": 58,
+      "createdAt": "2025-01-09T10:00:00",
+      "updatedAt": "2025-01-09T10:05:00",
+      "isLiked": true
+    },
+    {
+      "shortsId": 9,
+      "title": "TypeScript 제네릭 완벽 이해",
+      "description": "제네릭을 활용한 타입 안전한 코드 작성법을 알아보자.",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+      "thumbnailUrl": "https://images.pexels.com/photos/270488/pexels-photo-270488.jpeg",
+      "durationSec": 85,
+      "status": "PUBLISHED",
+      "userId": 22,
+      "userNickname": "타입마스터",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecie-profilowe-9.webp",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "keywords": [
+        "TypeScript",
+        "제네릭",
+        "타입"
+      ],
+      "viewCount": 1823,
+      "likeCount": 165,
+      "commentCount": 38,
+      "createdAt": "2025-01-10T11:30:00",
+      "updatedAt": "2025-01-10T11:35:00",
+      "isLiked": true
+    },
+    {
+      "shortsId": 10,
+      "title": "Docker 컨테이너 기초",
+      "description": "컨테이너 기술의 핵심 개념을 1분 안에 정리해드립니다.",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      "thumbnailUrl": "https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg",
+      "durationSec": 60,
+      "status": "PUBLISHED",
+      "userId": 23,
+      "userNickname": "데브옵스킹",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/zdjecia-profilowe-26.webp",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "keywords": [
+        "Docker",
+        "컨테이너",
+        "DevOps"
+      ],
+      "viewCount": 3456,
+      "likeCount": 289,
+      "commentCount": 72,
+      "createdAt": "2025-01-11T09:00:00",
+      "updatedAt": "2025-01-11T09:05:00",
+      "isLiked": true
+    },
+    {
+      "shortsId": 11,
+      "title": "Git 브랜치 전략 핵심",
+      "description": "Git Flow와 Trunk Based Development를 비교해보자.",
+      "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+      "thumbnailUrl": "https://images.pexels.com/photos/303383/pexels-photo-303383.jpeg",
+      "durationSec": 70,
+      "status": "PUBLISHED",
+      "userId": 24,
+      "userNickname": "깃마스터",
+      "userProfileUrl": "https://marszalstudio.pl/wp-content/uploads/2024/01/fajne-zdjecia-profilowe-13-1.webp",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "keywords": [
+        "Git",
+        "브랜치",
+        "버전관리"
+      ],
+      "viewCount": 2134,
+      "likeCount": 189,
+      "commentCount": 43,
+      "createdAt": "2025-01-12T14:00:00",
+      "updatedAt": "2025-01-12T14:05:00",
+      "isLiked": true
+    }
+  ],
+  "shortsPlaylists": [
+    {
+      "id": 1,
+      "title": "Spring Boot 완전 정복",
+      "description": "Spring Boot 입문부터 실전까지 다루는 플레이리스트입니다.",
+      "visibility": "PRIVATE",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "thumbnailUrl": "https://images.pexels.com/photos/303383/pexels-photo-303383.jpeg",
+      "shortsCount": 12,
+      "owner": {
+        "id": 16,
+        "nickname": "김코딩",
+        "profileUrl": "/images/favicon_shortudy.png"
+      },
+      "createdAt": "2025-01-10T10:00:00",
+      "updatedAt": "2025-01-14T12:00:00"
+    },
+    {
+      "id": 2,
+      "title": "React 상태 관리 모음",
+      "description": "React 상태 관리 라이브러리 비교 및 활용법",
+      "visibility": "PUBLIC",
+      "categoryId": 2,
+      "categoryName": "웹 개발",
+      "thumbnailUrl": "https://images.pexels.com/photos/35383162/pexels-photo-35383162.jpeg",
+      "shortsCount": 8,
+      "owner": {
+        "id": 16,
+        "nickname": "김코딩",
+        "profileUrl": "/images/favicon_shortudy.png"
+      },
+      "createdAt": "2025-01-11T14:30:00",
+      "updatedAt": "2025-01-13T09:00:00"
+    },
+    {
+      "id": 3,
+      "title": "CSS 레이아웃 마스터",
+      "description": "Flexbox와 Grid를 활용한 레이아웃 완벽 정리",
+      "visibility": "PUBLIC",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "thumbnailUrl": "https://images.pexels.com/photos/2182863/pexels-photo-2182863.jpeg",
+      "shortsCount": 5,
+      "owner": {
+        "id": 16,
+        "nickname": "김코딩",
+        "profileUrl": "/images/favicon_shortudy.png"
+      },
+      "createdAt": "2025-01-08T11:00:00",
+      "updatedAt": "2025-01-12T16:45:00"
+    },
+    {
+      "id": 4,
+      "title": "데이터베이스 기초부터 실전까지",
+      "description": "SQL 기초와 인덱스 최적화 학습 자료",
+      "visibility": "PUBLIC",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "thumbnailUrl": "https://images.pexels.com/photos/5483075/pexels-photo-5483075.jpeg",
+      "shortsCount": 15,
+      "owner": {
+        "id": 16,
+        "nickname": "김코딩",
+        "profileUrl": "/images/favicon_shortudy.png"
+      },
+      "createdAt": "2025-01-05T09:00:00",
+      "updatedAt": "2025-01-14T08:30:00"
+    },
+    {
+      "id": 5,
+      "title": "Vue vs React 비교 분석",
+      "description": "두 프레임워크의 장단점과 선택 기준 정리",
+      "visibility": "PUBLIC",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "thumbnailUrl": "https://images.pexels.com/photos/270488/pexels-photo-270488.jpeg",
+      "shortsCount": 7,
+      "owner": {
+        "id": 16,
+        "nickname": "김코딩",
+        "profileUrl": "/images/favicon_shortudy.png"
+      },
+      "createdAt": "2025-01-07T13:00:00",
+      "updatedAt": "2025-01-11T10:20:00"
+    },
+    {
+      "id": 6,
+      "title": "REST API 완벽 가이드",
+      "description": "",
+      "visibility": "PUBLIC",
+      "categoryId": 1,
+      "categoryName": "프로그래밍",
+      "thumbnailUrl": "https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg",
+      "shortsCount": 10,
+      "owner": {
+        "id": 16,
+        "nickname": "김코딩",
+        "profileUrl": "/images/favicon_shortudy.png"
+      },
+      "createdAt": "2025-01-06T15:00:00",
+      "updatedAt": "2025-01-10T14:00:00"
+    },
+    {
+      "id": 7,
+      "title": "Figma 디자인 시스템",
+      "description": "",
+      "visibility": "PUBLIC",
+      "categoryId": 3,
+      "categoryName": "모바일",
+      "thumbnailUrl": "https://images.pexels.com/photos/35008891/pexels-photo-35008891.jpeg",
+      "shortsCount": 6,
+      "owner": {
+        "id": 16,
+        "nickname": "김코딩",
+        "profileUrl": "/images/favicon_shortudy.png"
+      },
+      "createdAt": "2025-01-09T10:30:00",
+      "updatedAt": "2025-01-13T11:00:00"
+    },
+    {
+      "id": 8,
+      "title": "알고리즘 정복하기",
+      "description": "코딩 테스트 대비 알고리즘 문제 풀이 모음",
+      "visibility": "PUBLIC",
+      "categoryId": 3,
+      "categoryName": "모바일",
+      "thumbnailUrl": "https://images.pexels.com/photos/35308304/pexels-photo-35308304.jpeg",
+      "shortsCount": 9,
+      "owner": {
+        "id": 16,
+        "nickname": "김코딩",
+        "profileUrl": "/images/favicon_shortudy.png"
+      },
+      "createdAt": "2025-01-04T08:00:00",
+      "updatedAt": "2025-01-12T09:30:00"
+    }
+  ],
+  "playlists": [
+    {
+      "id": 1770555300347,
+      "title": "새로운 플레이리스트~",
+      "description": "새 플레이리스트~~~~",
+      "visibility": "PUBLIC",
+      "thumbnailUrl": "https://example.com/default-thumb.jpg",
+      "thumbnailCustom": true,
+      "itemsCount": 3,
+      "owner": {
+        "id": 1,
+        "nickname": "승일",
+        "profileUrl": ""
+      },
+      "shortsIds": [
+        1,
+        1,
+        1
+      ],
+      "createdAt": "2026-02-08T12:55:00.348Z",
+      "updatedAt": "2026-02-09T00:15:59.511Z"
+    },
+    {
+      "id": 1770556140956,
+      "title": "ㅁㄴㅇㄻㄴㅇㄹ",
+      "description": "ㅁㄴㅇㄻㄴㅇㄹ",
+      "visibility": "PUBLIC",
+      "thumbnailUrl": "https://example.com/default-thumb.jpg",
+      "thumbnailCustom": true,
+      "itemsCount": 3,
+      "owner": {
+        "id": 1,
+        "nickname": "승일",
+        "profileUrl": ""
+      },
+      "shortsIds": [
+        1,
+        4,
+        4
+      ],
+      "createdAt": "2026-02-08T13:09:00.957Z",
+      "updatedAt": "2026-02-09T01:06:21.384Z"
+    },
+    {
+      "id": 1770556143723,
+      "title": "ㄹ헛요ㅓ",
+      "description": "ㄹ홀호",
+      "visibility": "PUBLIC",
+      "thumbnailUrl": "https://example.com/default-thumb.jpg",
+      "thumbnailCustom": true,
+      "itemsCount": 4,
+      "owner": {
+        "id": 1,
+        "nickname": "승일",
+        "profileUrl": ""
+      },
+      "shortsIds": [
+        1,
+        3,
+        1,
+        5
+      ],
+      "createdAt": "2026-02-08T13:09:03.723Z",
+      "updatedAt": "2026-02-09T01:06:23.766Z"
+    },
+    {
+      "id": 1770556146918,
+      "title": "ㅇ류ㅗㅎ루쇼ㅜ",
+      "description": "ㄹ혼ㅇㄽ호",
+      "visibility": "PUBLIC",
+      "thumbnailUrl": "https://example.com/default-thumb.jpg",
+      "thumbnailCustom": true,
+      "itemsCount": 4,
+      "owner": {
+        "id": 1,
+        "nickname": "승일",
+        "profileUrl": ""
+      },
+      "shortsIds": [
+        3,
+        2,
+        1,
+        3
+      ],
+      "createdAt": "2026-02-08T13:09:06.918Z",
+      "updatedAt": "2026-02-09T01:06:17.023Z"
+    },
+    {
+      "id": 1770556150257,
+      "title": "홉ㅈㄷㄱㄴㅇㅎㄹ",
+      "description": "ㄹ후교ㅗㄷㄱㅎ",
+      "visibility": "PUBLIC",
+      "thumbnailUrl": "https://example.com/default-thumb.jpg",
+      "thumbnailCustom": true,
+      "itemsCount": 4,
+      "owner": {
+        "id": 1,
+        "nickname": "승일",
+        "profileUrl": ""
+      },
+      "shortsIds": [
+        2,
+        4,
+        4,
+        4
+      ],
+      "createdAt": "2026-02-08T13:09:10.258Z",
+      "updatedAt": "2026-02-09T01:05:34.565Z"
+    },
+    {
+      "id": 1770556153584,
+      "title": "ㄴㅇ휼후교노",
+      "description": "ㄷㄱㅇㅎㅇㅀ",
+      "visibility": "PUBLIC",
+      "thumbnailUrl": "https://example.com/default-thumb.jpg",
+      "thumbnailCustom": true,
+      "itemsCount": 5,
+      "owner": {
+        "id": 1,
+        "nickname": "승일",
+        "profileUrl": ""
+      },
+      "shortsIds": [
+        3,
+        3,
+        5,
+        5,
+        1
+      ],
+      "createdAt": "2026-02-08T13:09:13.584Z",
+      "updatedAt": "2026-02-09T01:06:08.130Z"
+    },
+    {
+      "id": 1770556156889,
+      "title": "ㅇㅀㄴㅇㄱㅀ",
+      "description": "ㅈㄷㄹㄴㅇㄹㅇㄹ휴",
+      "visibility": "PUBLIC",
+      "thumbnailUrl": "https://example.com/default-thumb.jpg",
+      "thumbnailCustom": true,
+      "itemsCount": 5,
+      "owner": {
+        "id": 1,
+        "nickname": "승일",
+        "profileUrl": ""
+      },
+      "shortsIds": [
+        2,
+        4,
+        2,
+        1,
+        2
+      ],
+      "createdAt": "2026-02-08T13:09:16.889Z",
+      "updatedAt": "2026-02-09T01:06:14.571Z"
+    }
+  ],
+  "currentUser": {
+    "userId": 1,
+    "email": "test@test.com",
+    "nickName": "승일",
+    "profileUrl": "/images/favicon_shortudy.png",
+    "createdAt": "2025-01-01T00:00:00Z"
+  }
 }

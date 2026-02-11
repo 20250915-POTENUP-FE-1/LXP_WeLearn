@@ -1,17 +1,20 @@
 'use client'
 
 import { SHORTS_STATUS_CONFIG } from '@/constants/shortsCardBadge'
-import type { ShortsStatus } from '@/types/mypage-shorts'
+import { ShortsStatus, ShortsVisibility } from '@/types/shorts/status'
 import { cn } from '@/utils/cnUtils'
 
 interface ShortsStatusBadgeProps {
   shortsStatus: ShortsStatus | null | undefined
+  visibility?: ShortsVisibility | null
   className?: string
 }
 
-export default function ShortsStatusBadge({ shortsStatus, className }: ShortsStatusBadgeProps) {
-  if (!shortsStatus || !(shortsStatus in SHORTS_STATUS_CONFIG)) return null
-  const config = SHORTS_STATUS_CONFIG[shortsStatus as keyof typeof SHORTS_STATUS_CONFIG]
+export default function ShortsStatusBadge({ shortsStatus, visibility, className }: ShortsStatusBadgeProps) {
+  // PUBLISHED 상태일 때는 visibility 기준으로 배지 표시
+  const badgeKey = shortsStatus === 'PUBLISHED' && visibility ? visibility : shortsStatus
+  if (!badgeKey || !(badgeKey in SHORTS_STATUS_CONFIG)) return null
+  const config = SHORTS_STATUS_CONFIG[badgeKey as keyof typeof SHORTS_STATUS_CONFIG]
   const Icon = config.icon
 
   return (

@@ -4,27 +4,57 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 import MyShortsCreateButton from './MyShortsCreateButton'
-import ShortsListHeader from '@/components/mypage/shorts/ShortsListHeader'
 import ShortsCard from '@/components/mypage/shorts/ShortsCard'
-import { ShortsResponse } from '@/types/mypage-shorts'
 import ShortsPreviewContainer from '@/components/mypage/shorts/ShortsPreviewContainer'
-import { deleteShortsAction } from './myshorts.action'
+import { deleteShortsAction, toggleShortsVisibilityAction } from './myshorts.action'
+import { ShortsBase } from '@/types/shorts/shorts'
+import ShortsListHeader from '@/components/mypage/shorts/ShortsListHeader'
+import EmptyState from '../EmptyState'
 
 interface MyShortsContainerProps {
-  initialShorts: ShortsResponse[]
+  initialShorts: ShortsBase[]
   totalCount: number
 }
 
 export default function MyShortsContainer({ initialShorts, totalCount }: MyShortsContainerProps) {
   const router = useRouter()
-  const [shortsList, setShortsList] = useState<ShortsResponse[]>(initialShorts)
-  const [selectedShorts, setSelectedShorts] = useState<ShortsResponse | null>(
-    initialShorts[0] ?? null,
-  )
+  const [shortsList, setShortsList] = useState<ShortsBase[]>(initialShorts)
+  const [selectedShorts, setSelectedShorts] = useState<ShortsBase | null>(initialShorts[0] ?? null)
   const [isDeleting, setIsDeleting] = useState(false)
 
-  const handleSelectShorts = (shorts: ShortsResponse) => {
+  const handleSelectShorts = (shorts: ShortsBase) => {
     setSelectedShorts(shorts)
+  }
+
+  // 숏츠 공개/비공개 전환 핸들러
+  const handleToggleVisibility = async (
+    shortsId: number,
+    currentStatus: ShortsBase['visibility'],
+  ) => {
+    try {
+      const result = await toggleShortsVisibilityAction(shortsId, currentStatus)
+
+      if (result.success && result.data) {
+        toast.success(result.message)
+        // 상태 업데이트
+        setShortsList((prev) =>
+          prev.map((s) =>
+            s.shortsId === shortsId ? { ...s, visibility: result.data!.visibility } : s,
+          ),
+        )
+        // 선택된 숏츠 상태도 업데이트
+        if (selectedShorts?.shortsId === shortsId) {
+          setSelectedShorts((prev) =>
+            prev ? { ...prev, visibility: result.data!.visibility } : prev,
+          )
+        }
+        router.refresh()
+      } else {
+        toast.error(result.message || '상태 변경에 실패했습니다.')
+      }
+    } catch (error) {
+      toast.error('상태 변경 중 오류가 발생했습니다.')
+    }
   }
 
   const handleDelete = async (shortsId: number) => {
@@ -88,11 +118,14 @@ export default function MyShortsContainer({ initialShorts, totalCount }: MyShort
                   shorts={shorts}
                   isSelected={selectedShorts?.shortsId === shorts.shortsId}
                   onSelect={() => handleSelectShorts(shorts)}
-                  onDelete={() => handleDelete(shorts.shortsId!)}
+                  onToggleVisibility={() =>
+                    handleToggleVisibility(shorts.shortsId, shorts.visibility)
+                  }
+                  onDelete={() => handleDelete(shorts.shortsId)}
                 />
               ))
             ) : (
-              <div className="py-12 text-center text-gray-500">아직 등록한 숏츠가 없습니다.</div>
+              <EmptyState type="myshorts" />
             )}
           </div>
         </div>

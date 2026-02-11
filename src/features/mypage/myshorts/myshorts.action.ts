@@ -2,16 +2,16 @@
 
 import { revalidatePath } from 'next/cache'
 import { myShortsApi } from '@/services/mypage/myshorts.service'
-import type { ShortsResponse, ShortsUpdateRequest } from '@/types/mypage-shorts'
-import { ActionState } from '@/types/action'
+import { ActionState } from '@/types/action/action'
+import { ShortsBase, ShortsRequest } from '@/types/shorts/shorts'
 
 /**
  * 숏츠 수정 액션
  */
 export async function updateShortsAction(
-  prevState: ActionState<ShortsResponse>,
+  prevState: ActionState<ShortsBase>,
   formData: FormData,
-): Promise<ActionState<ShortsResponse>> {
+): Promise<ActionState<ShortsBase>> {
   const shortsId = Number(formData.get('shortsId'))
 
   // 유효성 검사
@@ -22,28 +22,23 @@ export async function updateShortsAction(
     }
   }
 
-  const title = formData.get('title') as string
+  // 변경된 필드만 payload에 포함 (Partial PATCH)
+  const payload: Partial<ShortsRequest> = {}
+
+  const title = formData.get('title') as string | null
+  if (title !== null) payload.title = title
+
   const description = formData.get('description') as string | null
+  if (description !== null) payload.description = description || null
+
   const categoryId = formData.get('categoryId')
-  const status = formData.get('status') as ShortsUpdateRequest['status'] | null
+  if (categoryId !== null) payload.categoryId = Number(categoryId)
+
+  const visibility = formData.get('visibility') as ShortsRequest['visibility'] | null
+  if (visibility !== null) payload.visibility = visibility
+
   const keywords = formData.getAll('keywords') as string[]
-  const thumbnailUrl = formData.get('thumbnailUrl') as string | null
-
-  const payload: ShortsUpdateRequest = {
-    title: title || undefined,
-    description: description || undefined,
-    categoryId: categoryId ? Number(categoryId) : undefined,
-    status: status || undefined,
-    keywords: keywords.length > 0 ? keywords : undefined,
-  }
-
-  // 썸네일 처리: FormData에 thumbnailUrl 키가 있는 경우에만 처리
-  // - 빈 문자열(''): 삭제 요청 → null로 전송
-  // - 값이 있는 경우: 업데이트 요청
-  // - FormData에 키가 없는 경우: 기존 유지 (payload에 포함하지 않음)
-  if (formData.has('thumbnailUrl')) {
-    payload.thumbnailUrl = thumbnailUrl === '' ? null : thumbnailUrl
-  }
+  if (keywords.length > 0) payload.keywords = keywords
 
   try {
     const response = await myShortsApi.updateShorts(shortsId, payload)
@@ -92,10 +87,10 @@ export async function deleteShortsAction(shortsId: number): Promise<ActionState>
 /**
  * 숏츠 공개/비공개 전환 액션
  */
-export async function toggleShortsStatusAction(
+export async function toggleShortsVisibilityAction(
   shortsId: number,
-  currentStatus: ShortsUpdateRequest['status'],
-): Promise<ActionState<ShortsResponse>> {
+  currentStatus: ShortsRequest['visibility'],
+): Promise<ActionState<ShortsBase>> {
   if (!shortsId || isNaN(shortsId)) {
     return {
       success: false,
@@ -104,11 +99,11 @@ export async function toggleShortsStatusAction(
   }
 
   try {
-    const newStatus = currentStatus === 'PUBLISHED' ? 'DRAFT' : 'PUBLISHED'
-    const response = await myShortsApi.updateShorts(shortsId, { status: newStatus })
+    const newStatus = currentStatus === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC'
+    const response = await myShortsApi.updateShorts(shortsId, { visibility: newStatus })
     revalidatePath('/mypage/myshorts')
 
-    const statusText = response.data.status === 'PUBLISHED' ? '공개' : '비공개'
+    const statusText = response.data.visibility === 'PUBLIC' ? '공개' : '비공개'
 
     return {
       success: true,
