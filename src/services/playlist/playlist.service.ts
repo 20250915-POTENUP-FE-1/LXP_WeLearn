@@ -94,7 +94,9 @@ export const playlistApi = {
     data: ReorderPlaylist,
     playlistId: string,
   ): Promise<ApiResponse<PlaylistInfo>> => {
-    return await api.patch(`/api/v1/playlists/${playlistId}/items/reorder`, data)
+    return await api.patch(`/api/v1/playlists/${playlistId}/items/reorder`, data, {
+      cache: 'no-store',
+    })
   },
 
   // * DELETE

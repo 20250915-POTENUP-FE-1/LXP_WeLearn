@@ -11,6 +11,7 @@ export async function PATCH(req: Request) {
     const res = await playlistApi.updateShortsOrder(data, playlistId)
     revalidatePath(`playlists/${playlistId}`)
     revalidatePath(`mypage/myplaylists/${playlistId}`)
+
     return NextResponse.json({
       success: true,
       data: res,

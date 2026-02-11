@@ -46,7 +46,6 @@ export default function PlaylistCard({
       </div>
     )
   }
-
   async function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
     if (!over) return
@@ -54,15 +53,14 @@ export default function PlaylistCard({
 
     const oldIndex = items.findIndex((i) => i.itemId === active.id)
     const newIndex = items.findIndex((i) => i.itemId === over.id)
-
-    const newItems = arrayMove(items, oldIndex, newIndex)
-
-    setItems(newItems)
+    const activeItem = items.find((i) => i.itemId === active.id)
 
     await clientApi.patch(`/api/v1/playlists/${playlistId}/items/reorder`, {
-      data: { shortsId: active.id, newIndex },
+      data: { shortsId: activeItem?.shorts.shortsId, newIndex },
       playlistId: playlistId,
     })
+    const newItems = arrayMove(items, oldIndex, newIndex)
+    setItems(newItems)
   }
 
   return (

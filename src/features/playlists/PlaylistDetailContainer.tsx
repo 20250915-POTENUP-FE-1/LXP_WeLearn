@@ -34,7 +34,7 @@ export default function PlaylistDetailContainer({ playlistItem }: PlaylistDetail
       <div className="order-2 flex-1 lg:order-2">
         {/* ==================== List Header (총 갯수) ==================== */}
         <div className="mb-4 flex items-center justify-between">
-          <PlaylistRightHeader totalCount={playlistItem.shortsCount} />
+          <PlaylistRightHeader totalCount={playlistItem.items?.length || 0} />
           {userDate?.userId === playlistItem.owner.id && (
             <div className="flex items-center gap-3">
               <div className={`text-sm ${editMode ? 'text-green-500' : 'text-gray-500'}`}>
