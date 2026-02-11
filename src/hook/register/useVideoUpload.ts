@@ -42,7 +42,7 @@ export default function useVideoUpload({ onChange, inputRef }: UseVideoUploadPar
   const handleFileDrop = useCallback(
     (file: File) => {
       if (!isValidVideoFile(file)) {
-        toast.error('지원하지 않는 영상 형식입니다. (mp4, webm, mov만 허용)')
+        toast.error('지원하지 않는 영상 형식입니다. (mp4만 허용)')
         return
       }
       applyVideoFile(file)
@@ -70,7 +70,7 @@ export default function useVideoUpload({ onChange, inputRef }: UseVideoUploadPar
       if (!file) return
 
       if (!isValidVideoFile(file)) {
-        toast.error('지원하지 않는 영상 형식입니다. (mp4, webm, mov만 허용)')
+        toast.error('지원하지 않는 영상 형식입니다. (mp4만 허용)')
         resetInput()
         return
       }

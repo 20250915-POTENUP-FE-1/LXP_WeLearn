@@ -4,20 +4,12 @@ import { useRef } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
-import DashboardPlaylistCard from './DashboardPlaylistCard'
-
-interface ShortsPlaylist {
-  id: number
-  shortsCount: number
-  thumbnailUrl: string
-  title: string
-  description: string
-  categoryName: string
-  visibility: 'PUBLIC' | 'PRIVATE'
-}
+import EmptyState from './EmptyState'
+import { PlaylistInfo } from '@/types/playlist/playlist'
+import PlaylistItem from '@/features/playlists/PlaylistItem'
 
 interface DashboardPlaylistsProps {
-  playlists: ShortsPlaylist[]
+  playlists: PlaylistInfo[]
   totalPages?: number
   currentPage?: number
   isPending?: boolean
@@ -65,19 +57,29 @@ export default function DashboardPlaylists({ playlists }: DashboardPlaylistsProp
         </div>
       </div>
 
-      <div ref={scrollRef} className="scrollbar-hide flex gap-4 overflow-x-auto pt-1 pb-4">
-        {playlists.map((playlist) => (
-          <DashboardPlaylistCard
-            key={playlist.id}
-            id={playlist.id}
-            shortsCount={playlist.shortsCount}
-            thumbnailUrl={playlist.thumbnailUrl}
-            title={playlist.title}
-            description={playlist.description}
-            categoryName={playlist.categoryName}
-          />
-        ))}
-      </div>
+      {playlists.length === 0 ? (
+        <EmptyState type="saved" />
+      ) : (
+        <div ref={scrollRef} className="scrollbar-hide flex gap-5 overflow-x-auto pt-1 pb-4">
+          {playlists.map((playlist) => (
+            <Link
+              key={playlist.id}
+              href={`/mypage/myplaylists/${playlist.id}`}
+              className="group block w-70 shrink-0"
+            >
+              <PlaylistItem
+                id={playlist.id}
+                shortsCount={playlist.shortsCount}
+                thumbnailUrl={playlist.thumbnailUrl}
+                title={playlist.title}
+                description={playlist.description}
+                visibility={playlist.visibility}
+                showBadge
+              />
+            </Link>
+          ))}
+        </div>
+      )}
     </section>
   )
 }

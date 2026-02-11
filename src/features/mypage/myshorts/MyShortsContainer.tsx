@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import MyShortsCreateButton from './MyShortsCreateButton'
 import ShortsCard from '@/components/mypage/shorts/ShortsCard'
 import ShortsPreviewContainer from '@/components/mypage/shorts/ShortsPreviewContainer'
-import { deleteShortsAction } from './myshorts.action'
+import { deleteShortsAction, toggleShortsStatusAction } from './myshorts.action'
 import { ShortsBase } from '@/types/shorts/shorts'
 import ShortsListHeader from '@/components/mypage/shorts/ShortsListHeader'
 
@@ -23,6 +23,30 @@ export default function MyShortsContainer({ initialShorts, totalCount }: MyShort
 
   const handleSelectShorts = (shorts: ShortsBase) => {
     setSelectedShorts(shorts)
+  }
+
+  // 숏츠 공개/비공개 전환 핸들러
+  const handleToggleVisibility = async (shortsId: number, currentStatus: ShortsBase['status']) => {
+    try {
+      const result = await toggleShortsStatusAction(shortsId, currentStatus)
+
+      if (result.success && result.data) {
+        toast.success(result.message)
+        // 상태 업데이트
+        setShortsList((prev) =>
+          prev.map((s) => (s.shortsId === shortsId ? { ...s, status: result.data!.status } : s)),
+        )
+        // 선택된 숏츠 상태도 업데이트
+        if (selectedShorts?.shortsId === shortsId) {
+          setSelectedShorts((prev) => (prev ? { ...prev, status: result.data!.status } : prev))
+        }
+        router.refresh()
+      } else {
+        toast.error(result.message || '상태 변경에 실패했습니다.')
+      }
+    } catch (error) {
+      toast.error('상태 변경 중 오류가 발생했습니다.')
+    }
   }
 
   const handleDelete = async (shortsId: number) => {
@@ -86,6 +110,7 @@ export default function MyShortsContainer({ initialShorts, totalCount }: MyShort
                   shorts={shorts}
                   isSelected={selectedShorts?.shortsId === shorts.shortsId}
                   onSelect={() => handleSelectShorts(shorts)}
+                  onToggleVisibility={() => handleToggleVisibility(shorts.shortsId!, shorts.status)}
                   onDelete={() => handleDelete(shorts.shortsId!)}
                 />
               ))

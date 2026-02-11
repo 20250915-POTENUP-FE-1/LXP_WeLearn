@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { PlaylistApi } from '@/services/playlist/playlist.service'
+import { revalidatePath } from 'next/cache'
+import { playlistApi } from '@/services/playlist/playlist.service'
 
 export async function POST(req: Request) {
   const body = await req.json() // 요청 body에서 추가 데이터
@@ -7,7 +8,8 @@ export async function POST(req: Request) {
   const playlistId = body.playlistId
 
   try {
-    const res = await PlaylistApi.addShortsPlaylist(shortsId, playlistId)
+    const res = await playlistApi.addShortsPlaylist(shortsId, playlistId)
+    revalidatePath(`/shorts/${shortsId}`, 'layout')
     return NextResponse.json({ success: true, data: res })
   } catch (error: any) {
     const status = error?.response?.status || 500

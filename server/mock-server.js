@@ -671,11 +671,224 @@ server.get('/api/v1/keywords', (req, res) => {
 })
 
 // ==========================================
+// 11. 플레이리스트 API (Playlists)
+// ==========================================
+
+// [도우미 함수] 특정 숏츠 ID로 썸네일 URL 가져오기
+const getThumbnailById = (db, shortsId) => {
+  const shorts = db
+    .get('shorts')
+    .find({ shortsId: Number(shortsId) })
+    .value()
+  return shorts
+    ? shorts.thumbnailUrl
+    : 'https://images.pexels.com/photos/5483075/pexels-photo-5483075.jpeg'
+}
+
+// 1. 플레이리스트 생성 (POST /api/v1/playlists)
+server.post('/api/v1/playlists', (req, res) => {
+  const db = router.db
+  const { title, description, shortsIds, thumbnailShortsId, visibility } = req.body
+
+  const CURRENT_USER = { id: 1, nickname: '승일', profileUrl: '' }
+
+  const newPlaylist = {
+    id: Date.now(),
+    title,
+    description,
+    visibility: visibility || 'PUBLIC',
+    thumbnailUrl: getThumbnailById(db, thumbnailShortsId),
+    thumbnailCustom: true,
+    itemsCount: shortsIds ? shortsIds.length : 0,
+    owner: CURRENT_USER,
+    shortsIds: shortsIds || [], // 내부 관리를 위한 ID 배열
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  }
+
+  db.get('playlists').push(newPlaylist).write()
+
+  res.status(201).json({
+    success: true,
+    code: 'Success',
+    message: null,
+    data: newPlaylist,
+  })
+})
+
+// 2 & 3. 플레이리스트 목록 조회 (내 것 & 공개)
+server.get(['/api/v1/playlists/me', '/api/v1/playlists/public'], (req, res) => {
+  const db = router.db
+  const isPublicOnly = req.path.includes('public')
+  let playlists = db.get('playlists').value() || []
+
+  if (isPublicOnly) {
+    playlists = playlists.filter((p) => p.visibility === 'PUBLIC')
+  } else {
+    // 내 플레이리스트
+    playlists = playlists.filter((p) => p.owner?.id === 1)
+  }
+
+  const page = parseInt(req.query.page) || 0
+  const size = parseInt(req.query.size) || 10
+  const startIndex = page * size
+  const paginated = playlists.slice(startIndex, startIndex + size)
+
+  res.json({
+    success: true,
+    code: 'SUCCESS',
+    message: null,
+    data: {
+      content: paginated,
+      pageable: {},
+      totalPages: Math.ceil(playlists.length / size),
+      totalElements: playlists.length,
+    },
+  })
+})
+
+// 4. 플레이리스트 상세 조회 (GET /api/v1/playlists/:id)
+server.get('/api/v1/playlists/:id', (req, res) => {
+  const db = router.db
+  const playlistId = Number(req.params.id)
+
+  const playlist = db.get('playlists').find({ id: playlistId }).value()
+
+  if (!playlist) {
+    return res.status(404).json({ success: false, message: 'Not Found' })
+  }
+
+  // playlist.items가 쇼츠 객체 배열이라고 가정
+  const items = (playlist.items || []).map((shorts, index) => {
+    return {
+      itemId: 100 + index,
+      position: index,
+      shorts: shorts,
+      addedAt: playlist.createdAt,
+    }
+  })
+
+  res.json({
+    success: true,
+    code: 'Success',
+    message: null,
+    data: {
+      ...playlist,
+      items,
+    },
+  })
+})
+
+// 5. 메타데이터 수정 (POST - 설계서 기준)
+server.post('/api/v1/playlists/:id', (req, res) => {
+  const db = router.db
+  const id = Number(req.params.id)
+  const { title, description, thumbnailShortsId, visibility } = req.body
+
+  const playlist = db.get('playlists').find({ id }).value()
+  if (!playlist) return res.status(404).json({ success: false })
+
+  const updated = {
+    ...playlist,
+    title: title || playlist.title,
+    description: description || playlist.description,
+    visibility: visibility || playlist.visibility,
+    thumbnailUrl: thumbnailShortsId
+      ? getThumbnailById(db, thumbnailShortsId)
+      : playlist.thumbnailUrl,
+    updatedAt: new Date().toISOString(),
+  }
+
+  db.get('playlists').find({ id }).assign(updated).write()
+
+  res.json({ success: true, code: 'Success', message: null, data: updated })
+})
+
+// 6. 삭제
+server.delete('/api/v1/playlists/:id', (req, res) => {
+  router.db
+    .get('playlists')
+    .remove({ id: Number(req.params.id) })
+    .write()
+  res.status(204).end()
+})
+
+// 7. 숏츠 추가 (POST /api/v1/playlists/:id/items)
+server.post('/api/v1/playlists/:id/items', (req, res) => {
+  const db = router.db
+  const id = Number(req.params.id)
+  const { shortsId } = req.body
+
+  const playlist = db.get('playlists').find({ id }).value()
+  if (!playlist) return res.status(404).json({ success: false })
+
+  const newShortsIds = [...(playlist.shortsIds || []), Number(shortsId)]
+
+  db.get('playlists')
+    .find({ id })
+    .assign({
+      shortsIds: newShortsIds,
+      itemsCount: newShortsIds.length,
+      updatedAt: new Date().toISOString(),
+    })
+    .write()
+
+  // 상세 응답 (간소화)
+  res.status(201).json({ success: true, code: 'Success', data: playlist })
+})
+
+// 8. 숏츠 제거
+server.delete('/api/v1/playlists/:id/items/:shortsId', (req, res) => {
+  const db = router.db
+  const id = Number(req.params.id)
+  const sid = Number(req.params.shortsId)
+
+  const playlist = db.get('playlists').find({ id }).value()
+  if (playlist) {
+    const nextIds = playlist.shortsIds.filter((id) => id !== sid)
+    db.get('playlists')
+      .find({ id })
+      .assign({
+        shortsIds: nextIds,
+        shortsCount: nextIds.length,
+      })
+      .write()
+  }
+  res.status(204).end()
+})
+
+// 10. 순서 변경 (POST /api/v1/playlists/:id/items/reorder)
+server.post('/api/v1/playlists/:id/items/reorder', (req, res) => {
+  const db = router.db
+  const id = Number(req.params.id)
+  const { shortsId, newIndex } = req.body
+
+  const playlist = db.get('playlists').find({ id }).value()
+  if (!playlist) return res.status(404).json({ success: false })
+
+  let ids = [...playlist.shortsIds]
+  const targetId = Number(shortsId)
+
+  // 기존 위치 제거 후 새 위치 삽입
+  ids = ids.filter((i) => i !== targetId)
+  ids.splice(newIndex, 0, targetId)
+
+  db.get('playlists')
+    .find({ id })
+    .assign({
+      shortsIds: ids,
+      updatedAt: new Date().toISOString(),
+    })
+    .write()
+
+  res.json({ success: true, code: 'Success', data: playlist })
+})
+
+// ==========================================
 // 10. 라우팅 설정 (Prefix: /api)
 // ==========================================
 // 나머지 라우트는 json-server 기본 동작(db.json CRUD)을 따름
 server.use('/api', router)
-
 // 서버 시작
 const PORT = 4000
 server.listen(PORT, () => {
@@ -691,4 +904,14 @@ server.listen(PORT, () => {
   console.log('- Comments: GET /api/v1/shorts/:shortsId/comments')
   console.log('- Comments: POST /api/v1/posts/:postId/comments')
   console.log('- Keywords: GET /api/v1/keywords')
+  console.log('# 1. 플레이리스트 생성: POST /api/v1/playlists')
+  console.log('# 2. 내 플레이리스트 목록 조회: GET /api/v1/playlists/me')
+  console.log('# 3. 공개 플레이리스트 목록 조회: GET /api/v1/playlists/public')
+  console.log('# 4. 플레이리스트 상세 조회: GET /api/v1/playlists/:id')
+  console.log('# 5. 플레이리스트 메타데이터 수정: POST /api/v1/playlists/:id')
+  console.log('# 6. 플레이리스트 삭제: DELETE /api/v1/playlists/:id')
+  console.log('# 7. 플레이리스트에 숏츠 추가: POST /api/v1/playlists/:id/items')
+  console.log('# 8. 플레이리스트에서 숏츠 제거: DELETE /api/v1/playlists/:id/items/:shortsId')
+  console.log('# 9. 플레이리스트 아이템 목록 조회: GET /api/v1/playlists/:id/items')
+  console.log('# 10. 플레이리스트 내 아이템 순서 변경: POST /api/v1/playlists/:id/items/reorder')
 })

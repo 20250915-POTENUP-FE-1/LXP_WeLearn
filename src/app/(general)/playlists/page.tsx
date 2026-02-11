@@ -1,12 +1,11 @@
-import PlaylistPageWrapper from '@/features/playlists/PlaylistPageWrapper'
+import PlaylistPageCollection from '@/features/playlists/PlaylistPageCollection'
+import { playlistApi } from '@/services/playlist/playlist.service'
 
 export default async function PlaylistsPage() {
-  const [initialPlaylists] = await Promise.all([
-    fetch('http://localhost:4000/shortsPlaylists').then((res) => res.json()), // Mock server
-  ])
+  const response = await playlistApi.getPublicPlaylist({ page: 0, size: 10 })
   return (
-    <div>
-      <PlaylistPageWrapper initialPlaylists={initialPlaylists} />
+    <div className="w-full">
+      <PlaylistPageCollection initialPlaylists={response.data.content} />
     </div>
   )
 }

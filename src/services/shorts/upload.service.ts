@@ -22,20 +22,8 @@ export const shortsUploadApi = {
 
   /**
    * 2단계: S3 업로드 (Presigned URL)
-   * ❗ S3는 api util 사용 ❌ (Authorization 붙으면 안 됨)
+   * 클라이언트에서 직접 S3로 업로드 처리
    */
-  async uploadToS3(presignedUrl: string, file: File | Blob): Promise<void> {
-    const res = await fetch(presignedUrl, {
-      method: 'PUT',
-      body: file,
-      headers: {
-        'Content-Type': file.type,
-      },
-    })
-    if (!res.ok) {
-      throw new Error('S3 업로드 실패')
-    }
-  },
 
   /**
    * 3단계: 업로드 완료 확정

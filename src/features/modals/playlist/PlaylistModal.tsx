@@ -1,23 +1,22 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
-import { useParams, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import PlaylistModalHeader from './PlaylistModalHeader'
 import Playlist from './Playlist'
 import CreatePlaylistBtn from './CreatePlaylistBtn'
 import CreatePlaylistForm from './CreatePlaylistForm'
 import useIsMobile from '@/hook/useIsMobile'
-import { PlaylistBase, PlaylistItem } from '@/types/playlist/playlist'
+import { PlaylistBase, PlaylistInfo } from '@/types/playlist/playlist'
 
 interface PlaylistModalProps {
-  initialPlaylistData: PlaylistBase<PlaylistItem[]>
+  initialPlaylistData: PlaylistBase<PlaylistInfo[]>
 }
 
 export default function PlaylistModal({ initialPlaylistData }: PlaylistModalProps) {
   const [activeTab, setActiveTab] = useState('save') // 'save' or 'create'
   const pathname = usePathname()
-  const params = useParams()
   const isMobile = useIsMobile()
   const [mounted, setMounted] = useState(false)
   const [shortsId, setShortsId] = useState<number>(0)
@@ -66,7 +65,11 @@ export default function PlaylistModal({ initialPlaylistData }: PlaylistModalProp
               <>
                 <PlaylistModalHeader shortsId={shortsId} />
                 {/* 플레이리스트 목록 */}
-                <Playlist list={initialPlaylistData} shortsId={shortsId} />
+                <Playlist
+                  list={initialPlaylistData}
+                  shortsId={shortsId}
+                  handleActiveTab={handleActiveTab}
+                />
 
                 {/* 새 플레이리스트 만들기 버튼 */}
                 <CreatePlaylistBtn handleActiveTab={handleActiveTab} />

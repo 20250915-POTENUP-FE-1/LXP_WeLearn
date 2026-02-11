@@ -1,6 +1,6 @@
 'use client'
-import { CirclePlay, CircleUser, Heart, LogOut, Settings } from 'lucide-react'
-import { LogoutAction } from '@/features/auth/actions/logout.aciton';
+import { CirclePlay, CircleUser, Heart, ListVideo, LogOut, Settings } from 'lucide-react'
+import { LogoutAction } from '@/features/auth/actions/logout.aciton'
 import { useRouter } from 'next/navigation'
 import {
   DropdownMenu,
@@ -91,6 +91,13 @@ export default function HeaderDropdown() {
               <DropdownMenuItem className="flex w-full cursor-pointer gap-4 px-0 py-1">
                 <Heart />
                 좋아요 숏츠
+              </DropdownMenuItem>
+            </Link>
+
+            <Link href="/mypage/myplaylists" className="py-1">
+              <DropdownMenuItem className="flex w-full cursor-pointer gap-4 px-0 py-1">
+                <ListVideo />
+                플레이리스트
               </DropdownMenuItem>
             </Link>
 

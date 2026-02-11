@@ -140,11 +140,11 @@ export const api = {
 }
 
 async function handleError(res: Response) {
-  const errorData = await res.json().catch(() => ({}));
+  const errorData = await res.json().catch(() => ({}))
   throw {
     success: false,
     code: errorData.code || res.status,
     message: errorData.message || '알 수 없는 오류',
     data: errorData.data,
-  };
+  }
 }

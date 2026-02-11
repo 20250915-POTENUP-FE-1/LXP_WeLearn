@@ -1,57 +1,173 @@
 'use client'
 
 import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import LikeShortsDropdownMenu from '@/features/mypage/likes/LikeShortsDropdownMenu'
-import { MoreHorizontal } from 'lucide-react'
+import { PlaylistItems, PlaylistOwner } from '@/types/playlist/playlist'
+import { ChevronsUpDown, MoreHorizontal } from 'lucide-react'
 import Image from 'next/image'
+import PlaylistDropdownMenu from './PlaylistDropdownMenu'
+import { timeAgo } from '@/utils/timeAgo'
 
-export default function PlaylistCard() {
+import { DndContext, closestCenter, DragEndEvent } from '@dnd-kit/core'
+import {
+  SortableContext,
+  useSortable,
+  arrayMove,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable'
+import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers'
+import { CSS } from '@dnd-kit/utilities'
+import { useState } from 'react'
+
+interface PlaylistCardProps {
+  editMode: boolean
+  shortsList: PlaylistItems[] | null
+  handlePreview: (shorts: PlaylistItems) => void
+  playlistOwner: PlaylistOwner
+  selectedShorts: PlaylistItems | null
+}
+
+export default function PlaylistCard({
+  editMode,
+  shortsList,
+  handlePreview,
+  playlistOwner,
+  selectedShorts,
+}: PlaylistCardProps) {
+  const [items, setItems] = useState(shortsList ?? [])
+
+  if (!items || items.length === 0) {
+    return (
+      <div className="flex h-full w-full items-center justify-center text-xl text-gray-500">
+        영상이 없습니다.
+      </div>
+    )
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event
+    if (!over) return
+
+    if (active.id !== over.id) {
+      setItems((prev) => {
+        const oldIndex = prev.findIndex((i) => i.itemId === active.id)
+        const newIndex = prev.findIndex((i) => i.itemId === over.id)
+        return arrayMove(prev, oldIndex, newIndex)
+      })
+    }
+  }
+
   return (
-    <div className="space-y-6">
-      <div className="flex cursor-pointer gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md">
-        <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg border-transparent bg-gray-200 sm:h-48 sm:w-36">
-          <Image
-            src="https://images.pexels.com/photos/35008891/pexels-photo-35008891.jpeg"
-            alt="Figma 오토 레이아웃 기초"
-            fill
-            className="object-cover"
-            sizes="(max-width: 640px) 112px, 144px"
-          />
-          <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/25 px-3 py-1 text-[10px] text-white">
-            개발
-          </span>
+    <DndContext
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+      modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+    >
+      <SortableContext items={items.map((i) => i.itemId)} strategy={verticalListSortingStrategy}>
+        <div className="space-y-6">
+          {items.map((short) => (
+            <SortablePlaylistItem
+              key={short.itemId}
+              short={short}
+              editMode={editMode}
+              handlePreview={handlePreview}
+              selectedShorts={selectedShorts}
+            />
+          ))}
         </div>
-        <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
-          <div className="flex items-start justify-between gap-2">
-            <div className="min-w-0 flex-1">
-              <h3 className="pt-1 text-lg font-bold text-gray-900">
-                AI 시대의 필수 지식 MCP 이 영상 하나로 끝내세요!
-              </h3>
-              <p className="mt-1.5 mb-4 text-sm text-gray-500">
-                윤개발 · 조회수 1,234회 · 3개월 전
-              </p>
-              <p className="mb-1 line-clamp-2 text-sm text-gray-700">
-                MCP에 대한 모든 것을 알려드립니다.
-              </p>
-            </div>
-            {/* 더보기 드롭다운 메뉴 */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  onClick={(e) => e.stopPropagation()}
-                  className="shrink-0 rounded-full p-1 transition-colors hover:bg-gray-100"
-                >
-                  <MoreHorizontal size={18} className="text-black" />
-                </button>
-              </DropdownMenuTrigger>
-              <LikeShortsDropdownMenu />
-            </DropdownMenu>
+      </SortableContext>
+    </DndContext>
+  )
+}
+
+function SortablePlaylistItem({
+  short,
+  editMode,
+  handlePreview,
+  selectedShorts,
+}: {
+  short: PlaylistItems
+  editMode: boolean
+  handlePreview: (shorts: PlaylistItems) => void
+  selectedShorts: PlaylistItems | null
+}) {
+  const { setNodeRef, transform, transition, attributes, listeners, isDragging } = useSortable({
+    id: short.itemId,
+  })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  }
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...(editMode ? attributes : {})}
+      {...(editMode ? listeners : {})}
+      onClick={() => !editMode && handlePreview(short)}
+      className={`flex gap-4 rounded-lg border bg-white p-4 transition-shadow ${editMode ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer'} ${isDragging ? 'scale-[0.99] opacity-60 shadow-lg' : 'hover:shadow-md'} ${selectedShorts?.itemId === short.itemId ? 'border-green-500 ring-1 ring-green-500' : 'border-gray-200'} `}
+    >
+      {/* 드래그 아이콘 UI */}
+      {editMode && (
+        <div className="flex items-center justify-center pr-1 text-gray-400">
+          <ChevronsUpDown />
+        </div>
+      )}
+
+      {/* 썸네일 */}
+      <div className="relative h-48 w-28 shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:w-36">
+        <Image
+          src={short.shorts.thumbnailUrl}
+          alt={short.shorts.title}
+          fill
+          className="object-cover"
+          sizes="(max-width: 640px) 112px, 144px"
+        />
+        {short.shorts.category && (
+          <span className="absolute top-2 left-2 rounded-full bg-black/25 px-3 py-1 text-[10px] text-white">
+            {short.shorts.category.name}
+          </span>
+        )}
+      </div>
+
+      {/* 내용 */}
+      <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0 flex-1">
+            <h3 className="line-clamp-2 pt-1 text-lg font-bold text-gray-900">
+              {short.shorts.title}
+            </h3>
+
+            <p className="mt-1.5 mb-4 text-sm text-gray-500">
+              {short.shorts.uploader.nickname} · 조회수 {short.shorts.viewCount}회 ·{' '}
+              {timeAgo(short.shorts.createdAt)}
+            </p>
+
+            <p className="mb-1 line-clamp-2 text-sm text-gray-700">{short.shorts.description}</p>
           </div>
-          <div className="mt-auto flex flex-wrap gap-2">
-            <span className="px-1 py-1 text-xs text-gray-900">#프로그래밍</span>
-            <span className="px-1 py-1 text-xs text-gray-900">#AI</span>
-            <span className="px-1 py-1 text-xs text-gray-900">#mcp</span>
-          </div>
+
+          {/* 더보기 */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                onClick={(e) => e.stopPropagation()}
+                className="shrink-0 rounded-full p-1 hover:bg-gray-100"
+              >
+                <MoreHorizontal size={18} />
+              </button>
+            </DropdownMenuTrigger>
+            <PlaylistDropdownMenu />
+          </DropdownMenu>
+        </div>
+
+        {/* 태그 */}
+        <div className="mt-auto flex flex-wrap gap-2">
+          {short.shorts.keywords?.map((tag) => (
+            <span key={tag} className="px-1 py-1 text-xs text-gray-900">
+              #{tag}
+            </span>
+          ))}
         </div>
       </div>
     </div>

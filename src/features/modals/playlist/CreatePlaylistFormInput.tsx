@@ -39,11 +39,11 @@ export default function CreatePlaylistFormInput({
       {/* 공개/비공개 선택 */}
       <div>
         <label className="mb-3 block text-sm font-medium text-gray-700">공개 여부</label>
-        <input type="hidden" name="visibility" value={isPublic ? 'public' : 'private'} />
+        <input type="hidden" name="visibility" value={isPublic ? 'PUBLIC' : 'PRIVATE'} />
         <div className="flex items-center gap-4">
           <div className="flex w-full items-center gap-3">
             <label
-              className={`flex flex-1 cursor-pointer items-center justify-center rounded-full py-2 text-sm font-medium transition-all ${
+              className={`flex flex-1 cursor-pointer items-center justify-center rounded-lg py-2 text-sm font-medium transition-all ${
                 isPublic
                   ? 'border border-black bg-black text-white'
                   : 'border border-gray-200 bg-white text-gray-600'
@@ -59,7 +59,7 @@ export default function CreatePlaylistFormInput({
               공개
             </label>
             <label
-              className={`flex flex-1 cursor-pointer items-center justify-center rounded-full py-2 text-sm font-medium transition-all ${
+              className={`flex flex-1 cursor-pointer items-center justify-center rounded-lg py-2 text-sm font-medium transition-all ${
                 !isPublic
                   ? 'border border-black bg-black text-white'
                   : 'border border-gray-200 bg-white text-gray-600'

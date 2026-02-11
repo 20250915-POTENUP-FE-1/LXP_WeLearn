@@ -14,18 +14,37 @@ export interface PlaylistRequest {
   visibility: Visibility
 }
 
-// 임시 플레이 리스트 카드에 대한 정보
+// 공개 플레이리스트 조회 시
+// /api/v1/playlists/public
 export interface PlayListCard {
   id: number
-  thumbnailUrl: string
   title: string
+  description: string
+  visibility: Visibility
+  thumbnailUrl: string
   shortsCount: number
   categoryName: string
   progress?: number
   viewCount: number
   likeCount: number
-  description: string
-  visibility: Visibility
+}
+
+export interface PlaylistBase<T = unknown> {
+  content: T
+  empty: boolean
+  first: boolean
+  last: boolean
+  number: number
+  numberOfElements: number
+  pageable: Pageable
+  size: number
+  sort: {
+    sorted: boolean
+    empty: boolean
+    unsorted: boolean
+  }
+  totalPages: number
+  totalElements: number
 }
 
 export interface PlaylistOwner {
@@ -38,17 +57,17 @@ export interface PlaylistOwner {
  * 내 플레이 리스트 요청시
  * /api/v1/playlists/me
  */
-export interface Playlist {
+export interface PlaylistInfo {
   id: number
   title: string
   description: string
   thumbnailUrl: string
   visibility: Visibility
-  itemCount: number
+  shortsCount: number
   owner: PlaylistOwner
   createdAt: string
   updatedAt: string
-  item?: PlaylistItems
+  items?: PlaylistItems[]
 }
 
 // 플레이리스트 기본 틀
@@ -64,7 +83,7 @@ export interface PlaylistBase<T = unknown> {
 export interface PlaylistItems {
   itemId: number
   position: number
-  shorts: PlaylistShorts[]
+  shorts: PlaylistShorts
   addedAt: string
 }
 
@@ -86,12 +105,34 @@ export interface PlaylistShorts {
   thumbnailUrl: string
   durationSec: number
   status: ShortsVisibility
-  uploader: PlaylistUploader
+  // API 연동시 삭제 예정
+  // PlaylistShorts에 uploader: PlaylistUploader로 변경
+  uploader: PlaylistOwner
+  // 여기까지 api 들어오면 수정
   category: Category
+  keywords: string[]
+  createdAt: string
+  viewCount: number
 }
 
-interface PlaylistUploader {
-  memberId: number
-  nickname: string
-  profileImageUrl: string
+export interface PlaylistMetaDataResponse {
+  id: number
+  title: string
+  description: string
+  visibility: Visibility
+  thumbnailUrl: string
+  shortsCount: number
+  owner: PlaylistOwner
+  createdAt: string
+  updatedAt: string
+  category: Category
+  keywords: string[]
+  viewCount: number
+}
+
+export interface PatchPlaylistMeta {
+  title?: string
+  description?: string
+  thumbnailShortsId?: number
+  visibility?: Visibility
 }

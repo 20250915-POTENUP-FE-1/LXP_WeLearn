@@ -11,7 +11,7 @@ interface DashboardCreatedCardProps {
   description: string
   categoryName: string
   userNickname: string
-  keywords: string[]
+  keywords: string[] | null
 }
 
 export default function DashboardCreatedCard({
@@ -63,7 +63,7 @@ export default function DashboardCreatedCard({
             <p className="mb-1.5 line-clamp-1 text-[11px] text-gray-300">{description}</p>
             <div className="flex items-center justify-between text-[11px] text-gray-300">
               <span className="font-medium">{userNickname}</span>
-              {keywords.length > 0 && (
+              {keywords && keywords.length > 0 && (
                 <span className="rounded bg-white/20 px-1.5 py-0.5 text-[9px] text-white/90">
                   #{keywords[0]}
                 </span>

@@ -1,89 +1,110 @@
+import { api } from '@/lib/utils/apiUtils'
 import { ApiResponse } from '@/types/api/api'
 import {
   PlaylistBase,
-  PlaylistItem,
   PlaylistRequest,
   PlaylistShorts,
+  PlaylistInfo,
+  PlayListCard,
+  PatchPlaylistMeta,
+  PlaylistMetaDataResponse,
 } from '@/types/playlist/playlist'
 import { PageRequest } from '@/types/shorts/shorts'
-import { cookies } from 'next/headers'
 
-const baseUrl = 'https://995dcec8-b9b9-4ce1-b734-d1a7806c16ea.mock.pstmn.io'
-export const PlaylistApi = {
+export const playlistApi = {
+  /**
+   * ================
+   * Get 요청
+   * ================
+   */
+
   // 유저 개인 플레이 리스트 조회
   getUserPlaylist: async ({
     page,
     size,
-  }: PageRequest): Promise<ApiResponse<PlaylistBase<PlaylistItem[]>>> => {
+  }: PageRequest): Promise<ApiResponse<PlaylistBase<PlaylistInfo[]>>> => {
     const params = new URLSearchParams({
       page: String(page),
       size: String(size),
     })
-    const response = await fetch(`${baseUrl}/api/playlists/me?${params}`, {
-      cache: 'no-store',
-    })
 
-    const data = await response.json()
-    if (!response.ok) {
-      throw new Error('request failed')
-    }
-    return data.data
+    const response = await api.get<ApiResponse<PlaylistBase<PlaylistInfo[]>>>(
+      `/api/v1/playlists/me?${params}`,
+      {
+        cache: 'no-store',
+      },
+    )
+
+    return response
   },
 
   // 플레이리스트 상세 조회
-  getPlaylistItem: async (playlistId: number): Promise<ApiResponse<PlaylistItem>> => {
-    const response = await fetch(`${baseUrl}/api/playlist/${playlistId}`)
+  getPlaylistItem: async (playlistId: number): Promise<ApiResponse<PlaylistInfo>> => {
+    const response = await api.get<ApiResponse<PlaylistInfo>>(`/api/v1/playlists/${playlistId}`)
 
-    if (!response.ok) {
-      throw new Error('플레이리스트 불러오기 실패')
-    }
-
-    const data = await response.json()
-    return data.data
+    return response
   },
 
-  createPlaylist: async (content: PlaylistRequest) => {
-    const cookieStore = await cookies()
-    const accessToken = cookieStore.get('accessToken')?.value
-
-    const response = await fetch(`${baseUrl}/api/playlists`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(content),
+  // 공개 플레이리스트 조회
+  getPublicPlaylist: async ({
+    page = 0,
+    size = 10,
+    sort = 'createdAt,desc',
+  }: PageRequest): Promise<ApiResponse<PlaylistBase<PlayListCard[]>>> => {
+    const params = new URLSearchParams({
+      page: String(page),
+      size: String(size),
+      sort: String(sort),
     })
 
-    if (!response.ok) {
-      throw new Error('플레이리스트 생성 실패')
-    }
+    const response = await api.get<ApiResponse<PlaylistBase<PlayListCard[]>>>(
+      `/api/v1/playlists/public?${params}`,
+    )
 
-    const data = await response.json()
+    return response
+  },
 
-    return data
+  /**
+   * =================
+   * POST 요청
+   * =================
+   */
+
+  createPlaylist: async (content: PlaylistRequest) => {
+    const response = await api.post('/api/v1/playlists', content)
+
+    return response
   },
 
   addShortsPlaylist: async (
-    shortsId: number,
-    playlistId: number,
+    shortsId: string,
+    playlistId: string,
   ): Promise<ApiResponse<PlaylistShorts>> => {
-    const cookieStore = await cookies()
-    const accessToken = cookieStore.get('accessToken')?.value
+    const response = await api.post(`/api/v1/playlists/${playlistId}/items`, { shortsId: shortsId })
 
-    const response = await fetch(`${baseUrl}/api/playlists/${playlistId}/items`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({ shortsId }),
-    })
+    return response
+  },
 
-    if (!response.ok) {
-      throw new Error('숏츠 저장 실패')
-    }
+  /**
+   * ================
+   * PATCH
+   * ================
+   */
 
-    const data = await response.json()
+  patchPlaylistInfo: async (
+    data: PatchPlaylistMeta,
+    playlistId: string,
+  ): Promise<ApiResponse<PlaylistMetaDataResponse>> => {
+    return await api.patch(`/api/v1/playlists/${playlistId}`, data)
+  },
 
-    return data.data
+  /**
+   * ================
+   * Delete
+   * ================
+   */
+
+  deleteShortsInPlaylist: async (shortsId: number, playlistId: number) => {
+    const response = await api.delete(`/api/v1/playlists/${playlistId}/items/${shortsId}`)
   },
 }

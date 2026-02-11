@@ -22,19 +22,23 @@ export async function updateShortsAction(
     }
   }
 
-  const title = formData.get('title') as string
-  const description = formData.get('description') as string | null
-  const categoryId = formData.get('categoryId')
-  const status = formData.get('status') as ShortsRequest['status'] | null
-  const keywords = formData.getAll('keywords') as string[]
+  // 변경된 필드만 payload에 포함 (Partial PATCH)
+  const payload: Partial<ShortsRequest> = {}
 
-  const payload: ShortsRequest = {
-    title: title,
-    description: description,
-    categoryId: Number(categoryId),
-    status: status || undefined,
-    keywords: keywords,
-  }
+  const title = formData.get('title') as string | null
+  if (title !== null) payload.title = title
+
+  const description = formData.get('description') as string | null
+  if (description !== null) payload.description = description || null
+
+  const categoryId = formData.get('categoryId')
+  if (categoryId !== null) payload.categoryId = Number(categoryId)
+
+  const status = formData.get('status') as ShortsRequest['status'] | null
+  if (status !== null) payload.status = status
+
+  const keywords = formData.getAll('keywords') as string[]
+  if (keywords.length > 0) payload.keywords = keywords
 
   try {
     const response = await myShortsApi.updateShorts(shortsId, payload)

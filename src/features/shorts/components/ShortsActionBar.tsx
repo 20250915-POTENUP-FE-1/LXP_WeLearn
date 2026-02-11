@@ -1,6 +1,6 @@
 'use client'
 
-import { ListPlus, MessageSquareText, Send } from 'lucide-react'
+import { ListPlus, MessageSquareText, Send, Share2 } from 'lucide-react'
 import { toast } from 'react-toastify'
 import { usePathname, useRouter } from 'next/navigation'
 import { ShortsLikeButton } from './ShortsLikeButton'
@@ -79,7 +79,8 @@ export default function ShortsActionBar({
         type="button"
         onClick={() => handleComingSoon('공유')}
       >
-        <Send strokeWidth={1.5} />
+        {/* <Send strokeWidth={1.5} /> */}
+        <Share2 strokeWidth={1.5} />
         <span className="mt-1 text-xs">공유</span>
       </button>
     </aside>
