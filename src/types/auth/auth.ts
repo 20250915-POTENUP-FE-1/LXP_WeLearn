@@ -46,3 +46,8 @@ export interface TokenResponse {
   accessToken: string
   refreshToken: string
 }
+
+export interface PresignedUrlData {
+  url: string;
+  key: string;
+}

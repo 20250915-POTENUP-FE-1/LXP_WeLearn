@@ -32,19 +32,17 @@ export const SignupAction = async (
     const errorCode = error.code || error.msg || '알수없는 오류 발생'
     const errorMessage = error.message || null
 
-    switch (errorCode) {
+    switch (error.code) {
       case 'COMMON_400':
         return {
           success: false,
           code: errorMessage || '이메일을 기입해주세요.',
         }
-
       case 'USER_409':
         return {
           success: false,
           code: errorMessage || '이미 사용중인 이메일입니다.',
         }
-
       default:
         return {
           success: false,

@@ -23,7 +23,7 @@ export const authApi = {
   /**
    * 회원가입
    */
-  signup: async (data: SignUpRequest) => {
+  signup: (data: SignUpRequest) => {
     // 일반적인 POST 요청 (데이터만 반환)
     return api.post<SignUpResponse>('/api/v1/users', data, { cache: 'no-store' })
   },

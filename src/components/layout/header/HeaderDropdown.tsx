@@ -1,5 +1,5 @@
 'use client'
-import { CirclePlay, CircleUser, Heart, ListVideo, LogOut, Settings, User } from 'lucide-react'
+import { CirclePlay, CircleUser, Heart, ListVideo, LogOut, Settings } from 'lucide-react'
 import { LogoutAction } from '@/features/auth/actions/logout.aciton'
 import { useRouter } from 'next/navigation'
 import {
@@ -22,15 +22,12 @@ export default function HeaderDropdown() {
   const authLogout = useAuth((state) => state.logout)
 
   if (!hasHydrated) return null
-
   const handleLogout = async () => {
-    // 1. 서버 액션 직접 실행
     const res = await LogoutAction({
       success: false,
       message: '',
     })
 
-    // 2. 결과가 true면 즉시 처리
     if (res.success) {
       authLogout()
       toast.success('로그아웃 되었습니다.')
@@ -46,46 +43,35 @@ export default function HeaderDropdown() {
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <div
-              className="flex cursor-pointer items-center justify-center text-gray-600 transition-colors hover:text-gray-900"
+              className="flex cursor-pointer items-center justify-center text-gray-600 transition-colors"
               aria-label="프로필"
             >
-              {/* 유저 프로필 영역 */}
-              {auth?.profileUrl ? (
-                <div
-                  className="cursor-pointer rounded-full border-gray-100 transition-colors hover:border-gray-600"
-                  aria-label="프로필 이미지"
-                >
-                  <img src={auth?.profileUrl} alt="user-profile-image" />
-                </div>
-              ) : (
-                <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-gray-200">
-                  <Image src={DEFAULT_IMAGES.AVATAR} alt={'user-avatar'} width={32} height={32} />
-                </div>
-              )}
+              <div className="relative h-10 w-10 overflow-hidden rounded-full border border-gray-100 transition-colors">
+                <Image
+                  src={auth?.profileUrl || DEFAULT_IMAGES.AVATAR}
+                  alt="user-profile-image"
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
             </div>
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end" className="flex flex-col gap-2 pt-5 pr-10 pb-3 pl-8">
-            {auth?.profileUrl && (
-              <div
-                className="cursor-pointer rounded-full border-gray-100 transition-colors hover:border-gray-600"
-                aria-label="프로필 이미지"
-              >
-                <img src={auth?.profileUrl} alt="user-profile-image" />
+            <div className="mb-3 flex items-center gap-4 border-b pb-4">
+              <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full bg-gray-200">
+                <Image
+                  src={auth?.profileUrl || DEFAULT_IMAGES.AVATAR}
+                  alt={'user-avatar'}
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
               </div>
-            )}
-
-            <div className="mb-3 flex items-center gap-4">
-              <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-gray-200">
-                <Image src={DEFAULT_IMAGES.AVATAR} alt={'user-avatar'} width={32} height={32} />
-              </div>
-              <div className="flex flex-col justify-center">
-                {auth && (
-                  <>
-                    <div className="pb-1 text-sm font-bold">{auth.nickName}</div>
-                    <div className="text-xs text-gray-600">{auth.email}</div>
-                  </>
-                )}
+              <div className="flex flex-col justify-center overflow-hidden">
+                <div className="truncate text-sm font-bold">{auth.nickName}</div>
+                <div className="truncate text-xs text-gray-600">{auth.email}</div>
               </div>
             </div>
             <Link href="/mypage/profile" className="py-1">

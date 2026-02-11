@@ -37,27 +37,27 @@ export const LoginAction = async (
       data: user.data,
     }
   } catch (error:any) {
-    console.log(error)
-    const errorMessage = error.code || null
-    const errorCode = error.message || error.msg || '알 수 없는 에러'
+    console.log(`login 에러:`,error)
 
-    switch (errorCode) {
+    switch (error.code) {
       case 'USER_400':
         return {
           success: false,
-          message: errorMessage,
+          message: error.message,
           inputs: inputs
         }
       case 'USER_404':
         return {
           success: false,
-          message: errorMessage,
+          message: error.message,
           inputs: inputs
         }
-    }
-    return {
-      success: false,
-      message: error instanceof Error ? error.message : '알수없는 오류 발생',
+      default:
+        return {
+          success: false,
+          message: '일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+          inputs: inputs
+        }
     }
   }
 }
