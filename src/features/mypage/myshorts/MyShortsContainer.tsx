@@ -9,6 +9,7 @@ import ShortsPreviewContainer from '@/components/mypage/shorts/ShortsPreviewCont
 import { deleteShortsAction, toggleShortsStatusAction } from './myshorts.action'
 import { ShortsBase } from '@/types/shorts/shorts'
 import ShortsListHeader from '@/components/mypage/shorts/ShortsListHeader'
+import EmptyState from '../EmptyState'
 
 interface MyShortsContainerProps {
   initialShorts: ShortsBase[]
@@ -115,7 +116,7 @@ export default function MyShortsContainer({ initialShorts, totalCount }: MyShort
                 />
               ))
             ) : (
-              <div className="py-12 text-center text-gray-500">아직 등록한 숏츠가 없습니다.</div>
+              <EmptyState type="myshorts" />
             )}
           </div>
         </div>

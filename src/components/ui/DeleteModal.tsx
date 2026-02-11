@@ -67,7 +67,7 @@ export default function DeleteModal({
           transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
         >
           <div className="absolute inset-0 z-60 flex items-center justify-center rounded-xl bg-black/50">
-            <div className="w-[280px] rounded-lg bg-white p-6 shadow-xl">
+            <div className="w-70 rounded-lg bg-white p-6 shadow-xl">
               <p className="mb-6 text-center text-gray-800">
                 {deleteTarget.mode === 'comment' ? '댓글' : '답글'}을 완전히 삭제할까요?
               </p>

@@ -4,9 +4,9 @@ import { useRef } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
-import EmptyState from '../EmptyState'
 import { PlaylistInfo } from '@/types/playlist/playlist'
 import PlaylistItem from '@/features/playlists/PlaylistItem'
+import EmptyState from './DashboardEmptyState'
 
 interface DashboardPlaylistsProps {
   playlists: PlaylistInfo[]
