@@ -50,7 +50,7 @@ export default function ShortsCard({
       <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 flex-1">
-            {shorts.status && <ShortsStatusBadge shortsStatus={shorts.status} />}
+            {shorts.status && <ShortsStatusBadge shortsStatus={shorts.status} visibility={shorts.visibility} />}
 
             <h3 className="pt-1 text-lg font-bold text-gray-900">{shorts.title}</h3>
             <p className="my-1 line-clamp-1 text-sm text-gray-700">{shorts.description}</p>

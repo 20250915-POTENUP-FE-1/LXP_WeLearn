@@ -53,9 +53,7 @@ export default function ShortsCarouselCard({ item }: { item: ShortsBase }) {
           {/* 하단 그라데이션 + 텍스트 */}
           <div className="absolute inset-x-0 bottom-0 z-10 bg-linear-to-t from-black/85 via-black/50 to-transparent p-4">
             <p className="mb-1 line-clamp-2 text-sm font-semibold text-white">{item.title}</p>
-            <p className="mb-2 line-clamp-2 h-[3.22em] text-[11px] text-gray-200">
-              {item.description}
-            </p>
+            <p className="mb-2 line-clamp-2 h-8 text-[11px] text-gray-200">{item.description}</p>
             <div className="flex items-center justify-between text-[11px] text-gray-300">
               <span className="font-medium">{item.userNickname ?? '숏터'}</span>
               {item.keywords?.[0] && (

@@ -38,11 +38,15 @@ export default function MyShortsContainer({ initialShorts, totalCount }: MyShort
         toast.success(result.message)
         // 상태 업데이트
         setShortsList((prev) =>
-          prev.map((s) => (s.shortsId === shortsId ? { ...s, status: result.data!.status } : s)),
+          prev.map((s) =>
+            s.shortsId === shortsId ? { ...s, visibility: result.data!.visibility } : s,
+          ),
         )
         // 선택된 숏츠 상태도 업데이트
         if (selectedShorts?.shortsId === shortsId) {
-          setSelectedShorts((prev) => (prev ? { ...prev, status: result.data!.status } : prev))
+          setSelectedShorts((prev) =>
+            prev ? { ...prev, visibility: result.data!.visibility } : prev,
+          )
         }
         router.refresh()
       } else {
