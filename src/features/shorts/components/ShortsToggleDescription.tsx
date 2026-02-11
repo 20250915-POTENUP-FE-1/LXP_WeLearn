@@ -9,7 +9,6 @@ interface ShortsToggleDescriptionProps {
 
 export default function ShortsToggleDescription({ description }: ShortsToggleDescriptionProps) {
   const [isToggled, setIsToggled] = useState(false)
-  console.log(description)
   return (
     <div className="mt-3">
       <AnimatePresence>
