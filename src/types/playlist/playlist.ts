@@ -1,6 +1,6 @@
 import { Category } from '../category/category'
 import { Pageable } from '../shorts/shorts'
-import { ShortsVisibility } from '../shorts/status'
+import { ShortsStatus } from '../shorts/status'
 
 export type Visibility = 'PUBLIC' | 'PRIVATE'
 
@@ -104,7 +104,7 @@ export interface PlaylistShorts {
   videoUrl: string
   thumbnailUrl: string
   durationSec: number
-  status: ShortsVisibility
+  status: ShortsStatus
   // API 연동시 삭제 예정
   // PlaylistShorts에 uploader: PlaylistUploader로 변경
   uploader: PlaylistOwner

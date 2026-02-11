@@ -8,11 +8,11 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 import { Globe, Lock, Pencil, Trash2 } from 'lucide-react'
-import { ShortsVisibility } from '@/types/shorts/status'
+import { ShortsStatus } from '@/types/shorts/status'
 
 interface MyShortsDropdownMenuProps {
   shortsId: number // 수정 페이지 이동에 필요
-  shortsStatus: ShortsVisibility
+  shortsStatus: ShortsStatus
   onToggleVisibility?: () => void
   onDelete?: () => void
 }

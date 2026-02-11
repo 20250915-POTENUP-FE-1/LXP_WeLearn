@@ -99,7 +99,7 @@ export async function toggleShortsStatusAction(
   }
 
   try {
-    const newStatus = currentStatus === 'PUBLISHED' ? 'DRAFT' : 'PUBLISHED'
+    const newStatus = currentStatus === 'PUBLISHED' ? 'PENDING' : 'PUBLISHED'
     const response = await myShortsApi.updateShorts(shortsId, { status: newStatus })
     revalidatePath('/mypage/myshorts')
 
