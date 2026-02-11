@@ -16,13 +16,14 @@ import {
 } from '@dnd-kit/sortable'
 import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers'
 import { CSS } from '@dnd-kit/utilities'
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { clientApi } from '@/lib/utils/clientApiUtils'
 
 interface PlaylistCardProps {
   playlistId: number
   editMode: boolean
-  shortsList: PlaylistItems[] | null
+  shortsList: PlaylistItems[]
+  setShortsList: (value: PlaylistItems[] | ((prev: PlaylistItems[]) => PlaylistItems[])) => void
   handlePreview: (shorts: PlaylistItems) => void
   playlistOwner: PlaylistOwner
   selectedShorts: PlaylistItems | null
@@ -32,13 +33,15 @@ interface PlaylistCardProps {
 export default function PlaylistCard({
   playlistId,
   editMode,
-  shortsList,
+  shortsList: items,
+  setShortsList: setItems,
   handlePreview,
   playlistOwner,
   selectedShorts,
   setSelectedShorts,
 }: PlaylistCardProps) {
-  const [items, setItems] = useState(shortsList ?? [])
+  const router = useRouter()
+
   if (!items || items.length === 0) {
     return (
       <div className="flex h-full w-full items-center justify-center text-xl text-gray-500">
@@ -46,10 +49,10 @@ export default function PlaylistCard({
       </div>
     )
   }
+
   async function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
-    if (!over) return
-    if (active.id === over.id) return
+    if (!over || active.id === over.id) return
 
     const oldIndex = items.findIndex((i) => i.itemId === active.id)
     const newIndex = items.findIndex((i) => i.itemId === over.id)
@@ -57,10 +60,12 @@ export default function PlaylistCard({
 
     await clientApi.patch(`/api/v1/playlists/${playlistId}/items/reorder`, {
       data: { shortsId: activeItem?.shorts.shortsId, newIndex },
-      playlistId: playlistId,
+      playlistId,
     })
+
     const newItems = arrayMove(items, oldIndex, newIndex)
     setItems(newItems)
+    router.refresh()
   }
 
   return (
@@ -107,7 +112,7 @@ function SortablePlaylistItem({
   selectedShorts: PlaylistItems | null
   playlistOwner: PlaylistOwner
   playlistId: number
-  items: PlaylistItems[] | null
+  items: PlaylistItems[]
   handlePreview: (shorts: PlaylistItems) => void
   setItems: (value: PlaylistItems[] | ((prev: PlaylistItems[]) => PlaylistItems[])) => void
   setSelectedShorts: (value: PlaylistItems | null) => void
@@ -128,7 +133,13 @@ function SortablePlaylistItem({
       {...(editMode ? attributes : {})}
       {...(editMode ? listeners : {})}
       onClick={() => !editMode && handlePreview(short)}
-      className={`flex gap-4 rounded-lg border bg-white p-4 transition-shadow ${editMode ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer'} ${isDragging ? 'scale-[0.99] opacity-60 shadow-lg' : 'hover:shadow-md'} ${selectedShorts?.itemId === short.itemId ? 'border-green-500 ring-1 ring-green-500' : 'border-gray-200'} `}
+      className={`flex gap-4 rounded-lg border bg-white p-4 transition-shadow ${
+        editMode ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer'
+      } ${isDragging ? 'scale-[0.99] opacity-60 shadow-lg' : 'hover:shadow-md'} ${
+        selectedShorts?.itemId === short.itemId
+          ? 'border-green-500 ring-1 ring-green-500'
+          : 'border-gray-200'
+      } `}
     >
       {/* 드래그 아이콘 UI */}
       {editMode && (
