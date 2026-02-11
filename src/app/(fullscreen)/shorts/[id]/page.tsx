@@ -3,7 +3,6 @@ import ShortsContainer from '@/features/shorts/components/ShortsContainer'
 import { playlistApi } from '@/services/playlist/playlist.service'
 import { getShortsDetailList } from '@/services/shorts/getShortsDetailList'
 import { ShortsBase } from '@/types/shorts/shorts'
-import { PlaylistItems } from '@/types/playlist/playlist'
 import { mapPlaylistShortsToShortsBase } from '@/lib/utils/playlistToShorts'
 
 interface ShortDetailPageProps {
@@ -28,7 +27,7 @@ export default async function ShortformDetailPage({ params, searchParams }: Shor
   if (isPlaylist) {
     const res = await playlistApi.getPlaylistItem(Number(playlistId))
 
-    const playlistItems = res.data.items ?? []
+    const playlistItems = res.data.content ?? []
 
     const shortsList = mapPlaylistShortsToShortsBase(playlistItems)
 
@@ -45,7 +44,6 @@ export default async function ShortformDetailPage({ params, searchParams }: Shor
     }
   }
 
-  // ✅ Empty guard
   if (!data || data.shortsList.length === 0) {
     notFound()
   }
@@ -57,6 +55,7 @@ export default async function ShortformDetailPage({ params, searchParams }: Shor
         className="flex h-dvh w-full items-stretch md:h-full"
       >
         <ShortsContainer
+          playlistId={playlistId}
           shortsList={data.shortsList}
           initialIndex={data.initialIndex}
           isPlaylist={isPlaylist}

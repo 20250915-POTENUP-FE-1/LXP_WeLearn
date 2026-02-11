@@ -12,12 +12,22 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     )
   }
 
+  const { searchParams } = new URL(req.url)
+  const page = searchParams.get('page')
+  const size = searchParams.get('size')
+  const sort = searchParams.get('sort')
+
   try {
-    const response = await playlistApi.getPlaylistItem(playlistId)
+    const response = await playlistApi.getPlaylistItem(
+      playlistId,
+      page ? Number(page) : undefined,
+      size ? Number(size) : undefined,
+      sort ?? undefined,
+    )
 
     return NextResponse.json({
       success: true,
-      data: response,
+      data: response.data,
     })
   } catch (error) {
     return NextResponse.json({

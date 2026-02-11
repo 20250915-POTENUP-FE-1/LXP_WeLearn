@@ -11,24 +11,32 @@ import { usePathname, useRouter } from 'next/navigation'
 import ShortsCard from './ShortsCard'
 import { PageResponse, ShortsBase } from '@/types/shorts/shorts'
 import { clientApi } from '@/lib/utils/clientApiUtils'
-import { getShortsDetailList } from '@/services/shorts/getShortsDetailList'
 import { ApiResponse } from '@/types/api/api'
+import { PlaylistItems } from '@/types/playlist/playlist'
+import { mapPlaylistShortsToShortsBase } from '@/lib/utils/playlistToShorts'
 
 interface ShortsContainerProps {
   shortsList: ShortsBase[]
   initialIndex: number
   isPlaylist: boolean
+  playlistId: string | string[] | undefined
 }
 
 type SlideDirection = 'up' | 'down' | null
 
-export default function ShortsContainer({ shortsList, initialIndex }: ShortsContainerProps) {
+export default function ShortsContainer({
+  shortsList,
+  initialIndex,
+  isPlaylist,
+  playlistId,
+}: ShortsContainerProps) {
   const safeInitialIndex = getSafeIndex(initialIndex, shortsList.length)
   const [currentIndex, setCurrentIndex] = useState(safeInitialIndex)
   const [list, setList] = useState<ShortsBase[]>(shortsList)
   const [slideDirection, setSlideDirection] = useState<SlideDirection>(null)
   const [isAnimating, setIsAnimating] = useState(false)
   const [isFetching, setIsFetching] = useState(false)
+  const [page, setPage] = useState(0)
   const pathname = usePathname()
   const router = useRouter()
   const currentShorts = list[currentIndex] ?? null
@@ -50,17 +58,34 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
 
     setIsFetching(true)
 
-    const lastId = list[list.length - 1]?.shortsId
-    const res = await clientApi.get<ApiResponse<PageResponse<ShortsBase[]>>>(
-      `/api/v1/shorts/${lastId}`,
-    )
+    try {
+      if (isPlaylist) {
+        const res = await clientApi.get<ApiResponse<PageResponse<PlaylistItems[]>>>(
+          `/api/v1/playlists/${playlistId}?page=${page}&size=10`,
+        )
 
-    if (res.data.content) {
-      setList((prev) => [...prev, ...res.data.content])
+        const playlistItems = res.data.content ?? []
+        const shortsList = mapPlaylistShortsToShortsBase(playlistItems)
+
+        if (shortsList.length > 0) {
+          setList((prev) => [...prev, ...shortsList])
+          setPage((prev) => prev + 1)
+        }
+      } else {
+        const lastId = list[list.length - 1]?.shortsId
+
+        const res = await clientApi.get<ApiResponse<PageResponse<ShortsBase[]>>>(
+          `/api/v1/shorts?lastId=${lastId}&size=10`,
+        )
+
+        if (res.data.content?.length) {
+          setList((prev) => [...prev, ...res.data.content])
+        }
+      }
+    } finally {
+      setIsFetching(false)
     }
-
-    setIsFetching(false)
-  }, [list, isFetching])
+  }, [list, isFetching, page, isPlaylist, playlistId])
 
   useEffect(() => {
     const remain = list.length - currentIndex - 1
