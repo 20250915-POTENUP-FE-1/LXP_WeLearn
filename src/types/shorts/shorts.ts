@@ -42,6 +42,7 @@ export interface ShortsBase {
   userNickname: string
   userProfileUrl: string | null
   status: ShortsStatus
+  shortsStatusDescription?: string | null
   visibility: ShortsVisibility
 
   isLiked: boolean
@@ -122,10 +123,10 @@ export interface ShortsUploadStatus {
   videoUrl?: string
   thumbnailUrl?: string
   durationSec?: number
-  reviewComment?: string | null
   uploadedAt: string
   completedAt?: string
   errorMessage?: string | null
+  shortsStatusDescription?: string | null
 }
 
 /* =========================

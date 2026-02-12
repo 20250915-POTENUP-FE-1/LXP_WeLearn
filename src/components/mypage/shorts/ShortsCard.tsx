@@ -10,7 +10,6 @@ import ShortsStatusBadge from './ShortsStatusBadge'
 import { timeAgo } from '@/utils/timeAgo'
 import { ShortsBase } from '@/types/shorts/shorts'
 import { Button } from '@/components/ui/Button'
-import { div } from 'framer-motion/client'
 
 interface ShortsCardProps {
   shorts: ShortsBase
@@ -64,10 +63,16 @@ export default function ShortsCard({
               <Ban size={30} className="text-red-600" />
               <span className="text-md pl-3 font-bold text-red-600">
                 검토 결과 반려되었습니다. <br />
-                {/* {shorts.reviewComment || '삭제 후 다시 업로드 해주세요.'} */}
+                {shorts.shortsStatusDescription || '삭제 후 다시 업로드 해주세요.'}
               </span>
             </div>
-            <Button className="rounded-md bg-red-600 px-3 py-1 text-sm text-white hover:bg-red-500">
+            <Button
+              onClick={(e) => {
+                e.stopPropagation()
+                onDelete?.()
+              }}
+              className="rounded-md bg-red-600 px-3 py-1 text-sm text-white hover:bg-red-500"
+            >
               삭제하기
             </Button>
           </div>
