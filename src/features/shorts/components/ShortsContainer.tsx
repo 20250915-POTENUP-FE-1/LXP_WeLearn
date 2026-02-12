@@ -74,7 +74,6 @@ export default function ShortsContainer({
           setPage((prev) => prev + 1)
         }
       } else {
-        console.log('------------새 요청')
         const lastId = list[list.length - 1]?.shortsId
 
         const res = await clientApi.get<ApiResponse<PageResponse<ShortsBase[]>>>(
@@ -83,11 +82,9 @@ export default function ShortsContainer({
 
         if (res.data.content?.length) {
           setList((prev) => [...prev, ...res.data.content])
-          console.log(res.data.content)
         }
       }
     } finally {
-      console.log(list)
       setIsFetching(false)
     }
   }, [isFetching, page, isPlaylist, playlistId, totalElements, list.length])

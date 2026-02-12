@@ -57,7 +57,6 @@ export const playlistApi = {
         cache: 'no-store',
       },
     )
-    console.log(response)
     return response
   },
 
