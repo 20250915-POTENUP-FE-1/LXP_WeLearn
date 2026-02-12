@@ -90,6 +90,7 @@ export default function CommentList({
     setOpenReplyInput(openReplyInput === id ? null : id)
     setOpenReply(id)
   }
+  console.log(comments)
 
   return (
     <>
@@ -105,8 +106,9 @@ export default function CommentList({
                 <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-600">
                   {comment.writer.profileImageUrl ? (
                     <Image
-                      src={comment.writer.profileImageUrl}
+                      src={`/${comment.writer.profileImageUrl}`}
                       alt={comment.writer.nickname}
+                      fill
                       className="h-8 w-8 rounded-full object-cover"
                     />
                   ) : (
