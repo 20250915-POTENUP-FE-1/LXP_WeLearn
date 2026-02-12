@@ -1,16 +1,16 @@
 import PlaylistSection from '@/features/home/playlist/PlaylistSection'
-import { getShortPopular } from '@/services/shorts/getShortPopular'
 import { categoryApi } from '@/services/category/category.service'
 import CategoryShortsSection from '@/features/home/categories/CategoryShortsSection'
 import ShortsCarousel from '@/features/home/ShortsCarousel/ShortsCarousel'
 import { ShortsBase } from '@/types/shorts/shorts'
 import { playlistApi } from '@/services/playlist/playlist.service'
+import { shortsApi } from '@/services/shorts/shorts.service'
 
 export default async function Page() {
   // api 호출 (초기 로드: 전체 숏츠)
   const [popularShorts, categoryShortsResponse, categoriesResponse, playlistResponse] =
     await Promise.all([
-      getShortPopular(),
+      shortsApi.getShortPopular({}),
       categoryApi.getAllShorts({ sort: 'createdAt,desc' }), // 전체 숏츠 목록(최신순 기본값)
       categoryApi.getAllCategoryId(), // 카테고리 항목 목록
       playlistApi.getPublicPlaylist({}),

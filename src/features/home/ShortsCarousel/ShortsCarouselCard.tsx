@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useVideoPreview } from '@/hook/useVideoPreview'
 import { ShortsBase } from '@/types/shorts/shorts'
+import { Eye, Heart } from 'lucide-react'
 
 export default function ShortsCarouselCard({ item }: { item: ShortsBase }) {
   const { videoRef, handleMouseEnter, handleMouseLeave, handleLoadedData } = useVideoPreview({
@@ -41,7 +42,7 @@ export default function ShortsCarouselCard({ item }: { item: ShortsBase }) {
             <div className="absolute inset-0 h-full w-full bg-linear-to-br from-gray-200 to-gray-300" />
           )}
 
-          {/* 상단 배지 */}
+          {/* 상단 배지 - 좌: 카테고리 */}
           <div className="pointer-events-none absolute inset-x-0 top-0 z-10 pt-1.5 pl-4">
             {item.categoryName && (
               <span className="rounded-full bg-black/55 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur">
@@ -49,20 +50,32 @@ export default function ShortsCarouselCard({ item }: { item: ShortsBase }) {
               </span>
             )}
           </div>
+          {/* 상단 배지 - 우:키워드 */}
+          <div className="flex items-center justify-between text-[11px] text-gray-300">
+            {item.keywords?.[0] && (
+              <span className="rounded-full border border-white/25 px-2 py-0.5 text-[10px] text-gray-100">
+                #{item.keywords[0]}
+              </span>
+            )}
+          </div>
 
           {/* 하단 그라데이션 + 텍스트 */}
           <div className="absolute inset-x-0 bottom-0 z-10 bg-linear-to-t from-black/85 via-black/50 to-transparent p-4">
             <p className="mb-1 line-clamp-2 text-sm font-semibold text-white">{item.title}</p>
-            <p className="mb-2 line-clamp-2 h-[3.22em] text-[11px] text-gray-200">
-              {item.description}
-            </p>
+            <p className="mb-2 line-clamp-2 h-8 text-[11px] text-gray-200">{item.description}</p>
             <div className="flex items-center justify-between text-[11px] text-gray-300">
               <span className="font-medium">{item.userNickname ?? '숏터'}</span>
-              {item.keywords?.[0] && (
-                <span className="rounded-full border border-white/25 px-2 py-0.5 text-[10px] text-gray-100">
-                  #{item.keywords[0]}
-                </span>
-              )}
+              <div className="flex items-center gap-2">
+                <div className="flex flex-row items-center gap-1">
+                  <Eye size={12} />
+                  <span>{item.viewCount}</span>
+                </div>
+
+                <div className="flex flex-row items-center gap-1">
+                  <Heart size={12} />
+                  <span>{item.likeCount}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
