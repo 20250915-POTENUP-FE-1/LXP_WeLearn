@@ -51,11 +51,11 @@ export default function ProfileInfoSection({ user }: ProfileInfoSectionProps) {
   return (
     <>
       <div className="flex min-h-10 items-center justify-center border-b border-gray-200 py-4">
-        <label className="text-sm font-medium text-gray-700">닉네임</label>
+        <label className="gap w-15 text-sm font-medium text-gray-700">닉네임</label>
         <input
           value={nickName}
           type="text"
-          className="h-8 w-full flex-1 rounded-lg px-10 text-sm transition-all md:w-lg"
+          className="h-8 w-full flex-1 rounded-lg px-3 text-sm transition-all md:w-lg"
           onChange={handleNicknameChange}
         />
         <button
@@ -66,11 +66,11 @@ export default function ProfileInfoSection({ user }: ProfileInfoSectionProps) {
         </button>
       </div>
       <div className="flex min-h-10 items-center justify-center border-b border-gray-200 py-4">
-        <label className="text-sm font-medium text-gray-700">이메일</label>
+        <label className="w-15 text-sm font-medium text-gray-700">이메일</label>
         <input
           value={email}
           type="email"
-          className="h-8 w-full flex-1 rounded-lg px-10 text-sm transition-all md:w-lg"
+          className="h-8 w-full flex-1 rounded-lg px-3 text-sm transition-all md:w-lg"
           onChange={handleEmailChange}
         />
         <button
