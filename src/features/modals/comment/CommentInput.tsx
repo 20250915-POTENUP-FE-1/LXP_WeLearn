@@ -40,8 +40,9 @@ export default function CommentInput({ shortsId, setIsUpdate }: CommentInputProp
           <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-600">
             {user?.profileUrl ? (
               <Image
-                src={user.profileUrl}
+                src={`/${user.profileUrl}`}
                 alt={user.nickName}
+                fill
                 className="h-8 w-8 rounded-full object-cover"
               />
             ) : (

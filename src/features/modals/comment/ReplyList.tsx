@@ -76,8 +76,9 @@ export default function ReComment({
                         <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-600">
                           {reply.writer.profileImageUrl ? (
                             <Image
-                              src={reply.writer.profileImageUrl}
+                              src={`/${reply.writer.profileImageUrl}`}
                               alt={reply.writer.nickname}
+                              fill
                               className="h-8 w-8 rounded-full object-cover"
                             />
                           ) : (

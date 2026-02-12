@@ -1,14 +1,16 @@
 'use client'
 
-import { ListPlus, MessageSquareText, Send, Share2 } from 'lucide-react'
+import { ListPlus, MessageSquareText, Share2 } from 'lucide-react'
 import { toast } from 'react-toastify'
 import { usePathname, useRouter } from 'next/navigation'
 import { ShortsLikeButton } from './ShortsLikeButton'
+
 interface ShortsActionBarProps {
   shortsId: number
   likeCount: number
   commentCount?: number
   isLiked?: boolean
+  handleToggleLike: (shortsId: number) => void
 }
 
 export default function ShortsActionBar({
@@ -16,6 +18,7 @@ export default function ShortsActionBar({
   likeCount,
   commentCount,
   isLiked,
+  handleToggleLike,
 }: ShortsActionBarProps) {
   const router = useRouter()
   const pathname = usePathname()
@@ -47,10 +50,14 @@ export default function ShortsActionBar({
   return (
     <aside className="absolute right-5 bottom-20 flex flex-col items-center gap-6">
       {/* 좋아요 */}
-      <ShortsLikeButton initialLikeCount={likeCount} shortsId={shortsId} initialIsLike={isLiked} />
+      <ShortsLikeButton
+        shortsId={shortsId}
+        isLiked={isLiked ?? false}
+        likeCount={likeCount}
+        handleToggleLike={handleToggleLike}
+      />
 
       {/* 댓글 */}
-
       <button
         aria-label="댓글 보기"
         className="flex cursor-pointer flex-col items-center text-white hover:text-gray-300"
@@ -79,7 +86,6 @@ export default function ShortsActionBar({
         type="button"
         onClick={() => handleComingSoon('공유')}
       >
-        {/* <Send strokeWidth={1.5} /> */}
         <Share2 strokeWidth={1.5} />
         <span className="mt-1 text-xs">공유</span>
       </button>

@@ -1,45 +1,23 @@
 'use client'
 
-import { useThrottle } from '@/hook/useThrottle'
-import { clientApi } from '@/lib/utils/clientApiUtils'
-import { useAuth } from '@/shared/store/auth/auth.store'
-import { ApiResponse } from '@/types/api/api'
-import { ResponseLike } from '@/types/shorts/like'
 import { Heart } from 'lucide-react'
-import { useState } from 'react'
+import { useAuth } from '@/shared/store/auth/auth.store'
 import { toast } from 'react-toastify'
 
 interface ShortsLikeButtonProps {
-  initialLikeCount: number // 초기 좋아요 수
-  initialIsLike?: boolean // 기본값은 false
   shortsId: number
+  isLiked: boolean
+  likeCount: number
+  handleToggleLike: (shortsId: number) => void
 }
 
 export function ShortsLikeButton({
-  initialLikeCount,
-  initialIsLike,
   shortsId,
+  isLiked,
+  likeCount,
+  handleToggleLike,
 }: ShortsLikeButtonProps) {
-  const [isLike, setIsLike] = useState(initialIsLike)
-  const [likeCount, setLikeCount] = useState(initialLikeCount)
   const isLoggedIn = useAuth((state) => state.isLogin)
-
-  const sendLike = useThrottle(async () => {
-    try {
-      const response = await clientApi.post<ApiResponse<ResponseLike>>(
-        `/api/v1/shorts/${shortsId}/likes`,
-        {
-          shortsId: shortsId,
-        },
-      )
-
-      toast.success(`좋아요 ${response.data.isLiked === false ? '취소' : ''} 성공`)
-      setIsLike(response.data.isLiked)
-      setLikeCount(response.data.likeCount)
-    } catch (error) {
-      toast.error('좋아요 기능 사용 중 오류가 발생했습니다.')
-    }
-  }, 300)
 
   const handleLike = () => {
     if (!isLoggedIn) {
@@ -47,7 +25,7 @@ export function ShortsLikeButton({
       return
     }
 
-    sendLike()
+    handleToggleLike(shortsId)
   }
 
   return (
@@ -59,8 +37,8 @@ export function ShortsLikeButton({
     >
       <Heart
         strokeWidth={1.5}
-        fill={isLike ? 'currentColor' : 'none'}
-        className={isLike ? 'text-red-500' : ''}
+        fill={isLiked ? 'currentColor' : 'none'}
+        className={isLiked ? 'text-red-500' : ''}
       />
       <span className="mt-1 text-xs">{likeCount}</span>
     </button>

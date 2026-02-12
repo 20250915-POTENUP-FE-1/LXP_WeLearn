@@ -57,7 +57,9 @@ export default function PlaylistPreview({ playlistItem, selectedShorts }: Playli
                 className="object-cover"
               />
             ) : (
-              <div className="absolute inset-0 bg-gray-500" />
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-500 text-white">
+                선택된 쇼츠가 없습니다.
+              </div>
             )}
           </div>
 
@@ -77,7 +79,7 @@ export default function PlaylistPreview({ playlistItem, selectedShorts }: Playli
                 )}
               </div>
               <span className="text-md font-medium text-gray-200">
-                {selectedShorts?.shorts.uploader.nickname ?? '숏터'}
+                {selectedShorts ? selectedShorts?.shorts.uploader.nickname : ''}
               </span>
             </div>
             <h3 className="mb-2 line-clamp-2 text-[18px] leading-snug font-semibold text-white">

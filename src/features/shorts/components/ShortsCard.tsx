@@ -7,21 +7,19 @@ import { ShortsBase } from '@/types/shorts/shorts'
 interface ShortsCardProps {
   shorts: ShortsBase
   userProfileUrl?: string | null
+  handleToggleLike: (shortsId: number) => void
 }
 
-export default function ShortsCard({ shorts, userProfileUrl }: ShortsCardProps) {
+export default function ShortsCard({ shorts, userProfileUrl, handleToggleLike }: ShortsCardProps) {
   const profileUrl = userProfileUrl || shorts.userProfileUrl || DEFAULT_IMAGES.AVATAR
 
   return (
     <div className="relative h-dvh w-full overflow-hidden md:h-full">
-      {/* 영상 플레이어  */}
       <div className="absolute inset-0">
         <ShortsPlayer videoUrl={shorts.videoUrl} thumbnailUrl={shorts.thumbnailUrl} />
       </div>
 
-      {/* 오버레이 컨텐츠 */}
       <div className="pointer-events-none absolute inset-0 flex flex-col justify-end">
-        {/* 업로더 정보  */}
         <div className="pointer-events-auto w-full bg-linear-to-t from-black/80 to-transparent">
           <ShortsCreateInfo
             uploader={{
@@ -34,13 +32,13 @@ export default function ShortsCard({ shorts, userProfileUrl }: ShortsCardProps) 
           />
         </div>
 
-        {/* 액션 버튼 - 하단 우측 정렬 */}
         <div className="pointer-events-auto mr-2 self-end">
           <ShortsActionBar
             shortsId={shorts.shortsId}
             likeCount={shorts.likeCount}
             commentCount={shorts.commentCount}
             isLiked={shorts.isLiked}
+            handleToggleLike={handleToggleLike}
           />
         </div>
       </div>

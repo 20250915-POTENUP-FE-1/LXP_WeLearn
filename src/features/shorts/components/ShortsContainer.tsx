@@ -169,6 +169,37 @@ export default function ShortsContainer({
     }),
   }
 
+  const handleToggleLike = async (shortsId: number) => {
+    // 1️⃣ Optimistic Update
+    setList((prev) =>
+      prev.map((short) =>
+        short.shortsId === shortsId
+          ? {
+              ...short,
+              isLiked: !short.isLiked,
+              likeCount: short.isLiked ? short.likeCount - 1 : short.likeCount + 1,
+            }
+          : short,
+      ),
+    )
+
+    try {
+      await clientApi.post(`/api/v1/shorts/${shortsId}/likes`)
+    } catch {
+      setList((prev) =>
+        prev.map((short) =>
+          short.shortsId === shortsId
+            ? {
+                ...short,
+                isLiked: !short.isLiked,
+                likeCount: short.isLiked ? short.likeCount - 1 : short.likeCount + 1,
+              }
+            : short,
+        ),
+      )
+    }
+  }
+
   return (
     <div className="flex h-dvh w-full items-center justify-center gap-4 md:h-full">
       {/* 메인 숏폼 영역 */}
@@ -203,7 +234,7 @@ export default function ShortsContainer({
               }}
               className="h-full w-full cursor-grab overflow-y-hidden active:cursor-grabbing"
             >
-              <ShortsCard shorts={currentShorts} />
+              <ShortsCard shorts={currentShorts} handleToggleLike={handleToggleLike} />
             </motion.div>
           </AnimatePresence>
         </div>
