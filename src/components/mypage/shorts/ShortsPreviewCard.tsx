@@ -30,8 +30,7 @@ export function ShortsPreviewCard({
       </div>
     )
   }
-  // console.log('유저 프로필 url', shorts.userProfileUrl)
-  console.log('숏츠', shorts)
+
   const rawProfileUrl = shorts.userProfileUrl || DEFAULT_IMAGES.AVATAR
   const profileUrl =
     rawProfileUrl && !rawProfileUrl.startsWith('http') && !rawProfileUrl.startsWith('/')
