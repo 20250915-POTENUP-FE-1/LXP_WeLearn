@@ -1,21 +1,25 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Eye, MoreHorizontal, View } from 'lucide-react'
+import { MoreHorizontal } from 'lucide-react'
 import ShortsCardThumbnail from './ShortsCardThumbnail'
 import { DEFAULT_IMAGES } from '@/constants/shortsImages'
 import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import MyShortsDropdownMenu from '@/features/mypage/myshorts/MyShortsDropdownMenu'
+import LikeShortsDropdownMenu from '@/features/mypage/likes/LikeShortsDropdownMenu'
 import ShortsStatusBadge from './ShortsStatusBadge'
 import { timeAgo } from '@/utils/timeAgo'
 import { ShortsBase } from '@/types/shorts/shorts'
 
+type ModeType = 'LIKE_SHORTS' | 'MY_SHORTS'
 interface ShortsCardProps {
   shorts: ShortsBase
   isSelected?: boolean
   onSelect?: () => void
   onToggleVisibility?: () => void
   onDelete?: () => void
+  onLikeDelete?: () => void
+  mode: ModeType
 }
 
 export default function ShortsCard({
@@ -24,6 +28,8 @@ export default function ShortsCard({
   onSelect,
   onToggleVisibility,
   onDelete,
+  onLikeDelete,
+  mode,
 }: ShortsCardProps) {
   const [timeAgoText, setTimeAgoText] = useState<string>('')
 
@@ -40,13 +46,11 @@ export default function ShortsCard({
         isSelected ? 'border-green-500 ring-1 ring-green-500' : 'rounded-lg border-gray-200'
       }`}
     >
-      {/* 썸네일 */}
       <ShortsCardThumbnail
         thumbnailUrl={shorts.thumbnailUrl || DEFAULT_IMAGES.THUMBNAIL}
         shorts={shorts}
       />
 
-      {/* 콘텐츠 */}
       <div className="flex min-w-0 flex-1 flex-col p-2 lg:p-4">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 flex-1">
@@ -55,14 +59,12 @@ export default function ShortsCard({
             <h3 className="pt-1 text-lg font-bold text-gray-900">{shorts.title}</h3>
             <p className="my-1 line-clamp-1 text-sm text-gray-700">{shorts.description}</p>
 
-            {/* 닉네임 · 조회수 · 등록일 */}
             <p className="mt-2 mb-4 text-sm text-gray-500">
               {shorts.userNickname ?? '숏터'} · 조회수 {shorts.viewCount}회
               {timeAgoText && ` · ${timeAgoText}`}
             </p>
           </div>
 
-          {/* 더보기 드롭다운 메뉴 */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
@@ -72,17 +74,23 @@ export default function ShortsCard({
                 <MoreHorizontal size={18} className="text-black" />
               </button>
             </DropdownMenuTrigger>
-            <MyShortsDropdownMenu
-              shortsId={shorts.shortsId!}
-              visibility={shorts.visibility}
-              onToggleVisibility={onToggleVisibility}
-              onDelete={onDelete}
-            />
+            {mode === 'LIKE_SHORTS' ? (
+              <LikeShortsDropdownMenu
+                // handleSaveToPlaylist={handleSaveToPlaylist}
+                onLikeDelete={onLikeDelete}
+              />
+            ) : (
+              <MyShortsDropdownMenu
+                shortsId={shorts.shortsId!}
+                visibility={shorts.visibility}
+                onToggleVisibility={onToggleVisibility}
+                onDelete={onDelete}
+              />
+            )}
           </DropdownMenu>
         </div>
 
         <div className="mt-auto flex flex-wrap items-center gap-2">
-          {/* 키워드 표시 */}
           {shorts.keywords?.map((keyword: string, index: number) => (
             <span key={index} className="px-1 py-1 text-xs text-gray-900">
               #{keyword}

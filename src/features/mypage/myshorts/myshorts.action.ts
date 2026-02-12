@@ -77,6 +77,7 @@ export async function deleteShortsAction(shortsId: number): Promise<ActionState>
       message: '숏츠가 삭제되었습니다.',
     }
   } catch (error) {
+    console.log(error)
     return {
       success: false,
       message: error instanceof Error ? error.message : '숏츠 삭제 실패',

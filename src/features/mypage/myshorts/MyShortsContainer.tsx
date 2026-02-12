@@ -68,7 +68,6 @@ export default function MyShortsContainer({ initialShorts, totalCount }: MyShort
 
     try {
       const result = await deleteShortsAction(shortsId)
-
       if (result.success) {
         toast.success(result.message || '숏츠가 삭제되었습니다.')
         // 목록에서 삭제된 항목 제거
@@ -122,6 +121,7 @@ export default function MyShortsContainer({ initialShorts, totalCount }: MyShort
                     handleToggleVisibility(shorts.shortsId, shorts.visibility)
                   }
                   onDelete={() => handleDelete(shorts.shortsId)}
+                  mode="MY_SHORTS"
                 />
               ))
             ) : (

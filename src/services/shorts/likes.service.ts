@@ -5,7 +5,6 @@ import { PageRequest, PageResponse, ShortsBase } from '@/types/shorts/shorts'
 export const likeApi = {
   like: async (shortsId: number) => {
     const response = await api.post<ApiResponse>(`/api/v1/shorts/${shortsId}/likes`)
-
     return response
   },
 
@@ -16,7 +15,6 @@ export const likeApi = {
     const response = await api.get<ApiResponse<PageResponse<ShortsBase[]>>>(
       `/api/v1/me/likes/shorts?page=${page}&size=${size}`,
     )
-    // console.log('좋아요 숏츠 응답:', JSON.stringify(response.data, null, 2))
     return response.data
   },
 }
