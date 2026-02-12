@@ -63,8 +63,8 @@ export default function ShortsCard({
             <div className="flex flex-row items-center gap-2 px-4 py-2">
               <Ban size={30} className="text-red-600" />
               <span className="text-md pl-3 font-bold text-red-600">
-                검토 결과 반려되었습니다. <br />{' '}
-                {shorts.reviewComment || '삭제 후 다시 업로드 해주세요.'}
+                검토 결과 반려되었습니다. <br />
+                {/* {shorts.reviewComment || '삭제 후 다시 업로드 해주세요.'} */}
               </span>
             </div>
             <Button className="rounded-md bg-red-600 px-3 py-1 text-sm text-white hover:bg-red-500">
