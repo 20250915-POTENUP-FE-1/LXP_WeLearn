@@ -5,7 +5,7 @@ import CreatePlaylistFormInput from './CreatePlaylistFormInput'
 import CreatePlaylistFormSubmitBtn from './CreatePlaylistFormSubmitBtn'
 import { createPlaylistAction } from './action'
 import { toast } from 'react-toastify'
-import { PlaylistInfo } from '@/types/playlist/playlist'
+import { PlaylistItems } from '@/types/playlist/playlist'
 import { usePlaylist } from '@/shared/store/playlist/playlist.store'
 
 interface CratePlaylistFormProps {
@@ -21,7 +21,7 @@ export default function CreatePlaylistForm({ handleActiveTab, shortsId }: CrateP
     {
       success: false,
       message: '',
-      data: {} as PlaylistInfo,
+      data: {} as PlaylistItems,
     },
   )
 

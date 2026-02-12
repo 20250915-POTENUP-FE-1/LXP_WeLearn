@@ -1,19 +1,20 @@
 'use server'
-import { revalidatePath } from 'next/cache'
 import { shortsApi } from './shorts.service'
 import { ShortsBase } from '@/types/shorts/shorts'
 
 export interface ShortsListProps {
   shortsList: ShortsBase[]
   initialIndex: number
+  totalElement: number
 }
 
 export async function getShortsDetailList(startId: string): Promise<ShortsListProps | null> {
   try {
     // 1: API 호출 (shortsApi.shortsDetailList 유지)
     // response 타입을 any로 지정하여 기존의 복잡한 조건 검사 로직이 에러 없이 작동하게 합니다.
-    const response: any = await shortsApi.shortsDetailList({ page: 0, size: 100 })
+    const response = await shortsApi.shortsDetailList({ page: 0, size: 100 })
 
+    const totalElement = response.data.totalElements
     // 2: 페이징 응답에서 실제 배열 추출 (기존 로직 유지)
     let allShorts: ShortsBase[] = []
 
@@ -30,8 +31,8 @@ export async function getShortsDetailList(startId: string): Promise<ShortsListPr
       allShorts = response
     }
     // 만약 apiUtils가 data 래퍼를 벗겨서 content만 줬을 경우를 대비한 추가 방어코드
-    else if (Array.isArray(response?.content)) {
-      allShorts = response.content
+    else if (Array.isArray(response.data.content)) {
+      allShorts = response.data.content
     } else {
       console.error('예상치 못한 API 응답 형식:', response)
       return null
@@ -66,6 +67,7 @@ export async function getShortsDetailList(startId: string): Promise<ShortsListPr
     return {
       shortsList,
       initialIndex,
+      totalElement,
     }
   } catch (error) {
     console.error('shorts 목록 불러오기 실패:', error)

@@ -7,8 +7,8 @@ import { ShortsLikeButton } from './ShortsLikeButton'
 interface ShortsActionBarProps {
   shortsId: number
   likeCount: number
-  commentCount: number
-  isLiked: boolean
+  commentCount?: number
+  isLiked?: boolean
 }
 
 export default function ShortsActionBar({

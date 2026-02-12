@@ -1,4 +1,4 @@
-import { PlaylistItem } from '@/types/playlist/playlist'
+import { PlaylistItems } from '@/types/playlist/playlist'
 import { PlaylistState } from '@/types/store/playlistStore'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
@@ -10,7 +10,7 @@ export const usePlaylist = create<PlaylistState>()(
       hasHydrated: false,
 
       login: (playlist) => set({ playlist: playlist }),
-      setPlaylist: (playlist: PlaylistItem | undefined) =>
+      setPlaylist: (playlist: PlaylistItems | undefined) =>
         set((state) => ({ ...state, playlist: playlist })),
       setHasHydrated: () => set({ hasHydrated: true }),
     }),

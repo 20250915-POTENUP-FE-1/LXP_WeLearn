@@ -1,9 +1,9 @@
-import { PlaylistItem } from '../playlist/playlist'
+import { PlaylistItems } from '../playlist/playlist'
 
 export interface PlaylistState {
-  playlist: PlaylistItem | null
+  playlist: PlaylistItems | null
   hasHydrated: boolean
-  login: (user: PlaylistItem) => void
-  setPlaylist: (playlist: PlaylistItem) => void
+  login: (user: PlaylistItems) => void
+  setPlaylist: (playlist: PlaylistItems) => void
   setHasHydrated: () => void
 }

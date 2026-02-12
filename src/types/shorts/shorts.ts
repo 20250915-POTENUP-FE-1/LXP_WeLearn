@@ -136,6 +136,12 @@ export interface ShortsRecommendation {
   shortsId: number
   title: string
   thumbnailUrl: string
+  uploaderNickname: string
+  categoryName: string
+  viewCount: number
+  likeCount: number
+  keywords: string[]
+  durationSec: number
   similarity: number
 }
 

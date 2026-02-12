@@ -9,27 +9,43 @@ import { useDragNavigation } from '@/hook/useDragNavigation'
 import { useScrollNavigation } from '@/hook/useScrollNavigation'
 import { usePathname, useRouter } from 'next/navigation'
 import ShortsCard from './ShortsCard'
-import { ShortsBase } from '@/types/shorts/shorts'
+import { PageResponse, ShortsBase } from '@/types/shorts/shorts'
+import { clientApi } from '@/lib/utils/clientApiUtils'
+import { ApiResponse } from '@/types/api/api'
+import { PlaylistItems } from '@/types/playlist/playlist'
+import { mapPlaylistShortsToShortsBase } from '@/lib/utils/playlistToShorts'
 
 interface ShortsContainerProps {
   shortsList: ShortsBase[]
   initialIndex: number
+  isPlaylist: boolean
+  playlistId: string | string[] | undefined
+  totalElements?: number
 }
 
 type SlideDirection = 'up' | 'down' | null
 
-export default function ShortsContainer({ shortsList, initialIndex }: ShortsContainerProps) {
+export default function ShortsContainer({
+  shortsList,
+  initialIndex,
+  isPlaylist,
+  playlistId,
+  totalElements,
+}: ShortsContainerProps) {
   const safeInitialIndex = getSafeIndex(initialIndex, shortsList.length)
   const [currentIndex, setCurrentIndex] = useState(safeInitialIndex)
+  const [list, setList] = useState<ShortsBase[]>(shortsList)
   const [slideDirection, setSlideDirection] = useState<SlideDirection>(null)
   const [isAnimating, setIsAnimating] = useState(false)
+  const [isFetching, setIsFetching] = useState(false)
+  const [page, setPage] = useState(0)
   const pathname = usePathname()
   const router = useRouter()
-
-  const currentShorts = shortsList[currentIndex] ?? null
+  const currentShorts = list[currentIndex] ?? null
   const hasPrev = currentIndex > 0
-  const hasNext = currentIndex < shortsList.length - 1
+  const hasNext = currentIndex < list.length - 1
 
+  console.log(list)
   // 현재 숏폼이 바뀔 때 URL 동기화 (/shorts/:shortsId)
   useEffect(() => {
     if (!currentShorts) return
@@ -40,28 +56,51 @@ export default function ShortsContainer({ shortsList, initialIndex }: ShortsCont
   }, [currentShorts?.shortsId])
 
   // // 무한 스크롤
-  // const fetchMore = useCallback(async () => {
-  //   if (isFetching) return
+  const fetchMore = useCallback(async () => {
+    if (isFetching) return
+    if (totalElements != null && list.length >= totalElements) return
 
-  //   setIsFetching(true)
+    setIsFetching(true)
 
-  //   const lastId = list[list.length - 1]?.shortsId
-  //   const res = await getShortsDetailList(String(lastId))
+    try {
+      if (isPlaylist) {
+        const res = await clientApi.get<ApiResponse<PageResponse<PlaylistItems[]>>>(
+          `/api/v1/playlists/${playlistId}?page=${page}&size=10`,
+        )
 
-  //   if (res?.shortsList?.length) {
-  //     setList((prev) => [...prev, ...res.shortsList])
-  //   }
+        const playlistItems = res.data.content ?? []
+        const shortsList = mapPlaylistShortsToShortsBase(playlistItems)
 
-  //   setIsFetching(false)
-  // }, [list, isFetching])
+        if (shortsList.length > 0) {
+          setList((prev) => [...prev, ...shortsList])
+          setPage((prev) => prev + 1)
+        }
+      } else {
+        const lastId = list[list.length - 1]?.shortsId
 
-  // useEffect(() => {
-  //   const remain = list.length - currentIndex - 1
+        const res = await clientApi.get<ApiResponse<PageResponse<ShortsBase[]>>>(
+          `/api/v1/shorts?lastId=${lastId}&size=10`,
+        )
 
-  //   if (remain <= 2) {
-  //     fetchMore()
-  //   }
-  // }, [currentIndex, list.length, fetchMore])
+        if (res.data.content?.length) {
+          setList((prev) => [...prev, ...res.data.content])
+        }
+      }
+    } finally {
+      setIsFetching(false)
+    }
+  }, [isFetching, page, isPlaylist, playlistId, totalElements, list.length])
+
+  useEffect(() => {
+    if (totalElements == null) return
+
+    const remain = list.length - currentIndex - 1
+    const isLastPage = list.length >= totalElements
+
+    if (remain <= 2 && !isLastPage && !isFetching) {
+      fetchMore()
+    }
+  }, [currentIndex, list.length, totalElements, isFetching, fetchMore])
 
   /**
    * 이전/다음 숏폼으로 이동

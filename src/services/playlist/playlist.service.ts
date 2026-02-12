@@ -9,8 +9,9 @@ import {
   PatchPlaylistMeta,
   PlaylistMetaDataResponse,
   ReorderPlaylist,
+  PlaylistItems,
 } from '@/types/playlist/playlist'
-import { PageRequest } from '@/types/shorts/shorts'
+import { PageRequest, PageResponse } from '@/types/shorts/shorts'
 
 export const playlistApi = {
   // * GET
@@ -36,11 +37,26 @@ export const playlistApi = {
   },
 
   // 플레이리스트 상세 조회
-  getPlaylistItem: async (playlistId: number): Promise<ApiResponse<PlaylistInfo>> => {
-    const response = await api.get<ApiResponse<PlaylistInfo>>(`/api/v1/playlists/${playlistId}`, {
-      cache: 'no-store',
-    })
+  getPlaylistItem: async (
+    playlistId: number,
+    page?: number,
+    size?: number,
+    sort?: string,
+  ): Promise<ApiResponse<PlaylistInfo>> => {
+    const params = new URLSearchParams()
 
+    if (page !== undefined) params.set('page', String(page))
+    if (size !== undefined) params.set('size', String(size))
+    if (sort !== undefined) params.set('sort', sort)
+
+    const query = params.toString()
+
+    const response = await api.get<ApiResponse<PlaylistInfo>>(
+      `/api/v1/playlists/${playlistId}${query ? `?${query}` : ''}`,
+      {
+        cache: 'no-store',
+      },
+    )
     return response
   },
 

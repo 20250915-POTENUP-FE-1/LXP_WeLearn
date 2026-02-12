@@ -115,7 +115,10 @@ export default function PlaylistPreview({ playlistItem, selectedShorts }: Playli
         </div>
 
         {/* 재생 버튼 */}
-        <Link href="/mypage/likes" className="group w-full md:w-90">
+        <Link
+          href={`/shorts/${selectedShorts?.shorts.shortsId}?request=playlists&playlistId=${playlistItem.id}`}
+          className="group w-full md:w-90"
+        >
           <button className="flex w-full items-center justify-center gap-2 rounded-full bg-black py-5 text-lg font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gray-100 hover:shadow-lg">
             <Play
               strokeWidth={1.5}
