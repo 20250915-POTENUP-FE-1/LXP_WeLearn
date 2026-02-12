@@ -22,7 +22,7 @@ async function getAuthHeaders(auth: boolean, customHeaders: HeadersInit = {}) {
     ...customHeaders,
   } as Record<string, string>
 
-  if (auth === false) {
+  if (!auth) {
     return headers
   }
 

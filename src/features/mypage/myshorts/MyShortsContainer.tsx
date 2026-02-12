@@ -38,15 +38,11 @@ export default function MyShortsContainer({ initialShorts, totalCount }: MyShort
         toast.success(result.message)
         // 상태 업데이트
         setShortsList((prev) =>
-          prev.map((s) =>
-            s.shortsId === shortsId ? { ...s, visibility: result.data!.visibility } : s,
-          ),
+          prev.map((s) => (s.shortsId === shortsId ? { ...s, status: result.data!.status } : s)),
         )
         // 선택된 숏츠 상태도 업데이트
         if (selectedShorts?.shortsId === shortsId) {
-          setSelectedShorts((prev) =>
-            prev ? { ...prev, visibility: result.data!.visibility } : prev,
-          )
+          setSelectedShorts((prev) => (prev ? { ...prev, status: result.data!.status } : prev))
         }
         router.refresh()
       } else {
@@ -63,9 +59,7 @@ export default function MyShortsContainer({ initialShorts, totalCount }: MyShort
     // 삭제 확인
     const confirmed = window.confirm('정말 이 숏츠를 삭제하시겠습니까?')
     if (!confirmed) return
-
     setIsDeleting(true)
-
     try {
       const result = await deleteShortsAction(shortsId)
       if (result.success) {
@@ -97,7 +91,12 @@ export default function MyShortsContainer({ initialShorts, totalCount }: MyShort
             <h1 className="pt-8 text-center text-2xl font-black text-gray-900 uppercase md:pt-0 lg:p-0 lg:text-left">
               My Created Shorts
             </h1>
-            <ShortsPreviewContainer shorts={selectedShorts} loop={true} autoplay={true} />
+            <ShortsPreviewContainer
+              shorts={selectedShorts}
+              loop={true}
+              autoplay={true}
+              mode="MY_SHORTS"
+            />
             <div className="w-full items-center justify-center md:flex">
               <MyShortsCreateButton />
             </div>

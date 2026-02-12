@@ -22,7 +22,6 @@ export default function ShortsCardThumbnail({
         className="object-cover"
         unoptimized
       />
-      {/* 카테고리 */}
       {shorts.categoryName && (
         <span className="absolute top-2 left-2 rounded-full border border-gray-400/20 bg-black/50 px-3 py-1 text-[10px] text-white">
           {shorts.categoryName}

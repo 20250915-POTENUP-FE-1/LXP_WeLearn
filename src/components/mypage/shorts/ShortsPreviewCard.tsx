@@ -6,18 +6,18 @@ import { ShortsBase } from '@/types/shorts/shorts'
 
 interface ShortsPreviewCardProps {
   shorts: ShortsBase | null
-  userProfileUrl?: string | null
   videoRef?: React.RefObject<HTMLVideoElement | null>
   onLoadedData?: () => void
   loop?: boolean
+  mode: string
 }
 
 export function ShortsPreviewCard({
   shorts,
-  userProfileUrl,
   videoRef,
   onLoadedData,
   loop = true,
+  mode,
 }: ShortsPreviewCardProps) {
   // 빈 상태
   if (!shorts) {
@@ -30,8 +30,13 @@ export function ShortsPreviewCard({
       </div>
     )
   }
-
-  const profileUrl = userProfileUrl || shorts.userProfileUrl || DEFAULT_IMAGES.AVATAR
+  // console.log('유저 프로필 url', shorts.userProfileUrl)
+  console.log('숏츠', shorts)
+  const rawProfileUrl = shorts.userProfileUrl || DEFAULT_IMAGES.AVATAR
+  const profileUrl =
+    rawProfileUrl && !rawProfileUrl.startsWith('http') && !rawProfileUrl.startsWith('/')
+      ? `/${rawProfileUrl}`
+      : rawProfileUrl
 
   return (
     <div className="relative mx-auto aspect-9/16 w-full overflow-hidden rounded-2xl bg-gray-200 shadow-lg md:w-[360px] lg:mx-0">
@@ -43,6 +48,11 @@ export function ShortsPreviewCard({
           </span>
         ) : (
           <span />
+        )}
+        {mode === 'LIKE_SHORTS' && (
+          <span className="inline-flex items-center rounded-md bg-pink-600/80 px-2 py-1 text-[10px] font-bold text-white shadow-sm ring-1 ring-white/20">
+            LIKED
+          </span>
         )}
       </div>
 
