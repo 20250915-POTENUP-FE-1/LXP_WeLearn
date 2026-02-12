@@ -5,7 +5,7 @@ import { getShortsDetailList } from '@/services/shorts/getShortsDetailList'
 import { ShortsBase } from '@/types/shorts/shorts'
 import { mapPlaylistShortsToShortsBase } from '@/lib/utils/playlistToShorts'
 
-interface ShortDetailPageProps {
+interface ShortsDetailPageProps {
   params: Promise<{ id: string }>
   searchParams?: { [key: string]: string | string[] | undefined }
 }
@@ -16,7 +16,7 @@ interface ShortsData {
   totalElement?: number
 }
 
-export default async function ShortformDetailPage({ params, searchParams }: ShortDetailPageProps) {
+export default async function ShortsDetailPage({ params, searchParams }: ShortsDetailPageProps) {
   const { id } = await params
   const sp = await searchParams
   const { request, playlistId } = sp || {}
@@ -51,7 +51,7 @@ export default async function ShortformDetailPage({ params, searchParams }: Shor
   return (
     <div className="relative h-dvh w-full md:h-full">
       <section
-        aria-labelledby="shortform-content"
+        aria-labelledby="shorts-content"
         className="flex h-dvh w-full items-stretch md:h-full"
       >
         <ShortsContainer
