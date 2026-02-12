@@ -3,6 +3,7 @@
 import { SHORTS_STATUS_CONFIG } from '@/constants/shortsCardBadge'
 import { ShortsStatus, ShortsVisibility } from '@/types/shorts/status'
 import { cn } from '@/utils/cnUtils'
+import { Loader } from 'lucide-react'
 
 interface ShortsStatusBadgeProps {
   shortsStatus: ShortsStatus | null | undefined
@@ -10,7 +11,11 @@ interface ShortsStatusBadgeProps {
   className?: string
 }
 
-export default function ShortsStatusBadge({ shortsStatus, visibility, className }: ShortsStatusBadgeProps) {
+export default function ShortsStatusBadge({
+  shortsStatus,
+  visibility,
+  className,
+}: ShortsStatusBadgeProps) {
   // PUBLISHED 상태일 때는 visibility 기준으로 배지 표시
   const badgeKey = shortsStatus === 'PUBLISHED' && visibility ? visibility : shortsStatus
   if (!badgeKey || !(badgeKey in SHORTS_STATUS_CONFIG)) return null
@@ -24,7 +29,7 @@ export default function ShortsStatusBadge({ shortsStatus, visibility, className 
         config.bgColor,
         className,
       )}
-      aria-label={`쇼츠 상태: ${config.label}`}
+      aria-label={`숏츠 상태: ${config.label}`}
     >
       <Icon size={10} aria-hidden="true" />
       {config.label}

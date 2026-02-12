@@ -13,7 +13,7 @@ export const myShortsApi = {
         cache: 'no-cache',
       },
     )
-    console.log('내 숏츠 목록 조회 응답:', res.data)
+    // console.log('내 숏츠 목록 조회 응답:', res.data)
     return res.data
   },
 

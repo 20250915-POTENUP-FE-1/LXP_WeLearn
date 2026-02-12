@@ -1,4 +1,4 @@
-import { Globe, Loader, Lock, ShieldAlert } from 'lucide-react'
+import { Ban, Check, Globe, Loader, Lock, ShieldAlert, SquareX } from 'lucide-react'
 
 export const SHORTS_STATUS_CONFIG = {
   PUBLISHED: {
@@ -7,22 +7,22 @@ export const SHORTS_STATUS_CONFIG = {
     bgColor: 'bg-green-500',
   },
   PENDING: {
-    icon: Lock,
-    label: '비공개',
-    bgColor: 'bg-gray-700',
+    icon: Loader,
+    label: '검토 중',
+    bgColor: 'bg-gray-400',
   },
   AI_CHECK: {
     icon: Loader,
-    label: '검토중',
-    bgColor: 'bg-yellow-700',
+    label: '검토 중',
+    bgColor: 'bg-gray-500',
   },
   REJECT: {
-    icon: ShieldAlert,
-    label: '거부됨',
+    icon: Ban,
+    label: '반려됨',
     bgColor: 'bg-red-600',
   },
   PUBLIC: {
-    icon: Globe,
+    icon: Check,
     label: '공개',
     bgColor: 'bg-green-500',
   },
