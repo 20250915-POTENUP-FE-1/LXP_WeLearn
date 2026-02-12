@@ -1,7 +1,5 @@
 import { buildQueryString } from '@/utils/buildQueryString'
 
-const baseUrl = process.env.NEXT_PUBLIC_SERVER_API_URL
-
 interface FetchOptions extends RequestInit {
   params?: Record<string, any>
 }
@@ -40,7 +38,7 @@ async function fetchClient(url: string, options: FetchOptions = {}): Promise<Res
 export const clientApi = {
   async get<T>(endpoint: string, options?: FetchOptions): Promise<T> {
     const queryString = buildQueryString(options?.params)
-    const res = await fetchClient(`${baseUrl}${endpoint}${queryString}`, {
+    const res = await fetchClient(`${endpoint}${queryString}`, {
       ...options,
       method: 'GET',
     })
@@ -50,7 +48,7 @@ export const clientApi = {
   },
 
   async post<T>(endpoint: string, data?: unknown, options?: FetchOptions): Promise<T> {
-    const res = await fetchClient(`${baseUrl}${endpoint}`, {
+    const res = await fetchClient(`${endpoint}`, {
       ...options,
       method: 'POST',
       body: data ? JSON.stringify(data) : undefined,
@@ -60,7 +58,7 @@ export const clientApi = {
   },
 
   async patch<T>(endpoint: string, data?: unknown, options?: FetchOptions): Promise<T> {
-    const res = await fetchClient(`${baseUrl}${endpoint}`, {
+    const res = await fetchClient(`${endpoint}`, {
       ...options,
       method: 'PATCH',
       body: data ? JSON.stringify(data) : undefined,
@@ -71,7 +69,7 @@ export const clientApi = {
   },
 
   async delete(endpoint: string, options?: FetchOptions): Promise<boolean> {
-    const res = await fetchClient(`${baseUrl}${endpoint}`, {
+    const res = await fetchClient(`${endpoint}`, {
       ...options,
       method: 'DELETE',
     })
