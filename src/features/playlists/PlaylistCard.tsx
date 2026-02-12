@@ -57,16 +57,29 @@ export default function PlaylistCard({
 
     const oldIndex = items.findIndex((i) => i.itemId === active.id)
     const newIndex = items.findIndex((i) => i.itemId === over.id)
-    const activeItem = items.find((i) => i.itemId === active.id)
 
-    await clientApi.patch(`/api/v1/playlists/${playlistId}/items/reorder`, {
-      data: { shortsId: activeItem?.shorts.shortsId, newIndex },
-      playlistId,
-    })
+    if (oldIndex === -1 || newIndex === -1) return
 
+    const prevItems = items
+    const activeItem = items[oldIndex]
+
+    // ① UI 먼저 즉시 업데이트 (Optimistic)
     const newItems = arrayMove(items, oldIndex, newIndex)
     setItems(newItems)
-    router.refresh()
+
+    // ② 서버 요청은 await 없이 백그라운드 처리
+    clientApi
+      .patch(`/api/v1/playlists/${playlistId}/items/reorder`, {
+        data: {
+          shortsId: activeItem.shorts.shortsId,
+          newIndex,
+        },
+        playlistId,
+      })
+      .catch(() => {
+        // ③ 실패 시 롤백
+        setItems(prevItems)
+      })
   }
 
   return (
