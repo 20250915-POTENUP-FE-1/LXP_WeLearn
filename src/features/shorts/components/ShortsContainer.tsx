@@ -44,6 +44,8 @@ export default function ShortsContainer({
   const currentShorts = list[currentIndex] ?? null
   const hasPrev = currentIndex > 0
   const hasNext = currentIndex < list.length - 1
+
+  console.log(list)
   // 현재 숏폼이 바뀔 때 URL 동기화 (/shorts/:shortsId)
   useEffect(() => {
     if (!currentShorts) return

@@ -1,8 +1,6 @@
 import { Category } from '../category/category'
 import { Pageable } from '../shorts/shorts'
-import { ShortsStatus } from '../shorts/status'
-
-export type Visibility = 'PUBLIC' | 'PRIVATE'
+import { ShortsStatus, ShortsVisibility } from '../shorts/status'
 
 /* 플레이 리스트 생성 / 수정 요청시 Request
  * /api/v1/playlists // /api/v1/playlists/{playlistId}
@@ -11,7 +9,7 @@ export interface PlaylistRequest {
   title: string
   description: string
   thumbnailUrl: string | null
-  visibility: Visibility
+  visibility: ShortsVisibility
 }
 
 // 공개 플레이리스트 조회 시
@@ -20,7 +18,7 @@ export interface PlayListCard {
   id: number
   title: string
   description: string
-  visibility: Visibility
+  visibility: ShortsVisibility
   thumbnailUrl: string
   shortsCount: number
   categoryName: string
@@ -62,7 +60,7 @@ export interface PlaylistInfo {
   title: string
   description: string
   thumbnailUrl: string
-  visibility: Visibility
+  visibility: ShortsVisibility
   shortsCount: number
   owner: PlaylistOwner
   createdAt: string
@@ -105,22 +103,26 @@ export interface PlaylistShorts {
   thumbnailUrl: string
   durationSec: number
   status: ShortsStatus
+  visibility: ShortsVisibility
   // API 연동시 삭제 예정
   // PlaylistShorts에 uploader: PlaylistUploader로 변경
   uploader: PlaylistOwner
   // 여기까지 api 들어오면 수정
   category: Category
   keywords: string[]
-  createdAt: string
   viewCount: number
   likeCount: number
+  commentCount: number
+  createdAt: string
+  updatedAt: string
+  isLiked: false
 }
 
 export interface PlaylistMetaDataResponse {
   id: number
   title: string
   description: string
-  visibility: Visibility
+  visibility: ShortsVisibility
   thumbnailUrl: string
   shortsCount: number
   owner: PlaylistOwner
@@ -132,7 +134,7 @@ export interface PatchPlaylistMeta {
   title?: string
   description?: string
   thumbnailShortsId?: number
-  visibility?: Visibility
+  visibility?: ShortsVisibility
 }
 
 export interface ReorderPlaylist {

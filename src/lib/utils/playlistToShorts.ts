@@ -18,11 +18,14 @@ export function mapPlaylistShortsToShortsBase(items: PlaylistItems[]): ShortsBas
     userNickname: item.shorts.uploader.nickname ?? '',
     userProfileUrl: item.shorts.uploader.profileUrl ?? null,
 
-    status: item.shorts.status ?? 'PUBLISHED',
-
+    status: item.shorts.status,
+    visibility: item.shorts.visibility,
     likeCount: item.shorts.likeCount ?? 0,
     viewCount: item.shorts.viewCount ?? 0,
+    commentCount: item.shorts.commentCount || 0,
+    isLiked: item.shorts.isLiked,
 
     createdAt: item.shorts.createdAt ?? '',
+    updatedAt: item.shorts.updatedAt ?? '',
   }))
 }

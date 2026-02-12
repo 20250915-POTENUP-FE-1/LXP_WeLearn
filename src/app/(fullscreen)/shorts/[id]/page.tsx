@@ -28,7 +28,7 @@ export default async function ShortsDetailPage({ params, searchParams }: ShortsD
   if (isPlaylist) {
     const res = await playlistApi.getPlaylistItem(Number(playlistId))
     const playlistItems = res.data.items ?? []
-
+    console.log(res.data.items)
     const shortsList = mapPlaylistShortsToShortsBase(playlistItems)
 
     data = {
