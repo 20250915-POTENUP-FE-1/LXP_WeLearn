@@ -25,6 +25,7 @@ export async function getPresignedUrlAction(
       data: result,
     }
   } catch (error) {
+    console.log(`pre error: `,error)
     return {
       success: false,
       message: error instanceof Error ? error.message : 'Presigned URL 발급 실패',

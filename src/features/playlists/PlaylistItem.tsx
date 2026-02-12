@@ -1,6 +1,7 @@
 import { DEFAULT_IMAGES } from '@/constants/shortsImages'
 import { Play } from 'lucide-react'
 import Image from 'next/image'
+import { DEFAULT_IMAGES } from '@/constants/shortsImages';
 
 export interface PlaylistItemProps {
   id: number
@@ -53,13 +54,7 @@ export default function PlaylistItem({
             </div>
           </div>
 
-          <Image
-            src={thumbnailUrl || DEFAULT_IMAGES.THUMBNAIL}
-            alt={title}
-            fill
-            className="object-cover"
-            sizes="224px"
-          />
+          <Image src={thumbnailUrl || DEFAULT_IMAGES.THUMBNAIL} alt={title} fill className="object-cover" sizes="224px" />
         </div>
       </div>
     </div>
