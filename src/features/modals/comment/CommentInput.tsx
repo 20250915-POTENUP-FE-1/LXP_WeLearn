@@ -43,6 +43,7 @@ export default function CommentInput({ shortsId, setIsUpdate }: CommentInputProp
                 src={`/${user.profileUrl}`}
                 alt={user.nickName}
                 fill
+                unoptimized
                 className="h-8 w-8 rounded-full object-cover"
               />
             ) : (
