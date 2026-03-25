@@ -66,7 +66,7 @@ export default function ProfileImageSection({ initialProfileUrl }: ProfileImageS
               ...auth,
               profileUrl: newProfileUrl,
             })
-            setPreview(null)
+            setPreview(newProfileUrl)
             toast.success('프로필 사진이 변경되었습니다.')
           }
         } catch (e) {}
