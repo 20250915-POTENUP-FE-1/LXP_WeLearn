@@ -105,9 +105,14 @@ export default function CommentList({
                 <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-600">
                   {comment.writer.profileImageUrl ? (
                     <Image
-                      src={`/${comment.writer.profileImageUrl}`}
+                      src={
+                        /^https?:\/\//i.test(comment.writer.profileImageUrl)
+                          ? comment.writer.profileImageUrl
+                          : `/${comment.writer.profileImageUrl.replace(/^\/+/, '')}`
+                      }
                       alt={comment.writer.nickname}
                       fill
+                      sizes="32px"
                       className="h-8 w-8 rounded-full object-cover"
                     />
                   ) : (
@@ -115,6 +120,7 @@ export default function CommentList({
                       src={DEFAULT_IMAGES.AVATAR}
                       alt="user-profile-image"
                       fill
+                      sizes="32px"
                       className="rounded-full object-cover"
                       unoptimized
                     />

@@ -40,9 +40,14 @@ export default function CommentInput({ shortsId, setIsUpdate }: CommentInputProp
           <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-600">
             {user?.profileUrl ? (
               <Image
-                src={`/${user.profileUrl}`}
+                src={
+                  /^https?:\/\//i.test(user.profileUrl)
+                    ? user.profileUrl
+                    : `/${user.profileUrl.replace(/^\/+/, '')}`
+                }
                 alt={user.nickName}
                 fill
+                sizes="32px"
                 unoptimized
                 className="h-8 w-8 rounded-full object-cover"
               />
@@ -51,6 +56,7 @@ export default function CommentInput({ shortsId, setIsUpdate }: CommentInputProp
                 src={DEFAULT_IMAGES.AVATAR}
                 alt="user-profile-image"
                 fill
+                sizes="32px"
                 className="rounded-full object-cover"
                 unoptimized
               />
