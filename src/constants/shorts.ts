@@ -1,0 +1,1 @@
+export const RECOMMENDATION_LIMIT = 20

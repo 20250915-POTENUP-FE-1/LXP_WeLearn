@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
 import ShortsContainer from '@/features/shorts/components/ShortsContainer'
 import { playlistApi } from '@/services/playlist/playlist.service'
-import { getShortsDetailList } from '@/services/shorts/getShortsDetailList'
-import { ShortsBase } from '@/types/shorts/shorts'
+import { getRecommendedShortsDetailList } from '@/services/shorts/getRecommendedShortsDetailList'
+import { ShortsBase, ShortsRecommendationPageInfo } from '@/types/shorts/shorts'
 import { mapPlaylistShortsToShortsBase } from '@/lib/utils/playlistToShorts'
 
 interface ShortsDetailPageProps {
@@ -13,7 +13,9 @@ interface ShortsDetailPageProps {
 interface ShortsData {
   shortsList: ShortsBase[]
   initialIndex: number
-  totalElement?: number
+  totalElements?: number
+  seedShortsId?: number
+  recommendationPageInfo?: ShortsRecommendationPageInfo
 }
 
 export default async function ShortsDetailPage({ params, searchParams }: ShortsDetailPageProps) {
@@ -33,14 +35,15 @@ export default async function ShortsDetailPage({ params, searchParams }: ShortsD
     data = {
       shortsList,
       initialIndex: 0,
-      totalElement: res.data.shortsCount,
+      totalElements: res.data.shortsCount,
     }
   } else {
-    const res = await getShortsDetailList(id)
+    const res = await getRecommendedShortsDetailList(id)
     data = {
       shortsList: res?.shortsList ?? [],
       initialIndex: res?.initialIndex ?? 0,
-      totalElement: res?.totalElement,
+      seedShortsId: res?.seedShortsId,
+      recommendationPageInfo: res?.recommendationPageInfo,
     }
   }
 
@@ -57,8 +60,10 @@ export default async function ShortsDetailPage({ params, searchParams }: ShortsD
           playlistId={playlistId}
           shortsList={data.shortsList}
           initialIndex={data.initialIndex}
-          isPlaylist={isPlaylist}
-          totalElements={data.totalElement}
+          feedMode={isPlaylist ? 'playlist' : 'recommendation'}
+          totalElements={data.totalElements}
+          seedShortsId={data.seedShortsId}
+          initialRecommendationPageInfo={data.recommendationPageInfo}
         />
       </section>
     </div>

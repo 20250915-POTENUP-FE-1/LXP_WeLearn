@@ -9,19 +9,18 @@ import { useDragNavigation } from '@/hook/useDragNavigation'
 import { useScrollNavigation } from '@/hook/useScrollNavigation'
 import { usePathname, useRouter } from 'next/navigation'
 import ShortsCard from './ShortsCard'
-import { PageResponse, ShortsBase } from '@/types/shorts/shorts'
-import { clientApi } from '@/lib/utils/clientApiUtils'
-import { ApiResponse } from '@/types/api/api'
-import { PlaylistItems } from '@/types/playlist/playlist'
-import { mapPlaylistShortsToShortsBase } from '@/lib/utils/playlistToShorts'
-import { toast } from 'react-toastify'
+import { ShortsBase, ShortsRecommendationPageInfo } from '@/types/shorts/shorts'
+import { Loader2 } from 'lucide-react'
+import { useShortsFeed } from '@/hook/shorts/useShortsFeed'
 
 interface ShortsContainerProps {
   shortsList: ShortsBase[]
   initialIndex: number
-  isPlaylist: boolean
   playlistId: string | string[] | undefined
+  feedMode: 'playlist' | 'recommendation'
   totalElements?: number
+  seedShortsId?: number
+  initialRecommendationPageInfo?: ShortsRecommendationPageInfo
 }
 
 type SlideDirection = 'up' | 'down' | null
@@ -29,101 +28,92 @@ type SlideDirection = 'up' | 'down' | null
 export default function ShortsContainer({
   shortsList,
   initialIndex,
-  isPlaylist,
   playlistId,
+  feedMode,
   totalElements,
+  seedShortsId,
+  initialRecommendationPageInfo,
 }: ShortsContainerProps) {
   const safeInitialIndex = getSafeIndex(initialIndex, shortsList.length)
   const [currentIndex, setCurrentIndex] = useState(safeInitialIndex)
-  const [list, setList] = useState<ShortsBase[]>(shortsList)
   const [slideDirection, setSlideDirection] = useState<SlideDirection>(null)
   const [isAnimating, setIsAnimating] = useState(false)
-  const [isFetching, setIsFetching] = useState(false)
-  const [page, setPage] = useState(0)
+
+  const {
+    list,
+    isFetching,
+    hasNextInList,
+    canFetchRecommendation,
+    isLoadingNext,
+    fetchMore,
+    releaseAutoFetchBlock,
+    toggleLike,
+  } = useShortsFeed({
+    feedMode,
+    initialShortsList: shortsList,
+    playlistId,
+    currentIndex,
+    totalElements,
+    seedShortsId,
+    initialRecommendationPageInfo,
+  })
+
   const pathname = usePathname()
   const router = useRouter()
   const currentShorts = list[currentIndex] ?? null
+  const currentShortsId = currentShorts?.shortsId
   const hasPrev = currentIndex > 0
-  const hasNext = currentIndex < list.length - 1
+  const hasNext = hasNextInList || canFetchRecommendation
 
-  // 현재 숏폼이 바뀔 때 URL 동기화 (/shorts/:shortsId)
   useEffect(() => {
-    if (!currentShorts) return
+    if (!currentShortsId) return
     const newUrl = pathname.includes('comments')
-      ? `/shorts/${currentShorts.shortsId}/comments`
-      : `/shorts/${currentShorts.shortsId}`
+      ? `/shorts/${currentShortsId}/comments`
+      : `/shorts/${currentShortsId}`
     window.history.replaceState(null, '', newUrl)
-  }, [currentShorts?.shortsId])
+  }, [currentShortsId, pathname])
 
-  // // 무한 스크롤
-  const fetchMore = useCallback(async () => {
-    if (isFetching) return
-    if (totalElements != null && list.length >= totalElements) return
-
-    setIsFetching(true)
-
-    try {
-      if (isPlaylist) {
-        const res = await clientApi.get<ApiResponse<PageResponse<PlaylistItems[]>>>(
-          `/api/v1/playlists/${playlistId}?page=${page}&size=10`,
-        )
-
-        const playlistItems = res.data.content ?? []
-        const shortsList = mapPlaylistShortsToShortsBase(playlistItems)
-
-        if (shortsList.length > 0) {
-          setList((prev) => [...prev, ...shortsList])
-          setPage((prev) => prev + 1)
-        }
-      } else {
-        const lastId = list[list.length - 1]?.shortsId
-
-        const res = await clientApi.get<ApiResponse<PageResponse<ShortsBase[]>>>(
-          `/api/v1/shorts?lastId=${lastId}&size=10`,
-        )
-
-        if (res.data.content?.length) {
-          setList((prev) => [...prev, ...res.data.content])
-        }
-      }
-    } finally {
-      setIsFetching(false)
-    }
-  }, [isFetching, page, isPlaylist, playlistId, totalElements, list.length])
-
-  useEffect(() => {
-    if (totalElements == null) return
-
-    const remain = list.length - currentIndex - 1
-    const isLastPage = list.length >= totalElements
-
-    if (remain <= 2 && !isLastPage && !isFetching) {
-      fetchMore()
-    }
-  }, [currentIndex, list.length, totalElements, isFetching, fetchMore])
-
-  /**
-   * 이전/다음 숏폼으로 이동
-   * - 애니메이션 방향 설정 후 인덱스 변경
-   */
   const navigateTo = useCallback(
-    (direction: 'prev' | 'next') => {
+    async (direction: 'prev' | 'next') => {
       if (isAnimating) return
 
       if (direction === 'prev' && hasPrev) {
         setSlideDirection('down')
         setIsAnimating(true)
         setCurrentIndex((prev) => prev - 1)
-      } else if (direction === 'next' && hasNext) {
+        return
+      }
+
+      if (direction !== 'next') return
+
+      if (hasNextInList) {
+        setSlideDirection('up')
+        setIsAnimating(true)
+        setCurrentIndex((prev) => prev + 1)
+        return
+      }
+
+      if (!canFetchRecommendation || isFetching) return
+
+      releaseAutoFetchBlock()
+      const addedCount = await fetchMore()
+      if (addedCount > 0) {
         setSlideDirection('up')
         setIsAnimating(true)
         setCurrentIndex((prev) => prev + 1)
       }
     },
-    [isAnimating, hasPrev, hasNext],
+    [
+      canFetchRecommendation,
+      fetchMore,
+      hasNextInList,
+      hasPrev,
+      isAnimating,
+      isFetching,
+      releaseAutoFetchBlock,
+    ],
   )
 
-  // 드래그 네비게이션 훅 사용
   const handleDragEnd = useDragNavigation({
     onPrev: () => navigateTo('prev'),
     onNext: () => navigateTo('next'),
@@ -131,7 +121,6 @@ export default function ShortsContainer({
     velocityThreshold: 500,
   })
 
-  // 키보드 방향키 네비게이션 훅 사용
   useKeyboardNavigation({
     onPrev: () => navigateTo('prev'),
     onNext: () => navigateTo('next'),
@@ -143,7 +132,6 @@ export default function ShortsContainer({
     onNext: () => navigateTo('next'),
   })
 
-  // 데이터가 없을 때 처리
   if (!currentShorts) {
     return (
       <div className="flex h-full w-full items-center justify-center text-white">
@@ -152,12 +140,6 @@ export default function ShortsContainer({
     )
   }
 
-  /**
-   * 슬라이드 애니메이션 variants 정의 : 프레이머 모션
-   * - enter: 진입 위치 (위/아래에서 들어옴)
-   * - center: 중앙 고정
-   * - exit: 퇴장 위치 (위/아래로 나감)
-   */
   const slideVariants = {
     enter: (direction: SlideDirection) => ({
       y: direction === 'up' ? '100%' : '-100%',
@@ -170,44 +152,9 @@ export default function ShortsContainer({
     }),
   }
 
-  const handleToggleLike = async (shortsId: number) => {
-    // 1️⃣ Optimistic Update
-    setList((prev) =>
-      prev.map((short) =>
-        short.shortsId === shortsId
-          ? {
-              ...short,
-              isLiked: !short.isLiked,
-              likeCount: short.isLiked ? short.likeCount - 1 : short.likeCount + 1,
-            }
-          : short,
-      ),
-    )
-
-    try {
-      const res = await clientApi.post(`/api/v1/shorts/${shortsId}/likes`, { shortsId: shortsId })
-      console.log(res)
-      toast.success('좋아요 성공하였습니다.')
-    } catch {
-      setList((prev) =>
-        prev.map((short) =>
-          short.shortsId === shortsId
-            ? {
-                ...short,
-                isLiked: !short.isLiked,
-                likeCount: short.isLiked ? short.likeCount - 1 : short.likeCount + 1,
-              }
-            : short,
-        ),
-      )
-    }
-  }
-
   return (
     <div className="flex h-dvh w-full items-center justify-center gap-4 md:h-full">
-      {/* 메인 숏폼 영역 */}
-      <div className="h-dvh w-full overflow-hidden md:h-full md:w-[460px]">
-        {/* 세로 슬라이드 영역 (모바일: 전체 높이, 데스크탑: 70vh) */}
+      <div className="relative h-dvh w-full overflow-hidden md:h-full md:w-[460px]">
         <div
           className="h-dvh w-full overflow-hidden sm:rounded-2xl md:h-[84vh]"
           onWheel={(e) => {
@@ -237,19 +184,24 @@ export default function ShortsContainer({
               }}
               className="h-full w-full cursor-grab overflow-y-hidden active:cursor-grabbing"
             >
-              <ShortsCard shorts={currentShorts} handleToggleLike={handleToggleLike} />
+              <ShortsCard shorts={currentShorts} handleToggleLike={toggleLike} />
             </motion.div>
           </AnimatePresence>
         </div>
+        {isLoadingNext && (
+          <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 md:hidden">
+            <Loader2 className="animate-spin text-white drop-shadow" size={28} />
+          </div>
+        )}
       </div>
 
-      {/* 데스크톱에서만 보이는 이전/다음 버튼 영역 */}
       <div className="hidden md:block">
         <ShortsNavigationButtons
           onPrev={() => navigateTo('prev')}
           onNext={() => navigateTo('next')}
           hasPrev={hasPrev}
           hasNext={hasNext}
+          isLoadingNext={isLoadingNext}
         />
       </div>
     </div>
