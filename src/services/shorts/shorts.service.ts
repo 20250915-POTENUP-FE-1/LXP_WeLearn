@@ -17,10 +17,9 @@ export const shortsApi = {
     return response
   },
 
-  shortsDetail: async (shortsId: number) => {
-    const response = await api.get(`/api/v1/shorts/${shortsId}`, {
+  shortsDetail: async (shortsId: number): Promise<ApiResponse<ShortsBase>> => {
+    const response = await api.get<ApiResponse<ShortsBase>>(`/api/v1/shorts/${shortsId}`, {
       cache: 'no-store',
-      // auth: false,
     })
     return response
   },
@@ -59,7 +58,6 @@ export const shortsApi = {
         },
       },
     )
-    // console.log('인기 숏츠 목록 조회 결과:', response.data)
     return response
   },
 }
