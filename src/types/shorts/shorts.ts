@@ -134,15 +134,22 @@ export interface ShortsUploadStatus {
  * 숏츠 추천 목록 조회
  * ========================= */
 
+export interface ShortsRecommendationItem {
+  shorts: ShortsBase
+  similarity: number
+}
+
+export interface ShortsRecommendationPageInfo {
+  offset: number
+  limit: number
+  totalCount: number
+  hasNext: boolean
+  nextOffset: number
+}
+
 export interface ShortsRecommendationPage {
-  recommendations: { shorts: ShortsBase }[]
-  pageInfo: {
-    offset: number
-    limit: number
-    totalCount: number
-    hasNext: boolean
-    nextOffset: number
-  }
+  recommendations: ShortsRecommendationItem[]
+  pageInfo: ShortsRecommendationPageInfo
 }
 
 /**

@@ -1,11 +1,12 @@
 'use client'
-import { ArrowDown, ArrowUp } from 'lucide-react'
+import { ArrowDown, ArrowUp, Loader2 } from 'lucide-react'
 
 interface ShortsNavigationButtonsProps {
   onPrev: () => void
   onNext: () => void
   hasPrev: boolean
   hasNext: boolean
+  isLoadingNext?: boolean
 }
 
 export default function ShortsNavigationButtons({
@@ -13,6 +14,7 @@ export default function ShortsNavigationButtons({
   onNext,
   hasPrev,
   hasNext,
+  isLoadingNext = false,
 }: ShortsNavigationButtonsProps) {
   return (
     <div className="hidden flex-col items-center justify-center gap-4 md:flex">
@@ -31,12 +33,16 @@ export default function ShortsNavigationButtons({
       {/* 다음 영상 버튼 */}
       <button
         onClick={onNext}
-        disabled={!hasNext}
+        disabled={!hasNext || isLoadingNext}
         className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 transition-colors hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-40"
         aria-label="다음 영상"
       >
         <span className="flex flex-col items-center text-xs text-gray-600">
-          <ArrowDown strokeWidth={1.5} />
+          {isLoadingNext ? (
+            <Loader2 className="animate-spin" strokeWidth={1.5} />
+          ) : (
+            <ArrowDown strokeWidth={1.5} />
+          )}
         </span>
       </button>
     </div>

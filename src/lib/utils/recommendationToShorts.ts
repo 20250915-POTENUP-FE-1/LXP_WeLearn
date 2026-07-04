@@ -1,30 +1,30 @@
-import { ShortsBase } from '@/types/shorts/shorts'
+import { ShortsBase, ShortsRecommendationItem } from '@/types/shorts/shorts'
 
-export function mapRecommendationToShortsBase(data: { shorts: ShortsBase }[]): ShortsBase[] {
-  return data.map((shorts: { shorts: ShortsBase }) => ({
-    shortsId: shorts.shorts.shortsId,
-    title: shorts.shorts.title,
-    description: shorts.shorts.description ?? '',
-    categoryId: shorts.shorts.categoryId ?? 0,
-    categoryName: shorts.shorts.categoryName ?? '',
-    keywords: shorts.shorts.keywords ?? [],
+export function mapRecommendationToShortsBase(data: ShortsRecommendationItem[]): ShortsBase[] {
+  return data.map((item) => ({
+    shortsId: item.shorts.shortsId,
+    title: item.shorts.title,
+    description: item.shorts.description ?? '',
+    categoryId: item.shorts.categoryId ?? 0,
+    categoryName: item.shorts.categoryName ?? '',
+    keywords: item.shorts.keywords ?? [],
 
-    videoUrl: shorts.shorts.videoUrl,
-    thumbnailUrl: shorts.shorts.thumbnailUrl ?? null,
-    durationSec: shorts.shorts.durationSec ?? 0,
+    videoUrl: item.shorts.videoUrl,
+    thumbnailUrl: item.shorts.thumbnailUrl ?? null,
+    durationSec: item.shorts.durationSec ?? 0,
 
-    userId: shorts.shorts.userId ?? 0,
-    userNickname: shorts.shorts.userNickname ?? '',
-    userProfileUrl: shorts.shorts.userProfileUrl ?? null,
+    userId: item.shorts.userId ?? 0,
+    userNickname: item.shorts.userNickname ?? '',
+    userProfileUrl: item.shorts.userProfileUrl ?? null,
 
-    status: shorts.shorts.status,
-    visibility: shorts.shorts.visibility,
-    likeCount: shorts.shorts.likeCount ?? 0,
-    viewCount: shorts.shorts.viewCount ?? 0,
-    commentCount: shorts.shorts.commentCount ?? 0,
-    isLiked: shorts.shorts.isLiked,
+    status: item.shorts.status,
+    visibility: item.shorts.visibility,
+    likeCount: item.shorts.likeCount ?? 0,
+    viewCount: item.shorts.viewCount ?? 0,
+    commentCount: item.shorts.commentCount ?? 0,
+    isLiked: item.shorts.isLiked ?? false,
 
-    createdAt: shorts.shorts.createdAt ?? '',
-    updatedAt: shorts.shorts.updatedAt ?? '',
+    createdAt: item.shorts.createdAt ?? '',
+    updatedAt: item.shorts.updatedAt ?? '',
   }))
 }
